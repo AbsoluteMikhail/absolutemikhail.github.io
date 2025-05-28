@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>GamePunk Studio</title>
+  <link rel="canonical" href="https://absolutemikhail.github.io" />
+
+  <meta name="google-site-verification" content="xxx" />
+  <meta name="yandex-verification" content="xxx" />
+
+  <meta name="description" content="Игры от GamePunk Studio: симуляторы, шутеры, аркады, русская атмосфера.">
+  <meta name="keywords" content="инди игры, симулятор дуэлянта, русские игры, vkplay, steam, GamePunk studio">
+  <meta name="author" content="GamePunk Studio">
+
+  <meta property="og:title" content="Игры от GamePunk Studio">
+  <meta property="og:description" content="Симуляторы, хорроры и шутеры от независимого разработчика.">
+  <meta property="og:image" content="https://absolutemikhail.github.io/images/game1.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://absolutemikhail.github.io">
+
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-color: #f9f9f9;
+      --text-color: #000;
+      --card-bg: #fff;
+      --button-bg: #4CAF50;
+      --button-hover: #45a049;
+    }
+    body.dark {
+      --bg-color: #121212;
+      --text-color: #eee;
+      --card-bg: #1e1e1e;
+      --button-bg: #2e7d32;
+      --button-hover: #1b5e20;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    header {
+      background-color: #222;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .social-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-top: 15px;
+      position: relative;
+    }
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+    .header-controls {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 10px;
+    }
+    .theme-toggle, .lang-toggle {
+      background-color: transparent;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    .theme-toggle:hover, .lang-toggle:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+    .social-link {
+      color: white;
+      font-size: 24px;
+      transition: all 0.3s;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: rgba(255,255,255,0.1);
+      text-decoration: none;
+    }
+    .social-link:hover {
+      transform: scale(1.1);
+      text-decoration: none;
+    }
+    .social-link.telegram:hover {
+      background-color: #0088cc;
+    }
+    .social-link.youtube:hover {
+      background-color: #ff0000;
+    }
+    .social-link.vk:hover {
+      background-color: #4a76a8;
+    }
+    .social-link.x:hover {
+      background-color: #000000;
+    }
+    .social-link.discord:hover {
+      background-color: #7289da;
+    }
+  
+    .game-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+    .game-wrapper {
+      width: 240px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .game {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      width: 100%;
+      height: 440px;
+      transition: all 0.3s;
+      color: var(--text-color);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .game img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+    .game-content {
+      padding: 16px;
+    }
+    .game-content h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+    .game-content p {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .game:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .buy-button-container {
+      width: 100%;
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .buy-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex: 1;
+      padding: 10px;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+    .buy-button.steam {
+      background-color: #1b2838;
+    }
+    .buy-button.vkplay {
+      background-color: #1b2838;
+    }
+    .buy-button.itch {
+      background-color: #1b2838; /* fa5c5c Характерный красный цвет itch.io */
+    }
+    .buy-button.steam:hover {
+      background-color: #2a475e;
+      transform: translateY(-2px);
+    }
+    .buy-button.vkplay:hover {
+      background-color: #2a475e;
+      transform: translateY(-2px);
+    }
+    .buy-button.itch:hover {
+      background-color: #2a475e; /* e04a4a Темнее при наведении */
+      transform: translateY(-2px);
+    }
+    .buy-button i {
+      font-size: 18px;
+    }
+    /* Базовый стиль отключенной кнопки */
+    .buy-button.disabled {
+      opacity: 0.6;
+      filter: grayscale(70%);
+      cursor: not-allowed;
+      pointer-events: none; /* Блокирует все события мыши */
+      text-decoration: none;
+    }
+
+    /* Дополнительный эффект для темной темы */
+    body.dark .buy-button.disabled {
+      background-color: #333 !important;
+    }
+
+    .carousel-container {
+      overflow: hidden;
+      width: 100%;
+      margin: 20px auto;
+    }
+    .carousel-track {
+      display: flex;
+      gap: 20px;
+      width: max-content;
+      animation: scrollReviews 60s linear infinite;
+    }
+    @keyframes scrollReviews {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .review {
+      min-width: 280px;
+      max-width: 280px;
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+    .review:hover {
+      transform: scale(1.02);
+    }
+    .review strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: var(--button-bg);
+    }
+    .review p {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    footer {
+      background-color: var(--card-bg);
+      padding: 30px 20px;
+      text-align: center;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      margin-top: 40px;
+      font-size: 14px;
+    }
+    footer a {
+      color: var(--button-bg);
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    .fa-x-twitter::before {
+      content: "X";
+      font-weight: bold;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="header-content">
+    <h1>Games by GamePunk Studio</h1>
+    
+    <div class="social-bar">
+      <div class="social-links">
+        <a href="https://t.me/AbsoluteUnderground" class="social-link telegram" target="_blank" title="Telegram">
+          <i class="fab fa-telegram"></i>
+        </a>
+        <a href="https://www.youtube.com/@AbsoluteMikhail" class="social-link youtube" target="_blank" title="YouTube">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://vk.com/absolutemikhail" class="social-link vk" target="_blank" title="ВКонтакте">
+          <i class="fab fa-vk"></i>
+        </a>
+        <a href="https://x.com/AbsoluteMikhail" class="social-link x" target="_blank" title="X">
+          <i class="fab fa-x-twitter"></i>
+        </a>
+        <a href="hhttps://discord.gg/NkwZ8pqyS6" class="social-link discord" target="_blank" title="Discord">
+          <i class="fab fa-discord"></i>
+        </a>
+      </div>
+      
+      <div class="header-controls">
+        <button class="lang-toggle" id="langToggle" title="Switch language">
+          <i class="fas fa-language"></i>
+        </button>
+        <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="game-list">
+  <div class="game-wrapper">
+    <a class="game" href="https://store.steampowered.com/app/2854500" target="_blank">
+      <img src="images/game4.jpg" alt="ДУЭЛЯНТ">
+      <div class="game-content">
+        <h2>ДУЭЛЯНТ</h2>
+        <p>Играй так, чтобы даже твоя ИИ спутница рассказывала всем насколько ты крут!</p>
+      </div>
+    </a>
+    <div class="buy-button-container">
+      <a class="buy-button steam" href="https://store.steampowered.com/app/2854500" target="_blank">
+        <i class="fab fa-steam"></i>
+        Steam
+      </a>
+      <a class="buy-button vkplay" href="https://vkplay.ru/play/game/duelant" target="_blank">
+        <i class="fab fa-vk"></i>
+        VK Play
+      </a>
+    </div>
+  </div>
+
+  <div class="game-wrapper">
+    <a class="game" href="https://vkplay.ru/play/game/gribnik-the-forest-of-fools/" target="_blank">
+      <img src="images/game3.jpg" alt="G.R.I.B.N.I.K. в лесу дураков">
+      <div class="game-content">
+        <h2>ГРИБНИК в лесу дураков</h2>
+        <p>Холодильник ни друг и не враг. Он необходимое условие выживания!</p>
+      </div>
+    </a>
+    <div class="buy-button-container">
+      <a class="buy-button itch" href="https://elpadlos.itch.io/gribnik" target="_blank">
+        <i class="fab fa-itch-io"></i>
+        itch.io
+      </a>
+      <a class="buy-button vkplay" href="https://vkplay.ru/play/game/gribnik-the-forest-of-fools" target="_blank">
+        <i class="fab fa-vk"></i>
+        VK Play
+      </a>
+    </div>
+  </div>
+
+  <div class="game-wrapper">
+    <a class="game" href="https://vkplay.ru/play/game/kolobok_protiv_jascherov_arkanoid" target="_blank">
+      <img src="images/game2.jpg" alt="КОЛОБОК против ЯЩЕРОВ">
+      <div class="game-content">
+        <h2>КОЛОБОК против ЯЩЕРОВ</h2>
+        <p>Ящеры идут на Русь! Помоги колобку победить ящеров!</p>
+      </div>
+    </a>
+    <div class="buy-button-container">
+      <a class="buy-button steam disabled" href="javascript:void(0)" tabindex="-1">
+        <i class="fab fa-steam"></i>
+        <i class="fas fa-clock" style="margin-left: 5px;"></i>
+        Soon
+      </a>
+      <a class="buy-button vkplay" href="https://vkplay.ru/play/game/kolobok_protiv_jascherov_arkanoid" target="_blank">
+        <i class="fab fa-vk"></i>
+        VK Play
+      </a>
+    </div>
+  </div>
+
+  <div class="game-wrapper">
+    <a class="game" href="https://vkplay.ru/play/game/zvezdnyj_kochevnik/" target="_blank">
+      <img src="images/game1.jpg" alt="ЗВЁЗДНЫЙ КОЧЕВНИК: пролог">
+      <div class="game-content">
+        <h2>ЗВЁЗДНЫЙ КОЧЕВНИК: пролог</h2>
+        <p>Руби врагов мечом, метко стреляй из лука. Cтанет жарко, используй ледяной посох!</p>
+      </div>
+    </a>
+    <div class="buy-button-container">
+      <a class="buy-button itch" href="https://mikhaile.itch.io/starnomad" target="_blank">
+        <i class="fab fa-itch-io"></i>
+        itch.io
+      </a>
+      <a class="buy-button vkplay" href="https://vkplay.ru/play/game/zvezdnyj_kochevnik/" target="_blank">
+        <i class="fab fa-vk"></i>
+        VK Play
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="carousel-container">
+  <div class="carousel-track">
+    <div class="review"><strong>Филька</strong><p>Рикошетом попал мужику в печень :) Игра имба!</p></div>
+    <div class="review"><strong>Сэтрий</strong><p>Она драйвовая, весёлая, забавная. Это очень качественный арканоид.</p></div>
+    <div class="review"><strong>MaSeK</strong><p>Вы отстрелили друг другу руки и стоите злобно сопите.. А "Малена" в это время истерически хохочет =)</p></div>
+    <div class="review"><strong>blakSou1</strong><p>хахаха топчик топчик, вспомнил игры из детства)</p></div>
+    <div class="review"><strong>Machaon maackii</strong><p>Все в игре - от начальной заставки до концовки - вызывает восхищение.</p></div>
+    <div class="review"><strong>Kunreys</strong><p>Музыка хороша! Как время убивалка в самый раз.</p></div>
+    <div class="review"><strong>PolyaTriton</strong><p>Игра, от которой мурашки побежали.</p></div>
+    <div class="review"><strong>vlados241</strong><p>Игра мне понравилось, очень красивые планеты и черные дыры)) Даже лор затянул))</p></div>
+    <div class="review"><strong>Iridemo</strong><p>Рекомендую для прохождения фанатам Деревни дураков и любителей старого дума. Лайк!</p></div>
+    <div class="review"><strong>Nick</strong><p>Игра реально необычная и веселая! Механика с грибами забавная, озвучка на уровне) </p></div>
+    <div class="review"><strong>RigorousT</strong><p>Никогда так не боялся Деревни Дураков)))</p></div>
+    <div class="review"><strong>korovka110</strong><p>Необычная и крутая игра. На мой взгляд достойный кандидат в борьбе за шляпу, как минимум)</p></div>
+
+    <div class="review"><strong>Филька</strong><p>Рикошетом попал мужику в печень :) Игра имба!</p></div>
+    <div class="review"><strong>Сэтрий</strong><p>Она драйвовая, весёлая, забавная. Это очень качественный арканоид.</p></div>
+    <div class="review"><strong>MaSeK</strong><p>Вы отстрелили друг другу руки и стоите злобно сопите.. А "Малена" в это время истерически хохочет =)</p></div>
+    <div class="review"><strong>blakSou1</strong><p>хахаха топчик топчик, вспомнил игры из детства)</p></div>
+    <div class="review"><strong>Machaon maackii</strong><p>Все в игре - от начальной заставки до концовки - вызывает восхищение.</p></div>
+    <div class="review"><strong>Kunreys</strong><p>Музыка хороша! Как время убивалка в самый раз.</p></div>
+    <div class="review"><strong>PolyaTriton</strong><p>Игра, от которой мурашки побежали.</p></div>
+    <div class="review"><strong>vlados241</strong><p>Игра мне понравилось, очень красивые планеты и черные дыры)) Даже лор затянул))</p></div>
+    <div class="review"><strong>Iridemo</strong><p>Рекомендую для прохождения фанатам Деревни дураков и любителей старого дума. Лайк!</p></div>
+    <div class="review"><strong>Nick</strong><p>Игра реально необычная и веселая! Механика с грибами забавная, озвучка на уровне) </p></div>
+    <div class="review"><strong>RigorousT</strong><p>Никогда так не боялся Деревни Дураков)))</p></div>
+    <div class="review"><strong>korovka110</strong><p>Необычная и крутая игра. На мой взгляд достойный кандидат в борьбе за шляпу, как минимум)</p></div>
+  </div>
+</div>
+
+<footer>
+  <p>
+    <button id="emailButton" 
+            style="background: none; border: none; color: var(--button-bg); cursor: pointer; 
+                   font-size: 14px; padding: 0; font-family: inherit;">
+      <i class="fas fa-envelope"></i>
+      <span id="emailText">Написать нам</span>
+    </button>
+  </p>
+</footer>
+
+<script>
+  // Email защита
+  const emailButton = document.getElementById('emailButton');
+  const emailText = document.getElementById('emailText');
+  let emailRevealed = false;
+  const realEmail = ['ru', 'age'].join('') + '@' + ['v', 'k.com'].join('');
+
+  emailButton.addEventListener('click', () => {
+    window.location.href = 'mailto:' + realEmail;
+  });
+
+  emailButton.addEventListener('mouseover', () => {
+    if (!emailRevealed) {
+      emailText.textContent = realEmail;
+      emailRevealed = true;
+    }
+  });
+
+  emailButton.addEventListener('mouseout', () => {
+    if (emailRevealed) {
+      setTimeout(() => {
+        emailText.textContent = document.documentElement.lang === 'en' 
+          ? 'Show email' 
+          : 'Написать нам';
+        emailRevealed = false;
+      }, 5000);
+    }
+  });
+
+  // Тема и язык
+  function initApp() {
+    // Тема
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.body.classList.toggle('dark', savedTheme === 'dark');
+    document.getElementById('themeToggle').innerHTML = savedTheme === 'dark' 
+      ? '<i class="fas fa-sun"></i>' 
+      : '<i class="fas fa-moon"></i>';
+
+    // Язык
+    const savedLang = localStorage.getItem('language');
+    const userLang = (navigator.language || 'ru').split('-')[0];
+    const defaultLang = ['ru', 'en'].includes(userLang) ? userLang : 'ru';
+    setLanguage(savedLang || defaultLang);
+  }
+
+  function toggleTheme() {
+    const isDark = document.body.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    document.getElementById('themeToggle').innerHTML = isDark 
+      ? '<i class="fas fa-sun"></i>' 
+      : '<i class="fas fa-moon"></i>';
+  }
+
+  function toggleLanguage() {
+    const newLang = document.documentElement.lang === 'ru' ? 'en' : 'ru';
+    setLanguage(newLang);
+  }
+
+  function setLanguage(lang) {
+    document.documentElement.lang = lang;
+    localStorage.setItem('language', lang);
+    
+    if (lang === 'en') {
+      document.querySelector('h1').textContent = 'Games by GamePunk Studio';
+      emailText.textContent = emailRevealed ? realEmail : 'Show email';
+      document.getElementById('langToggle').title = 'Switch to Russian';
+    } else {
+      document.querySelector('h1').textContent = 'Игры от GamePunk Studio';
+      emailText.textContent = emailRevealed ? realEmail : 'Написать нам';
+      document.getElementById('langToggle').title = 'Переключить на английский';
+    }
+  }
+
+  // Инициализация
+  document.getElementById('langToggle').addEventListener('click', toggleLanguage);
+  document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+  window.addEventListener('DOMContentLoaded', initApp);
+</script>
+
+</body>
+</html>
