@@ -1,42 +1,36 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html style="width:100%;height:100%;overflow:hidden;margin:0;padding:0;">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>GamePunk Live Wallpaper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body, html {
+    body, iframe {
       margin: 0;
       padding: 0;
-      overflow: hidden;
+      border: 0;
       width: 100%;
       height: 100%;
-      background-color: #000;
+      overflow: hidden;
     }
-    .video-container {
-      position: absolute;
+    html {
+      width: 100%;
+      height: 100%;
+    }
+    body {
+      position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      pointer-events: none; /* Отключаем клики — чтобы не мешало как обои */
+      background: #000;
     }
   </style>
 </head>
 <body>
-  <div class="video-container">
-    <iframe 
-      src="https://www.youtube.com/embed/ur1CqY7A2xk?autoplay=1&mute=1&loop=1&playlist=ur1CqY7A2xk&controls=0&rel=0&modestbranding=1&fs=0&showinfo=0"
-      title="Live Wallpaper Video"
-      frameborder="0" 
-      allow="autoplay; encrypted-media" 
-      allowfullscreen>
-    </iframe>
-  </div>
+  <iframe 
+    src="https://www.youtube.com/embed/ur1CqY7A2xk?autoplay=1&mute=1&loop=1&playlist=ur1CqY7A2xk&controls=0&showinfo=0&rel=0&modestbranding=1&fs=0"
+    frameborder="0" 
+    allow="autoplay; encrypted-media" 
+    allowfullscreen 
+    style="position:fixed; top:0; left:0; width:100%; height:100%">
+  </iframe>
 </body>
 </html>
