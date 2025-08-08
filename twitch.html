@@ -1,12 +1,61 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: transparent;
+    }
+    .emote {
+      position: absolute;
+      font-size: 24px;
+      animation: fly 30s linear forwards;
+      pointer-events: none;
+    }
+    @keyframes fly {
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) translateX(calc(100vw - 50px));
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
 <body>
-  <div id="reactions"></div>
+  <div id="container"></div>
+
   <script>
     const ws = new WebSocket('wss://twitchwebsocket.onrender.com');
-    ws.onmessage = (e) => {
-      document.getElementById('reactions').innerText = e.data;
+    const container = document.getElementById('container');
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.type === 'emote') {
+        spawnEmote(data.emoteId, data.color);
+      }
     };
+
+    function spawnEmote(emoteId, color) {
+      const emote = document.createElement('div');
+      emote.className = 'emote';
+      emote.style.color = color;
+      
+      // Используем Twitch CDN для смайлов
+      const emoteImg = document.createElement('img');
+      emoteImg.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`;
+      emoteImg.width = 50;
+      emoteImg.height = 50;
+      
+      emote.appendChild(emoteImg);
+      container.appendChild(emote);
+
+      // Удаляем через 30 секунд
+      setTimeout(() => emote.remove(), 30000);
+    }
   </script>
 </body>
 </html>
