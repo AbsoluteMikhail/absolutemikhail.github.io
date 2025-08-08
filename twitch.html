@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <div id="reactions"></div>
+  <script>
+    const ws = new WebSocket('wss://twitchwebsocket.onrender.com');
+    ws.onmessage = (e) => {
+      document.getElementById('reactions').innerText = e.data;
+    };
+  </script>
+</body>
+</html>
