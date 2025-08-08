@@ -6,20 +6,24 @@
       margin: 0;
       overflow: hidden;
       background: transparent;
+      user-select: none;
     }
     .emote {
       position: absolute;
-      font-size: 24px;
-      animation: fly 30s linear forwards;
+      animation: fly linear forwards;
       pointer-events: none;
+      filter: drop-shadow(0 0 5px rgba(0,0,0,0.7));
+      z-index: 100;
+      bottom: 0;
+      will-change: transform;
     }
     @keyframes fly {
       0% {
-        transform: translateY(100vh) translateX(0);
+        transform: translateY(0) translateX(var(--start-x));
         opacity: 1;
       }
       100% {
-        transform: translateY(-100px) translateX(calc(100vw - 50px));
+        transform: translateY(-100vh) translateX(var(--end-x));
         opacity: 0;
       }
     }
@@ -29,33 +33,75 @@
   <div id="container"></div>
 
   <script>
-    const ws = new WebSocket('wss://twitchwebsocket.onrender.com');
-    const container = document.getElementById('container');
-
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.type === 'emote') {
-        spawnEmote(data.emoteId, data.color);
+    // Конфигурация
+    const config = {
+      wsUrl: 'wss://twitchwebsocket.onrender.com',
+      emote: {
+        size: 70, // Размер смайлов в пикселях
+        duration: 30, // Длительность анимации в секундах
+        startX: '10vw', // Стартовая позиция X
+        endX: '90vw'   // Конечная позиция X
       }
     };
 
+    // WebSocket подключение
+    const container = document.getElementById('container');
+    let ws;
+
+    function connectWebSocket() {
+      ws = new WebSocket(config.wsUrl);
+
+      ws.onopen = () => console.log('Connected to server');
+      ws.onclose = () => {
+        console.log('Disconnected, reconnecting...');
+        setTimeout(connectWebSocket, 3000);
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === 'emote') {
+            spawnEmote(data.emoteId, data.color);
+          }
+        } catch (e) {
+          console.error('Error parsing message:', e);
+        }
+      };
+    }
+
+    // Создание смайла
     function spawnEmote(emoteId, color) {
       const emote = document.createElement('div');
       emote.className = 'emote';
-      emote.style.color = color;
-      
-      // Используем Twitch CDN для смайлов
+      emote.style.setProperty('--start-x', getRandomX(config.emote.startX));
+      emote.style.setProperty('--end-x', getRandomX(config.emote.endX));
+      emote.style.animationDuration = `${config.emote.duration}s`;
+
       const emoteImg = document.createElement('img');
-      emoteImg.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`;
-      emoteImg.width = 50;
-      emoteImg.height = 50;
+      emoteImg.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/2.0`;
+      emoteImg.width = config.emote.size;
+      emoteImg.height = config.emote.size;
+      emoteImg.style.opacity = '0.9';
+      emoteImg.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
       
       emote.appendChild(emoteImg);
       container.appendChild(emote);
 
-      // Удаляем через 30 секунд
-      setTimeout(() => emote.remove(), 30000);
+      setTimeout(() => {
+        emote.style.opacity = '0';
+        setTimeout(() => emote.remove(), 1000);
+      }, (config.emote.duration - 1) * 1000);
     }
+
+    // Случайное смещение по X
+    function getRandomX(base) {
+      const value = parseInt(base);
+      const unit = base.replace(value, '');
+      return `${value + (Math.random() * 20 - 10)}${unit}`;
+    }
+
+    // Запуск
+    connectWebSocket();
   </script>
 </body>
 </html>
