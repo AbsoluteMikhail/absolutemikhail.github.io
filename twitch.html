@@ -10,22 +10,31 @@
     }
     .emote {
       position: absolute;
-      animation: fly linear forwards;
-      pointer-events: none;
-      filter: drop-shadow(0 0 5px #000);
       bottom: 0;
       z-index: 100;
+      pointer-events: none;
+      filter: drop-shadow(0 0 5px #000);
+      animation: fly 5s linear forwards, sway 2s ease-in-out infinite;
       will-change: transform;
     }
     @keyframes fly {
       0% {
-        transform: translateY(0) translateX(var(--start-x));
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-100vh) translateX(var(--end-x));
+        transform: translateY(0) translateX(var(--start-x)) scale(0.5);
         opacity: 0;
       }
+      10% {
+        transform: translateY(-10vh) translateX(var(--start-x)) scale(1);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(var(--end-x)) scale(1);
+        opacity: 0;
+      }
+    }
+    @keyframes sway {
+      0% { transform: translateY(-10vh) translateX(var(--start-x)) scale(1); }
+      50% { transform: translateY(-10vh) translateX(calc(var(--start-x) + 10px)) scale(1); }
+      100% { transform: translateY(-10vh) translateX(var(--start-x)) scale(1); }
     }
   </style>
 </head>
@@ -33,11 +42,10 @@
   <div id="container"></div>
 
   <script>
-    // Конфигурация
     const config = {
       wsUrl: 'wss://twitchwebsocket.onrender.com',
       emoteSize: 70,
-      animationDuration: 30
+      animationDuration: 5 // Сократил для более быстрой анимации
     };
 
     const container = document.getElementById('container');
@@ -46,23 +54,21 @@
     function connectWebSocket() {
       ws = new WebSocket(config.wsUrl);
 
-      ws.onopen = () => console.log('Connected to server');
+      ws.onopen = () => console.log('Connected to WebSocket server');
       ws.onclose = () => {
-        console.log('Disconnected, reconnecting...');
+        console.log('WebSocket disconnected, reconnecting...');
         setTimeout(connectWebSocket, 3000);
       };
-      
       ws.onerror = (err) => console.error('WebSocket error:', err);
-      
       ws.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
-          console.log('Received:', data);
+          console.log('Received from server:', data);
           if (data.type === 'emote') {
             createEmote(data.emoteId, data.color);
           }
         } catch (err) {
-          console.error('Error parsing message:', err);
+          console.error('Error parsing WebSocket message:', err);
         }
       };
     }
@@ -75,28 +81,28 @@
       emote.style.animationDuration = `${config.animationDuration}s`;
 
       const img = document.createElement('img');
-      img.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/2.0`;
+      img.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`; // Крупнее эмодзи
       img.width = config.emoteSize;
       img.height = config.emoteSize;
       img.style.opacity = '0.9';
-      
+
       emote.appendChild(img);
       container.appendChild(emote);
 
       setTimeout(() => emote.remove(), config.animationDuration * 1000);
     }
 
-    // Запуск
-    connectWebSocket();
-    
-    // Тестовая кнопка для проверки
+    // Тестовая кнопка
     const testBtn = document.createElement('button');
     testBtn.textContent = 'Test Emote';
     testBtn.style.position = 'fixed';
     testBtn.style.top = '10px';
     testBtn.style.left = '10px';
-    testBtn.onclick = () => createEmote('304456832', '#FF0000'); // Kappa emote
+    testBtn.onclick = () => createEmote('25', '#FF0000'); // Kappa emote
     document.body.appendChild(testBtn);
+
+    // Запуск
+    connectWebSocket();
   </script>
 </body>
 </html>
