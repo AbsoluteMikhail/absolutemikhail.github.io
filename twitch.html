@@ -12,9 +12,9 @@
       position: absolute;
       animation: fly linear forwards;
       pointer-events: none;
-      filter: drop-shadow(0 0 5px rgba(0,0,0,0.7));
-      z-index: 100;
+      filter: drop-shadow(0 0 5px #000);
       bottom: 0;
+      z-index: 100;
       will-change: transform;
     }
     @keyframes fly {
@@ -36,15 +36,10 @@
     // Конфигурация
     const config = {
       wsUrl: 'wss://twitchwebsocket.onrender.com',
-      emote: {
-        size: 70, // Размер смайлов в пикселях
-        duration: 30, // Длительность анимации в секундах
-        startX: '10vw', // Стартовая позиция X
-        endX: '90vw'   // Конечная позиция X
-      }
+      emoteSize: 70,
+      animationDuration: 30
     };
 
-    // WebSocket подключение
     const container = document.getElementById('container');
     let ws;
 
@@ -56,52 +51,52 @@
         console.log('Disconnected, reconnecting...');
         setTimeout(connectWebSocket, 3000);
       };
-
+      
+      ws.onerror = (err) => console.error('WebSocket error:', err);
+      
       ws.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
+          console.log('Received:', data);
           if (data.type === 'emote') {
-            spawnEmote(data.emoteId, data.color);
+            createEmote(data.emoteId, data.color);
           }
-        } catch (e) {
-          console.error('Error parsing message:', e);
+        } catch (err) {
+          console.error('Error parsing message:', err);
         }
       };
     }
 
-    // Создание смайла
-    function spawnEmote(emoteId, color) {
+    function createEmote(emoteId, color) {
       const emote = document.createElement('div');
       emote.className = 'emote';
-      emote.style.setProperty('--start-x', getRandomX(config.emote.startX));
-      emote.style.setProperty('--end-x', getRandomX(config.emote.endX));
-      emote.style.animationDuration = `${config.emote.duration}s`;
+      emote.style.setProperty('--start-x', `${Math.random() * 80 + 10}vw`);
+      emote.style.setProperty('--end-x', `${Math.random() * 80 + 10}vw`);
+      emote.style.animationDuration = `${config.animationDuration}s`;
 
-      const emoteImg = document.createElement('img');
-      emoteImg.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/2.0`;
-      emoteImg.width = config.emote.size;
-      emoteImg.height = config.emote.size;
-      emoteImg.style.opacity = '0.9';
-      emoteImg.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+      const img = document.createElement('img');
+      img.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/2.0`;
+      img.width = config.emoteSize;
+      img.height = config.emoteSize;
+      img.style.opacity = '0.9';
       
-      emote.appendChild(emoteImg);
+      emote.appendChild(img);
       container.appendChild(emote);
 
-      setTimeout(() => {
-        emote.style.opacity = '0';
-        setTimeout(() => emote.remove(), 1000);
-      }, (config.emote.duration - 1) * 1000);
-    }
-
-    // Случайное смещение по X
-    function getRandomX(base) {
-      const value = parseInt(base);
-      const unit = base.replace(value, '');
-      return `${value + (Math.random() * 20 - 10)}${unit}`;
+      setTimeout(() => emote.remove(), config.animationDuration * 1000);
     }
 
     // Запуск
     connectWebSocket();
+    
+    // Тестовая кнопка для проверки
+    const testBtn = document.createElement('button');
+    testBtn.textContent = 'Test Emote';
+    testBtn.style.position = 'fixed';
+    testBtn.style.top = '10px';
+    testBtn.style.left = '10px';
+    testBtn.onclick = () => createEmote('304456832', '#FF0000'); // Kappa emote
+    document.body.appendChild(testBtn);
   </script>
 </body>
 </html>
