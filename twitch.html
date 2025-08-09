@@ -13,28 +13,68 @@
       bottom: 0;
       z-index: 100;
       pointer-events: none;
-      filter: drop-shadow(0 0 5px #000);
-      animation: fly 5s linear forwards, sway 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 3px #000);
+      animation: fly 10s linear forwards;
+      will-change: transform;
+    }
+    .firework {
+      position: absolute;
+      bottom: 0;
+      z-index: 100;
+      pointer-events: none;
+      filter: drop-shadow(0 0 3px #000);
+      animation: firework 4s linear forwards;
+      will-change: transform;
+    }
+    .scatter {
+      position: absolute;
+      z-index: 100;
+      pointer-events: none;
+      filter: drop-shadow(0 0 2px #000);
+      animation: scatter 3s linear forwards;
       will-change: transform;
     }
     @keyframes fly {
       0% {
-        transform: translateY(0) translateX(var(--start-x)) scale(0.5);
+        transform: translateY(0) translateX(var(--start-x)) scale(0.7);
         opacity: 0;
       }
       10% {
         transform: translateY(-10vh) translateX(var(--start-x)) scale(1);
         opacity: 0.9;
       }
+      90% {
+        transform: translateY(-90vh) translateX(var(--start-x)) scale(1);
+        opacity: 0.9;
+      }
       100% {
-        transform: translateY(-100vh) translateX(var(--end-x)) scale(1);
+        transform: translateY(-100vh) translateX(var(--start-x)) scale(1);
         opacity: 0;
       }
     }
-    @keyframes sway {
-      0% { transform: translateY(-10vh) translateX(var(--start-x)) scale(1); }
-      50% { transform: translateY(-10vh) translateX(calc(var(--start-x) + 10px)) scale(1); }
-      100% { transform: translateY(-10vh) translateX(var(--start-x)) scale(1); }
+    @keyframes firework {
+      0% {
+        transform: translateY(0) translateX(var(--start-x)) scale(0.7);
+        opacity: 0;
+      }
+      20% {
+        transform: translateY(-10vh) translateX(var(--start-x)) scale(1);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-60vh) translateX(calc(var(--start-x) + var(--arc-x))) scale(1);
+        opacity: 0.9;
+      }
+    }
+    @keyframes scatter {
+      0% {
+        transform: translateY(-60vh) translateX(calc(var(--start-x) + var(--arc-x))) scale(0.7);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(calc(-60vh + var(--fall-y))) translateX(calc(var(--start-x) + var(--arc-x) + var(--scatter-x))) scale(0.5);
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -44,8 +84,11 @@
   <script>
     const config = {
       wsUrl: 'wss://twitchwebsocket.onrender.com',
-      emoteSize: 70,
-      animationDuration: 5 // Сократил для более быстрой анимации
+      emoteSize: 35, // Одиночный и ведущий эмодзи
+      scatterSize: 25, // Эмодзи после взрыва
+      flyDuration: 10, // Одиночный полёт
+      fireworkDuration: 4, // Полёт до взрыва
+      scatterDuration: 3 // Падение после взрыва
     };
 
     const container = document.getElementById('container');
@@ -65,7 +108,11 @@
           const data = JSON.parse(event.data);
           console.log('Received from server:', data);
           if (data.type === 'emote') {
-            createEmote(data.emoteId, data.color);
+            if (data.emotes && data.emotes.length > 5) {
+              createFirework(data.emotes);
+            } else {
+              createEmote(data.emoteId, data.color);
+            }
           }
         } catch (err) {
           console.error('Error parsing WebSocket message:', err);
@@ -77,11 +124,10 @@
       const emote = document.createElement('div');
       emote.className = 'emote';
       emote.style.setProperty('--start-x', `${Math.random() * 80 + 10}vw`);
-      emote.style.setProperty('--end-x', `${Math.random() * 80 + 10}vw`);
-      emote.style.animationDuration = `${config.animationDuration}s`;
+      emote.style.animationDuration = `${config.flyDuration}s`;
 
       const img = document.createElement('img');
-      img.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`; // Крупнее эмодзи
+      img.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`;
       img.width = config.emoteSize;
       img.height = config.emoteSize;
       img.style.opacity = '0.9';
@@ -89,10 +135,55 @@
       emote.appendChild(img);
       container.appendChild(emote);
 
-      setTimeout(() => emote.remove(), config.animationDuration * 1000);
+      setTimeout(() => emote.remove(), config.flyDuration * 1000);
     }
 
-    // Тестовая кнопка
+    function createFirework(emotes) {
+      // Ведущий эмодзи
+      const firework = document.createElement('div');
+      firework.className = 'firework';
+      const startX = `${Math.random() * 80 + 10}vw`;
+      const arcX = `${(Math.random() - 0.5) * 20}vw`; // Лёгкая дуга
+      firework.style.setProperty('--start-x', startX);
+      firework.style.setProperty('--arc-x', arcX);
+      firework.style.animationDuration = `${config.fireworkDuration}s`;
+
+      const img = document.createElement('img');
+      img.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emotes[0].id}/default/dark/3.0`;
+      img.width = config.emoteSize;
+      img.height = config.emoteSize;
+      img.style.opacity = '0.9';
+
+      firework.appendChild(img);
+      container.appendChild(firework);
+
+      // Взрыв после полёта
+      setTimeout(() => {
+        firework.remove();
+        emotes.forEach(emoteId => {
+          const scatter = document.createElement('div');
+          scatter.className = 'scatter';
+          scatter.style.setProperty('--start-x', startX);
+          scatter.style.setProperty('--arc-x', arcX);
+          scatter.style.setProperty('--scatter-x', `${(Math.random() - 0.5) * 20}vw`); // Лёгкое смещение в стороны
+          scatter.style.setProperty('--fall-y', `${Math.random() * 30 + 20}vh`); // Падение вниз
+          scatter.style.animationDuration = `${config.scatterDuration}s`;
+
+          const scatterImg = document.createElement('img');
+          scatterImg.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId.id}/default/dark/3.0`;
+          scatterImg.width = config.scatterSize;
+          scatterImg.height = config.scatterSize;
+          scatterImg.style.opacity = '0.9';
+
+          scatter.appendChild(scatterImg);
+          container.appendChild(scatter);
+
+          setTimeout(() => scatter.remove(), config.scatterDuration * 1000);
+        });
+      }, config.fireworkDuration * 1000);
+    }
+
+    // Тестовая кнопка для одиночного
     const testBtn = document.createElement('button');
     testBtn.textContent = 'Test Emote';
     testBtn.style.position = 'fixed';
@@ -100,6 +191,17 @@
     testBtn.style.left = '10px';
     testBtn.onclick = () => createEmote('25', '#FF0000'); // Kappa emote
     document.body.appendChild(testBtn);
+
+    // Тестовая кнопка для салюта
+    const testFireworkBtn = document.createElement('button');
+    testFireworkBtn.textContent = 'Test Firework';
+    testFireworkBtn.style.position = 'fixed';
+    testFireworkBtn.style.top = '40px';
+    testFireworkBtn.style.left = '10px';
+    testFireworkBtn.onclick = () => createFirework([
+      { id: '25' }, { id: '25' }, { id: '25' }, { id: '25' }, { id: '25' }, { id: '25' }
+    ]); // 6 Kappa для теста
+    document.body.appendChild(testFireworkBtn);
 
     // Запуск
     connectWebSocket();
