@@ -72,12 +72,14 @@
     // Все параметры в одном месте
     const config = {
       wsUrl: 'wss://twitchwebsocket.onrender.com',
-      emoteSize: 35, // Размер смайликов (px)
-      minFlyDuration: 8, // Мин. длительность полёта (сек)
-      maxFlyDuration: 15, // Макс. длительность полёта (сек)
-      maxDelay: 0.5, // Макс. задержка появления (сек)
-      spreadWidth: 90, // Ширина распределения по экрану (%)
-      swayAngle: 10 // Макс. угол поворота для покачивания (градусы)
+      emoteSize: 50, // Размер смайликов (px)
+      minFlyDuration: 20, // Мин. длительность полёта (сек)
+      maxFlyDuration: 30, // Макс. длительность полёта (сек)
+      maxDelay: 1.5, // Макс. задержка появления (сек)
+      spreadWidth: 100, // Ширина распределения по экрану (%)
+      swayAngle: 10, // Макс. угол поворота для покачивания (градусы)
+      pingUrl: 'https://twitchwebsocket.onrender.com/', // URL для пинга
+      pingInterval: 10 * 60 * 1000 // Пинг каждые 10 минут
     };
 
     const container = document.getElementById('container');
@@ -139,34 +141,25 @@
       }, (duration + delay) * 1000);
     }
 
-<!--
-    // Тестовая кнопка для одиночного
-    const testBtn = document.createElement('button');
-    testBtn.textContent = 'Test Emote';
-    testBtn.style.position = 'fixed';
-    testBtn.style.top = '10px';
-    testBtn.style.left = '10px';
-    testBtn.onclick = () => createEmote('25', '#FF0000'); // Kappa
-    document.body.appendChild(testBtn);
+    // Функция для пинга сервера
+    function pingServer() {
+      fetch(config.pingUrl, { method: 'GET' })
+        .then(response => {
+          if (response.ok) {
+            console.log('Server pinged successfully');
+          } else {
+            console.error('Ping failed with status:', response.status);
+          }
+        })
+        .catch(err => console.error('Ping error:', err));
+    }
 
-    // Тестовая кнопка для нескольких эмодзи
-    const testMultipleBtn = document.createElement('button');
-    testMultipleBtn.textContent = 'Test Multiple Emotes';
-    testMultipleBtn.style.position = 'fixed';
-    testMultipleBtn.style.top = '40px';
-    testMultipleBtn.style.left = '10px';
-    testMultipleBtn.onclick = () => {
-      const emotes = [
-        { id: '25' }, { id: '304627477' }, { id: '25' }, { id: '304627477' }, { id: '25' }, { id: '304627477' }
-      ];
-      console.log('Spawning', emotes.length, 'emotes');
-      emotes.forEach(emote => createEmote(emote.id, '#FF0000'));
-    };
-    document.body.appendChild(testMultipleBtn);
--->
+    // Запуск пинга каждые 10 минут
+    setInterval(pingServer, config.pingInterval);
 
     // Запуск
     connectWebSocket();
+    pingServer(); // Немедленный пинг при загрузке
   </script>
 </body>
 </html>
