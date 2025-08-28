@@ -5,45 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Случайные видео</title>
     <style>
-        /* Стиль для видео на весь экран */
         body {
             margin: 0;
             padding: 0;
-            background-color: black; /* На всякий случай, чтобы не было белых рамок */
-            overflow: hidden; /* Скрыть полосы прокрутки */
+            background-color: black;
+            overflow: hidden;
         }
         #video-player {
-            width: 100vw; /* Ширина на весь экран */
-            height: 100vh; /* Высота на весь экран */
-            object-fit: cover; /* Заполнить весь экран, обрезая лишнее */
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
         }
     </style>
 </head>
 <body>
 
-    <video id="video-player" autoplay muted></video>
+    <video id="video-player"></video>
 
     <script>
-        // Список ваших видеофайлов
-        // ВАЖНО: нужно вручную перечислить все файлы
         const videos = [
             'videos/Shmatko.mp4',
             'videos/drunk-dancing.mp4',
             'videos/chef.mp4',
             'videos/dance_vagan.mp4',
-			'videos/hahaha.mp4',
-			'videos/Myhogyk.mp4'
+            'videos/hahaha.mp4',
+            'videos/Myhogyk.mp4'
         ];
 
         const videoPlayer = document.getElementById('video-player');
-        let playedIndexes = []; // Массив для отслеживания уже проигранных видео
+        let playedIndexes = [];
 
         function getRandomVideo() {
-            // Если все видео проиграны, начинаем сначала
             if (playedIndexes.length === videos.length) {
                 playedIndexes = [];
             }
-
             let randomIndex;
             do {
                 randomIndex = Math.floor(Math.random() * videos.length);
@@ -53,18 +48,26 @@
             return videos[randomIndex];
         }
 
-        function playNextVideo() {
+        // Эта функция будет вызываться из Unreal Engine
+        window.startVideoLoop = function() {
+            // Устанавливаем атрибуты muted и autoplay при запуске
+            videoPlayer.muted = true;
+            videoPlayer.autoplay = true;
+
+            // Запускаем первое видео
             const nextVideo = getRandomVideo();
             videoPlayer.src = nextVideo;
-            videoPlayer.load(); // Загружаем новое видео
-            videoPlayer.play(); // И проигрываем
-        }
-
-        // Запускаем первое видео
-        playNextVideo();
+            videoPlayer.load();
+            videoPlayer.play();
+        };
 
         // Слушаем событие "ended" (когда видео закончилось)
-        videoPlayer.addEventListener('ended', playNextVideo);
+        videoPlayer.addEventListener('ended', () => {
+            const nextVideo = getRandomVideo();
+            videoPlayer.src = nextVideo;
+            videoPlayer.load();
+            videoPlayer.play();
+        });
     </script>
 
 </body>
