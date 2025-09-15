@@ -95,8 +95,8 @@
     <script src="https://pixijs.download/release/pixi.js"></script>
   <script>
         // Configuration
-    const config = {
-      wsUrl: 'wss://twitchwebsocket.onrender.com',
+        const config = {
+            wsUrl: 'wss://twitchwebsocket.onrender.com',
             pingUrl: 'https://twitchwebsocket.onrender.com/',
             pingInterval: 10 * 60 * 1000, // 10 minutes
             maxBunnies: 10,
@@ -107,7 +107,13 @@
             maxFlyDuration: 30,
             maxDelay: 1.5,
             spreadWidth: 100,
-            swayAngle: 10
+            swayAngle: 10,
+            // Bunny lifecycle settings
+            initialLifetime: 5 * 60 * 1000, // 5 minutes in milliseconds
+            lifetimeExtension: 60 * 1000, // 1 minute per new message
+            minSize: 0.1, // 10% of original size
+            maxSize: 1.0, // 100% of original size
+            updateInterval: 1000 // Update every second
         };
 
         // Global variables
@@ -144,6 +150,11 @@
             app.ticker.add(() => {
                 bunnies.forEach(bunny => updateBunny(bunny));
             });
+
+            // Lifecycle update loop
+            setInterval(() => {
+                updateBunnyLifecycle();
+            }, config.updateInterval);
 
             // Handle resize
             window.addEventListener('resize', () => {
@@ -190,9 +201,12 @@
             let existingBunny = bunnies.find(bunny => bunny.username === username);
             
             if (existingBunny) {
-                // Update existing bunny's last activity
+                // Update existing bunny's last activity and extend lifetime (max 5 minutes)
                 existingBunny.lastActivity = Date.now();
-                console.log('Updated existing bunny for:', username);
+                const newLifetime = Math.min(existingBunny.lifetime + config.lifetimeExtension, config.initialLifetime);
+                existingBunny.lifetime = newLifetime;
+                existingBunny.maxLifetime = Math.max(existingBunny.maxLifetime, newLifetime);
+                console.log('Updated existing bunny for:', username, 'Lifetime extended to:', Math.round(existingBunny.lifetime / 1000), 'seconds');
                 return;
             }
 
@@ -281,7 +295,12 @@
                 jumpPhase: 0,
                 idleTimer: 0,
                 isIdle: false,
-                lastActivity: Date.now()
+                lastActivity: Date.now(),
+                // Lifecycle properties
+                lifetime: config.initialLifetime,
+                maxLifetime: config.initialLifetime,
+                createdAt: Date.now(),
+                originalSize: config.bunnySize
             };
 
             // Start with random delay
@@ -354,6 +373,39 @@
             bunny.bunny.y = 0;
         }
 
+        function updateBunnyLifecycle() {
+            const now = Date.now();
+            const bunniesToRemove = [];
+
+            bunnies.forEach(bunny => {
+                // Decrease lifetime
+                bunny.lifetime -= config.updateInterval;
+                
+                // Calculate size based on remaining lifetime
+                const lifetimeRatio = bunny.lifetime / bunny.maxLifetime;
+                const sizeRatio = Math.max(lifetimeRatio, config.minSize);
+                const newSize = bunny.originalSize * sizeRatio;
+                
+                // Update bunny size
+                bunny.bunny.width = newSize;
+                bunny.bunny.height = newSize;
+                
+                // Update name tag position based on new size
+                bunny.nameTag.y = -newSize / 2 - 20;
+                
+                // Check if bunny should be removed
+                if (bunny.lifetime <= 0) {
+                    bunniesToRemove.push(bunny);
+                    console.log('Bunny expired:', bunny.username);
+                }
+            });
+
+            // Remove expired bunnies
+            bunniesToRemove.forEach(bunny => {
+                removeBunny(bunny);
+            });
+        }
+
         // Create flying emote (original CSS-based approach)
         function createFlyingEmote(emoteId, color) {
             console.log('Creating flying emote with ID:', emoteId);
@@ -402,7 +454,8 @@
         // Test function for debugging
         function testEmote() {
             createFlyingEmote('25', '#FF0000');
-            console.log('Test emote created');
+            addOrUpdateBunny('TestUser' + Math.floor(Math.random() * 1000), '#FF0000');
+            console.log('Test emote and bunny created');
         }
 
         // Add invisible test button for debugging
