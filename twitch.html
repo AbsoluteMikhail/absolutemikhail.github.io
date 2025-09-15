@@ -1,89 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <title>Twitch Bunnies & Emotes</title>
   <style>
     body {
       margin: 0;
+            padding: 0; 
+            background: transparent; 
       overflow: hidden;
-      background: transparent;
       user-select: none;
     }
-    .emote {
-      position: absolute;
-      bottom: 0;
-      z-index: 100;
-      pointer-events: none;
-      filter: drop-shadow(0 0 3px #000);
-      animation: fly var(--duration) linear forwards;
-      animation-delay: var(--delay);
-      will-change: transform;
-      opacity: 0; /* Невидим до старта */
-    }
-    .emote img {
-      animation: pulse 1.5s ease-in-out infinite, sway 2s ease-in-out infinite;
-      will-change: transform;
-    }
-    @keyframes fly {
-      0% {
-        transform: translateY(0) translateX(var(--start-x)) scale(0.7);
-        opacity: 0;
-      }
-      10% {
-        transform: translateY(-10vh) translateX(var(--start-x)) scale(1);
-        opacity: 0.9;
-      }
-      90% {
-        transform: translateY(-90vh) translateX(var(--start-x)) scale(1);
-        opacity: 0.9;
-      }
-      100% {
-        transform: translateY(-100vh) translateX(var(--start-x)) scale(1);
-        opacity: 0;
-      }
-    }
-    @keyframes pulse {
-      0% {
-        transform: scale(0.9);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(0.9);
-      }
-    }
-    @keyframes sway {
-      0% {
-        transform: rotate(var(--sway-angle, 0deg));
-      }
-      50% {
-        transform: rotate(calc(var(--sway-angle, 0deg) * -1));
-      }
-      100% {
-        transform: rotate(var(--sway-angle, 0deg));
-      }
+        canvas { 
+            display: block; 
     }
   </style>
 </head>
 <body>
-  <div id="container"></div>
-
+    <script src="https://pixijs.download/release/pixi.js"></script>
   <script>
-    // Все параметры в одном месте
+        // Configuration
     const config = {
       wsUrl: 'wss://twitchwebsocket.onrender.com',
-      emoteSize: 50, // Размер смайликов (px)
-      minFlyDuration: 20, // Мин. длительность полёта (сек)
-      maxFlyDuration: 30, // Макс. длительность полёта (сек)
-      maxDelay: 1.5, // Макс. задержка появления (сек)
-      spreadWidth: 100, // Ширина распределения по экрану (%)
-      swayAngle: 10, // Макс. угол поворота для покачивания (градусы)
-      pingUrl: 'https://twitchwebsocket.onrender.com/', // URL для пинга
-      pingInterval: 10 * 60 * 1000 // Пинг каждые 10 минут
-    };
+            pingUrl: 'https://twitchwebsocket.onrender.com/',
+            pingInterval: 10 * 60 * 1000, // 10 minutes
+            maxBunnies: 10,
+            bunnySize: 64,
+            groundLevel: 100,
+            emoteSize: 50,
+            minFlyDuration: 20,
+            maxFlyDuration: 30,
+            maxDelay: 1.5,
+            spreadWidth: 100,
+            swayAngle: 10
+        };
 
-    const container = document.getElementById('container');
+        // Global variables
+        let app;
+        let bunnyTexture;
+        let bunnies = [];
     let ws;
+        let emoteContainer;
+
+        // Initialize the application
+        async function init() {
+            // Create PixiJS application
+            app = new PIXI.Application();
+            await app.init({ 
+                background: 'transparent', 
+                resizeTo: window,
+                antialias: true
+            });
+            document.body.appendChild(app.canvas);
+
+            // Load bunny texture
+            bunnyTexture = await PIXI.Assets.load('https://pixijs.com/assets/bunny.png');
+            
+            // Create emote container for flying emotes
+            emoteContainer = new PIXI.Container();
+            app.stage.addChild(emoteContainer);
+            
+            // Connect to WebSocket
+            connectWebSocket();
+            
+            // Start ping interval
+            setInterval(pingServer, config.pingInterval);
+            pingServer(); // Immediate ping on load
+
+            // Animation loop
+            app.ticker.add(() => {
+                bunnies.forEach(bunny => updateBunny(bunny));
+            });
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                const newGroundLevel = app.screen.height - config.groundLevel;
+                bunnies.forEach(bunny => {
+                    bunny.container.y = newGroundLevel;
+                });
+            });
+        }
 
     function connectWebSocket() {
       ws = new WebSocket(config.wsUrl);
@@ -98,13 +94,17 @@
         try {
           const data = JSON.parse(event.data);
           console.log('Received from server:', data);
+                    
+                    if (data.type === 'chat_message' && data.user) {
+                        console.log('New chat message from:', data.user);
+                        addOrUpdateBunny(data.user, data.color);
+                    }
+                    
           if (data.type === 'emote' && data.emotes && data.emotes.length > 0) {
             console.log('Spawning', data.emotes.length, 'emotes');
             data.emotes.forEach(emote => {
-              createEmote(emote.id, data.color);
+                            createFlyingEmote(emote.id, data.color);
             });
-          } else {
-            console.log('No emotes to spawn or invalid data');
           }
         } catch (err) {
           console.error('Error parsing WebSocket message:', err);
@@ -112,36 +112,235 @@
       };
     }
 
-    function createEmote(emoteId, color) {
-      console.log('Creating emote with ID:', emoteId);
-      const emote = document.createElement('div');
-      emote.className = 'emote';
-      const duration = Math.random() * (config.maxFlyDuration - config.minFlyDuration) + config.minFlyDuration;
-      const delay = Math.random() * config.maxDelay;
-      const startX = Math.random() * config.spreadWidth + (100 - config.spreadWidth) / 2;
-      const swayAngle = Math.random() * config.swayAngle; // Случайный угол 0–5°
-      emote.style.setProperty('--start-x', `${startX}vw`);
-      emote.style.setProperty('--duration', `${duration}s`);
-      emote.style.setProperty('--delay', `${delay}s`);
-      emote.style.setProperty('--sway-angle', `${swayAngle}deg`);
+        function addOrUpdateBunny(username, color) {
+            // Check if bunny already exists
+            let existingBunny = bunnies.find(bunny => bunny.username === username);
+            
+            if (existingBunny) {
+                // Update existing bunny's last activity
+                existingBunny.lastActivity = Date.now();
+                console.log('Updated existing bunny for:', username);
+                return;
+            }
 
-      const img = document.createElement('img');
-      img.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`;
-      img.width = config.emoteSize;
-      img.height = config.emoteSize;
-      img.style.opacity = '0.9';
+            // If we have max bunnies, remove the oldest one
+            if (bunnies.length >= config.maxBunnies) {
+                const oldestBunny = bunnies.reduce((oldest, current) => 
+                    current.lastActivity < oldest.lastActivity ? current : oldest
+                );
+                removeBunny(oldestBunny);
+                console.log('Removed oldest bunny:', oldestBunny.username);
+            }
 
-      emote.appendChild(img);
-      container.appendChild(emote);
+            // Create new bunny
+            createBunny(username, color);
+        }
 
-      console.log(`Emote ID: ${emoteId}, Duration: ${duration}s, Delay: ${delay}s, StartX: ${startX}vw, SwayAngle: ${swayAngle}deg`);
-      setTimeout(() => {
-        console.log('Removing emote with ID:', emoteId);
-        emote.remove();
-      }, (duration + delay) * 1000);
-    }
+        function createBunny(username, color) {
+            console.log('Creating new bunny for:', username);
+            
+            // Create container
+            const container = new PIXI.Container();
+            app.stage.addChild(container);
 
-    // Функция для пинга сервера
+            // Create bunny sprite
+            const bunny = new PIXI.Sprite(bunnyTexture);
+            bunny.anchor.set(0.5);
+            bunny.width = config.bunnySize;
+            bunny.height = config.bunnySize;
+            
+            // Apply user color to bunny
+            if (color && color !== '#FF0000') {
+                const colorInt = parseInt(color.replace('#', ''), 16);
+                bunny.tint = colorInt;
+            }
+            
+            container.addChild(bunny);
+
+            // Create name tag
+            const nameText = new PIXI.Text({
+                text: username,
+                style: {
+                    fontFamily: 'Arial',
+                    fontSize: 14,
+                    fill: 0x000000,
+                    align: 'center',
+                    fontWeight: 'bold'
+                }
+            });
+
+            const nameTag = new PIXI.Container();
+            nameTag.y = -50;
+            
+            // Background for name tag
+            const padding = 6;
+            const nameTagBg = new PIXI.Graphics();
+            nameTagBg.roundRect(
+                -nameText.width/2 - padding, 
+                -nameText.height/2 - padding, 
+                nameText.width + padding * 2, 
+                nameText.height + padding * 2, 
+                6
+            );
+            nameTagBg.fill(0xFFFFFF);
+            nameTagBg.stroke({ width: 2, color: 0x000000 });
+            
+            nameTag.addChild(nameTagBg);
+            nameTag.addChild(nameText);
+            nameText.anchor.set(0.5);
+            container.addChild(nameTag);
+
+            // Initial position
+            const groundLevel = app.screen.height - config.groundLevel;
+            container.x = 100 + (bunnies.length * 120) % (app.screen.width - 200);
+            container.y = groundLevel;
+
+            // Bunny state
+            const bunnyState = {
+                container,
+                bunny,
+                nameTag,
+                username,
+                color,
+                isMoving: false,
+                targetX: container.x,
+                jumpPhase: 0,
+                idleTimer: 0,
+                isIdle: false,
+                lastActivity: Date.now()
+            };
+
+            // Start with random delay
+            setTimeout(() => {
+                startNewMovement(bunnyState);
+            }, Math.random() * 1000);
+
+            // Make clickable
+            container.eventMode = 'static';
+            container.cursor = 'pointer';
+            container.on('pointerdown', () => {
+                if (bunnyState.isIdle) {
+                    bunnyState.isIdle = false;
+                    startNewMovement(bunnyState);
+                }
+            });
+
+            bunnies.push(bunnyState);
+        }
+
+        function removeBunny(bunny) {
+            const index = bunnies.indexOf(bunny);
+            if (index > -1) {
+                bunnies.splice(index, 1);
+                app.stage.removeChild(bunny.container);
+                bunny.container.destroy();
+            }
+        }
+
+        function updateBunny(bunny) {
+            if (bunny.isIdle) {
+                bunny.idleTimer -= app.ticker.deltaMS;
+                bunny.bunny.y = Math.sin(Date.now() * 0.002) * 2;
+                
+                if (bunny.idleTimer <= 0) {
+                    bunny.isIdle = false;
+                    startNewMovement(bunny);
+                }
+                return;
+            }
+
+            if (bunny.isMoving) {
+                const direction = bunny.targetX > bunny.container.x ? 1 : -1;
+                bunny.container.x += direction * 2;
+                
+                bunny.jumpPhase += 0.2;
+                bunny.bunny.y = Math.sin(bunny.jumpPhase) * 15;
+                
+                bunny.bunny.scale.x = Math.abs(bunny.bunny.scale.x) * direction;
+                
+                if (Math.abs(bunny.container.x - bunny.targetX) < 5 || 
+                    bunny.container.x < 50 || 
+                    bunny.container.x > app.screen.width - 50) {
+                    bunny.isMoving = false;
+                    startIdle(bunny);
+                }
+            }
+        }
+
+        function startNewMovement(bunny) {
+            const padding = 80;
+            bunny.targetX = padding + Math.random() * (app.screen.width - padding * 2);
+            bunny.isMoving = true;
+            bunny.jumpPhase = 0;
+        }
+
+        function startIdle(bunny) {
+            bunny.isIdle = true;
+            bunny.idleTimer = 1000 + Math.random() * 2000;
+            bunny.bunny.y = 0;
+        }
+
+        // Create flying emote
+        function createFlyingEmote(emoteId, color) {
+            console.log('Creating flying emote with ID:', emoteId);
+            
+            const flyingEmote = new PIXI.Container();
+            flyingEmote.x = Math.random() * config.spreadWidth + (100 - config.spreadWidth) / 2;
+            flyingEmote.y = app.screen.height;
+            
+            const emoteSprite = new PIXI.Sprite(PIXI.Texture.from(`https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`));
+            emoteSprite.anchor.set(0.5);
+            emoteSprite.width = config.emoteSize;
+            emoteSprite.height = config.emoteSize;
+            flyingEmote.addChild(emoteSprite);
+            
+            // Emotes keep their original colors
+            
+            emoteContainer.addChild(flyingEmote);
+            
+            // Animation properties
+            const duration = Math.random() * (config.maxFlyDuration - config.minFlyDuration) + config.minFlyDuration;
+            const delay = Math.random() * config.maxDelay;
+            const swayAngle = Math.random() * config.swayAngle;
+            
+            // Start animation after delay
+            setTimeout(() => {
+                const startTime = Date.now();
+                const startY = flyingEmote.y;
+                const targetY = -config.emoteSize;
+                
+                const animate = () => {
+                    const elapsed = (Date.now() - startTime) / 1000;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // Easing function for smooth movement
+                    const easeProgress = 1 - Math.pow(1 - progress, 3);
+                    
+                    flyingEmote.y = startY + (targetY - startY) * easeProgress;
+                    
+                    // Add swaying motion
+                    flyingEmote.rotation = Math.sin(elapsed * 2) * (swayAngle * Math.PI / 180);
+                    
+                    // Add pulsing effect
+                    const scale = 0.9 + 0.2 * Math.sin(elapsed * 4);
+                    flyingEmote.scale.set(scale);
+                    
+                    // Add opacity fade
+                    flyingEmote.alpha = progress < 0.1 ? progress * 10 : (progress > 0.9 ? (1 - progress) * 10 : 1);
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        emoteContainer.removeChild(flyingEmote);
+                        flyingEmote.destroy();
+                    }
+                };
+                
+                animate();
+            }, delay * 1000);
+        }
+
+        // Ping server function
     function pingServer() {
       fetch(config.pingUrl, { method: 'GET' })
         .then(response => {
@@ -154,12 +353,8 @@
         .catch(err => console.error('Ping error:', err));
     }
 
-    // Запуск пинга каждые 10 минут
-    setInterval(pingServer, config.pingInterval);
-
-    // Запуск
-    connectWebSocket();
-    pingServer(); // Немедленный пинг при загрузке
+        // Start the app
+        init();
   </script>
 </body>
 </html>
