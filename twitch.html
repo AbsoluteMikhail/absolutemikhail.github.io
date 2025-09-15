@@ -282,9 +282,6 @@
             const groundLevel = app.screen.height - config.groundLevel;
             container.x = 100 + (bunnies.length * 120) % (app.screen.width - 200);
             container.y = groundLevel;
-            
-            // Store ground level for reference
-            bunnyState.groundLevel = groundLevel;
 
             // Bunny state
             const bunnyState = {
@@ -303,7 +300,8 @@
                 lifetime: config.initialLifetime,
                 maxLifetime: config.initialLifetime,
                 createdAt: Date.now(),
-                originalSize: config.bunnySize
+                originalSize: config.bunnySize,
+                groundLevel: groundLevel
             };
 
             // Start with random delay
