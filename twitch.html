@@ -4,75 +4,94 @@
     <meta charset="utf-8">
     <title>Twitch Bunnies & Emotes</title>
   <style>
-    body {
-      margin: 0;
+        body { 
+            margin: 0; 
             padding: 0; 
             background: transparent; 
-      overflow: hidden;
-      user-select: none;
-    }
+            overflow: hidden;
+            user-select: none;
+            position: relative;
+        }
         canvas { 
             display: block;
             background: transparent;
+            position: relative;
+            z-index: 10;
+        }
+        #emote-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
         }
         .emote {
             position: absolute;
             bottom: 0;
-            z-index: 100;
+            z-index: 1;
             pointer-events: none;
             filter: drop-shadow(0 0 3px #000);
             animation: fly var(--duration) linear forwards;
             animation-delay: var(--delay);
             will-change: transform;
             opacity: 0;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
         .emote img {
             animation: pulse 1.5s ease-in-out infinite, sway 2s ease-in-out infinite;
             will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
         }
         @keyframes fly {
             0% {
-                transform: translateY(0) translateX(var(--start-x)) scale(0.7);
+                transform: translateY(0) translateX(var(--start-x)) scale(0.7) translateZ(0);
                 opacity: 0;
             }
             10% {
-                transform: translateY(-10vh) translateX(var(--start-x)) scale(1);
+                transform: translateY(-10vh) translateX(var(--start-x)) scale(1) translateZ(0);
                 opacity: 0.9;
             }
             90% {
-                transform: translateY(-90vh) translateX(var(--start-x)) scale(1);
+                transform: translateY(-90vh) translateX(var(--start-x)) scale(1) translateZ(0);
                 opacity: 0.9;
             }
             100% {
-                transform: translateY(-100vh) translateX(var(--start-x)) scale(1);
+                transform: translateY(-100vh) translateX(var(--start-x)) scale(1) translateZ(0);
                 opacity: 0;
             }
         }
         @keyframes pulse {
             0% {
-                transform: scale(0.9);
+                transform: scale(0.9) translateZ(0);
             }
             50% {
-                transform: scale(1.1);
+                transform: scale(1.1) translateZ(0);
             }
             100% {
-                transform: scale(0.9);
+                transform: scale(0.9) translateZ(0);
             }
         }
         @keyframes sway {
             0% {
-                transform: rotate(var(--sway-angle, 0deg));
+                transform: rotate(var(--sway-angle, 0deg)) translateZ(0);
             }
             50% {
-                transform: rotate(calc(var(--sway-angle, 0deg) * -1));
+                transform: rotate(calc(var(--sway-angle, 0deg) * -1)) translateZ(0);
             }
             100% {
-                transform: rotate(var(--sway-angle, 0deg));
+                transform: rotate(var(--sway-angle, 0deg)) translateZ(0);
             }
         }
   </style>
 </head>
-<body>
+  <body>
+    <div id="emote-container"></div>
     <script src="https://pixijs.download/release/pixi.js"></script>
   <script>
         // Configuration
@@ -358,7 +377,7 @@
             img.style.opacity = '0.9';
 
             emote.appendChild(img);
-            document.body.appendChild(emote);
+            document.getElementById('emote-container').appendChild(emote);
 
             console.log(`Emote ID: ${emoteId}, Duration: ${duration}s, Delay: ${delay}s, StartX: ${startX}vw, SwayAngle: ${swayAngle}deg`);
             setTimeout(() => {
