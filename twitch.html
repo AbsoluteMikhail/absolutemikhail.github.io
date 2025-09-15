@@ -14,7 +14,62 @@
         canvas { 
             display: block;
             background: transparent;
-    }
+        }
+        .emote {
+            position: absolute;
+            bottom: 0;
+            z-index: 100;
+            pointer-events: none;
+            filter: drop-shadow(0 0 3px #000);
+            animation: fly var(--duration) linear forwards;
+            animation-delay: var(--delay);
+            will-change: transform;
+            opacity: 0;
+        }
+        .emote img {
+            animation: pulse 1.5s ease-in-out infinite, sway 2s ease-in-out infinite;
+            will-change: transform;
+        }
+        @keyframes fly {
+            0% {
+                transform: translateY(0) translateX(var(--start-x)) scale(0.7);
+                opacity: 0;
+            }
+            10% {
+                transform: translateY(-10vh) translateX(var(--start-x)) scale(1);
+                opacity: 0.9;
+            }
+            90% {
+                transform: translateY(-90vh) translateX(var(--start-x)) scale(1);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(var(--start-x)) scale(1);
+                opacity: 0;
+            }
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(0.9);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(0.9);
+            }
+        }
+        @keyframes sway {
+            0% {
+                transform: rotate(var(--sway-angle, 0deg));
+            }
+            50% {
+                transform: rotate(calc(var(--sway-angle, 0deg) * -1));
+            }
+            100% {
+                transform: rotate(var(--sway-angle, 0deg));
+            }
+        }
   </style>
 </head>
 <body>
@@ -40,8 +95,7 @@
         let app;
         let bunnyTexture;
         let bunnies = [];
-    let ws;
-        let emoteContainer;
+        let ws;
 
         // Initialize the application
         async function init() {
@@ -58,9 +112,7 @@
             // Load bunny texture
             bunnyTexture = await PIXI.Assets.load('https://pixijs.com/assets/bunny.png');
             
-            // Create emote container for flying emotes
-            emoteContainer = new PIXI.Container();
-            app.stage.addChild(emoteContainer);
+            // Emotes will be created as DOM elements with CSS animations
             
             // Connect to WebSocket
             connectWebSocket();
@@ -283,64 +335,36 @@
             bunny.bunny.y = 0;
         }
 
-        // Create flying emote
+        // Create flying emote (original CSS-based approach)
         function createFlyingEmote(emoteId, color) {
             console.log('Creating flying emote with ID:', emoteId);
             
-            const flyingEmote = new PIXI.Container();
-            flyingEmote.x = (app.screen.width - config.spreadWidth) / 2 + Math.random() * config.spreadWidth;
-            flyingEmote.y = app.screen.height;
-            
-            const emoteSprite = new PIXI.Sprite(PIXI.Texture.from(`https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`));
-            emoteSprite.anchor.set(0.5);
-            emoteSprite.width = config.emoteSize;
-            emoteSprite.height = config.emoteSize;
-            flyingEmote.addChild(emoteSprite);
-            
-            // Emotes keep their original colors
-            
-            emoteContainer.addChild(flyingEmote);
-            
-            // Animation properties
+            const emote = document.createElement('div');
+            emote.className = 'emote';
             const duration = Math.random() * (config.maxFlyDuration - config.minFlyDuration) + config.minFlyDuration;
             const delay = Math.random() * config.maxDelay;
+            const startX = Math.random() * config.spreadWidth + (100 - config.spreadWidth) / 2;
             const swayAngle = Math.random() * config.swayAngle;
             
-            // Start animation after delay
-      setTimeout(() => {
-                const startTime = Date.now();
-                const startY = flyingEmote.y;
-                const targetY = -config.emoteSize;
-                
-                const animate = () => {
-                    const elapsed = (Date.now() - startTime) / 1000;
-                    const progress = Math.min(elapsed / duration, 1);
-                    
-                    // Easing function for smooth movement
-                    const easeProgress = 1 - Math.pow(1 - progress, 3);
-                    
-                    flyingEmote.y = startY + (targetY - startY) * easeProgress;
-                    
-                    // Add swaying motion
-                    flyingEmote.rotation = Math.sin(elapsed * 2) * (swayAngle * Math.PI / 180);
-                    
-                    // Add pulsing effect
-                    const scale = 0.9 + 0.2 * Math.sin(elapsed * 4);
-                    flyingEmote.scale.set(scale);
-                    
-                    // Add opacity fade
-                    flyingEmote.alpha = progress < 0.1 ? progress * 10 : (progress > 0.9 ? (1 - progress) * 10 : 1);
-                    
-                    if (progress < 1) {
-                        requestAnimationFrame(animate);
-                    } else {
-                        emoteContainer.removeChild(flyingEmote);
-                        flyingEmote.destroy();
-                    }
-                };
-                
-                animate();
-            }, delay * 1000);
+            emote.style.setProperty('--start-x', `${startX}vw`);
+            emote.style.setProperty('--duration', `${duration}s`);
+            emote.style.setProperty('--delay', `${delay}s`);
+            emote.style.setProperty('--sway-angle', `${swayAngle}deg`);
+
+            const img = document.createElement('img');
+            img.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`;
+            img.width = config.emoteSize;
+            img.height = config.emoteSize;
+            img.style.opacity = '0.9';
+
+            emote.appendChild(img);
+            document.body.appendChild(emote);
+
+            console.log(`Emote ID: ${emoteId}, Duration: ${duration}s, Delay: ${delay}s, StartX: ${startX}vw, SwayAngle: ${swayAngle}deg`);
+            setTimeout(() => {
+                console.log('Removing emote with ID:', emoteId);
+                emote.remove();
+            }, (duration + delay) * 1000);
         }
 
         // Ping server function
@@ -362,7 +386,7 @@
             console.log('Test emote created');
         }
 
-        // Add test button for debugging
+        // Add invisible test button for debugging
         window.addEventListener('load', () => {
             const testBtn = document.createElement('button');
             testBtn.textContent = 'Test Emote';
@@ -370,7 +394,27 @@
             testBtn.style.top = '10px';
             testBtn.style.right = '10px';
             testBtn.style.zIndex = '1000';
-            testBtn.onclick = testEmote;
+            testBtn.style.opacity = '0';
+            testBtn.style.background = 'transparent';
+            testBtn.style.border = 'none';
+            testBtn.style.color = 'transparent';
+            testBtn.style.width = '100px';
+            testBtn.style.height = '30px';
+            testBtn.style.cursor = 'pointer';
+            testBtn.onclick = () => {
+                testEmote();
+                // Show button for 1 second after click
+                testBtn.style.opacity = '1';
+                testBtn.style.background = 'rgba(0,0,0,0.5)';
+                testBtn.style.color = 'white';
+                testBtn.style.border = '1px solid white';
+                setTimeout(() => {
+                    testBtn.style.opacity = '0';
+                    testBtn.style.background = 'transparent';
+                    testBtn.style.color = 'transparent';
+                    testBtn.style.border = 'none';
+                }, 1000);
+            };
             document.body.appendChild(testBtn);
         });
 
