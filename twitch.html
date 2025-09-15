@@ -282,6 +282,9 @@
             const groundLevel = app.screen.height - config.groundLevel;
             container.x = 100 + (bunnies.length * 120) % (app.screen.width - 200);
             container.y = groundLevel;
+            
+            // Store ground level for reference
+            bunnyState.groundLevel = groundLevel;
 
             // Bunny state
             const bunnyState = {
@@ -390,13 +393,20 @@
                 bunny.bunny.width = newSize;
                 bunny.bunny.height = newSize;
                 
-                // Update name tag position based on new size
+                // Keep bunny on ground level - adjust container position
+                const sizeDifference = bunny.originalSize - newSize;
+                bunny.container.y = bunny.groundLevel + sizeDifference / 2;
+                
+                // Update name tag position and size based on new bunny size
                 bunny.nameTag.y = -newSize / 2 - 20;
                 
-                // Debug logging
-                if (Math.random() < 0.01) { // Log 1% of the time to avoid spam
-                    console.log(`Bunny ${bunny.username}: lifetime=${Math.round(bunny.lifetime/1000)}s, size=${Math.round(newSize)}px, ratio=${sizeRatio.toFixed(2)}`);
+                // Scale name tag text proportionally
+                const nameText = bunny.nameTag.children[1]; // The text element
+                if (nameText) {
+                    nameText.style.fontSize = Math.max(10, newSize * 0.2) + 'px';
                 }
+                
+                // Debug logging removed
                 
                 // Check if bunny should be removed
                 if (bunny.lifetime <= 0) {
@@ -458,9 +468,10 @@
 
         // Test function for debugging
         function testEmote() {
-            createFlyingEmote('25', '#FF0000');
-            addOrUpdateBunny('TestUser' + Math.floor(Math.random() * 1000), '#FF0000');
-            console.log('Test emote and bunny created');
+            const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+            createFlyingEmote('25', randomColor);
+            addOrUpdateBunny('TestUser' + Math.floor(Math.random() * 1000), randomColor);
+            console.log('Test emote and bunny created with color:', randomColor);
         }
 
         // Add invisible test button for debugging
@@ -498,7 +509,7 @@
             
             testBtn.onclick = () => {
                 testEmote();
-                // Show button for 2 seconds after click
+                // Show button for 1 second after click
                 testBtn.style.opacity = '1';
                 testBtn.style.background = 'rgba(0,0,0,0.7)';
                 testBtn.style.color = 'white';
@@ -508,7 +519,7 @@
                     testBtn.style.background = 'transparent';
                     testBtn.style.color = 'transparent';
                     testBtn.style.border = 'none';
-                }, 2000);
+                }, 1000);
             };
             document.body.appendChild(testBtn);
         });
