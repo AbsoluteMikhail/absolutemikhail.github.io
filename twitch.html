@@ -205,7 +205,7 @@
                 existingBunny.lastActivity = Date.now();
                 const newLifetime = Math.min(existingBunny.lifetime + config.lifetimeExtension, config.initialLifetime);
                 existingBunny.lifetime = newLifetime;
-                existingBunny.maxLifetime = Math.max(existingBunny.maxLifetime, newLifetime);
+                // Don't increase maxLifetime - keep it at initial value
                 console.log('Updated existing bunny for:', username, 'Lifetime extended to:', Math.round(existingBunny.lifetime / 1000), 'seconds');
                 return;
             }
@@ -393,6 +393,11 @@
                 // Update name tag position based on new size
                 bunny.nameTag.y = -newSize / 2 - 20;
                 
+                // Debug logging
+                if (Math.random() < 0.01) { // Log 1% of the time to avoid spam
+                    console.log(`Bunny ${bunny.username}: lifetime=${Math.round(bunny.lifetime/1000)}s, size=${Math.round(newSize)}px, ratio=${sizeRatio.toFixed(2)}`);
+                }
+                
                 // Check if bunny should be removed
                 if (bunny.lifetime <= 0) {
                     bunniesToRemove.push(bunny);
@@ -473,11 +478,29 @@
             testBtn.style.width = '100px';
             testBtn.style.height = '30px';
             testBtn.style.cursor = 'pointer';
+            testBtn.style.transition = 'opacity 0.3s ease';
+            
+            // Show on hover
+            testBtn.addEventListener('mouseenter', () => {
+                testBtn.style.opacity = '1';
+                testBtn.style.background = 'rgba(0,0,0,0.7)';
+                testBtn.style.color = 'white';
+                testBtn.style.border = '1px solid white';
+            });
+            
+            // Hide on mouse leave
+            testBtn.addEventListener('mouseleave', () => {
+                testBtn.style.opacity = '0';
+                testBtn.style.background = 'transparent';
+                testBtn.style.color = 'transparent';
+                testBtn.style.border = 'none';
+            });
+            
             testBtn.onclick = () => {
                 testEmote();
-                // Show button for 1 second after click
+                // Show button for 2 seconds after click
                 testBtn.style.opacity = '1';
-                testBtn.style.background = 'rgba(0,0,0,0.5)';
+                testBtn.style.background = 'rgba(0,0,0,0.7)';
                 testBtn.style.color = 'white';
                 testBtn.style.border = '1px solid white';
                 setTimeout(() => {
@@ -485,7 +508,7 @@
                     testBtn.style.background = 'transparent';
                     testBtn.style.color = 'transparent';
                     testBtn.style.border = 'none';
-                }, 1000);
+                }, 2000);
             };
             document.body.appendChild(testBtn);
         });
