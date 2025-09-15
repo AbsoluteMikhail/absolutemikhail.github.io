@@ -12,7 +12,8 @@
       user-select: none;
     }
         canvas { 
-            display: block; 
+            display: block;
+            background: transparent;
     }
   </style>
 </head>
@@ -47,7 +48,8 @@
             // Create PixiJS application
             app = new PIXI.Application();
             await app.init({ 
-                background: 'transparent', 
+                background: 0x000000,
+                backgroundAlpha: 0,
                 resizeTo: window,
                 antialias: true
             });
@@ -286,7 +288,7 @@
             console.log('Creating flying emote with ID:', emoteId);
             
             const flyingEmote = new PIXI.Container();
-            flyingEmote.x = Math.random() * config.spreadWidth + (100 - config.spreadWidth) / 2;
+            flyingEmote.x = (app.screen.width - config.spreadWidth) / 2 + Math.random() * config.spreadWidth;
             flyingEmote.y = app.screen.height;
             
             const emoteSprite = new PIXI.Sprite(PIXI.Texture.from(`https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`));
@@ -305,7 +307,7 @@
             const swayAngle = Math.random() * config.swayAngle;
             
             // Start animation after delay
-            setTimeout(() => {
+      setTimeout(() => {
                 const startTime = Date.now();
                 const startY = flyingEmote.y;
                 const targetY = -config.emoteSize;
@@ -353,6 +355,24 @@
         })
         .catch(err => console.error('Ping error:', err));
     }
+
+        // Test function for debugging
+        function testEmote() {
+            createFlyingEmote('25', '#FF0000');
+            console.log('Test emote created');
+        }
+
+        // Add test button for debugging
+        window.addEventListener('load', () => {
+            const testBtn = document.createElement('button');
+            testBtn.textContent = 'Test Emote';
+            testBtn.style.position = 'fixed';
+            testBtn.style.top = '10px';
+            testBtn.style.right = '10px';
+            testBtn.style.zIndex = '1000';
+            testBtn.onclick = testEmote;
+            document.body.appendChild(testBtn);
+        });
 
         // Start the app
         init();
