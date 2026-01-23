@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GamePunk Live Wallpaper</title>
+  <title>GamePunk Live Wallpaper Shuffle</title>
   <style>
     body {
       margin: 0;
@@ -20,16 +20,14 @@
       width: 1920px;
       height: 1080px;
       max-width: 100%;
-      /* Начальное состояние: невидимый */
-      opacity: 0;
-      /* Анимация появления: длится 5 секунды, срабатывает 1 раз */
-      animation: fadeInEffect 5s forwards;
+      opacity: 0; /* Изначально скрыто */
+      transition: opacity 2s ease-in-out; /* Плавный переход прозрачности */
     }
 
-    @keyframes fadeInEffect {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+    /* Класс для проявления */
+    .fade-in { opacity: 1; }
+    /* Класс для затухания */
+    .fade-out { opacity: 0; }
 
     iframe {
       width: 100%;
@@ -40,37 +38,58 @@
 </head>
 <body>
 
-  <div class="video-container">
+  <div class="video-container" id="container">
     <iframe id="wallpaper-video" 
-      src="https://www.youtube-nocookie.com/embed/c5_mX-M7fmk?si=KwF1gA-HUxfz1FRm&enablejsapi=1&controls=0&mute=1&loop=1&playlist=c5_mX-M7fmk" 
+      src="" 
       title="YouTube video player" 
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      allow="autoplay; encrypted-media" 
       referrerpolicy="strict-origin-when-cross-origin">
     </iframe>
   </div>
 
   <script>
-    // Загружаем API YouTube
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    const videos = [
+      "ApegC5BGrd4",
+      "c5_mX-M7fmk",
+      "1_2J3gKpbSQ",
+      "QnISXAW2ZTQ",
+      "PeB1aFZDpHw",
+      "SM4HToR__xo"
+    ];
 
-    var player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('wallpaper-video', {
-        events: {
-          'onReady': onPlayerReady
-        }
-      });
+    const iframe = document.getElementById('wallpaper-video');
+    const container = document.getElementById('container');
+
+    function changeVideo() {
+      // 1. Сначала плавно гасим экран
+      container.classList.remove('fade-in');
+      container.classList.add('fade-out');
+
+      setTimeout(() => {
+        // 2. Выбираем случайное ID из списка
+        const randomId = videos[Math.floor(Math.random() * videos.length)];
+        
+        // 3. Формируем ссылку (без лишних хвостов, только нужные параметры)
+        const newSrc = `https://www.youtube-nocookie.com/embed/${randomId}?autoplay=1&mute=1&controls=0&rel=0&showinfo=0`;
+        
+        iframe.src = newSrc;
+
+        // 4. Когда видео начало грузиться, плавно проявляем его
+        // Небольшая задержка, чтобы iframe успел обновиться
+        setTimeout(() => {
+          container.classList.remove('fade-out');
+          container.classList.add('fade-in');
+        }, 500);
+
+      }, 2000); // Время на полное затухание перед сменой
     }
 
-    function onPlayerReady(event) {
-      // Ждем пока идет анимация CSS, и запускаем видео
-      setTimeout(function() {
-        event.target.playVideo();
-      }, 1);
-    }
+    // Запускаем первое видео сразу
+    changeVideo();
+
+    // Ставим интервал на смену каждые 60 секунд
+    // (60000 миллисекунд)
+    setInterval(changeVideo, 60000);
   </script>
 </body>
 </html>
