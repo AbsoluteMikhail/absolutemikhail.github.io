@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -31,21 +34,31 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="#" className="font-display text-xl font-bold text-foreground z-50">
+        <Link to="/" className="font-display text-xl font-bold text-foreground z-50">
           <span className="text-primary">&lt;</span>DEV<span className="text-primary">/&gt;</span>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="flex items-center gap-4">
           <div className="hidden md:flex items-center gap-8 mr-4">
             {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-sm font-display tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors"
-              >
-                {link.label}
-              </a>
+              isHomePage ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="text-sm font-display tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.label}
+                  to={`/${link.href.startsWith("#") ? link.href : ""}`}
+                  className="text-sm font-display tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
           </div>
 
@@ -79,14 +92,25 @@ const Navbar = () => {
           >
             <div className="flex flex-col gap-4 p-6">
               {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-lg font-display tracking-widest uppercase text-muted-foreground hover:text-primary transition-colors py-2"
-                >
-                  {link.label}
-                </a>
+                isHomePage ? (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="text-lg font-display tracking-widest uppercase text-muted-foreground hover:text-primary transition-colors py-2"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.label}
+                    to={`/${link.href.startsWith("#") ? link.href : ""}`}
+                    onClick={() => setIsOpen(false)}
+                    className="text-lg font-display tracking-widest uppercase text-muted-foreground hover:text-primary transition-colors py-2"
+                  >
+                    {link.label}
+                  </Link>
+                )
               ))}
               <a
                 href="mailto:dev@example.com"

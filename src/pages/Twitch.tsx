@@ -261,7 +261,7 @@ const Twitch = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-transparent overflow-hidden pointer-events-none select-none">
+    <div className="fixed inset-0 bg-transparent overflow-hidden select-none">
       <style>{`
         @keyframes twitch-fly {
           0% { transform: translateY(0) scale(0.7); opacity: 0; }

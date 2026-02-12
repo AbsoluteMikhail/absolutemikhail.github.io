@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ExternalLink, Calendar, Users, Rocket, Code, Layout } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import { useEffect } from "react";
 import gameCover1 from "@/assets/game-cover-1.jpg";
 import gameCover2 from "@/assets/game-cover-2.jpg";
 import gameCover3 from "@/assets/game-cover-3.jpg";
@@ -43,6 +44,10 @@ const projects = [
 ];
 
 const Projects = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
