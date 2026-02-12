@@ -1,0 +1,106 @@
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
+
+const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navLinks = [
+    { label: "Обо мне", href: "#" },
+    { label: "Достижения", href: "#timeline" },
+    { label: "Проекты", href: "#games" },
+    { label: "Менторинг", href: "#mentoring" },
+  ];
+
+  return (
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled || isOpen
+          ? "bg-background/95 backdrop-blur-lg border-b border-border"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="#" className="font-display text-xl font-bold text-foreground z-50">
+          <span className="text-primary">&lt;</span>DEV<span className="text-primary">/&gt;</span>
+        </a>
+
+        {/* Desktop Navigation */}
+        <div className="flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-8 mr-4">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-sm font-display tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          <a
+            href="mailto:dev@example.com"
+            className="hidden sm:block px-5 py-2 rounded-lg text-xs font-display tracking-wider uppercase gradient-primary text-primary-foreground font-semibold hover:scale-105 transition-transform whitespace-nowrap"
+          >
+            Связаться
+          </a>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 text-foreground hover:text-primary transition-colors z-50"
+            aria-label="Toggle Menu"
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Navigation Overlay */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-background border-b border-border overflow-hidden"
+          >
+            <div className="flex flex-col gap-4 p-6">
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="text-lg font-display tracking-widest uppercase text-muted-foreground hover:text-primary transition-colors py-2"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <a
+                href="mailto:dev@example.com"
+                onClick={() => setIsOpen(false)}
+                className="mt-2 px-5 py-4 rounded-lg text-center text-sm font-display tracking-wider uppercase gradient-primary text-primary-foreground font-semibold"
+              >
+                Связаться
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
+  );
+};
+
+export default Navbar;
