@@ -260,6 +260,13 @@ const Twitch = () => {
     };
   }, []);
 
+  useEffect(() => {
+    document.body.style.backgroundColor = "transparent";
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, []);
+
   return (
     <div className="fixed inset-0 bg-transparent overflow-hidden select-none">
       <style>{`

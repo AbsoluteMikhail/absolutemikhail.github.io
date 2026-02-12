@@ -33,8 +33,15 @@ const Music = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    document.body.style.backgroundColor = "transparent";
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, []);
+
   return (
-    <div className="fixed inset-0 bg-black flex justify-center items-center overflow-hidden">
+    <div className="fixed inset-0 bg-transparent flex justify-center items-center overflow-hidden">
       <div 
         className={`w-[1920px] h-[1080px] max-w-full transition-opacity duration-[2000ms] ease-in-out ${
           isVisible ? "opacity-100" : "opacity-0"
