@@ -12,14 +12,10 @@
       // e.g. http://www.foo.tld/one/two?a=b#three --> http://www.foo.tld/?p=/one/two&q=a=b#three
       // For use with Single Page Applications on GitHub Pages
       (function(l) {
-        var path = l.pathname.split('/').filter(Boolean);
-        // If the path contains the repo name as the first segment (for project pages), 
-        // we might need to adjust this. But for user pages (username.github.io), it's usually just /.
-        
         l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-          l.pathname.split('/').slice(0, 1).join('/') + '/?p=/' +
+          l.pathname.split('/').slice(0, 1).join('/') + '/?' +
           l.pathname.split('/').slice(1).join('/').replace(/&/g, '~and~') +
-          (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+          (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
           l.hash);
       }(window.location))
     </script>
