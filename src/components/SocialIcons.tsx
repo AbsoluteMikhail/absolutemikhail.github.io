@@ -3,8 +3,9 @@ import React from 'react';
 export const DiscordIcon = ({ className }: { className?: string }) => (
   <svg 
     viewBox="0 0 512 512" 
+    preserveAspectRatio="xMidYMid meet"
     fill="currentColor" 
-    className={className}
+    className={`${className} icon-svg`}
     xmlns="http://www.w3.org/2000/svg"
   >
     <path d="M448 96c-21.15 0-32.64 5.02-44.78 15.48l-1.6 1.4c-35.09-24.81-79.67-40.04-128.62-44.1l11.41-52.07 38.3 8.35c4.71 1.03 9.4-1.95 10.43-6.66l2.12-9.71c1.03-4.71-1.95-9.4-6.66-10.43l-49.33-10.76c-4.14-.9-8.19 1.47-9.45 5.48l-15.68 71.53c-1.12 5.11 2.22 10.16 7.37 11.16 46.1 8.95 86.6 24.36 117.8 44.91l-1.37-1.18c-12.27-10.28-24.38-15.22-45.06-15.22-54.34 0-98.39 44.05-98.39 98.39v.01c0 54.34 44.05 98.39 98.39 98.39 54.34 0 98.39-44.05 98.39-98.39v-.01c0-54.34-44.05-98.39-98.39-98.39zM202.24 197.82c-20.32 0-36.8 20.31-36.8 45.36s16.48 45.36 36.8 45.36 36.8-20.31 36.8-45.36-16.48-45.36-36.8-45.36zm107.52 0c-20.32 0-36.8 20.31-36.8 45.36s16.48 45.36 36.8 45.36 36.8-20.31 36.8-45.36-16.48-45.36-36.8-45.36z"/>
@@ -14,8 +15,9 @@ export const DiscordIcon = ({ className }: { className?: string }) => (
 export const SteamIcon = ({ className }: { className?: string }) => (
   <svg 
     viewBox="0 0 512 512" 
+    preserveAspectRatio="xMidYMid meet"
     fill="currentColor" 
-    className={className}
+    className={`${className} icon-svg`}
     xmlns="http://www.w3.org/2000/svg"
   >
     <path d="M496 384c0 70.7-57.3 128-128 128s-128-57.3-128-128 57.3-128 128-128 128 57.3 128 128zm-128-80c-44.1 0-80 35.9-80 80s35.9 80 80 80 80-35.9 80-80-35.9-80-80-80zm0 128c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm-320-80c0-141.4 114.6-256 256-256 78 0 148.1 34.8 195.4 90.1l-41.4 34.8c-36.4-42.5-90.2-68.9-154-68.9-106 0-192 86-192 192s86 192 192 192c63.8 0 117.6-26.4 154-68.9l41.4 34.8c-47.3 55.3-117.4 90.1-195.4 90.1-141.4 0-256-114.6-256-256z"/>
@@ -25,8 +27,9 @@ export const SteamIcon = ({ className }: { className?: string }) => (
 export const TelegramIcon = ({ className }: { className?: string }) => (
   <svg 
     viewBox="0 0 512 512" 
+    preserveAspectRatio="xMidYMid meet"
     fill="currentColor" 
-    className={className}
+    className={`${className} icon-svg`}
     xmlns="http://www.w3.org/2000/svg"
   >
     <path d="M256 8a248 248 0 1 0 0 496 248 248 0 0 0 0-496zm114.6 167.3l-37 174.5c-2.7 12.1-9.9 15.1-20.1 9.4l-56.4-41.6-27.2 26.2c-3 3-5.6 5.6-11.4 5.6l4-57 103.7-93.7c4.5-4-1-6.2-7-2.2L140.5 264.4l-55.2-17.3c-12-3.7-12.2-12 2.5-17.8l215.4-83c10-3.7 18.7 2.3 17.4 14.3z"/>
@@ -36,8 +39,9 @@ export const TelegramIcon = ({ className }: { className?: string }) => (
 export const YoutubeIcon = ({ className }: { className?: string }) => (
   <svg 
     viewBox="0 0 512 512" 
+    preserveAspectRatio="xMidYMid meet"
     fill="currentColor" 
-    className={className}
+    className={`${className} icon-svg`}
     xmlns="http://www.w3.org/2000/svg"
   >
     <path d="M508.6 148.8c-5.9-22.1-23.3-39.5-45.4-45.4C423.1 92.7 256 92.7 256 92.7s-167.1 0-207.2 10.7c-22.1 5.9-39.5 23.3-45.4 45.4-10.7 40.1-10.7 123.2-10.7 123.2s0 83.1 10.7 123.2c5.9 22.1 23.3 39.5 45.4 45.4 40.1 10.7 207.2 10.7 207.2 10.7s167.1 0 207.2-10.7c22.1-5.9 39.5-23.3 45.4-45.4 10.7-40.1 10.7-123.2 10.7-123.2s0-83.1-10.7-123.2zM204.8 320V192l115.2 64-115.2 64z"/>
@@ -47,8 +51,9 @@ export const YoutubeIcon = ({ className }: { className?: string }) => (
 export const TwitchIcon = ({ className }: { className?: string }) => (
   <svg 
     viewBox="0 0 512 512" 
+    preserveAspectRatio="xMidYMid meet"
     fill="currentColor" 
-    className={className}
+    className={`${className} icon-svg`}
     xmlns="http://www.w3.org/2000/svg"
   >
     <path d="M391.17 103.47h-38.71v109.69h38.71ZM285.81 103.47H247.1v109.69h38.71ZM120.83 0 24.31 91.42V420.58H140.46V512l96.53-91.42h77.33l173.37-164.56V0Zm317.3 237.69-86.87 82.28H273.93L216 374.83V319.97H120.83V45.74H438.13Z"/>
