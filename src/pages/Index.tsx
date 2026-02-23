@@ -5,7 +5,7 @@ import GamesSection from "@/components/GamesSection";
 import MentoringSection from "@/components/MentoringSection";
 import ReviewsSection from "@/components/ReviewsSection";
 import { motion } from "framer-motion";
-import { Youtube, Send, MessageCircle, Gamepad2, Mail, MapPin, ArrowUpRight } from "lucide-react";
+import { Youtube, Send, MessageCircle, Gamepad2, Twitch, Mail, MapPin, ArrowUpRight } from "lucide-react";
 
 const Index = () => {
   return (
@@ -34,6 +34,7 @@ const Index = () => {
               <div className="flex gap-4">
                 {[
                   { icon: Youtube, href: "https://www.youtube.com/@Absolute-Unreal" },
+                  { icon: Twitch, href: "https://www.twitch.tv/absolutemikhail" },
                   { icon: Send, href: "https://t.me/AbsoluteUnderground" },
                   { icon: MessageCircle, href: "https://discord.gg/NkwZ8pqyS6" },
                   { icon: Gamepad2, href: "https://store.steampowered.com/developer/GamePunk-Studio" },
