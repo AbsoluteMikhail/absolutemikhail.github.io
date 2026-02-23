@@ -3,42 +3,42 @@ import { Link } from "react-router-dom";
 import { ChevronLeft, ExternalLink, Calendar, Users, Rocket, Code, Layout } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { useEffect } from "react";
-import gameCover1 from "@/assets/game-cover-1.jpg";
-import gameCover2 from "@/assets/game-cover-2.jpg";
-import gameCover3 from "@/assets/game-cover-3.jpg";
+import gribnikCover from "@/assets/projects/gribnik/cover.jpg";
+import duelantCover from "@/assets/projects/duelant/cover.jpg";
+import kolobokCover from "@/assets/projects/kolobok/cover.jpg";
 
 const projects = [
   {
     id: 1,
-    title: "Dragon's Wrath",
-    genre: "Action RPG",
-    year: "2024",
-    cover: gameCover1,
-    desc: "Масштабная Action RPG в мрачном фэнтезийном мире. Разработка на Unreal Engine 5 с использованием передовых технологий освещения и анимации.",
-    tech: ["Unreal Engine 5", "C++", "Blueprints", "Blender"],
-    stats: "50K+ Игроков",
+    title: "G.R.I.B.N.I.K. в лесу дураков",
+    genre: "FPS / Horror",
+    year: "2025",
+    cover: gribnikCover,
+    desc: "Атмосферный хоррор-симулятор выживания в стиле PSX. Исследуйте странный лес, собирайте грибы и защищайтесь от сказочных тварей.",
+    tech: ["Unreal Engine 5", "Blender", "FMOD", "PSX Shader Stack"],
+    stats: "В разработке",
     type: "Game"
   },
   {
     id: 2,
-    title: "Stellar Command",
-    genre: "Sci-Fi Shooter",
-    year: "2022",
-    cover: gameCover2,
-    desc: "Космический шутер с процедурной генерацией миров. Реализован сложный сетевой код для масштабных сражений.",
-    tech: ["Unity", "C#", "Photon", "Substance"],
-    stats: "30K+ Игроков",
+    title: "DUELANT",
+    genre: "Duel Simulator",
+    year: "TBA",
+    cover: duelantCover,
+    desc: "Динамичный симулятор дуэлей в виртуальных мирах будущего. Короткие и яростные схватки, где всё решает реакция и выбор оружия.",
+    tech: ["Unreal Engine 5", "Niagara VFX", "Advanced IK"],
+    stats: "Demo soon",
     type: "Game"
   },
   {
     id: 3,
-    title: "Neon Streets",
-    genre: "Cyberpunk Adventure",
-    year: "2023",
-    cover: gameCover3,
-    desc: "Атмосферное приключение в стиле киберпанк. Фокус на стелс-механиках и уникальном визуальном стиле.",
-    tech: ["Godot 4", "GDScript", "Aseprite"],
-    stats: "20K+ Игроков",
+    title: "КОЛОБОК против ЯЩЕРОВ",
+    genre: "Arcade / Arkanoid",
+    year: "2024",
+    cover: kolobokCover,
+    desc: "Защитите Русь-матушку от вторжения легионов ящеров в этом безумном арканоиде с харизматичным героем и драйвовым саундтреком.",
+    tech: ["Unity", "C#", "Aseprite", "Original OST"],
+    stats: "10K+ Игроков",
     type: "Game"
   }
 ];

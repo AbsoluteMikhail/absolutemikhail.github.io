@@ -2,9 +2,9 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink, Calendar, Users, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import gameCover1 from "@/assets/game-cover-1.jpg";
-import gameCover2 from "@/assets/game-cover-2.jpg";
-import gameCover3 from "@/assets/game-cover-3.jpg";
+import gribnikCover from "@/assets/projects/gribnik/cover.jpg";
+import duelantCover from "@/assets/projects/duelant/cover.jpg";
+import kolobokCover from "@/assets/projects/kolobok/cover.jpg";
 
 interface Game {
   id: number;
@@ -21,42 +21,42 @@ interface Game {
 const games: Game[] = [
   {
     id: 1,
-    title: "Dragon's Wrath",
-    genre: "Action RPG",
-    year: "2024",
-    cover: gameCover1,
+    title: "G.R.I.B.N.I.K. в лесу дураков",
+    genre: "FPS / Horror / Simulator",
+    year: "2025",
+    cover: gribnikCover,
     shortDesc:
-      "Эпическое тёмное фэнтези с открытым миром, динамичной боевой системой и глубоким сюжетом о борьбе добра и зла.",
+      "Уникальная смесь симулятора грибника с дробовиком и хоррора в стиле PSX. Выживайте в странном лесу, где ваш единственный друг — старый кибер-холодильник.",
     fullDesc:
-      "Dragon's Wrath — это масштабная Action RPG в мрачном фэнтезийном мире. Игрок берёт на себя роль последнего выжившего рыцаря ордена Огня, который должен остановить пробуждение древнего дракона. Игра предлагает обширный открытый мир с десятками подземелий, уникальную систему магии и крафта, а также нелинейный сюжет с множеством концовок. Разработка заняла 3 года и была полностью выполнена мной.",
-    tech: ["Unreal Engine 5", "Blender", "FMOD"],
-    players: "50K+",
+      "Герой просыпается в светлом, но пугающем лесу. Единственное спасение — ржавый кибер-холодильник, который служит базой. Если не вернуться к нему до темноты, лес поглотит вас. \n\nОсобенности игры:\n— Атмосферная Low-Poly графика в духе эпохи PlayStation 1;\n— Кибернизированные герои русских народных сказок;\n— Глубокое взаимодействие с грибами и вариативность прохождения;\n— Нарративное окружение и музыка, отсылающая к классике S.T.A.L.K.E.R. и Doom;\n— Две концовки, раскрывающие истинный смысл происходящего.",
+    tech: ["Unreal Engine 5", "Blender", "FMOD", "PSX Shader Stack"],
+    players: "В разработке",
   },
   {
     id: 2,
-    title: "Stellar Command",
-    genre: "Sci-Fi Shooter",
-    year: "2022",
-    cover: gameCover2,
+    title: "DUELANT",
+    genre: "Duel Simulator",
+    year: "В разработке",
+    cover: duelantCover,
     shortDesc:
-      "Космический шутер с процедурно генерируемыми мирами и мультиплеером на 64 игрока.",
+      "Адреналиновые дуэли в разных эпохах под присмотром ИИ-помощницы Малены. Кровь, деньги и 30 секунд, чтобы доказать, кто здесь лучший стрелок.",
     fullDesc:
-      "Stellar Command переносит игроков в далёкое будущее, где человечество колонизировало десятки звёздных систем. Вы командуете отрядом космических истребителей и участвуете в масштабных космических сражениях. Уникальная система процедурной генерации создаёт бесконечное разнообразие миссий и карт. Мультиплеер поддерживает до 64 игроков одновременно.",
-    tech: ["Unity", "Photon", "Substance Painter"],
-    players: "30K+",
+      "Недалекое будущее. Виртуальные дуэли стали легальным способом заработка и развлечения. В роли молодого дуэлянта вам предстоит сражаться в разных сеттингах — от Дикого Запада до киберпанка. \n\nКлючевые фишки:\n— 30-секундные динамичные поединки;\n— Сопровождение харизматичной ИИ-спутницы Малены;\n— Система отстрела конечностей и прокачка способностей;\n— Элементы Roguelike: риск обнуления прогресса в турнирном режиме;\n— Динамическая смена погоды и времени суток, влияющая на геймплей.",
+    tech: ["Unreal Engine 5", "Niagara VFX", "Advanced IK System"],
+    players: "Demo soon",
   },
   {
     id: 3,
-    title: "Neon Streets",
-    genre: "Cyberpunk Adventure",
-    year: "2023",
-    cover: gameCover3,
+    title: "КОЛОБОК против ЯЩЕРОВ",
+    genre: "Arcade / Arkanoid",
+    year: "2024",
+    cover: kolobokCover,
     shortDesc:
-      "Киберпанк-приключение в неоновом мегаполисе будущего с элементами стелса и головоломками.",
+      "Безумный арканоид о защите Руси-матушки. Помогите харизматичному комку теста отбить атаку легионов ящеров и спасти родной дом.",
     fullDesc:
-      "Neon Streets — это атмосферное приключение в стилистике киберпанка. Вы играете за хакера, который раскрывает заговор мегакорпораций. Игра сочетает элементы стелса, хакерские головоломки и динамичные погони по крышам небоскрёбов. Особое внимание уделено атмосфере: дождливые улицы, неоновые вывески, джазовый саундтрек.",
-    tech: ["Godot 4", "Aseprite", "Audacity"],
-    players: "20K+",
+      "Ящеры вторглись на Русь! Лишь Колобок, выпрыгнувший из печки, готов принять вызов. Катитесь, отскакивайте и крушите врагов в этом динамичном переосмыслении классического арканоида. \n\nВас ждет:\n— 21 уникальный уровень в разных локациях;\n— 3 уровня сложности: от новичка до мастера;\n— Бесконечный режим для самых стойких защитников;\n— 18 оригинальных музыкальных треков;\n— Легионы ящеров с уникальным поведением;\n— Море юмора и достижений.",
+    tech: ["Unity", "C#", "Aseprite", "Original OST"],
+    players: "10K+",
   },
 ];
 
@@ -109,7 +109,7 @@ const GamesSection = () => {
                   <Calendar className="w-4 h-4 text-muted-foreground" />
                   <span className="text-sm text-muted-foreground">{game.year}</span>
                   <Users className="w-4 h-4 text-muted-foreground ml-4" />
-                  <span className="text-sm text-muted-foreground">{game.players} игроков</span>
+                  <span className="text-sm text-muted-foreground">{game.players}</span>
                 </div>
                 <h3 className="text-2xl md:text-4xl font-display font-bold text-foreground group-hover:text-glow transition-all">
                   {game.title}
@@ -188,7 +188,7 @@ const GamesSection = () => {
                     {selectedGame.genre}
                   </span>
                   <span className="text-sm text-muted-foreground">{selectedGame.year}</span>
-                  <span className="text-sm text-muted-foreground">{selectedGame.players} игроков</span>
+                  <span className="text-sm text-muted-foreground">{selectedGame.players}</span>
                 </div>
 
                 <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
