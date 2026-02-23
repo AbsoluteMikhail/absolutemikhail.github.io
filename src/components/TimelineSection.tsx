@@ -1,37 +1,43 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
-import { Trophy, Star, Rocket, Flame, Award } from "lucide-react";
+import { Trophy, Star, Rocket, Award } from "lucide-react";
 
 const milestones = [
   {
-    year: "2018",
-    title: "Первая игра",
-    desc: "Выпустил первый инди-проект",
-    icon: Rocket,
+    year: "2026",
+    title: "Лучший геймдизайн — G.R.I.B.N.I.K.",
+    desc: "Награда за геймдизайн",
+    icon: Award,
   },
   {
-    year: "2019",
-    title: "Game Jam Winner",
-    desc: "Победа на Ludum Dare 45",
-    icon: Trophy,
-  },
-  {
-    year: "2020",
-    title: "10K загрузок",
-    desc: "Первая игра набрала 10K",
-    icon: Star,
-  },
-  {
-    year: "2022",
-    title: "Steam релиз",
-    desc: "Первый релиз в Steam",
-    icon: Flame,
+    year: "2025",
+    title: "«Золотой Орёл» и Сколково",
+    desc: "Премия за VFX в «Воздухе» и резидентство кластера видеоигр «Сколково»",
+    icon: Award,
   },
   {
     year: "2024",
-    title: "Награда года",
-    desc: "Лучшая инди-игра 2024",
-    icon: Award,
+    title: "Автор курса «C++ в UE»",
+    desc: "Записал курс для крупнейшей EdTech‑платформы",
+    icon: Rocket,
+  },
+  {
+    year: "2023",
+    title: "Соло‑победа на «Синеус»",
+    desc: "Первое место на офлайн‑хакатоне «Синеус»",
+    icon: Trophy,
+  },
+  {
+    year: "2022",
+    title: "Кино и лайв‑ивенты",
+    desc: "Работа над фильмом «Воздух» и концертом «Выпускной ВКонтакте 2022»",
+    icon: Star,
+  },
+  {
+    year: "2021",
+    title: "Победа на Gamebox Hack",
+    desc: "Также — «Выбор tinyBuild» на Unreal Engine Dev Contest",
+    icon: Trophy,
   },
 ];
 
