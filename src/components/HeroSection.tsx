@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import heroPhoto from "@/assets/hero-photo.jpg";
-import { Youtube, MessageCircle, Send, Gamepad2, Twitch } from "lucide-react";
+import { Youtube, Twitch } from "lucide-react";
+import { DiscordIcon, SteamIcon, TelegramIcon } from "@/components/SocialIcons";
 
 const HeroSection = () => {
   return (
@@ -109,9 +110,9 @@ const HeroSection = () => {
             {[
               { icon: Youtube, href: "https://www.youtube.com/@Absolute-Unreal", label: "YouTube" },
               { icon: Twitch, href: "https://www.twitch.tv/absolutemikhail", label: "Twitch" },
-              { icon: MessageCircle, href: "https://discord.gg/NkwZ8pqyS6", label: "Discord" },
-              { icon: Send, href: "https://t.me/AbsoluteUnderground", label: "Telegram" },
-              { icon: Gamepad2, href: "https://store.steampowered.com/developer/GamePunk-Studio", label: "Steam" },
+              { icon: DiscordIcon, href: "https://discord.gg/NkwZ8pqyS6", label: "Discord" },
+              { icon: TelegramIcon, href: "https://t.me/AbsoluteUnderground", label: "Telegram" },
+              { icon: SteamIcon, href: "https://store.steampowered.com/developer/GamePunk-Studio", label: "Steam" },
             ].map((social) => (
               <a
                 key={social.label}

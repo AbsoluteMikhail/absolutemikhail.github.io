@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Check, Zap, Flame, Crown } from "lucide-react";
+import { ContactTelegram } from "@/components/ContactTelegram";
 
 const packages = [
   {
@@ -146,8 +147,7 @@ const MentoringSection = () => {
                   ))}
                 </ul>
 
-                <a
-                  href="mailto:dev@example.com"
+                <ContactTelegram
                   className={`block text-center py-4 rounded-2xl font-display text-xs font-bold uppercase tracking-[0.15em] transition-all duration-300 ${
                     pkg.popular
                       ? "gradient-primary text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-95"
@@ -155,7 +155,7 @@ const MentoringSection = () => {
                   }`}
                 >
                   Записаться
-                </a>
+                </ContactTelegram>
               </motion.div>
             );
           })}

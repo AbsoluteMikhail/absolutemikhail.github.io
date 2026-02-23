@@ -5,7 +5,9 @@ import GamesSection from "@/components/GamesSection";
 import MentoringSection from "@/components/MentoringSection";
 import ReviewsSection from "@/components/ReviewsSection";
 import { motion } from "framer-motion";
-import { Youtube, Send, MessageCircle, Gamepad2, Twitch, Mail, MapPin, ArrowUpRight } from "lucide-react";
+import { Youtube, Twitch, Mail, MapPin, ArrowUpRight } from "lucide-react";
+import { DiscordIcon, SteamIcon, TelegramIcon } from "@/components/SocialIcons";
+import { ContactEmail } from "@/components/ContactEmail";
 
 const Index = () => {
   return (
@@ -35,9 +37,9 @@ const Index = () => {
                 {[
                   { icon: Youtube, href: "https://www.youtube.com/@Absolute-Unreal" },
                   { icon: Twitch, href: "https://www.twitch.tv/absolutemikhail" },
-                  { icon: Send, href: "https://t.me/AbsoluteUnderground" },
-                  { icon: MessageCircle, href: "https://discord.gg/NkwZ8pqyS6" },
-                  { icon: Gamepad2, href: "https://store.steampowered.com/developer/GamePunk-Studio" },
+                  { icon: TelegramIcon, href: "https://t.me/AbsoluteUnderground" },
+                  { icon: DiscordIcon, href: "https://discord.gg/NkwZ8pqyS6" },
+                  { icon: SteamIcon, href: "https://store.steampowered.com/developer/GamePunk-Studio" },
                 ].map((social, i) => (
                   <a 
                     key={i} 
@@ -77,10 +79,10 @@ const Index = () => {
               <h4 className="font-display font-bold uppercase tracking-widest text-xs mb-6 text-foreground">Контакты</h4>
               <ul className="space-y-4">
                 <li>
-                  <a href="mailto:dev@example.com" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3">
+                  <ContactEmail className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3">
                     <Mail className="w-4 h-4 text-primary" />
-                    dev@example.com
-                  </a>
+                    Написать мне
+                  </ContactEmail>
                 </li>
                 <li className="text-sm text-muted-foreground flex items-center gap-3">
                   <MapPin className="w-4 h-4 text-primary" />

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { ContactEmail } from "@/components/ContactEmail";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -62,12 +63,11 @@ const Navbar = () => {
             ))}
           </div>
 
-          <a
-            href="mailto:dev@example.com"
+          <ContactEmail
             className="hidden sm:block px-5 py-2 rounded-lg text-xs font-display tracking-wider uppercase gradient-primary text-primary-foreground font-semibold hover:scale-105 transition-transform whitespace-nowrap"
           >
             Связаться
-          </a>
+          </ContactEmail>
 
           {/* Mobile Menu Button */}
           <button
@@ -112,13 +112,11 @@ const Navbar = () => {
                   </Link>
                 )
               ))}
-              <a
-                href="mailto:dev@example.com"
-                onClick={() => setIsOpen(false)}
+              <ContactEmail
                 className="mt-2 px-5 py-4 rounded-lg text-center text-sm font-display tracking-wider uppercase gradient-primary text-primary-foreground font-semibold"
               >
                 Связаться
-              </a>
+              </ContactEmail>
             </div>
           </motion.div>
         )}
