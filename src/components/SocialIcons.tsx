@@ -8,16 +8,27 @@ interface IconProps {
 const getIconClassName = (className?: string) => 
   ["icon-svg", className].filter(Boolean).join(" ");
 
-const BaseIcon = ({ size = 24, className, children }: IconProps & { children: React.ReactNode }) => (
-  <svg 
-    width={size}
-    height={size}
-    viewBox="0 0 24 24" 
-    fill="currentColor" 
-    className={getIconClassName(className)}
-  >
-    {children}
-  </svg>
+interface IconProps {
+    className?: string;
+    size?: number | string;
+    viewBox?: string;
+}
+
+const BaseIcon = ({
+                      size = 24,
+                      className,
+                      viewBox = "0 0 24 24",
+                      children
+                  }: IconProps & { children: React.ReactNode }) => (
+    <svg
+        width={size}
+        height={size}
+        viewBox={viewBox}
+        fill="currentColor"
+        className={getIconClassName(className)}
+    >
+        {children}
+    </svg>
 );
 
 export const DiscordIcon = (props: IconProps) => (
@@ -27,8 +38,8 @@ export const DiscordIcon = (props: IconProps) => (
 );
 
 export const SteamIcon = (props: IconProps) => (
-    <BaseIcon {...props}>
-        <path d="M12 0C5.373 0 0 5.373 0 12c0 5.268 3.438 9.735 8.205 11.326l1.354-2.215a3.462 3.462 0 0 1-1.547-4.62l2.188.905a2.11 2.11 0 1 0 .823-4.05l-5.02-2.078A9.987 9.987 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.96 9.96 0 0 1-4.96-1.318l1.387-.832A3.46 3.46 0 0 0 13.9 17.6l2.27 1.354a6.002 6.002 0 1 0-2.017-6.532l-2.276-.942A3.46 3.46 0 0 0 7.7 9.67l-2.19-.907A9.956 9.956 0 0 1 12 0Z"/>
+    <BaseIcon {...props} viewBox="0 0 448 512">
+        <path d="M395.5 176.2c-3.7-6-7.1-12.1-10.2-18.4-11.4-23.3-17.7-49.6-17.7-77.5 0-40.4 16-77.1 41.9-104.1L359.1 12.5C330.1 39.5 312 77.5 312 119.5c0 29.5 8.1 57.1 22.1 80.6l-73.4 61.6c-13.6-6.6-28.9-10.3-45-10.3-57.2 0-103.6 46.4-103.6 103.6s46.4 103.6 103.6 103.6 103.6-46.4 103.6-103.6c0-10.3-1.5-20.2-4.3-29.6l73.4-61.6c17.5 10.1 37.8 15.8 59.5 15.8 66.3 0 120-53.7 120-120 0-29.5-10.6-56.5-28.3-77.4zm-180.2 212.4c-33 0-59.7-26.7-59.7-59.7s26.7-59.7 59.7-59.7 59.7 26.7 59.7 59.7-26.7 59.7-59.7 59.7zm0-95.5c-19.8 0-35.8 16-35.8 35.8s16 35.8 35.8 35.8 35.8-16 35.8-35.8-16-35.8-35.8-35.8zM0 256C0 114.6 114.6 0 256 0c85.8 0 161.4 42.1 207.7 106.5l-50.6 42.5C377.9 104.9 321 74.7 256 74.7c-100.1 0-181.3 81.2-181.3 181.3S155.9 437.3 256 437.3c65 0 121.9-34.2 157.1-85.7l50.6 42.5C417.4 423.9 341.8 466 256 466 114.6 466 0 351.4 0 256z"/>
     </BaseIcon>
 );
 
