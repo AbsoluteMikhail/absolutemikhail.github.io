@@ -107,10 +107,10 @@ const HeroSection = () => {
             className="flex gap-3"
           >
             {[
-              { icon: Youtube, href: "https://youtube.com", label: "YouTube" },
-              { icon: MessageCircle, href: "https://discord.com", label: "Discord" },
-              { icon: Send, href: "https://t.me", label: "Telegram" },
-              { icon: Gamepad2, href: "https://store.steampowered.com", label: "Steam" },
+              { icon: Youtube, href: "https://www.youtube.com/@Absolute-Unreal", label: "YouTube" },
+              { icon: MessageCircle, href: "https://discord.gg/NkwZ8pqyS6", label: "Discord" },
+              { icon: Send, href: "https://t.me/AbsoluteUnderground", label: "Telegram" },
+              { icon: Gamepad2, href: "https://store.steampowered.com/developer/GamePunk-Studio", label: "Steam" },
             ].map((social) => (
               <a
                 key={social.label}

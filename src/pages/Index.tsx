@@ -33,14 +33,16 @@ const Index = () => {
               </p>
               <div className="flex gap-4">
                 {[
-                  { icon: Youtube, href: "#" },
-                  { icon: Send, href: "#" },
-                  { icon: MessageCircle, href: "#" },
-                  { icon: Gamepad2, href: "#" },
+                  { icon: Youtube, href: "https://www.youtube.com/@Absolute-Unreal" },
+                  { icon: Send, href: "https://t.me/AbsoluteUnderground" },
+                  { icon: MessageCircle, href: "https://discord.gg/NkwZ8pqyS6" },
+                  { icon: Gamepad2, href: "https://store.steampowered.com/developer/GamePunk-Studio" },
                 ].map((social, i) => (
                   <a 
                     key={i} 
-                    href={social.href} 
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-10 h-10 rounded-xl bg-secondary/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300"
                   >
                     <social.icon className="w-5 h-5" />
@@ -107,7 +109,7 @@ const Index = () => {
 
           <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-xs text-muted-foreground">
-              © 2024 Absolute Mikhail. Crafted with passion for GameDev.
+              © 2026 Absolute Mikhail. Crafted with passion for GameDev.
             </p>
             <div className="flex gap-8">
               <a href="#" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">Privacy Policy</a>
