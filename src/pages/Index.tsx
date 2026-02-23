@@ -5,9 +5,10 @@ import GamesSection from "@/components/GamesSection";
 import MentoringSection from "@/components/MentoringSection";
 import ReviewsSection from "@/components/ReviewsSection";
 import { motion } from "framer-motion";
-import { Youtube, Twitch, Mail, MapPin, ArrowUpRight } from "lucide-react";
-import { DiscordIcon, SteamIcon, TelegramIcon } from "@/components/SocialIcons";
+import { Mail, MapPin, ArrowUpRight } from "lucide-react";
+import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
 import { ContactEmail } from "@/components/ContactEmail";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const Index = () => {
   return (
@@ -35,8 +36,8 @@ const Index = () => {
               </p>
               <div className="flex gap-4">
                 {[
-                  { icon: Youtube, href: "https://www.youtube.com/@Absolute-Unreal" },
-                  { icon: Twitch, href: "https://www.twitch.tv/absolutemikhail" },
+                  { icon: YoutubeIcon, href: "https://www.youtube.com/@Absolute-Unreal" },
+                  { icon: TwitchIcon, href: "https://www.twitch.tv/absolutemikhail" },
                   { icon: TelegramIcon, href: "https://t.me/AbsoluteUnderground" },
                   { icon: DiscordIcon, href: "https://discord.gg/NkwZ8pqyS6" },
                   { icon: SteamIcon, href: "https://store.steampowered.com/developer/GamePunk-Studio" },
@@ -121,6 +122,7 @@ const Index = () => {
           </div>
         </div>
       </footer>
+      <ScrollToTop />
     </div>
   );
 };

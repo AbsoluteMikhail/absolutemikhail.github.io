@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import heroPhoto from "@/assets/hero-photo.jpg";
-import { Youtube, Twitch } from "lucide-react";
-import { DiscordIcon, SteamIcon, TelegramIcon } from "@/components/SocialIcons";
+import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
 
 const HeroSection = () => {
   return (
@@ -108,8 +107,8 @@ const HeroSection = () => {
             className="flex gap-3"
           >
             {[
-              { icon: Youtube, href: "https://www.youtube.com/@Absolute-Unreal", label: "YouTube" },
-              { icon: Twitch, href: "https://www.twitch.tv/absolutemikhail", label: "Twitch" },
+              { icon: YoutubeIcon, href: "https://www.youtube.com/@Absolute-Unreal", label: "YouTube" },
+              { icon: TwitchIcon, href: "https://www.twitch.tv/absolutemikhail", label: "Twitch" },
               { icon: DiscordIcon, href: "https://discord.gg/NkwZ8pqyS6", label: "Discord" },
               { icon: TelegramIcon, href: "https://t.me/AbsoluteUnderground", label: "Telegram" },
               { icon: SteamIcon, href: "https://store.steampowered.com/developer/GamePunk-Studio", label: "Steam" },
