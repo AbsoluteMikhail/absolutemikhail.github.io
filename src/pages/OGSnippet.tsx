@@ -140,17 +140,17 @@ const OGSnippet = () => {
         </div>
 
         {/* Bottom Bar / Branding */}
-        <div className="absolute bottom-12 left-20 right-20 flex justify-between items-end">
-          <Logo className="text-3xl font-bold tracking-tighter" />
+        <div className="flex flex-col items-end bg-background/40 backdrop-blur-md px-5 py-3 rounded-xl border border-white/5 shadow-2xl">
+          <p className="text-[10px] uppercase tracking-[0.4em] text-primary/80 mb-2 font-black leading-none">
+            Official Portfolio
+          </p>
 
-          <div className="text-right bg-background/20 backdrop-blur-sm p-2 rounded-lg">
-            <p className="text-[11px] uppercase tracking-[0.5em] text-foreground/70 mb-1.5 font-bold">
-              Official Portfolio
-            </p>
-            <p className="text-sm font-display font-black text-primary/90 tracking-tight">
-              absolutemikhail.github.io
-            </p>
-          </div>
+          {/* Тонкая линия-разделитель в стиле UI игровых движков */}
+          <div className="h-[1px] w-full bg-gradient-to-l from-primary/50 to-transparent mb-2" />
+
+          <p className="text-sm font-display font-black text-foreground tracking-tight leading-none">
+            absolutemikhail.github.io
+          </p>
         </div>
 
         {/* Decorative corner accents */}
