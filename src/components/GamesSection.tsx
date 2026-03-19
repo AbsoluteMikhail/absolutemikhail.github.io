@@ -16,6 +16,7 @@ interface Game {
   fullDesc: string;
   tech: string[];
   players: string;
+  storeUrl?: string;
 }
 
 const games: Game[] = [
@@ -31,6 +32,7 @@ const games: Game[] = [
       "Герой просыпается в светлом, но пугающем лесу. Единственное спасение — ржавый кибер-холодильник, который служит базой. Если не вернуться к нему до темноты, лес поглотит вас. \n\nОсобенности игры:\n— Атмосферная Low-Poly графика в духе эпохи PlayStation 1;\n— Кибернизированные герои русских народных сказок;\n— Глубокое взаимодействие с грибами и вариативность прохождения;\n— Нарративное окружение и музыка, отсылающая к классике S.T.A.L.K.E.R. и Doom;\n— Две концовки, раскрывающие истинный смысл происходящего.",
     tech: ["Unreal Engine 5", "Blender", "FMOD", "PSX Shader Stack"],
     players: "В разработке",
+    storeUrl: "https://vkplay.ru/play/game/gribnik-the-forest-of-fools-44079",
   },
   {
     id: 2,
@@ -44,6 +46,7 @@ const games: Game[] = [
       "Недалекое будущее. Виртуальные дуэли стали легальным способом заработка и развлечения. В роли молодого дуэлянта вам предстоит сражаться в разных сеттингах — от Дикого Запада до киберпанка. \n\nКлючевые фишки:\n— 30-секундные динамичные поединки;\n— Сопровождение харизматичной ИИ-спутницы Малены;\n— Система отстрела конечностей и прокачка способностей;\n— Элементы Roguelike: риск обнуления прогресса в турнирном режиме;\n— Динамическая смена погоды и времени суток, влияющая на геймплей.",
     tech: ["Unreal Engine 5", "Niagara VFX", "Advanced IK System"],
     players: "Demo soon",
+    storeUrl: "https://store.steampowered.com/app/2854500?curator_clanid=45056388&utm_source=absolute&utm_medium=portfolio",
   },
   {
     id: 3,
@@ -57,6 +60,7 @@ const games: Game[] = [
       "Ящеры вторглись на Русь! Лишь Колобок, выпрыгнувший из печки, готов принять вызов. Катитесь, отскакивайте и крушите врагов в этом динамичном переосмыслении классического арканоида. \n\nВас ждет:\n— 21 уникальный уровень в разных локациях;\n— 3 уровня сложности: от новичка до мастера;\n— Бесконечный режим для самых стойких защитников;\n— 18 оригинальных музыкальных треков;\n— Легионы ящеров с уникальным поведением;\n— Море юмора и достижений.",
     tech: ["Unity", "C#", "Aseprite", "Original OST"],
     players: "10K+",
+    storeUrl: "https://vkplay.ru/play/game/kolobok-protiv-jascherov-arkanoid-40059",
   },
 ];
 
@@ -209,6 +213,20 @@ const GamesSection = () => {
                     </span>
                   ))}
                 </div>
+
+                {selectedGame.storeUrl && (
+                  <div className="pt-6">
+                    <a
+                      href={selectedGame.storeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-8 py-4 rounded-xl gradient-primary text-primary-foreground font-display text-sm tracking-wider uppercase hover:shadow-lg hover:shadow-primary/20 transition-all group"
+                    >
+                      Смотреть в магазине
+                      <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </a>
+                  </div>
+                )}
               </div>
             </motion.div>
           </motion.div>

@@ -17,7 +17,8 @@ const projects = [
     desc: "Атмосферный хоррор-симулятор выживания в стиле PSX. Исследуйте странный лес, собирайте грибы и защищайтесь от сказочных тварей.",
     tech: ["Unreal Engine 5", "Blender", "FMOD", "PSX Shader Stack"],
     stats: "В разработке",
-    type: "Game"
+    type: "Game",
+    storeUrl: "https://vkplay.ru/play/game/gribnik-the-forest-of-fools-44079"
   },
   {
     id: 2,
@@ -28,7 +29,8 @@ const projects = [
     desc: "Динамичный симулятор дуэлей в виртуальных мирах будущего. Короткие и яростные схватки, где всё решает реакция и выбор оружия.",
     tech: ["Unreal Engine 5", "Niagara VFX", "Advanced IK"],
     stats: "Demo soon",
-    type: "Game"
+    type: "Game",
+    storeUrl: "https://store.steampowered.com/app/2854500?curator_clanid=45056388&utm_source=absolute&utm_medium=portfolio"
   },
   {
     id: 3,
@@ -39,7 +41,8 @@ const projects = [
     desc: "Защитите Русь-матушку от вторжения легионов ящеров в этом безумном арканоиде с харизматичным героем и драйвовым саундтреком.",
     tech: ["Unity", "C#", "Aseprite", "Original OST"],
     stats: "10K+ Игроков",
-    type: "Game"
+    type: "Game",
+    storeUrl: "https://vkplay.ru/play/game/kolobok-protiv-jascherov-arkanoid-40059"
   }
 ];
 
@@ -139,10 +142,17 @@ const Projects = () => {
                     ))}
                   </div>
 
-                  <button className="w-full py-3 rounded-xl border border-primary/20 bg-primary/5 text-primary text-xs font-display tracking-widest uppercase font-bold hover:bg-primary hover:text-primary-foreground transition-all duration-300 flex items-center justify-center gap-2 group/btn">
-                    Смотреть проект
-                    <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                  </button>
+                  {project.storeUrl && (
+                    <a
+                      href={project.storeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-3 rounded-xl border border-primary/20 bg-primary/5 text-primary text-xs font-display tracking-widest uppercase font-bold hover:bg-primary hover:text-primary-foreground transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+                    >
+                      Смотреть проект
+                      <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                    </a>
+                  )}
                 </div>
               </motion.div>
             ))}
