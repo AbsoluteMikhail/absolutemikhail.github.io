@@ -24,6 +24,15 @@ const ScrollToTop = () => {
       top: 0,
       behavior: "smooth",
     });
+    
+    // Очистка хеша без перезагрузки
+    if (window.location.hash) {
+      window.history.pushState(
+        "",
+        document.title,
+        window.location.pathname + window.location.search
+      );
+    }
   };
 
   return (

@@ -11,6 +11,7 @@ import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@
 import { ContactEmail } from "@/components/ContactEmail";
 import ScrollToTop from "@/components/ScrollToTop";
 import LegalModal from "@/components/LegalModal";
+import Logo from "@/components/Logo";
 import { legalContent } from "@/constants/legalContent";
 
 const Index = () => {
@@ -33,9 +34,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             {/* Brand Column */}
             <div className="space-y-6">
-              <a href="#" className="font-display text-2xl font-bold tracking-tighter">
-                <span className="text-primary">&lt;</span>DEV<span className="text-primary">/&gt;</span>
-              </a>
+              <Logo className="font-display text-2xl font-bold tracking-tighter" />
               <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
                 Создаю захватывающие игровые миры и обучаю искусству разработки на Unreal Engine 5. Путь от идеи до реализации.
               </p>

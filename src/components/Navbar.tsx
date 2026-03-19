@@ -3,22 +3,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { ContactTelegram } from "@/components/ContactTelegram";
+import Logo from "@/components/Logo";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
-
-  const handleLogoClick = (e: React.MouseEvent) => {
-    if (isHomePage) {
-      e.preventDefault();
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
-  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -45,13 +36,9 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        <Link
-          to="/"
-          onClick={handleLogoClick}
+        <Logo
           className="font-display text-xl font-bold text-foreground z-50"
-        >
-          <span className="text-primary">&lt;</span>DEV<span className="text-primary">/&gt;</span>
-        </Link>
+        />
 
         {/* Desktop Navigation */}
         <div className="flex items-center gap-4">
