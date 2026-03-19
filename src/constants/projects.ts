@@ -48,7 +48,7 @@ export const projects: Project[] = [
     tech: ["Unreal Engine 5", "Niagara VFX", "Advanced IK System"],
     stats: "В разработке",
     storeUrl: "https://store.steampowered.com/app/2854500?curator_clanid=45056388&utm_source=absolute&utm_medium=portfolio",
-    videoUrl: "https://rutube.ru/play/embed/645bb330753f9dd744d94fe871acfff4/",
+    videoUrl: "https://rutube.ru/play/embed/d3e024f488a0e97cb7cf69a4629156a0/",
     screenshots: [duelant1, duelant2, duelant3, duelant4, duelant5],
   },
   {
