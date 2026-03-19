@@ -26,14 +26,18 @@ const OGSnippet = () => {
         Container with fixed 1200x630 aspect ratio, 
         but scales to fit the screen while maintaining proportions.
       */}
-      <div 
-        id="og-snippet-container"
-        className="relative bg-background overflow-hidden border border-white/5 shadow-[0_0_100px_rgba(0,0,0,0.8)] flex-shrink-0"
-        style={{
-          width: '1200px',
-          height: '630px',
-          transform: 'scale(var(--snippet-scale, 1))',
-        }}
+      <div
+          id="og-snippet-container"
+          className="relative bg-background overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(0,0,0,0.8)] flex-shrink-0"
+          style={{
+            width: '1200px',
+            height: '630px',
+            transform: 'scale(var(--snippet-scale, 1))',
+            // Внутренняя фаска (стеклянный край)
+            boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.05), 0 20px 50px rgba(0,0,0,0.5)',
+            // Легкий градиент поверх всего, чтобы создать эффект объема
+            backgroundImage: 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 40%)'
+          }}
       >
         {/* ============================================================================== */}
         {/* ВАРИАНТ 1: Очищенный блок фото с использованием CSS Mask */}
@@ -138,12 +142,12 @@ const OGSnippet = () => {
         {/* Bottom Bar / Branding */}
         <div className="absolute bottom-12 left-20 right-20 flex justify-between items-end">
           <Logo className="text-3xl font-bold tracking-tighter" />
-          
-          <div className="text-right">
-            <p className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground mb-1">
+
+          <div className="text-right bg-background/20 backdrop-blur-sm p-2 rounded-lg">
+            <p className="text-[11px] uppercase tracking-[0.5em] text-foreground/70 mb-1.5 font-bold">
               Official Portfolio
             </p>
-            <p className="text-sm font-display font-bold text-foreground/80">
+            <p className="text-sm font-display font-black text-primary/90 tracking-tight">
               absolutemikhail.github.io
             </p>
           </div>
