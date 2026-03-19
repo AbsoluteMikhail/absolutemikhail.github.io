@@ -33,10 +33,18 @@ const OGSnippet = () => {
             width: '1200px',
             height: '630px',
             transform: 'scale(var(--snippet-scale, 1))',
-            // Внутренняя фаска (стеклянный край)
-            boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.05), 0 20px 50px rgba(0,0,0,0.5)',
-            // Легкий градиент поверх всего, чтобы создать эффект объема
-            backgroundImage: 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 40%)'
+
+            // ВИШЕНКА №1: Внутренняя фаска (стеклянный край)
+            // Мы добавляем 1px белого цвета с очень низкой прозрачностью.
+            // Глаз видит это как блик на грани стекла.
+            boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.07), 0 20px 50px rgba(0,0,0,0.5)',
+
+            // ВИШЕНКА №2: Диагональный отблеск
+            // Создает эффект того, что на панель падает свет под углом.
+            backgroundImage: `
+            linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 30%),
+            linear-gradient(225deg, rgba(255,255,255,0.02) 0%, transparent 20%)
+          `
           }}
       >
         {/* ============================================================================== */}
@@ -96,7 +104,7 @@ const OGSnippet = () => {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-8xl font-display font-black leading-[0.9] mb-8 tracking-tighter"
+            className="text-8xl font-display font-black leading-[0.9] mb-8 tracking-tight"
             style={{ textShadow: '0 0 40px rgba(0,0,0,0.5)' }}
           >
             <span className="text-foreground">ABSOLUTE</span>
@@ -152,9 +160,9 @@ const OGSnippet = () => {
             {/* Тонкая линия-разделитель в стиле UI игровых движков */}
             <div className="h-[1px] w-full bg-gradient-to-l from-primary/50 to-transparent mb-2" />
 
-            <p className="text-sm font-display font-black text-foreground tracking-tight leading-none">
-              absolutemikhail.github.io
-            </p>
+              <p className="text-sm font-display font-bold text-foreground/90 tracking-wider leading-none antialiased">
+                  absolutemikhail.github.io
+              </p>
           </div>
         </div>
 
