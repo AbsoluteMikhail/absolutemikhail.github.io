@@ -35,37 +35,34 @@ const OGSnippet = () => {
           transform: 'scale(var(--snippet-scale, 1))',
         }}
       >
-        {/* 
-          ОБЛАСТЬ ФОТО: Теперь контейнер на весь сниппет (inset-0), 
-          чтобы градиенты начинались от левого края и не имели швов на границах блоков.
-        */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* ============================================================================== */}
+        {/* ВАРИАНТ 1: Очищенный блок фото с использованием CSS Mask */}
+        {/* ============================================================================== */}
+        <div
+            className="absolute top-0 right-0 h-full w-[65%] pointer-events-none"
+            style={{
+              // Маска делает левый край плавно прозрачным, убирая любые полосы.
+              maskImage: 'linear-gradient(to right, transparent 0%, black 40%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 40%)'
+            }}
+        >
           <img
               src={heroPhoto}
               alt="Absolute Mikhail"
-              // Фотография прижата к правому краю, занимает 65% ширины
-              className="absolute top-0 right-0 h-full w-[65%] object-cover object-top scale-[1.05] translate-x-[5%]"
+              // Оставляем твои настройки картинки
+              className="absolute inset-0 h-full w-full object-cover object-top scale-[1.05] translate-x-[5%]"
           />
 
-          {/* ГРАДИЕНТЫ ДЛЯ СМЕШИВАНИЯ (Стиль HeroSection, но без "грязной" интерполяции) */}
+          {/* Убираем левый градиент-наплыв (он больше не нужен поверх маски) */}
 
-          {/* СЛЕВА НАПРАВО: исправленный плавный переход */}
-          <div
-              className="absolute inset-0
-              bg-gradient-to-r
-              from-background
-              via-background/45
-              to-transparent
-              to-78%"
-          />
-          {/* СНИЗУ ВВЕРХ: Исправленный переход (to-background/0) */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/0 to-40%" />
+          {/* Оставляем ТОЛЬКО нижний и верхний градиенты, чтобы сохранить плавность снизу */}
+          {/* Снизу (подредактированный для плавности) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent to-30%" />
+          {/* Сверху */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-transparent" />
 
-          {/* СВЕРХУ ВНИЗ: Легкий акцент (to-background/0) */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/0 to-background/0" />
-
-          {/* Дополнительное свечение на персонаже */}
-          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[50%] h-full bg-primary/5 blur-[100px]" />
+          {/* Свечение */}
+          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px]" />
         </div>
         {/* ============================================================================== */}
 
