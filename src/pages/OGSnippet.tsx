@@ -40,11 +40,11 @@ const OGSnippet = () => {
           <img
             src={heroPhoto}
             alt="Absolute Mikhail"
-            className="h-full w-full object-cover object-top scale-[1.02] origin-right"
+            className="h-full w-full object-cover object-top scale-[1.1] translate-x-[10%]"
           />
           {/* Gradients to blend photo with the dark background */}
-          {/* We use a slightly wider gradient div to avoid a 1px edge artifact */}
-          <div className="absolute inset-y-0 -left-px right-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
+          {/* Increased overlap and opacity to perfectly hide any edge artifacts and accommodate the shift */}
+          <div className="absolute inset-y-0 -left-32 right-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-transparent" />
           
@@ -82,7 +82,7 @@ const OGSnippet = () => {
           >
             <div className="h-px w-12 bg-primary/50" />
             <p className="text-2xl text-muted-foreground font-medium tracking-wide">
-              Создаю миры, которые захватывают дух.
+              Создаю миры, которые захватывают дух
             </p>
           </motion.div>
 
