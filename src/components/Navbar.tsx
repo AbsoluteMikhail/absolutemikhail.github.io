@@ -48,7 +48,7 @@ const Navbar = () => {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-sm font-display tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors"
+                  className="text-sm font-display tracking-wider uppercase text-foreground/70 hover:text-primary transition-colors"
                 >
                   {link.label}
                 </a>
@@ -56,7 +56,7 @@ const Navbar = () => {
                 <Link
                   key={link.label}
                   to={`/${link.href.startsWith("#") ? link.href : ""}`}
-                  className="text-sm font-display tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors"
+                  className="text-sm font-display tracking-wider uppercase text-foreground/70 hover:text-primary transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -98,7 +98,7 @@ const Navbar = () => {
                     key={link.label}
                     href={link.href}
                     onClick={() => setIsOpen(false)}
-                    className="text-lg font-display tracking-widest uppercase text-muted-foreground hover:text-primary transition-colors py-2"
+                    className="text-lg font-display tracking-widest uppercase text-foreground/80 hover:text-primary transition-colors py-2"
                   >
                     {link.label}
                   </a>
@@ -107,7 +107,7 @@ const Navbar = () => {
                     key={link.label}
                     to={`/${link.href.startsWith("#") ? link.href : ""}`}
                     onClick={() => setIsOpen(false)}
-                    className="text-lg font-display tracking-widest uppercase text-muted-foreground hover:text-primary transition-colors py-2"
+                    className="text-lg font-display tracking-widest uppercase text-foreground/80 hover:text-primary transition-colors py-2"
                   >
                     {link.label}
                   </Link>
