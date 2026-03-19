@@ -51,6 +51,7 @@ const OGSnippet = () => {
               alt="Absolute Mikhail"
               // Оставляем настройки картинки
               className="absolute inset-0 h-full w-full object-cover object-top scale-[1.05] translate-x-[5%]"
+              style={{ filter: 'brightness(0.9) contrast(1.1) saturate(0.9)' }}
           />
 
           {/* Сбоку (мягкое припорошивание левого края градиентом) */}
@@ -63,7 +64,7 @@ const OGSnippet = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/0 to-background/0" />
 
           {/* Свечение */}
-          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px]" />
+          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px] mix-blend-screen" />
         </div>
         {/* ============================================================================== */}
 
@@ -83,6 +84,7 @@ const OGSnippet = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-8xl font-display font-black leading-[0.9] mb-8 tracking-tighter"
+            style={{ textShadow: '0 0 40px rgba(0,0,0,0.5)' }}
           >
             <span className="text-foreground">ABSOLUTE</span>
             <br />
