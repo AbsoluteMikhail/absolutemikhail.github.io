@@ -27,7 +27,7 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { label: "Обо мне", href: "#" },
+    { label: "Обо мне", href: "#about" },
     { label: "Достижения", href: "#timeline" },
     { label: "Проекты", href: "#games" },
     { label: "Менторинг", href: "#mentoring" },

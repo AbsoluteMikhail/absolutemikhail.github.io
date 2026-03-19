@@ -4,7 +4,7 @@ import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex flex-col md:flex-row md:items-center overflow-hidden bg-background">
+    <section id="about" className="relative min-h-screen flex flex-col md:flex-row md:items-center overflow-hidden bg-background">
       {/* Mobile: photo on top */}
       <div className="relative w-full h-[60vh] md:hidden">
         <motion.img

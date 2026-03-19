@@ -65,8 +65,9 @@ const Index = () => {
               <h4 className="font-display font-bold uppercase tracking-widest text-xs mb-6 text-foreground">Навигация</h4>
               <ul className="space-y-4">
                 {[
-                  { label: "Проекты", href: "#games" },
+                  { label: "Обо мне", href: "#about" },
                   { label: "Достижения", href: "#timeline" },
+                  { label: "Проекты", href: "#games" },
                   { label: "Менторинг", href: "#mentoring" },
                   { label: "Все проекты", href: "/projects" },
                 ].map((link) => (
