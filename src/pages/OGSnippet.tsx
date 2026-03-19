@@ -39,7 +39,7 @@ const OGSnippet = () => {
         {/* ВАРИАНТ 1: Очищенный блок фото с использованием CSS Mask */}
         {/* ============================================================================== */}
         <div
-            className="absolute top-0 right-0 h-full w-[65%] pointer-events-none"
+            className="absolute top-0 right-0 h-full w-[50%] pointer-events-none"
             style={{
               // Маска делает левый край плавно прозрачным, убирая любые полосы.
               maskImage: 'linear-gradient(to right, transparent 0%, black 40%)',
@@ -49,17 +49,15 @@ const OGSnippet = () => {
           <img
               src={heroPhoto}
               alt="Absolute Mikhail"
-              // Оставляем твои настройки картинки
+              // Оставляем настройки картинки
               className="absolute inset-0 h-full w-full object-cover object-top scale-[1.05] translate-x-[5%]"
           />
 
-          {/* Убираем левый градиент-наплыв (он больше не нужен поверх маски) */}
-
           {/* Оставляем ТОЛЬКО нижний и верхний градиенты, чтобы сохранить плавность снизу */}
           {/* Снизу (подредактированный для плавности) */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent to-30%" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/0 to-30%" />
           {/* Сверху */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/0 to-background/0" />
 
           {/* Свечение */}
           <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px]" />
