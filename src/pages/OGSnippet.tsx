@@ -42,8 +42,8 @@ const OGSnippet = () => {
             className="absolute top-0 right-0 h-full w-[50%] pointer-events-none"
             style={{
               // Маска делает левый край плавно прозрачным, убирая любые полосы.
-              maskImage: 'linear-gradient(to right, transparent 0%, black 40%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 40%)'
+              maskImage: 'linear-gradient(to right, transparent 0%, black 50%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 50%)'
             }}
         >
           <img
