@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Projects from "./pages/Projects";
 import Music from "./pages/Music";
 import Twitch from "./pages/Twitch";
+import OGSnippet from "./pages/OGSnippet";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/projects" element={<Projects />} />
           <Route path="/music" element={<Music />} />
           <Route path="/twitch" element={<Twitch />} />
+          <Route path="/og-snippet" element={<OGSnippet />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
