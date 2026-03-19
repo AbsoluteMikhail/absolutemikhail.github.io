@@ -99,7 +99,7 @@ const Projects = () => {
                 className="group relative bg-card/40 backdrop-blur-sm border border-border rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10"
               >
                 {/* Project Image */}
-                <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="relative aspect-video overflow-hidden">
                   <img 
                     src={project.cover} 
                     alt={project.title}
