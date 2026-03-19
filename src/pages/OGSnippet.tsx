@@ -41,9 +41,18 @@ const OGSnippet = () => {
         <div
             className="absolute top-0 right-0 h-full w-[50%] pointer-events-none"
             style={{
-              // Маска делает левый край плавно прозрачным, убирая любые полосы.
-              maskImage: 'linear-gradient(to right, transparent 0%, black 50%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 50%)'
+              // Мы объединяем две маски: горизонтальную (to right) и вертикальную (to top)
+              maskImage: `
+            linear-gradient(to right, transparent 0%, black 40%), 
+            linear-gradient(to top, transparent 0%, black 35%)
+        `,
+              WebkitMaskImage: `
+            linear-gradient(to right, transparent 0%, black 40%), 
+            linear-gradient(to top, transparent 0%, black 35%)
+        `,
+              // Это заставляет маски пересекаться (как логическое И в шейдерах)
+              maskComposite: 'intersect',
+              WebkitMaskComposite: 'source-in'
             }}
         >
           <img
@@ -51,7 +60,7 @@ const OGSnippet = () => {
               alt="Absolute Mikhail"
               // Оставляем настройки картинки
               className="absolute inset-0 h-full w-full object-cover object-top scale-[1.05] translate-x-[5%]"
-              style={{ filter: 'brightness(0.9) contrast(1.1) saturate(0.9)' }}
+              style={{ filter: 'brightness(0.9) contrast(1.1) saturate(0.8)' }}
           />
 
           {/* Сбоку (мягкое припорошивание левого края градиентом) */}
