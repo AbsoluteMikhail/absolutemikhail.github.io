@@ -49,9 +49,15 @@ const OGSnippet = () => {
 
           {/* ГРАДИЕНТЫ ДЛЯ СМЕШИВАНИЯ (Стиль HeroSection, но без "грязной" интерполяции) */}
 
-          {/* СЛЕВА НАПРАВО: Начинаем от фона и плавно уходим в прозрачность фона (to-background/0) */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/0 to-60%" />
-
+          {/* СЛЕВА НАПРАВО: исправленный плавный переход */}
+          <div
+              className="absolute inset-0
+              bg-gradient-to-r
+              from-background
+              via-background/45
+              to-transparent
+              to-78%"
+          />
           {/* СНИЗУ ВВЕРХ: Исправленный переход (to-background/0) */}
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/0 to-40%" />
 
