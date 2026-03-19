@@ -35,20 +35,20 @@ const OGSnippet = () => {
           transform: 'scale(var(--snippet-scale, 1))',
         }}
       >
-        {/* Photo and gradients for a seamless "modern gamedev" look */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Photo area with gradients - confined to the right side for a better transition */}
+        <div className="absolute top-0 right-0 h-full w-[55%] pointer-events-none overflow-hidden bg-background">
           <img
             src={heroPhoto}
             alt="Absolute Mikhail"
-            className="absolute top-0 right-0 h-full w-[55%] object-cover object-top scale-[1.1] translate-x-[8%]"
+            className="absolute inset-0 h-full w-full object-cover object-top scale-[1.1] translate-x-[8%]"
           />
-          {/* Gradients to blend photo with the dark background - matching HeroSection style but spanning full width for a smoother look */}
+          {/* Gradients to blend photo with the dark background - matching HeroSection style */}
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-transparent" />
           
           {/* Extra subtle glow on the character */}
-          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[50%] h-full bg-primary/5 blur-[100px]" />
+          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px]" />
         </div>
 
         {/* Left Side Content */}
