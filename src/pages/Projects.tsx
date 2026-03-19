@@ -9,28 +9,28 @@ import kolobokCover from "@/assets/projects/kolobok/cover.jpg";
 
 const projects = [
   {
+    id: 2,
+    title: "DUELANT",
+    genre: "Duel Simulator",
+    year: "2026",
+    cover: duelantCover,
+    desc: "Динамичный симулятор дуэлей в виртуальных мирах будущего. Короткие и яростные схватки, где всё решает реакция и выбор оружия.",
+    tech: ["Unreal Engine 5", "Niagara VFX", "Advanced IK"],
+    stats: "В разработке",
+    type: "Game",
+    storeUrl: "https://store.steampowered.com/app/2854500?curator_clanid=45056388&utm_source=absolute&utm_medium=portfolio"
+  },
+  {
     id: 1,
     title: "G.R.I.B.N.I.K. в лесу дураков",
     genre: "FPS / Horror",
     year: "2025",
     cover: gribnikCover,
     desc: "Атмосферный хоррор-симулятор выживания в стиле PSX. Исследуйте странный лес, собирайте грибы и защищайтесь от сказочных тварей.",
-    tech: ["Unreal Engine 5", "Blender", "FMOD", "PSX Shader Stack"],
+    tech: ["Unreal Engine 5", "Blender", "PSX Shader Stack"],
     stats: "В разработке",
     type: "Game",
     storeUrl: "https://vkplay.ru/play/game/gribnik-the-forest-of-fools-44079"
-  },
-  {
-    id: 2,
-    title: "DUELANT",
-    genre: "Duel Simulator",
-    year: "TBA",
-    cover: duelantCover,
-    desc: "Динамичный симулятор дуэлей в виртуальных мирах будущего. Короткие и яростные схватки, где всё решает реакция и выбор оружия.",
-    tech: ["Unreal Engine 5", "Niagara VFX", "Advanced IK"],
-    stats: "Demo soon",
-    type: "Game",
-    storeUrl: "https://store.steampowered.com/app/2854500?curator_clanid=45056388&utm_source=absolute&utm_medium=portfolio"
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ const projects = [
     year: "2024",
     cover: kolobokCover,
     desc: "Защитите Русь-матушку от вторжения легионов ящеров в этом безумном арканоиде с харизматичным героем и драйвовым саундтреком.",
-    tech: ["Unity", "C#", "Aseprite", "Original OST"],
+    tech: ["Unreal Engine 5", "Niagara VFX", "Original OST"],
     stats: "10K+ Игроков",
     type: "Game",
     storeUrl: "https://vkplay.ru/play/game/kolobok-protiv-jascherov-arkanoid-40059"
