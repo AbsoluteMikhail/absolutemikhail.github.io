@@ -35,20 +35,23 @@ const OGSnippet = () => {
           transform: 'scale(var(--snippet-scale, 1))',
         }}
       >
-        {/* Photo area with gradients - confined to the right side for a better transition */}
-        <div className="absolute top-0 right-0 h-full w-[55%] pointer-events-none overflow-hidden bg-background">
+        {/* Photo area with CSS Mask for perfect blending */}
+        <div
+            className="absolute top-0 right-0 h-full w-[60%] pointer-events-none"
+            style={{
+              // Маска делает левый край плавно прозрачным, убирая любые стыки с фоном
+              maskImage: 'linear-gradient(to right, transparent 0%, black 35%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 35%)'
+            }}
+        >
           <img
-            src={heroPhoto}
-            alt="Absolute Mikhail"
-            className="absolute inset-0 h-full w-full object-cover object-top scale-[1.1] translate-x-[8%]"
+              src={heroPhoto}
+              alt="Absolute Mikhail"
+              className="absolute inset-0 h-full w-full object-cover object-top scale-[1.1] translate-x-[8%]"
           />
-          {/* Gradients to blend photo with the dark background - matching HeroSection style */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-transparent" />
-          
-          {/* Extra subtle glow on the character */}
-          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px]" />
+
+          {/* Оставляем только свечение, если оно нужно для акцента на персонаже */}
+          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px] mix-blend-screen" />
         </div>
 
         {/* Left Side Content */}
