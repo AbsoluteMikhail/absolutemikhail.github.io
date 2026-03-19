@@ -10,6 +10,16 @@ const Navbar = () => {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
+  const handleLogoClick = (e: React.MouseEvent) => {
+    if (isHomePage) {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
@@ -35,7 +45,11 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="font-display text-xl font-bold text-foreground z-50">
+        <Link
+          to="/"
+          onClick={handleLogoClick}
+          className="font-display text-xl font-bold text-foreground z-50"
+        >
           <span className="text-primary">&lt;</span>DEV<span className="text-primary">/&gt;</span>
         </Link>
 

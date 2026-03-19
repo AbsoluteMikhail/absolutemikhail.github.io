@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import TimelineSection from "@/components/TimelineSection";
@@ -9,8 +10,12 @@ import { Mail, MapPin, ArrowUpRight } from "lucide-react";
 import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
 import { ContactEmail } from "@/components/ContactEmail";
 import ScrollToTop from "@/components/ScrollToTop";
+import LegalModal from "@/components/LegalModal";
+import { legalContent } from "@/constants/legalContent";
 
 const Index = () => {
+  const [activeLegalModal, setActiveLegalModal] = useState<"privacy" | "terms" | null>(null);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
@@ -116,13 +121,29 @@ const Index = () => {
               © 2026 Absolute Mikhail. Crafted with passion for GameDev.
             </p>
             <div className="flex gap-8">
-              <a href="#" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">Privacy Policy</a>
-              <a href="#" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">Terms of Service</a>
+              <button
+                onClick={() => setActiveLegalModal("privacy")}
+                className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
+              >
+                Privacy Policy
+              </button>
+              <button
+                onClick={() => setActiveLegalModal("terms")}
+                className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
+              >
+                Terms of Service
+              </button>
             </div>
           </div>
         </div>
       </footer>
       <ScrollToTop />
+      <LegalModal
+        isOpen={activeLegalModal !== null}
+        onClose={() => setActiveLegalModal(null)}
+        title={activeLegalModal ? legalContent[activeLegalModal].title : ""}
+        content={activeLegalModal ? legalContent[activeLegalModal].content : null}
+      />
     </div>
   );
 };

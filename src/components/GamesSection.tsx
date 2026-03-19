@@ -58,7 +58,7 @@ const games: Game[] = [
   {
     id: 1,
     title: "G.R.I.B.N.I.K. в лесу дураков",
-    genre: "FPS / Horror / Simulator",
+    genre: "FPS / Horror",
     year: "2025",
     cover: gribnikCover,
     shortDesc:
@@ -211,18 +211,18 @@ const GamesSection = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative max-w-4xl w-full bg-card border border-border rounded-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
+              className="relative max-w-4xl w-full bg-card border border-border rounded-2xl overflow-hidden max-h-[90vh] flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={handleCloseModal}
-                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-secondary/80 flex items-center justify-center text-foreground hover:bg-primary/20 hover:text-primary transition-colors"
+                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-secondary/80 flex items-center justify-center text-foreground hover:bg-primary/20 hover:text-primary transition-colors shadow-lg"
               >
                 <X className="w-5 h-5" />
               </button>
 
               {/* Carousel */}
-              <div className="relative group/carousel bg-black aspect-video">
+              <div className="relative group/carousel bg-black aspect-video flex-shrink-0 z-10 shadow-xl">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentSlide}
@@ -289,7 +289,7 @@ const GamesSection = () => {
                 </div>
               </div>
 
-              <div className="p-8 space-y-4">
+              <div className="p-8 space-y-4 overflow-y-auto flex-1">
                 <div className="flex items-center gap-4">
                   <span className="px-3 py-1 rounded-full gradient-primary text-xs font-display text-primary-foreground tracking-wider uppercase">
                     {selectedGame.genre}
@@ -302,9 +302,32 @@ const GamesSection = () => {
                   {selectedGame.title}
                 </h2>
 
-                <p className="text-muted-foreground leading-relaxed text-lg">
-                  {selectedGame.fullDesc}
-                </p>
+                <div className="text-muted-foreground leading-relaxed text-lg">
+                  {selectedGame.fullDesc.split("\n").map((line, idx) => {
+                    const trimmed = line.trim();
+                    if (!trimmed) return <div key={idx} className="h-2" />;
+                    if (trimmed.startsWith("—")) {
+                      return (
+                        <div key={idx} className="flex gap-3 pl-4 mb-2 last:mb-0">
+                          <span className="text-primary font-bold">—</span>
+                          <span>{trimmed.slice(1).trim()}</span>
+                        </div>
+                      );
+                    }
+                    if (trimmed.endsWith(":")) {
+                      return (
+                        <div key={idx} className="text-foreground font-bold mt-6 mb-3 first:mt-0 last:mb-0">
+                          {trimmed}
+                        </div>
+                      );
+                    }
+                    return (
+                      <p key={idx} className="mb-2 last:mb-0">
+                        {trimmed}
+                      </p>
+                    );
+                  })}
+                </div>
 
                 <div className="flex flex-wrap gap-2 pt-4">
                   {selectedGame.tech.map((t) => (

@@ -2,10 +2,12 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ExternalLink, Calendar, Users, Rocket, Code, Layout } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import gribnikCover from "@/assets/projects/gribnik/cover.jpg";
 import duelantCover from "@/assets/projects/duelant/cover.jpg";
 import kolobokCover from "@/assets/projects/kolobok/cover.jpg";
+import LegalModal from "@/components/LegalModal";
+import { legalContent } from "@/constants/legalContent";
 
 const projects = [
   {
@@ -47,6 +49,7 @@ const projects = [
 ];
 
 const Projects = () => {
+  const [activeLegalModal, setActiveLegalModal] = useState<"privacy" | "terms" | null>(null);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -157,8 +160,36 @@ const Projects = () => {
               </motion.div>
             ))}
           </div>
+          
+          {/* Footer inside container */}
+          <div className="pt-8 mt-24 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-xs text-muted-foreground">
+              © 2026 Absolute Mikhail. Crafted with passion for GameDev.
+            </p>
+            <div className="flex gap-8">
+              <button
+                onClick={() => setActiveLegalModal("privacy")}
+                className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
+              >
+                Privacy Policy
+              </button>
+              <button
+                onClick={() => setActiveLegalModal("terms")}
+                className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
+              >
+                Terms of Service
+              </button>
+            </div>
+          </div>
         </div>
       </main>
+
+      <LegalModal
+        isOpen={activeLegalModal !== null}
+        onClose={() => setActiveLegalModal(null)}
+        title={activeLegalModal ? legalContent[activeLegalModal].title : ""}
+        content={activeLegalModal ? legalContent[activeLegalModal].content : null}
+      />
 
       {/* Footer Decoration */}
       <div className="fixed bottom-0 left-0 w-full h-64 bg-gradient-to-t from-primary/5 to-transparent pointer-events-none -z-10" />
