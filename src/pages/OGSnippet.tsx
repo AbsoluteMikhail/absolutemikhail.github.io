@@ -35,40 +35,31 @@ const OGSnippet = () => {
           transform: 'scale(var(--snippet-scale, 1))',
         }}
       >
-        {/* ============================================================================== */}
-        {/* ОБНОВЛЕННАЯ ОБЛАСТЬ ФОТО: Увеличен наплыв слева и снизу */}
-        {/* ============================================================================== */}
-        {/* 1. Увеличили ширину контейнера с w-[55%] до w-[65%],
-             чтобы фотография уходила глубже влево под текст.
+        {/* 
+          ОБЛАСТЬ ФОТО: Теперь контейнер на весь сниппет (inset-0), 
+          чтобы градиенты начинались от левого края и не имели швов на границах блоков.
         */}
-        <div className="absolute top-0 right-0 h-full w-[65%] pointer-events-none overflow-hidden bg-background">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <img
               src={heroPhoto}
               alt="Absolute Mikhail"
-              // Чуть уменьшили масштаб и сдвиг, чтобы лицо не уехало слишком сильно из-за расширения контейнера
-              className="absolute inset-0 h-full w-full object-cover object-top scale-[1.05] translate-x-[5%]"
+              // Фотография прижата к правому краю, занимает 65% ширины
+              className="absolute top-0 right-0 h-full w-[65%] object-cover object-top scale-[1.05] translate-x-[5%]"
           />
 
-          {/* Градиенты для смешивания */}
+          {/* ГРАДИЕНТЫ ДЛЯ СМЕШИВАНИЯ (Стиль HeroSection, но без "грязной" интерполяции) */}
 
-          {/* СЛЕВА:
-            via-background/90 делает центральную часть градиента почти непрозрачной,
-            что создает глубокий наплыв черного.
-            to-50% означает, что к середине контейнера фото станет полностью прозрачным.
-          */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/100 to-transparent to-50%" />
+          {/* СЛЕВА НАПРАВО: Начинаем от фона и плавно уходим в прозрачность фона (to-background/0) */}
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/0 to-60%" />
 
-          {/* СНИЗУ:
-            Раньше было from-background via-transparent.
-            Теперь добавили via-background/80, чтобы черный цвет "поднимался" выше и плотнее.
-          */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent to-40%" />
+          {/* СНИЗУ ВВЕРХ: Исправленный переход (to-background/0) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/0 to-40%" />
 
-          {/* Верхний градиент оставляем легким */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-transparent" />
+          {/* СВЕРХУ ВНИЗ: Легкий акцент (to-background/0) */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/0 to-background/0" />
 
-          {/* Дополнительное свечение */}
-          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px]" />
+          {/* Дополнительное свечение на персонаже */}
+          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[50%] h-full bg-primary/5 blur-[100px]" />
         </div>
         {/* ============================================================================== */}
 
