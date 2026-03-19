@@ -36,7 +36,7 @@ const Logo = ({ className, onClick }: LogoProps) => {
     <Link
       to="/"
       onClick={handleClick}
-      className={className}
+      className={`${className} transition-all duration-300 hover:drop-shadow-[0_0_10px_hsl(var(--primary))]`}
     >
       <span className="text-primary">&lt;</span>DEV<span className="text-primary">/&gt;</span>
     </Link>
