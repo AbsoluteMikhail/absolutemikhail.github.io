@@ -42,8 +42,8 @@ const OGSnippet = () => {
             className="absolute top-0 right-0 h-full w-[50%] pointer-events-none"
             style={{
               // Маска делает левый край плавно прозрачным, убирая любые полосы.
-              maskImage: 'linear-gradient(to right, transparent 0%, black 70%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 70%)'
+              maskImage: 'linear-gradient(to right, transparent 0%, black 50%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 50%)'
             }}
         >
           <img
@@ -52,6 +52,9 @@ const OGSnippet = () => {
               // Оставляем настройки картинки
               className="absolute inset-0 h-full w-full object-cover object-top scale-[1.05] translate-x-[5%]"
           />
+
+          {/* Сбоку (мягкое припорошивание левого края градиентом) */}
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-background/0 to-60%" />
 
           {/* Оставляем ТОЛЬКО нижний и верхний градиенты, чтобы сохранить плавность снизу */}
           {/* Снизу (подредактированный для плавности) */}
