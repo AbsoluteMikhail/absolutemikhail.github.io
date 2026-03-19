@@ -3,53 +3,16 @@ import { Link } from "react-router-dom";
 import { ChevronLeft, ExternalLink, Calendar, Users, Rocket, Code, Layout } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
-import gribnikCover from "@/assets/projects/gribnik/cover.jpg";
-import duelantCover from "@/assets/projects/duelant/cover.jpg";
-import kolobokCover from "@/assets/projects/kolobok/cover.jpg";
 import LegalModal from "@/components/LegalModal";
 import { legalContent } from "@/constants/legalContent";
-
-const projects = [
-  {
-    id: 2,
-    title: "DUELANT",
-    genre: "Duel Simulator",
-    year: "2026",
-    cover: duelantCover,
-    desc: "Динамичный симулятор дуэлей в виртуальных мирах будущего. Короткие и яростные схватки, где всё решает реакция и выбор оружия.",
-    tech: ["Unreal Engine 5", "Niagara VFX", "Advanced IK"],
-    stats: "В разработке",
-    type: "Game",
-    storeUrl: "https://store.steampowered.com/app/2854500?curator_clanid=45056388&utm_source=absolute&utm_medium=portfolio"
-  },
-  {
-    id: 1,
-    title: "G.R.I.B.N.I.K. в лесу дураков",
-    genre: "FPS / Horror",
-    year: "2025",
-    cover: gribnikCover,
-    desc: "Атмосферный хоррор-симулятор выживания в стиле PSX. Исследуйте странный лес, собирайте грибы и защищайтесь от сказочных тварей.",
-    tech: ["Unreal Engine 5", "Blender", "PSX Shader Stack"],
-    stats: "В разработке",
-    type: "Game",
-    storeUrl: "https://vkplay.ru/play/game/gribnik-the-forest-of-fools-44079"
-  },
-  {
-    id: 3,
-    title: "КОЛОБОК против ЯЩЕРОВ",
-    genre: "Arcade / Arkanoid",
-    year: "2024",
-    cover: kolobokCover,
-    desc: "Защитите Русь-матушку от вторжения легионов ящеров в этом безумном арканоиде с харизматичным героем и драйвовым саундтреком.",
-    tech: ["Unreal Engine 5", "Niagara VFX", "Original OST"],
-    stats: "10K+ Игроков",
-    type: "Game",
-    storeUrl: "https://vkplay.ru/play/game/kolobok-protiv-jascherov-arkanoid-40059"
-  }
-];
+import { projects } from "@/constants/projects";
+import ProjectDetailModal from "@/components/ProjectDetailModal";
+import type { Project } from "@/constants/projects";
 
 const Projects = () => {
   const [activeLegalModal, setActiveLegalModal] = useState<"privacy" | "terms" | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -96,7 +59,8 @@ const Projects = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="group relative bg-card/40 backdrop-blur-sm border border-border rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10"
+                className="group relative bg-card/40 backdrop-blur-sm border border-border rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 cursor-pointer"
+                onClick={() => setSelectedProject(project)}
               >
                 {/* Project Image */}
                 <div className="relative aspect-video overflow-hidden">
@@ -131,7 +95,7 @@ const Projects = () => {
                   </h3>
                   
                   <p className="text-muted-foreground text-sm leading-relaxed mb-6 line-clamp-3">
-                    {project.desc}
+                    {project.shortDesc}
                   </p>
 
                   <div className="flex flex-wrap gap-2 mb-8">
@@ -145,17 +109,12 @@ const Projects = () => {
                     ))}
                   </div>
 
-                  {project.storeUrl && (
-                    <a
-                      href={project.storeUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full py-3 rounded-xl border border-primary/20 bg-primary/5 text-primary text-xs font-display tracking-widest uppercase font-bold hover:bg-primary hover:text-primary-foreground transition-all duration-300 flex items-center justify-center gap-2 group/btn"
-                    >
-                      Смотреть проект
-                      <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                    </a>
-                  )}
+                  <button
+                    className="w-full py-3 rounded-xl border border-primary/20 bg-primary/5 text-primary text-xs font-display tracking-widest uppercase font-bold hover:bg-primary hover:text-primary-foreground transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+                  >
+                    Подробнее
+                    <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                  </button>
                 </div>
               </motion.div>
             ))}
@@ -189,6 +148,12 @@ const Projects = () => {
         onClose={() => setActiveLegalModal(null)}
         title={activeLegalModal ? legalContent[activeLegalModal].title : ""}
         content={activeLegalModal ? legalContent[activeLegalModal].content : null}
+      />
+
+      <ProjectDetailModal
+        project={selectedProject}
+        isOpen={selectedProject !== null}
+        onClose={() => setSelectedProject(null)}
       />
 
       {/* Footer Decoration */}
