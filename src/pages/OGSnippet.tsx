@@ -35,24 +35,42 @@ const OGSnippet = () => {
           transform: 'scale(var(--snippet-scale, 1))',
         }}
       >
-        {/* Photo area with CSS Mask for perfect blending */}
-        <div
-            className="absolute top-0 right-0 h-full w-[60%] pointer-events-none"
-            style={{
-              // Маска делает левый край плавно прозрачным, убирая любые стыки с фоном
-              maskImage: 'linear-gradient(to right, transparent 0%, black 35%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 35%)'
-            }}
-        >
+        {/* ============================================================================== */}
+        {/* ОБНОВЛЕННАЯ ОБЛАСТЬ ФОТО: Увеличен наплыв слева и снизу */}
+        {/* ============================================================================== */}
+        {/* 1. Увеличили ширину контейнера с w-[55%] до w-[65%],
+             чтобы фотография уходила глубже влево под текст.
+        */}
+        <div className="absolute top-0 right-0 h-full w-[65%] pointer-events-none overflow-hidden bg-background">
           <img
               src={heroPhoto}
               alt="Absolute Mikhail"
-              className="absolute inset-0 h-full w-full object-cover object-top scale-[1.1] translate-x-[8%]"
+              // Чуть уменьшили масштаб и сдвиг, чтобы лицо не уехало слишком сильно из-за расширения контейнера
+              className="absolute inset-0 h-full w-full object-cover object-top scale-[1.05] translate-x-[5%]"
           />
 
-          {/* Оставляем только свечение, если оно нужно для акцента на персонаже */}
-          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px] mix-blend-screen" />
+          {/* Градиенты для смешивания */}
+
+          {/* СЛЕВА:
+            via-background/90 делает центральную часть градиента почти непрозрачной,
+            что создает глубокий наплыв черного.
+            to-50% означает, что к середине контейнера фото станет полностью прозрачным.
+          */}
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/100 to-transparent to-50%" />
+
+          {/* СНИЗУ:
+            Раньше было from-background via-transparent.
+            Теперь добавили via-background/80, чтобы черный цвет "поднимался" выше и плотнее.
+          */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent to-40%" />
+
+          {/* Верхний градиент оставляем легким */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-transparent" />
+
+          {/* Дополнительное свечение */}
+          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px]" />
         </div>
+        {/* ============================================================================== */}
 
         {/* Left Side Content */}
         <div className="relative z-10 h-full flex flex-col justify-center px-20 max-w-3xl">
