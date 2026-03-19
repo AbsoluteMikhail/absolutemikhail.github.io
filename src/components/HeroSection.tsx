@@ -4,7 +4,18 @@ import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@
 
 const HeroSection = () => {
   return (
-    <section id="about" className="relative min-h-screen flex flex-col md:flex-row md:items-center overflow-hidden bg-background">
+    <section 
+      id="about" 
+      className="relative min-h-screen flex flex-col md:flex-row md:items-center overflow-hidden bg-background"
+      style={{
+        // Глубина и объем: Внутренняя фаска (стеклянный край) и диагональные отблески
+        boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.05)',
+        backgroundImage: `
+          linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 30%),
+          linear-gradient(225deg, rgba(255,255,255,0.01) 0%, transparent 20%)
+        `
+      }}
+    >
       {/* Mobile: photo on top */}
       <div className="relative w-full h-[60vh] md:hidden">
         <motion.img
@@ -14,12 +25,26 @@ const HeroSection = () => {
           src={heroPhoto}
           alt="Game Developer"
           className="w-full h-full object-cover object-[center_20%]"
+          style={{ filter: 'brightness(0.9) contrast(1.1) saturate(0.8)' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background" />
+        <div 
+          className="absolute inset-0"
+          style={{
+            maskImage: 'linear-gradient(to top, transparent 0%, black 25%)',
+            WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 25%)',
+            backgroundColor: 'hsl(var(--background))'
+          }}
+        />
       </div>
 
       {/* Desktop: photo on the right */}
-      <div className="hidden md:block absolute top-0 right-0 h-full w-[50%] lg:w-[45%]">
+      <div 
+        className="hidden md:block absolute top-0 right-0 h-full w-[50%] lg:w-[45%] pointer-events-none"
+        style={{
+          maskImage: 'linear-gradient(to right, transparent 0%, black 40%)',
+          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 40%)'
+        }}
+      >
         <motion.div 
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -30,11 +55,14 @@ const HeroSection = () => {
             src={heroPhoto}
             alt="Game Developer"
             className="h-full w-full object-cover object-center"
+            style={{ filter: 'brightness(0.9) contrast(1.1) saturate(0.8)' }}
           />
-          {/* Gradients for smooth transition */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-transparent" />
+          {/* Gradients for smooth transition and depth */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/0 to-30%" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/0 to-background/0" />
+          
+          {/* Subtle Glow like in OG Snippet */}
+          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px] mix-blend-screen" />
         </motion.div>
       </div>
 
@@ -50,9 +78,9 @@ const HeroSection = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/40 bg-primary/10"
+            className="inline-block mb-4 px-5 py-2 rounded-full border border-primary/40 bg-primary/10"
           >
-            <span className="text-sm font-display tracking-widest text-primary uppercase">
+            <span className="text-sm font-display tracking-[0.3em] text-primary uppercase font-bold">
               Game Developer
             </span>
           </motion.div>
@@ -61,7 +89,8 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.7 }}
-            className="text-5xl md:text-7xl font-display font-bold leading-tight mb-6"
+            className="text-5xl md:text-7xl font-display font-black leading-tight mb-6 tracking-tight"
+            style={{ textShadow: '0 0 40px rgba(0,0,0,0.5)' }}
           >
             <span className="text-foreground">СОЗДАЮ</span>
             <br />

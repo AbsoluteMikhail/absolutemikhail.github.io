@@ -117,9 +117,14 @@ const Index = () => {
           </div>
 
           <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-xs text-muted-foreground">
-              © 2026 Absolute Mikhail. Crafted with passion for GameDev.
-            </p>
+            <div className="flex flex-col items-center md:items-start gap-2">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em]">
+                © 2026 Absolute Mikhail. Crafted with passion for GameDev.
+              </p>
+              <p className="text-xs font-display font-bold text-foreground/60 tracking-wider leading-none antialiased">
+                absolutemikhail.github.io
+              </p>
+            </div>
             <div className="flex gap-8">
               <button
                 onClick={() => setActiveLegalModal("privacy")}
