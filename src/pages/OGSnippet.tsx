@@ -36,15 +36,15 @@ const OGSnippet = () => {
         }}
       >
         {/* Photo on the right with complex gradients for the "modern gamedev" look */}
-        <div className="absolute top-0 right-0 h-full w-[55%] pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 h-full w-[55%] pointer-events-none overflow-hidden bg-background">
           <img
             src={heroPhoto}
             alt="Absolute Mikhail"
-            className="h-full w-full object-cover object-top scale-[1.1] translate-x-[10%]"
+            className="h-full w-full object-cover object-top scale-[1.2] translate-x-[10%]"
           />
           {/* Gradients to blend photo with the dark background */}
           {/* Increased overlap and opacity to perfectly hide any edge artifacts and accommodate the shift */}
-          <div className="absolute inset-y-0 -left-32 right-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
+          <div className="absolute inset-y-0 -left-32 right-0 bg-gradient-to-r from-background via-background to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-transparent" />
           
