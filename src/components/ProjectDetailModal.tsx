@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ExternalLink, ChevronRight, ChevronLeft } from "lucide-react";
+import { X, ExternalLink, ChevronRight, ChevronLeft, Play } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Project } from "@/constants/projects";
 
@@ -11,13 +11,19 @@ interface ProjectDetailModalProps {
 
 const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   // Сбрасываем слайд при смене проекта или закрытии
   useEffect(() => {
     if (!isOpen) {
       setCurrentSlide(0);
+      setIsVideoPlaying(false);
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    setIsVideoPlaying(false);
+  }, [currentSlide]);
 
   if (!project) return null;
 
@@ -54,32 +60,62 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
             </button>
 
             {/* Carousel */}
-            <div className="relative group/carousel bg-black aspect-video flex-shrink-0 z-10 shadow-xl">
+            <div className="relative group/carousel bg-black aspect-video flex-shrink-0 z-10 shadow-xl overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentSlide}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.3 }}
-                  className="w-full h-full"
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  onDragEnd={(_, info) => {
+                    const threshold = 50;
+                    if (info.offset.x < -threshold) {
+                      setCurrentSlide((prev) => (prev + 1) % slides.length);
+                    } else if (info.offset.x > threshold) {
+                      setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+                    }
+                  }}
+                  className="w-full h-full cursor-grab active:cursor-grabbing touch-none"
                 >
                   {slides[currentSlide].type === "video" ? (
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src={slides[currentSlide].url}
-                      style={{ border: "none" }}
-                      allow="clipboard-write; autoplay"
-                      webkitAllowFullScreen
-                      mozAllowFullScreen
-                      allowFullScreen
-                    />
+                    <div className="relative w-full h-full">
+                      {isVideoPlaying ? (
+                        <iframe
+                          width="100%"
+                          height="100%"
+                          src={slides[currentSlide].url}
+                          style={{ border: "none" }}
+                          allow="clipboard-write; autoplay"
+                          webkitAllowFullScreen
+                          mozAllowFullScreen
+                          allowFullScreen
+                        />
+                      ) : (
+                        <div 
+                          className="relative w-full h-full cursor-pointer group/play"
+                          onClick={() => setIsVideoPlaying(true)}
+                        >
+                          <img
+                            src={project.cover}
+                            alt={project.title}
+                            className="w-full h-full object-cover brightness-50 group-hover/play:brightness-75 transition-all"
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-20 h-20 rounded-full bg-primary/80 flex items-center justify-center text-white group-hover/play:scale-110 transition-transform box-glow">
+                              <Play className="w-10 h-10 fill-current ml-1" />
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   ) : (
                     <img
                       src={slides[currentSlide].url}
                       alt={`${project.title} screenshot ${currentSlide}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover pointer-events-none"
                     />
                   )}
                 </motion.div>
@@ -91,7 +127,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
                   e.stopPropagation();
                   setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
                 }}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white opacity-0 group-hover/carousel:opacity-100 transition-opacity hover:bg-primary/50"
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white md:opacity-0 md:group-hover/carousel:opacity-100 opacity-100 transition-all hover:bg-primary/50 z-20"
               >
                 <ChevronLeft className="w-6 h-6" />
               </button>
@@ -100,7 +136,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
                   e.stopPropagation();
                   setCurrentSlide((prev) => (prev + 1) % slides.length);
                 }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white opacity-0 group-hover/carousel:opacity-100 transition-opacity hover:bg-primary/50"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white md:opacity-0 md:group-hover/carousel:opacity-100 opacity-100 transition-all hover:bg-primary/50 z-20"
               >
                 <ChevronRight className="w-6 h-6" />
               </button>
