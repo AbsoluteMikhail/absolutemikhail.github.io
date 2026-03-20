@@ -20,14 +20,26 @@ const GamesSection = () => {
   return (
     <section id="games" className="py-24">
       <div className="container mx-auto px-6">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-display font-bold text-center mb-16"
-        >
-          <span className="gradient-text uppercase">Мои проекты</span>
-        </motion.h2>
+        <div className="mb-16 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5"
+          >
+            <span className="text-xs font-display tracking-widest text-primary uppercase">
+              Игры
+            </span>
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-5xl font-display font-bold"
+          >
+            <span className="gradient-text uppercase">Мои проекты</span>
+          </motion.h2>
+        </div>
 
         <div className="space-y-16">
           {projects.map((game, i) => (
