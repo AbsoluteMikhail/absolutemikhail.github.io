@@ -13,12 +13,25 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
-  // Сбрасываем слайд при смене проекта или закрытии
+  // Сбрасываем слайд при смене проекта или закрытии и блокируем прокрутку
   useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.style.overflow = 'unset';
+      document.body.classList.remove('modal-open');
+    }
+    
     if (!isOpen) {
       setCurrentSlide(0);
       setIsVideoPlaying(false);
     }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.body.classList.remove('modal-open');
+    };
   }, [isOpen]);
 
   useEffect(() => {

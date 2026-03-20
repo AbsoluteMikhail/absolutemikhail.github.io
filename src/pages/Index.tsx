@@ -18,7 +18,7 @@ const Index = () => {
   const [activeLegalModal, setActiveLegalModal] = useState<"privacy" | "terms" | null>(null);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
       <HeroSection />
       <TimelineSection />

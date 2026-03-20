@@ -127,10 +127,10 @@ const ReviewsSection = () => {
         </motion.h2>
       </div>
 
-      <div className="relative group">
+      <div className="relative group overflow-hidden">
         {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background via-background/80 to-transparent z-20 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background via-background/80 to-transparent z-20 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-background via-background/80 to-transparent z-20 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-background via-background/80 to-transparent z-20 pointer-events-none" />
 
         <div className="flex w-fit">
           <motion.div 
@@ -139,7 +139,7 @@ const ReviewsSection = () => {
               x: ["0%", "-33.333%"]
             }}
             transition={{
-              duration: 40,
+              duration: 80,
               ease: "linear",
               repeat: Infinity,
             }}

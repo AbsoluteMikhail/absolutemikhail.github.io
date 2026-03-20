@@ -4,6 +4,23 @@ import { ChevronUp } from "lucide-react";
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Следим за тем, открыто ли модальное окно (через класс на body)
+  useEffect(() => {
+    const checkModal = () => {
+      setIsModalOpen(document.body.classList.contains("modal-open"));
+    };
+
+    // Начальная проверка
+    checkModal();
+
+    // Наблюдатель за изменениями классов body
+    const observer = new MutationObserver(checkModal);
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
+  }, []);
 
   // Показываем кнопку, если прокрутили ниже hero-блока (около 100vh)
   useEffect(() => {
@@ -37,7 +54,7 @@ const ScrollToTop = () => {
 
   return (
     <AnimatePresence>
-      {isVisible && (
+      {isVisible && !isModalOpen && (
         <motion.button
           initial={{ opacity: 0, scale: 0.5, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
