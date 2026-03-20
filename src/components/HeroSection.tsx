@@ -30,8 +30,8 @@ const HeroSection = () => {
         <div 
           className="absolute inset-0"
           style={{
-            maskImage: 'linear-gradient(to top, transparent 0%, black 25%)',
-            WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 25%)',
+            maskImage: 'linear-gradient(to top, black 0%, transparent 20%, transparent 90%, black 100%)',
+            WebkitMaskImage: 'linear-gradient(to top, black 0%, transparent 20%, transparent 90%, black 100%)',
             backgroundColor: 'hsl(var(--background))'
           }}
         />
