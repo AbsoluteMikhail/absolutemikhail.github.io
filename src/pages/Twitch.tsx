@@ -9,8 +9,8 @@ const Twitch = () => {
   const wsRef = useRef<WebSocket | null>(null);
 
   const config = {
-    wsUrl: 'wss://twitchwebsocket.onrender.com',
-    pingUrl: 'https://twitchwebsocket.onrender.com/',
+    wsUrl: 'ws://85.208.85.221:3000',
+    pingUrl: 'http://85.208.85.221:3000/',
     pingInterval: 10 * 60 * 1000,
     maxBunnies: 10,
     bunnySize: 64,
