@@ -240,7 +240,14 @@ const Twitch = () => {
       emote.style.animation = `twitch-fly ${duration}s linear ${delay}s forwards`;
       
       const img = document.createElement('img');
-      img.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`;
+      
+      if (emoteId.startsWith('uni_')) {
+          const hexCode = emoteId.split('_')[1];
+          img.src = `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/${hexCode}.png`;
+      } else {
+          img.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`;
+      }
+
       img.style.width = `${config.emoteSize}px`;
       img.style.height = `${config.emoteSize}px`;
       img.style.animation = `twitch-pulse 1.5s ease-in-out infinite, twitch-sway 2s ease-in-out infinite`;
