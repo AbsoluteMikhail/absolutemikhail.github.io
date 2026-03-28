@@ -9,8 +9,8 @@ const Twitch = () => {
   const wsRef = useRef<WebSocket | null>(null);
 
   const config = {
-    wsUrl: 'ws://85.208.85.221:3000',
-    pingUrl: 'http://85.208.85.221:3000/',
+    wsUrl: 'wss://api.cg-studio.ru/',
+    pingUrl: 'https://api.cg-studio.ru/',
     pingInterval: 10 * 60 * 1000,
     maxBunnies: 10,
     bunnySize: 64,
