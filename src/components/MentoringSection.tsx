@@ -5,47 +5,47 @@ import { ContactTelegram } from "@/components/ContactTelegram";
 const packages = [
   {
     icon: Zap,
-    title: "Разовый созвон",
-    price: "5 000 ₽",
-    period: "1 час",
-    description: "Идеально для точечных вопросов и code review",
+    title: "Вход в индустрию & Ревью идей",
+    price: "3 000 ₽",
+    period: "45 минут",
+    description: "Твой быстрый старт без ошибок новичка.",
     features: [
-      "1 час видеозвонка",
-      "Разбор вашего проекта",
-      "Ответы на вопросы по UE5 / C++",
-      "Рекомендации по архитектуре",
+      "Карьерный аудит: Как собрать портфолио, которое не стыдно показать топ-студиям.",
+      "Вектор развития: Выбор стека технологий под твой проект (UE5 / C++ / Plugins).",
+      "GDD-Check: Разбор твоей идеи на жизнеспособность и монетизацию.",
+      "Q&A: Честные ответы о жизни в геймдеве и «подводных камнях» IT.",
     ],
+    buttonText: "Забронировать 45 минут",
     popular: false,
   },
   {
     icon: Flame,
-    title: "Стандарт",
-    price: "8 000 ₽",
-    period: "/ мес",
-    description: "Регулярное сопровождение с обратной связью",
+    title: "Blueprint-Ревью & Оптимизация",
+    price: "7 000 ₽",
+    period: "",
+    description: "Чистим «спагетти» и готовим проект к релизу.",
     features: [
-      "2 созвона по 1 часу в месяц",
-      "Разбор кода между сессиями",
-      "Поддержка в чате",
-      "Персональный план обучения",
-      "Приоритетные ответы",
+      "Logic Review: Глубокий разбор твоих Блюпринтов на наличие багов и утечек.",
+      "Рефакторинг: Как превратить хаос в читаемую и расширяемую систему.",
+      "Performance: Оптимизация логики, материалов и систем частиц (Niagara).",
+      "Roadmap: Пошаговый план миграции тяжелой логики на C++.",
     ],
+    buttonText: "Исправить мой код",
     popular: true,
   },
   {
     icon: Crown,
-    title: "Интенсив",
-    price: "14 000 ₽",
-    period: "/ мес",
-    description: "Максимальное погружение и быстрый рост",
+    title: "Архитектура & Hardcore C++",
+    price: "12 000 ₽",
+    period: "",
+    description: "Доступ к опыту Lead Developer для решения High-end задач.",
     features: [
-      "4 созвона по 1 часу в месяц",
-      "Еженедельный разбор прогресса",
-      "Поддержка в чате 24/7",
-      "Совместная работа над проектом",
-      "Помощь с портфолио",
-      "Ревью резюме для геймдева",
+      "Deep Dive: Проектирование сложных систем на C++ (Subsystems, GAS, Multi-threading).",
+      "Code Surgery: Вместе фиксим «нерешаемые» баги и крэши движка.",
+      "Industrial Standard: Внедрение архитектурных паттернов уровня AAA-студий.",
+      "AI & Tools: Создание кастомных инструментов и продвинутого ИИ.",
     ],
+    buttonText: "Стать Senior-разработчиком",
     popular: false,
   },
 ];
@@ -154,12 +154,24 @@ const MentoringSection = () => {
                       : "border border-primary/20 text-primary hover:bg-primary/5 active:scale-95"
                   }`}
                 >
-                  Записаться
+                  {pkg.buttonText}
                 </ContactTelegram>
               </motion.div>
             );
           })}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="text-center mt-12"
+        >
+          <p className="text-muted-foreground text-sm font-medium">
+            💡 При записи на аудит за 7к или 12к запись созвона и конспект правок — бесплатно.
+          </p>
+        </motion.div>
       </div>
     </section>
   );
