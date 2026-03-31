@@ -16,13 +16,14 @@ const packages = [
       "Q&A: Честные ответы о жизни в геймдеве и «подводных камнях» IT.",
     ],
     buttonText: "Забронировать 45 минут",
+    telegramMessage: "Привет! Хочу записаться на Gamedev-Стратегию",
     popular: false,
   },
   {
     icon: Flame,
     title: "Blueprint-Ревью & Оптимизация",
     price: "7 000 ₽",
-    period: "",
+    period: "1 час",
     description: "Чистим «спагетти» и готовим проект к релизу.",
     features: [
       "Logic Review: Глубокий разбор твоих Блюпринтов на наличие багов и утечек.",
@@ -31,13 +32,14 @@ const packages = [
       "Roadmap: Пошаговый план миграции тяжелой логики на C++.",
     ],
     buttonText: "Исправить мой код",
+    telegramMessage: "Привет! Хочу записаться на Blueprint-Ревью",
     popular: true,
   },
   {
     icon: Crown,
     title: "Архитектура & Hardcore C++",
     price: "12 000 ₽",
-    period: "",
+    period: "1 час",
     description: "Доступ к опыту Lead Developer для решения High-end задач.",
     features: [
       "Deep Dive: Проектирование сложных систем на C++ (Subsystems, GAS, Multi-threading).",
@@ -46,6 +48,7 @@ const packages = [
       "AI & Tools: Создание кастомных инструментов и продвинутого ИИ.",
     ],
     buttonText: "Стать Senior-разработчиком",
+    telegramMessage: "Привет! Хочу записаться на Lead-консалтинг",
     popular: false,
   },
 ];
@@ -148,6 +151,7 @@ const MentoringSection = () => {
                 </ul>
 
                 <ContactTelegram
+                  message={pkg.telegramMessage}
                   className={`block text-center py-4 rounded-2xl font-display text-xs font-bold uppercase tracking-[0.15em] transition-all duration-300 ${
                     pkg.popular
                       ? "gradient-primary text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-95"
