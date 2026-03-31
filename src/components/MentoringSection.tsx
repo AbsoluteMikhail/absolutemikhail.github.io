@@ -23,7 +23,7 @@ const packages = [
     icon: Flame,
     title: "Blueprint-Ревью & Оптимизация",
     price: "7 000 ₽",
-    period: "1 час",
+    period: "1.5 часа",
     description: "Чистим «спагетти» и готовим проект к релизу.",
     features: [
       "Logic Review: Глубокий разбор твоих Блюпринтов на наличие багов и утечек.",
