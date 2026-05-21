@@ -176,9 +176,9 @@ const AcademyHome = () => (
         </p>
         <blockquote className="mt-8 max-w-2xl rounded-lg border-l-4 border-primary bg-card/45 px-5 py-4">
           <p className="text-xl font-display font-bold leading-8">
-            "нормально делай нормально будет"
+            "Нормально делай, нормально будет!"
           </p>
-          <footer className="mt-3 text-sm text-muted-foreground">абсолютный михаил =)</footer>
+          <footer className="mt-3 text-sm text-muted-foreground">Абсолютный Михаил</footer>
         </blockquote>
       </section>
 
