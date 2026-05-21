@@ -98,6 +98,113 @@
   }
 }
 
+@layer components {
+  .academy-prose {
+    @apply text-base leading-8 text-foreground/90;
+  }
+
+  .academy-prose > * + * {
+    @apply mt-5;
+  }
+
+  .academy-prose h1 {
+    @apply mt-0 font-display text-4xl font-bold leading-tight text-foreground md:text-5xl;
+  }
+
+  .academy-prose h2 {
+    @apply scroll-mt-24 pt-6 font-display text-2xl font-bold leading-tight text-foreground;
+  }
+
+  .academy-prose h3 {
+    @apply scroll-mt-24 pt-4 font-display text-xl font-bold leading-tight text-foreground;
+  }
+
+  .academy-prose h4 {
+    @apply scroll-mt-24 pt-3 font-display text-lg font-bold leading-tight text-foreground;
+  }
+
+  .academy-prose p {
+    @apply text-foreground/85;
+  }
+
+  .academy-prose a {
+    @apply text-primary underline underline-offset-4 transition-colors hover:text-accent;
+  }
+
+  .academy-prose strong {
+    @apply font-semibold text-foreground;
+  }
+
+  .academy-prose em {
+    @apply text-foreground;
+  }
+
+  .academy-prose ul,
+  .academy-prose ol {
+    @apply space-y-2 pl-6;
+  }
+
+  .academy-prose ul {
+    @apply list-disc;
+  }
+
+  .academy-prose ol {
+    @apply list-decimal;
+  }
+
+  .academy-prose li {
+    @apply pl-1 text-foreground/85;
+  }
+
+  .academy-prose blockquote {
+    @apply rounded-lg border-l-4 border-primary bg-primary/10 px-5 py-4 font-medium text-foreground;
+  }
+
+  .academy-prose blockquote > * + * {
+    @apply mt-3;
+  }
+
+  .academy-prose pre {
+    @apply overflow-x-auto rounded-lg border border-border bg-black/35 p-4 text-sm leading-7;
+  }
+
+  .academy-prose :not(pre) > code {
+    @apply rounded-md border border-border bg-secondary/70 px-1.5 py-0.5 text-sm text-accent;
+  }
+
+  .academy-prose figure {
+    @apply overflow-hidden rounded-lg border border-border bg-card/35;
+  }
+
+  .academy-prose img {
+    @apply w-full object-cover;
+  }
+
+  .academy-prose figcaption {
+    @apply border-t border-border px-4 py-2 text-sm text-muted-foreground;
+  }
+
+  .academy-prose hr {
+    @apply my-8 border-border;
+  }
+
+  .academy-callout {
+    @apply rounded-lg border p-4;
+  }
+
+  .academy-callout__header {
+    @apply mb-2 flex items-center gap-2 text-sm font-bold;
+  }
+
+  .academy-callout .academy-prose {
+    @apply text-sm leading-7;
+  }
+
+  .academy-callout .academy-prose > * + * {
+    @apply mt-3;
+  }
+}
+
 /* Marquee animation for reviews */
 @keyframes marquee {
   0% { transform: translateX(0); }
