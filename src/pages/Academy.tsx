@@ -13,6 +13,7 @@ import {
   GraduationCap,
   Layers,
   PlayCircle,
+  Tag,
 } from "lucide-react";
 import {
   academyCourses,
@@ -26,10 +27,13 @@ import { MarkdownContent, TableOfContents } from "@/components/academy/MarkdownC
 import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
 
 const AcademyShell = ({ children }: { children: React.ReactNode }) => (
-  <div className="min-h-screen bg-background text-foreground">
-    <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur-xl">
+  <div className="min-h-screen bg-background pt-16 text-foreground">
+    <header className="fixed left-0 top-0 z-40 w-full border-b border-border bg-background/90 backdrop-blur-xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-6">
-        <Link className="flex items-center gap-3" to="/academy">
+        <Link
+          className="flex items-center gap-3 transition-all duration-300 hover:drop-shadow-[0_0_10px_hsl(var(--primary))]"
+          to="/academy"
+        >
           <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-primary/30 bg-primary/10 text-primary">
             <GraduationCap className="h-5 w-5" />
           </span>
@@ -66,7 +70,7 @@ const CourseMeta = ({ course }: { course: AcademyCourse }) => (
     </div>
     <div className="rounded-lg border border-border bg-card/40 p-4">
       <Boxes className="mb-3 h-5 w-5 text-accent" />
-      <p className="text-lg font-display font-bold">{course.project || "Gameplay sandbox"}</p>
+      <p className="text-lg font-display font-bold">{course.project || "Не задан"}</p>
       <p className="text-xs uppercase tracking-widest text-muted-foreground">сквозной проект</p>
     </div>
     <div className="rounded-lg border border-border bg-card/40 p-4">
@@ -84,56 +88,60 @@ const LessonSidebar = ({
   activeLessonSlug?: string;
   course: AcademyCourse;
 }) => (
-  <aside className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto">
-    <Link
-      className="mb-5 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
-      to="/academy"
-    >
-      <ArrowLeft className="h-4 w-4" />
-      Все курсы
-    </Link>
+  <aside className="lg:self-start">
+    <div className="lg:fixed lg:left-6 lg:top-[6.5rem] lg:flex lg:max-h-[calc(100vh-6.5rem)] lg:w-[280px] lg:flex-col 2xl:left-[calc((100vw-1400px)/2+1.5rem)]">
+      <div className="shrink-0">
+        <Link
+          className="mb-5 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
+          to="/academy"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Все курсы
+        </Link>
 
-    <div className="rounded-lg border border-border bg-card/35 p-4">
-      <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.24em] text-primary">Курс</p>
-      <Link className="font-display text-lg font-bold transition-colors hover:text-primary" to={`/academy/${course.slug}`}>
-        {course.title}
-      </Link>
-    </div>
-
-    <div className="mt-6 space-y-6">
-      {groupLessonsByBlock(course.lessons).map((block) => (
-        <div key={block.title}>
-          <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-muted-foreground">
-            {block.title}
-          </p>
-          <div className="space-y-1">
-            {block.lessons.map((lesson) => (
-              <Link
-                className={`block rounded-md border px-3 py-2 text-sm transition-colors ${
-                  activeLessonSlug === lesson.slug
-                    ? "border-primary/40 bg-primary/10 text-primary"
-                    : "border-transparent text-muted-foreground hover:border-border hover:bg-secondary/30 hover:text-foreground"
-                }`}
-                key={lesson.slug}
-                to={`/academy/${course.slug}/${lesson.slug}`}
-              >
-                <span className="mr-2 text-xs opacity-60">{lesson.meta.video}</span>
-                {lesson.meta.title}
-              </Link>
-            ))}
-          </div>
+        <div className="rounded-lg border border-border bg-card/35 p-4">
+          <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.24em] text-primary">Курс</p>
+          <Link className="font-display text-lg font-bold transition-colors hover:text-primary" to={`/academy/${course.slug}`}>
+            {course.title}
+          </Link>
         </div>
-      ))}
+      </div>
+
+      <div className="mt-6 space-y-6 lg:min-h-0 lg:overflow-y-auto lg:pr-2">
+        {groupLessonsByBlock(course.lessons).map((block) => (
+          <div key={block.title}>
+            <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-muted-foreground">
+              {block.title}
+            </p>
+            <div className="space-y-1">
+              {block.lessons.map((lesson) => (
+                <Link
+                  className={`block rounded-md border px-3 py-2 text-sm transition-colors ${
+                    activeLessonSlug === lesson.slug
+                      ? "border-primary/40 bg-primary/10 text-primary"
+                      : "border-transparent text-muted-foreground hover:border-border hover:bg-secondary/30 hover:text-foreground"
+                  }`}
+                  key={lesson.slug}
+                  to={`/academy/${course.slug}/${lesson.slug}`}
+                >
+                  <span className="mr-2 text-xs opacity-60">{lesson.meta.video}</span>
+                  {lesson.meta.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   </aside>
 );
 
 const CourseCard = ({ course }: { course: AcademyCourse }) => (
   <Link
-    className="group block rounded-lg border border-border bg-card/45 p-6 transition-all hover:border-primary/45 hover:bg-card/70 hover:shadow-2xl hover:shadow-primary/10"
+    className="group flex h-full flex-col rounded-lg border border-border bg-card/45 p-5 transition-all hover:border-primary/45 hover:bg-card/70 hover:shadow-2xl hover:shadow-primary/10"
     to={`/academy/${course.slug}`}
   >
-    <div className="mb-8 flex items-start justify-between gap-4">
+    <div className="mb-5 flex items-start justify-between gap-4">
       <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary">
         <Code2 className="h-5 w-5" />
       </div>
@@ -145,35 +153,31 @@ const CourseCard = ({ course }: { course: AcademyCourse }) => (
     <h2 className="mb-3 font-display text-2xl font-bold transition-colors group-hover:text-primary">
       {course.title}
     </h2>
-    <p className="mb-6 max-w-2xl text-sm leading-6 text-muted-foreground">{course.description}</p>
+    <p className="mb-5 text-sm leading-6 text-muted-foreground">{course.description}</p>
 
-    <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+    <div className="mt-auto flex flex-wrap gap-2 text-xs text-muted-foreground">
       <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/40 px-2.5 py-1">
         <BookOpen className="h-3.5 w-3.5" />
         {course.lessons.length ? `${course.lessons.length} уроков` : "материалы"}
       </span>
-      {course.project ? (
-        <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/40 px-2.5 py-1">
-          <Boxes className="h-3.5 w-3.5" />
-          {course.project}
+      {course.tags.map((tag) => (
+        <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/40 px-2.5 py-1" key={tag}>
+          <Tag className="h-3.5 w-3.5" />
+          {tag}
         </span>
-      ) : null}
+      ))}
     </div>
   </Link>
 );
 
 const AcademyHome = () => (
   <AcademyShell>
-    <main className="container mx-auto px-6 py-16 lg:py-24">
+    <main className="container mx-auto px-6 py-10 lg:py-14">
       <section className="mb-12 max-w-4xl">
         <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-primary">Документация к курсам</p>
         <h1 className="mb-6 font-display text-4xl font-bold leading-tight md:text-6xl">
-          Academy для конспектов, материалов и структуры курса
+          Absolute Unreal Engine Academy
         </h1>
-        <p className="max-w-2xl text-lg leading-8 text-muted-foreground">
-          Скрытый раздел сайта, доступный по прямой ссылке. Контент редактируется через Markdown-файлы:
-          уроки, картинки, ссылки, списки, цитаты и блоки кода без постоянной правки React.
-        </p>
         <blockquote className="mt-8 max-w-2xl rounded-lg border-l-4 border-primary bg-card/45 px-5 py-4">
           <p className="text-xl font-display font-bold leading-8">
             "Нормально делай, нормально будет!"
@@ -182,7 +186,7 @@ const AcademyHome = () => (
         </blockquote>
       </section>
 
-      <div className="grid gap-5">
+      <div className="grid gap-4 md:grid-cols-2">
         {academyCourses.map((course) => (
           <CourseCard course={course} key={course.slug} />
         ))}
@@ -193,7 +197,7 @@ const AcademyHome = () => (
 
 const CoursePage = ({ course }: { course: AcademyCourse }) => (
   <AcademyShell>
-    <main className="container mx-auto grid gap-10 px-6 py-10 lg:grid-cols-[280px_minmax(0,1fr)] lg:py-14 xl:grid-cols-[280px_minmax(0,760px)_220px]">
+    <main className="container mx-auto grid gap-10 px-6 py-8 lg:grid-cols-[280px_minmax(0,1fr)] lg:py-10 xl:grid-cols-[280px_minmax(0,760px)_220px]">
       <LessonSidebar course={course} />
 
       <article>
@@ -292,18 +296,10 @@ const LessonPager = ({
 
 const LessonPage = ({ course, lesson }: { course: AcademyCourse; lesson: AcademyLesson }) => (
   <AcademyShell>
-    <main className="container mx-auto grid gap-10 px-6 py-10 lg:grid-cols-[280px_minmax(0,1fr)] lg:py-14 xl:grid-cols-[280px_minmax(0,760px)_220px]">
+    <main className="container mx-auto grid gap-10 px-6 py-8 lg:grid-cols-[280px_minmax(0,1fr)] lg:py-10 xl:grid-cols-[280px_minmax(0,760px)_220px]">
       <LessonSidebar activeLessonSlug={lesson.slug} course={course} />
 
       <article>
-        <Link
-          className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
-          to={`/academy/${course.slug}`}
-        >
-          <ArrowLeft className="h-4 w-4" />
-          К описанию курса
-        </Link>
-
         <div className="mb-8 rounded-lg border border-border bg-card/30 p-5">
           <div className="mb-4 flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-xs text-primary">

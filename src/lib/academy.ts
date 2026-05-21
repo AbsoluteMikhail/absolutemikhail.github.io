@@ -26,6 +26,7 @@ export type AcademyCourse = AcademyDocument & {
   order: number;
   project?: string;
   status?: string;
+  tags: string[];
   title: string;
 };
 
@@ -108,6 +109,12 @@ const getSlugFromPath = (path: string) => {
   return fileName === "index" ? parts[parts.length - 2] : fileName;
 };
 
+const parseCommaSeparatedValues = (value?: string) =>
+  (value || "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+
 const documents = Object.entries(contentModules).map(([path, raw]) => {
   const { body, meta } = parseFrontmatter(raw);
   const type = (meta.type || "lesson") as AcademyDocType;
@@ -152,6 +159,7 @@ export const academyCourses: AcademyCourse[] = sortByOrder(
         order: Number(course.meta.order || 0),
         project: course.meta.project,
         status: course.meta.status,
+        tags: parseCommaSeparatedValues(course.meta.tags),
         title: course.meta.title || course.slug,
       };
     }),

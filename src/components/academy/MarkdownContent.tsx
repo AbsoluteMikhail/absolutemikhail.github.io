@@ -328,23 +328,25 @@ export const TableOfContents = ({ headings }: { headings: AcademyHeading[] }) =>
   }
 
   return (
-    <nav className="sticky top-24 hidden max-h-[calc(100vh-7rem)] overflow-y-auto xl:block">
-      <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.24em] text-muted-foreground">
-        На странице
-      </p>
-      <div className="space-y-2 border-l border-border">
-        {visibleHeadings.map((heading) => (
-          <a
-            className={`block py-1.5 pr-2 text-sm text-muted-foreground transition-colors hover:text-primary ${
-              heading.depth === 3 ? "pl-7" : "pl-4"
-            }`}
-            href={`#${heading.id}`}
-            key={heading.id}
-          >
-            {heading.text}
-          </a>
-        ))}
-      </div>
-    </nav>
+    <aside className="hidden self-start xl:block">
+      <nav className="fixed right-6 top-[6.5rem] max-h-[calc(100vh-6.5rem)] w-[220px] overflow-y-auto 2xl:right-[calc((100vw-1400px)/2+1.5rem)]">
+        <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.24em] text-muted-foreground">
+          На странице
+        </p>
+        <div className="space-y-2 border-l border-border">
+          {visibleHeadings.map((heading) => (
+            <a
+              className={`block py-1.5 pr-2 text-sm text-muted-foreground transition-colors hover:text-primary ${
+                heading.depth === 3 ? "pl-7" : "pl-4"
+              }`}
+              href={`#${heading.id}`}
+              key={heading.id}
+            >
+              {heading.text}
+            </a>
+          ))}
+        </div>
+      </nav>
+    </aside>
   );
 };

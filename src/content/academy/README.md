@@ -37,6 +37,7 @@ public/academy/
    title: Название курса
    description: Короткое описание курса для карточки и шапки.
    project: Название сквозного проекта
+   tags: Unreal Engine, C++, Gameplay
    status: В работе
    order: 2
    ---
@@ -110,7 +111,8 @@ Frontmatter - это блок между `---` в начале файла.
 - `slug` - URL курса. Пример: `ue-cpp-blueprint-devs`.
 - `title` - название курса.
 - `description` - описание для карточки и шапки.
-- `project` - сквозной проект, если есть.
+- `project` - сквозной проект курса, если есть. Пример: `Greybox Arena`.
+- `tags` - теги карточки курса через запятую. Пример: `Unreal Engine, C++, Gameplay`.
 - `status` - статус курса. Например: `В работе`, `Тестовый курс`, `Опубликован`.
 - `order` - порядок курса на `/academy`.
 

@@ -4,6 +4,7 @@ slug: ue-cpp-blueprint-devs
 title: UE C++ для Blueprint разработчиков
 description: Курс про переход от BP spaghetti к мышлению gameplay programmer'а через практику на Greybox Arena.
 project: Greybox Arena
+tags: Unreal Engine, C++
 status: Тестовый курс
 order: 1
 ---
