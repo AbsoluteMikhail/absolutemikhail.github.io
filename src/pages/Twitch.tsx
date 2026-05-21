@@ -30,32 +30,32 @@ type TwitchEmotePayload = {
   id?: unknown;
 };
 
+const twitchConfig = {
+  wsUrl: 'wss://api.cg-studio.ru/',
+  pingUrl: 'https://api.cg-studio.ru/',
+  pingInterval: 10 * 60 * 1000,
+  maxBunnies: 10,
+  bunnySize: 64,
+  groundLevel: 100,
+  emoteSize: 50,
+  minFlyDuration: 20,
+  maxFlyDuration: 30,
+  maxDelay: 1.5,
+  spreadWidth: 100,
+  swayAngle: 10,
+  initialLifetime: 5 * 60 * 1000,
+  lifetimeExtension: 60 * 1000,
+  minSize: 0.1,
+  maxSize: 1.0,
+  updateInterval: 1000
+};
+
 const Twitch = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const emoteContainerRef = useRef<HTMLDivElement>(null);
   const appRef = useRef<PIXI.Application | null>(null);
   const bunniesRef = useRef<BunnyState[]>([]);
   const wsRef = useRef<WebSocket | null>(null);
-
-  const config = {
-    wsUrl: 'wss://api.cg-studio.ru/',
-    pingUrl: 'https://api.cg-studio.ru/',
-    pingInterval: 10 * 60 * 1000,
-    maxBunnies: 10,
-    bunnySize: 64,
-    groundLevel: 100,
-    emoteSize: 50,
-    minFlyDuration: 20,
-    maxFlyDuration: 30,
-    maxDelay: 1.5,
-    spreadWidth: 100,
-    swayAngle: 10,
-    initialLifetime: 5 * 60 * 1000,
-    lifetimeExtension: 60 * 1000,
-    minSize: 0.1,
-    maxSize: 1.0,
-    updateInterval: 1000
-  };
 
   useEffect(() => {
     let isMounted = true;
@@ -81,7 +81,7 @@ const Twitch = () => {
       const bunnyTexture = await PIXI.Assets.load('https://pixijs.com/assets/bunny.png');
 
       const connectWebSocket = () => {
-        const ws = new WebSocket(config.wsUrl);
+        const ws = new WebSocket(twitchConfig.wsUrl);
         wsRef.current = ws;
 
         ws.onopen = () => console.log('Connected to WebSocket server');
@@ -122,14 +122,14 @@ const Twitch = () => {
       connectWebSocket();
 
       const pingInterval = setInterval(() => {
-        fetch(config.pingUrl).catch(e => console.error('Ping error', e));
-      }, config.pingInterval);
+        fetch(twitchConfig.pingUrl).catch(e => console.error('Ping error', e));
+      }, twitchConfig.pingInterval);
 
       app.ticker.add(() => {
         bunniesRef.current.forEach(bunny => updateBunny(bunny, app));
       });
 
-      const lifecycleInterval = setInterval(updateBunnyLifecycle, config.updateInterval);
+      const lifecycleInterval = setInterval(updateBunnyLifecycle, twitchConfig.updateInterval);
 
       return () => {
         clearInterval(pingInterval);
@@ -141,11 +141,11 @@ const Twitch = () => {
       const existingBunny = bunniesRef.current.find(b => b.username === username);
       if (existingBunny) {
         existingBunny.lastActivity = Date.now();
-        existingBunny.lifetime = Math.min(existingBunny.lifetime + config.lifetimeExtension, config.initialLifetime);
+        existingBunny.lifetime = Math.min(existingBunny.lifetime + twitchConfig.lifetimeExtension, twitchConfig.initialLifetime);
         return;
       }
 
-      if (bunniesRef.current.length >= config.maxBunnies) {
+      if (bunniesRef.current.length >= twitchConfig.maxBunnies) {
         const oldestBunny = bunniesRef.current.reduce((oldest, current) => 
           current.lastActivity < oldest.lastActivity ? current : oldest
         );
@@ -164,8 +164,8 @@ const Twitch = () => {
 
       const bunny = new PIXI.Sprite(texture);
       bunny.anchor.set(0.5);
-      bunny.width = config.bunnySize;
-      bunny.height = config.bunnySize;
+      bunny.width = twitchConfig.bunnySize;
+      bunny.height = twitchConfig.bunnySize;
       if (color && color !== '#FF0000') {
         bunny.tint = parseInt(color.replace('#', ''), 16);
       }
@@ -192,15 +192,15 @@ const Twitch = () => {
       nameText.anchor.set(0.5);
       container.addChild(nameTag);
 
-      const groundLevel = app.screen.height - config.groundLevel;
+      const groundLevel = app.screen.height - twitchConfig.groundLevel;
       container.x = 100 + (bunniesRef.current.length * 120) % (app.screen.width - 200);
       container.y = groundLevel;
 
       const bunnyState = {
         container, bunny, nameTag, username, color,
         isMoving: false, targetX: container.x, jumpPhase: 0, idleTimer: 0, isIdle: false,
-        lastActivity: Date.now(), lifetime: config.initialLifetime, maxLifetime: config.initialLifetime,
-        originalSize: config.bunnySize, groundLevel: groundLevel
+        lastActivity: Date.now(), lifetime: twitchConfig.initialLifetime, maxLifetime: twitchConfig.initialLifetime,
+        originalSize: twitchConfig.bunnySize, groundLevel: groundLevel
       };
 
       setTimeout(() => startNewMovement(bunnyState), Math.random() * 1000);
@@ -255,8 +255,8 @@ const Twitch = () => {
     const updateBunnyLifecycle = () => {
       const expired: BunnyState[] = [];
       bunniesRef.current.forEach(bunny => {
-        bunny.lifetime -= config.updateInterval;
-        const sizeRatio = Math.max(bunny.lifetime / bunny.maxLifetime, config.minSize);
+        bunny.lifetime -= twitchConfig.updateInterval;
+        const sizeRatio = Math.max(bunny.lifetime / bunny.maxLifetime, twitchConfig.minSize);
         const newSize = bunny.originalSize * sizeRatio;
         bunny.bunny.width = newSize;
         bunny.bunny.height = newSize;
@@ -271,10 +271,10 @@ const Twitch = () => {
       if (!emoteContainerRef.current) return;
       const emote = document.createElement('div');
       emote.className = 'absolute bottom-0 z-[1] pointer-events-none opacity-0';
-      const duration = Math.random() * (config.maxFlyDuration - config.minFlyDuration) + config.minFlyDuration;
-      const delay = Math.random() * config.maxDelay;
-      const startX = Math.random() * config.spreadWidth + (100 - config.spreadWidth) / 2;
-      const swayAngle = Math.random() * config.swayAngle;
+      const duration = Math.random() * (twitchConfig.maxFlyDuration - twitchConfig.minFlyDuration) + twitchConfig.minFlyDuration;
+      const delay = Math.random() * twitchConfig.maxDelay;
+      const startX = Math.random() * twitchConfig.spreadWidth + (100 - twitchConfig.spreadWidth) / 2;
+      const swayAngle = Math.random() * twitchConfig.swayAngle;
 
       emote.style.left = `${startX}vw`;
       emote.style.animation = `twitch-fly ${duration}s linear ${delay}s forwards`;
@@ -288,8 +288,8 @@ const Twitch = () => {
           img.src = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`;
       }
 
-      img.style.width = `${config.emoteSize}px`;
-      img.style.height = `${config.emoteSize}px`;
+      img.style.width = `${twitchConfig.emoteSize}px`;
+      img.style.height = `${twitchConfig.emoteSize}px`;
       img.style.animation = `twitch-pulse 1.5s ease-in-out infinite, twitch-sway 2s ease-in-out infinite`;
       img.style.setProperty('--sway-angle', `${swayAngle}deg`);
 
