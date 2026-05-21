@@ -1,11 +1,40 @@
 import { useEffect, useRef } from "react";
 import * as PIXI from "pixi.js";
 
+type BunnyState = {
+  container: PIXI.Container;
+  bunny: PIXI.Sprite;
+  nameTag: PIXI.Container;
+  username: string;
+  color?: string;
+  isMoving: boolean;
+  targetX: number;
+  jumpPhase: number;
+  idleTimer: number;
+  isIdle: boolean;
+  lastActivity: number;
+  lifetime: number;
+  maxLifetime: number;
+  originalSize: number;
+  groundLevel: number;
+};
+
+type TwitchMessage = {
+  type?: unknown;
+  user?: unknown;
+  color?: unknown;
+  emotes?: unknown;
+};
+
+type TwitchEmotePayload = {
+  id?: unknown;
+};
+
 const Twitch = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const emoteContainerRef = useRef<HTMLDivElement>(null);
   const appRef = useRef<PIXI.Application | null>(null);
-  const bunniesRef = useRef<any[]>([]);
+  const bunniesRef = useRef<BunnyState[]>([]);
   const wsRef = useRef<WebSocket | null>(null);
 
   const config = {
@@ -64,13 +93,24 @@ const Twitch = () => {
         };
         ws.onmessage = (event) => {
           try {
-            const data = JSON.parse(event.data);
-            if (data.type === 'chat_message' && data.user) {
-              addOrUpdateBunny(data.user, data.color, bunnyTexture);
+            const data = JSON.parse(event.data) as TwitchMessage;
+            if (data.type === 'chat_message' && typeof data.user === "string") {
+              addOrUpdateBunny(
+                data.user,
+                typeof data.color === "string" ? data.color : undefined,
+                bunnyTexture,
+              );
             }
-            if (data.type === 'emote' && data.emotes && data.emotes.length > 0) {
-              data.emotes.forEach((emote: any) => {
-                createFlyingEmote(emote.id);
+            if (data.type === 'emote' && Array.isArray(data.emotes) && data.emotes.length > 0) {
+              data.emotes.forEach((emote) => {
+                if (typeof emote !== "object" || emote === null || !("id" in emote)) {
+                  return;
+                }
+
+                const emoteId = (emote as TwitchEmotePayload).id;
+                if (typeof emoteId === "string") {
+                  createFlyingEmote(emoteId);
+                }
               });
             }
           } catch (err) {
@@ -97,8 +137,8 @@ const Twitch = () => {
       };
     };
 
-    const addOrUpdateBunny = (username: string, color: string, texture: PIXI.Texture) => {
-      let existingBunny = bunniesRef.current.find(b => b.username === username);
+    const addOrUpdateBunny = (username: string, color: string | undefined, texture: PIXI.Texture) => {
+      const existingBunny = bunniesRef.current.find(b => b.username === username);
       if (existingBunny) {
         existingBunny.lastActivity = Date.now();
         existingBunny.lifetime = Math.min(existingBunny.lifetime + config.lifetimeExtension, config.initialLifetime);
@@ -115,7 +155,7 @@ const Twitch = () => {
       createBunny(username, color, texture);
     };
 
-    const createBunny = (username: string, color: string, texture: PIXI.Texture) => {
+    const createBunny = (username: string, color: string | undefined, texture: PIXI.Texture) => {
       const app = appRef.current;
       if (!app) return;
 
@@ -167,7 +207,7 @@ const Twitch = () => {
       bunniesRef.current.push(bunnyState);
     };
 
-    const removeBunny = (bunny: any) => {
+    const removeBunny = (bunny: BunnyState) => {
       const index = bunniesRef.current.indexOf(bunny);
       if (index > -1) {
         bunniesRef.current.splice(index, 1);
@@ -176,7 +216,7 @@ const Twitch = () => {
       }
     };
 
-    const updateBunny = (bunny: any, app: PIXI.Application) => {
+    const updateBunny = (bunny: BunnyState, app: PIXI.Application) => {
       if (bunny.isIdle) {
         bunny.idleTimer -= app.ticker.deltaMS;
         bunny.bunny.y = Math.sin(Date.now() * 0.002) * 2;
@@ -199,21 +239,21 @@ const Twitch = () => {
       }
     };
 
-    const startNewMovement = (bunny: any) => {
+    const startNewMovement = (bunny: BunnyState) => {
       const padding = 80;
       bunny.targetX = padding + Math.random() * (window.innerWidth - padding * 2);
       bunny.isMoving = true;
       bunny.jumpPhase = 0;
     };
 
-    const startIdle = (bunny: any) => {
+    const startIdle = (bunny: BunnyState) => {
       bunny.isIdle = true;
       bunny.idleTimer = 1000 + Math.random() * 2000;
       bunny.bunny.y = 0;
     };
 
     const updateBunnyLifecycle = () => {
-      const expired: any[] = [];
+      const expired: BunnyState[] = [];
       bunniesRef.current.forEach(bunny => {
         bunny.lifetime -= config.updateInterval;
         const sizeRatio = Math.max(bunny.lifetime / bunny.maxLifetime, config.minSize);
