@@ -4,6 +4,7 @@ import HeroSection from "@/components/HeroSection";
 import TimelineSection from "@/components/TimelineSection";
 import GamesSection from "@/components/GamesSection";
 import MentoringSection from "@/components/MentoringSection";
+import MenteeReviewsSection from "@/components/MenteeReviewsSection";
 import ReviewsSection from "@/components/ReviewsSection";
 import { motion } from "framer-motion";
 import { Mail, MapPin, ArrowUpRight } from "lucide-react";
@@ -25,6 +26,7 @@ const Index = () => {
       <GamesSection />
       <ReviewsSection />
       <MentoringSection />
+      <MenteeReviewsSection />
 
       {/* Footer */}
       <footer className="relative pt-24 pb-12 overflow-hidden border-t border-border/50">
