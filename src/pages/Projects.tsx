@@ -132,7 +132,7 @@ const Projects = () => {
                 onClick={() => setActiveLegalModal("privacy")}
                 className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
               >
-                Privacy Policy
+                Политика конфиденциальности
               </button>
               <button
                 onClick={() => setActiveLegalModal("terms")}
