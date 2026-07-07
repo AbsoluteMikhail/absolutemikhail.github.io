@@ -37,7 +37,7 @@ const MenteeReviewsSection = () => (
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55 }}
         viewport={{ once: true }}
-        className="mb-12 max-w-3xl"
+        className="mb-12 max-w-5xl"
       >
         <div className="mb-4 inline-block rounded-full border border-accent/20 bg-accent/5 px-4 py-1.5">
           <span className="font-display text-[10px] uppercase tracking-[0.2em] text-accent">
@@ -47,6 +47,9 @@ const MenteeReviewsSection = () => (
         <h2 className="font-display text-3xl font-bold md:text-5xl">
           Что говорят после занятий
         </h2>
+        <p className="mt-5 text-lg leading-8 text-foreground/70 md:whitespace-nowrap">
+          Большинство учеников приходят с собственными проектами или готовятся к работе в индустрии.
+        </p>
       </motion.div>
 
       <div className="grid gap-5 lg:grid-cols-3">

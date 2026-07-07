@@ -286,7 +286,7 @@ export const MarkdownContent = ({ className = "", content }: MarkdownContentProp
         if (block.type === "image") {
           return (
             <figure key={index}>
-              <img alt={block.alt} src={block.src} />
+              <img alt={block.alt} decoding="async" loading="lazy" src={block.src} />
               {block.alt ? <figcaption>{block.alt}</figcaption> : null}
             </figure>
           );

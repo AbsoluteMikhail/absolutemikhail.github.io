@@ -69,7 +69,9 @@ const OGSnippet = () => {
         >
           <img
               src={heroPhoto}
-              alt="Absolute Mikhail"
+              alt="Absolute Mikhail, game developer и ментор по Unreal Engine 5"
+              loading="lazy"
+              decoding="async"
               // Оставляем настройки картинки
               className="absolute inset-0 h-full w-full object-cover object-top scale-[1.05] translate-x-[5%]"
               style={{ filter: 'brightness(0.9) contrast(1.1) saturate(0.8)' }}

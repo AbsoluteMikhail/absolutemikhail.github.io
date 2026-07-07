@@ -4,7 +4,9 @@ import HeroSection from "@/components/HeroSection";
 import TimelineSection from "@/components/TimelineSection";
 import GamesSection from "@/components/GamesSection";
 import MentoringSection from "@/components/MentoringSection";
+import FAQSection from "@/components/FAQSection";
 import MenteeReviewsSection from "@/components/MenteeReviewsSection";
+import FinalTrustSection from "@/components/FinalTrustSection";
 import ReviewsSection from "@/components/ReviewsSection";
 import { motion } from "framer-motion";
 import { Mail, MapPin, ArrowUpRight } from "lucide-react";
@@ -23,10 +25,12 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <TimelineSection />
+      <MentoringSection />
+      <FAQSection />
+      <MenteeReviewsSection />
       <GamesSection />
       <ReviewsSection />
-      <MentoringSection />
-      <MenteeReviewsSection />
+      <FinalTrustSection />
 
       {/* Footer */}
       <footer className="relative pt-24 pb-12 overflow-hidden border-t border-border/50">
@@ -66,8 +70,7 @@ const Index = () => {
               <h4 className="font-display font-bold uppercase tracking-widest text-xs mb-6 text-foreground">Навигация</h4>
               <ul className="space-y-4">
                 {[
-                  { label: "Обо мне", href: "#about" },
-                  { label: "Достижения", href: "#timeline" },
+                  { label: "Опыт", href: "#timeline" },
                   { label: "Проекты", href: "#games" },
                   { label: "Менторинг", href: "#mentoring" },
                   { label: "Все проекты", href: "/projects" },

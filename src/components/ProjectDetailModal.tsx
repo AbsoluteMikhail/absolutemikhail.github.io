@@ -101,6 +101,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
                           height="100%"
                           src={slides[currentSlide].url}
                           style={{ border: "none" }}
+                          loading="lazy"
                           allow="clipboard-write; autoplay"
                           webkitAllowFullScreen
                           mozAllowFullScreen
@@ -113,7 +114,9 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
                         >
                           <img
                             src={project.cover}
-                            alt={project.title}
+                            alt={`Видео-превью проекта ${project.title}`}
+                            loading="lazy"
+                            decoding="async"
                             className="w-full h-full object-cover brightness-50 group-hover/play:brightness-75 transition-all"
                           />
                           <div className="absolute inset-0 flex items-center justify-center">
@@ -127,7 +130,9 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
                   ) : (
                     <img
                       src={slides[currentSlide].url}
-                      alt={`${project.title} screenshot ${currentSlide}`}
+                      alt={`Скриншот проекта ${project.title}, кадр ${currentSlide}`}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover pointer-events-none"
                     />
                   )}

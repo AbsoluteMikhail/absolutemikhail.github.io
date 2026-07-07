@@ -53,6 +53,7 @@ const Music = () => {
             src={currentVideo}
             title="YouTube video player"
             allow="autoplay; encrypted-media"
+            loading="lazy"
             referrerPolicy="strict-origin-when-cross-origin"
           />
         )}

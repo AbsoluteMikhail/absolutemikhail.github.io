@@ -280,6 +280,9 @@ const Twitch = () => {
       emote.style.animation = `twitch-fly ${duration}s linear ${delay}s forwards`;
       
       const img = document.createElement('img');
+      img.alt = '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
       
       if (emoteId.startsWith('uni_')) {
           const hexCode = emoteId.split('_')[1];

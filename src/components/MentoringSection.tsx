@@ -1,54 +1,57 @@
 import { motion } from "framer-motion";
-import { Check, Zap, Flame, Crown } from "lucide-react";
+import { Check, MessageCircle, SearchCode, Network } from "lucide-react";
 import { ContactTelegram } from "@/components/ContactTelegram";
 
 const packages = [
   {
-    icon: Zap,
-    title: "Вход в индустрию & Ревью идей",
-    price: "3 000 ₽",
-    period: "45 минут",
-    description: "Твой быстрый старт без ошибок новичка.",
+    icon: MessageCircle,
+    title: "Консультация",
+    price: "1 000 ₽",
+    period: "/ час",
+    description:
+      "Быстро разберем любой вопрос по Unreal Engine, C++, Blueprint или разработке игр.",
     features: [
-      "Карьерный аудит: Как собрать портфолио, которое не стыдно показать топ-студиям.",
-      "Вектор развития: Выбор стека технологий под твой проект (UE5 / C++ / Plugins).",
-      "GDD-Check: Разбор твоей идеи на жизнеспособность и монетизацию.",
-      "Q&A: Честные ответы о жизни в геймдеве и «подводных камнях» IT.",
+      "Разберем именно вашу проблему в Unreal Engine.",
+      "Blueprint, C++, архитектура проекта и gameplay systems.",
+      "Карьерный совет, портфолио и подготовка к собеседованию.",
+      "Оценка идеи и выбор следующего шага в разработке.",
+      "Лучший вариант, если не знаете, с чего начать или застряли в развитии проекта.",
     ],
-    buttonText: "Забронировать 45 минут",
-    telegramMessage: "Привет! Хочу записаться на Gamedev-Стратегию",
+    buttonText: "Выбрать консультацию",
+    telegramMessage: "Привет! Хочу записаться на консультацию по Unreal Engine.",
     popular: false,
   },
   {
-    icon: Flame,
-    title: "Blueprint-Ревью & Оптимизация",
-    price: "7 000 ₽",
-    period: "1.5 часа",
-    description: "Чистим «спагетти» и готовим проект к релизу.",
+    icon: SearchCode,
+    title: "Разбор проекта",
+    price: "3 000 ₽",
+    period: "/ час",
+    description:
+      "Приходишь со своим проектом - уходишь с понятным планом действий.",
     features: [
-      "Logic Review: Глубокий разбор твоих Блюпринтов на наличие багов и утечек.",
-      "Рефакторинг: Как превратить хаос в читаемую и расширяемую систему.",
-      "Performance: Оптимизация логики, материалов и систем частиц (Niagara).",
-      "Roadmap: Пошаговый план миграции тяжелой логики на C++.",
+      "Смотрим код, Blueprint-графы, структуру проекта и проблемные места.",
+      "Ищем архитектурные ошибки, баги, узкие места и лишнюю сложность.",
+      "Составляем roadmap: что чинить сейчас, что отложить, что удалить.",
+      "Определяем следующие шаги, чтобы проект стал ближе к релизу.",
     ],
-    buttonText: "Исправить мой код",
-    telegramMessage: "Привет! Хочу записаться на Blueprint-Ревью",
+    buttonText: "Разобрать проект",
+    telegramMessage: "Привет! Хочу записаться на разбор проекта.",
     popular: true,
   },
   {
-    icon: Crown,
-    title: "Архитектура & Hardcore C++",
-    price: "12 000 ₽",
-    period: "1 час",
-    description: "Доступ к опыту Lead Developer для решения High-end задач.",
+    icon: Network,
+    title: "Архитектурная сессия",
+    price: "5 000 ₽",
+    period: "/ час",
+    description: "Для сложных систем, production-решений и технических развилок.",
     features: [
-      "Deep Dive: Проектирование сложных систем на C++ (Subsystems, GAS, Multi-threading).",
-      "Code Surgery: Вместе фиксим «нерешаемые» баги и крэши движка.",
-      "Industrial Standard: Внедрение архитектурных паттернов уровня AAA-студий.",
-      "AI & Tools: Создание кастомных инструментов и продвинутого ИИ.",
+      "GAS, Subsystems, Multiplayer, Plugin Architecture и Mass.",
+      "Проектирование gameplay systems и production-подходов.",
+      "Code Review сложных модулей, технических рисков и зависимостей.",
+      "Разбор архитектурной задачи, которую опасно решать наугад.",
     ],
-    buttonText: "Стать Senior-разработчиком",
-    telegramMessage: "Привет! Хочу записаться на Lead-консалтинг",
+    buttonText: "Обсудить архитектуру",
+    telegramMessage: "Привет! Хочу записаться на архитектурную сессию.",
     popular: false,
   },
 ];
@@ -73,15 +76,16 @@ const MentoringSection = () => {
         >
           <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5">
             <span className="text-[10px] font-display tracking-[0.2em] text-primary uppercase">
-              Обучение
+              Работаем один на один
             </span>
           </div>
           <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">
             <span className="gradient-text uppercase">Менторинг</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-            Персональное обучение Unreal Engine 5 и C++ от практикующего
-            разработчика. Прокачай свои навыки с индивидуальным подходом и реальными кейсами.
+          <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
+            Помогаю разработчикам на Unreal Engine быстрее доводить проекты до
+            рабочего состояния, готовиться к собеседованиям и строить
+            масштабируемую архитектуру.
           </p>
         </motion.div>
 
@@ -173,7 +177,16 @@ const MentoringSection = () => {
           className="text-center mt-12"
         >
           <p className="text-muted-foreground text-sm font-medium">
-            💡 При записи на аудит за 7к или 12к запись созвона и конспект правок — бесплатно.
+            Если не уверены, какой формат выбрать - помогу определиться и не
+            переплачивать.
+          </p>
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-muted-foreground/80">
+            <span className="block">
+              Большинство вопросов решаются за одну встречу.
+            </span>
+            <span className="block">
+              Если потребуется больше времени - заранее обсудим план работы.
+            </span>
           </p>
         </motion.div>
       </div>

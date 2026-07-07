@@ -28,17 +28,29 @@ const GamesSection = () => {
             className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5"
           >
             <span className="text-xs font-display tracking-widest text-primary uppercase">
-              Игры
+              Практика
             </span>
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-display font-bold"
+            className="text-3xl md:text-5xl font-display font-bold mb-6"
           >
-            <span className="gradient-text uppercase">Мои проекты</span>
+            <span className="gradient-text uppercase">Я не только учу</span>
+            <br />
+            <span className="text-foreground uppercase">я сам делаю игры</span>
           </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground"
+          >
+            Все, что обсуждаем на консультациях, основано не на теории, а на
+            реальных проектах.
+          </motion.p>
         </div>
 
         <div className="space-y-16">
@@ -58,7 +70,9 @@ const GamesSection = () => {
               <div className="w-full md:w-1/2 relative overflow-hidden rounded-xl">
                 <img
                   src={game.cover}
-                  alt={game.title}
+                  alt={`Обложка игры ${game.title} в жанре ${game.genre}`}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
@@ -105,8 +119,14 @@ const GamesSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-20 text-center"
+          className="mt-20 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
+          <a
+            href="#mentoring"
+            className="inline-flex items-center justify-center px-8 py-4 rounded-full gradient-primary text-primary-foreground font-display text-sm font-semibold tracking-wider uppercase box-glow transition-transform hover:scale-105"
+          >
+            Обсудить менторинг
+          </a>
           <Link
             to="/projects"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-secondary border border-border text-foreground font-display text-sm tracking-wider uppercase hover:bg-primary/10 hover:border-primary/50 transition-all group"

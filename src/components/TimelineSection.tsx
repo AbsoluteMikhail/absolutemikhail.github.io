@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { useRef } from "react";
 import { Trophy, Star, Rocket, Award } from "lucide-react";
 
 const milestones = [
@@ -12,7 +11,7 @@ const milestones = [
   {
     year: "2025",
     title: "«Золотой Орёл» и Сколково",
-    desc: "Премия за VFX в «Воздухе» и резидентство кластера видеоигр «Сколково»",
+    desc: "VFX в фильме «Воздух», отмеченном премией «Золотой Орёл», и резидентство кластера видеоигр «Сколково»",
     icon: Award,
   },
   {
@@ -66,10 +65,21 @@ const TimelineSection = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-display font-bold"
+            className="text-3xl md:text-5xl font-display font-bold mb-6"
           >
-            <span className="gradient-text uppercase">Достижения</span>
+            <span className="gradient-text uppercase">Почему мне доверяют</span>
           </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground"
+          >
+            За каждым пунктом в этой истории - реальные проекты, ошибки, релизы
+            и сотни часов разработки. Именно этот практический опыт я использую
+            во время менторинга.
+          </motion.p>
         </div>
 
         <div className="relative max-w-4xl mx-auto">
@@ -114,6 +124,7 @@ const TimelineSection = () => {
             ))}
           </div>
         </div>
+
       </div>
     </section>
   );
