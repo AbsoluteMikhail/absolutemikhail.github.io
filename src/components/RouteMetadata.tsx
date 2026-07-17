@@ -8,9 +8,9 @@ interface PageMetadata {
 }
 
 const defaultMetadata: PageMetadata = {
-  title: "Менторинг Unreal Engine 5 и C++ | Absolute Mikhail",
+  title: "Портфолио и менторинг Unreal Engine | Absolute Mikhail",
   description:
-    "Персональный менторинг по Unreal Engine 5, C++, Blueprint, архитектуре игровых систем и подготовке проекта к релизу.",
+    "Инди-разработчик и ментор по Unreal Engine 5. Игры, C++, Blueprint, архитектура игровых систем и помощь с доведением проектов до релиза.",
 };
 
 const routeMetadata: Array<{ matches: (pathname: string) => boolean; metadata: PageMetadata }> = [
