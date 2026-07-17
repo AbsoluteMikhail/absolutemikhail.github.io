@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 import { Building2, CheckCircle2, Film, GraduationCap, Trophy } from "lucide-react";
 import heroPhoto from "@/assets/hero-photo.jpg";
 import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
-import { ProtectedSocialButton } from "@/components/ProtectedSocialButton";
 
 const trustItems = [
   { icon: Building2, lines: ["Резидент игрового кластера", "Сколково"] },
@@ -247,10 +246,6 @@ const HeroSection = () => {
                 <social.icon className="w-5 h-5" />
               </a>
             ))}
-            <ProtectedSocialButton
-              className="w-10 h-10 rounded-lg border border-border bg-card/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
-              iconClassName="w-5 h-5"
-            />
           </motion.div>
         </motion.div>
       </div>

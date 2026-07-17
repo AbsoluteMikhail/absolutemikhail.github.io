@@ -1,59 +1,11 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
-interface PageMetadata {
-  title: string;
-  description: string;
-  robots?: string;
-}
-
-const defaultMetadata: PageMetadata = {
-  title: "Портфолио и менторинг Unreal Engine | Absolute Mikhail",
-  description:
-    "Инди-разработчик и ментор по Unreal Engine 5. Игры, C++, Blueprint, архитектура игровых систем и помощь с доведением проектов до релиза.",
-};
-
-const routeMetadata: Array<{ matches: (pathname: string) => boolean; metadata: PageMetadata }> = [
-  {
-    matches: (pathname) => pathname === "/projects",
-    metadata: {
-      title: "Игры и проекты на Unreal Engine | Absolute Mikhail",
-      description:
-        "Авторские игры Absolute Mikhail на Unreal Engine: DUELANT, G.R.I.B.N.I.K. и «КОЛОБОК против ЯЩЕРОВ».",
-    },
-  },
-  {
-    matches: (pathname) => pathname.startsWith("/academy"),
-    metadata: {
-      title: "Academy: C++ и Blueprint в Unreal Engine | Absolute Mikhail",
-      description:
-        "Практические материалы по C++, Blueprint, архитектуре и разработке игровых систем в Unreal Engine.",
-    },
-  },
-  {
-    matches: (pathname) => pathname === "/music",
-    metadata: {
-      title: "Музыка из игр | Absolute Mikhail",
-      description: "Авторская музыка и звуковые материалы из игровых проектов Absolute Mikhail.",
-    },
-  },
-  {
-    matches: (pathname) => pathname === "/twitch",
-    metadata: {
-      title: "Twitch-интерактив | Absolute Mikhail",
-      description: "Интерактивная Twitch-сцена для трансляций Absolute Mikhail.",
-      robots: "noindex, nofollow",
-    },
-  },
-  {
-    matches: (pathname) => pathname === "/og-snippet",
-    metadata: {
-      title: "Превью сайта | Absolute Mikhail",
-      description: "Служебная страница изображения для социальных сетей.",
-      robots: "noindex, nofollow",
-    },
-  },
-];
+import {
+  findRouteMetadata,
+  normalizePathname,
+  notFoundMetadata,
+  siteUrl,
+} from "@/constants/routeMetadata.js";
 
 const upsertMeta = (selector: string, attribute: "name" | "property", key: string, value: string) => {
   let element = document.head.querySelector<HTMLMetaElement>(selector);
@@ -69,16 +21,9 @@ const RouteMetadata = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const match = routeMetadata.find((route) => route.matches(pathname));
-    const isKnownRoute = pathname === "/" || Boolean(match);
-    const metadata = match?.metadata ?? (isKnownRoute
-      ? defaultMetadata
-      : {
-          title: "Страница не найдена | Absolute Mikhail",
-          description: "Запрошенная страница не найдена.",
-          robots: "noindex, nofollow",
-        });
-    const canonicalUrl = `https://absolutemikhail.github.io${pathname === "/" ? "/" : pathname}`;
+    const normalizedPathname = normalizePathname(pathname);
+    const metadata = findRouteMetadata(normalizedPathname) ?? notFoundMetadata;
+    const canonicalUrl = `${siteUrl}${normalizedPathname === "/" ? "/" : normalizedPathname}`;
 
     document.title = metadata.title;
     upsertMeta('meta[name="description"]', "name", "description", metadata.description);

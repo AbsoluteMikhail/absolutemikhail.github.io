@@ -88,7 +88,13 @@ const TimelineSection = () => {
                     <h3 className="text-xl font-display font-bold text-foreground mb-2">
                       {m.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p
+                      className={`leading-relaxed text-muted-foreground ${
+                        m.singleLineDescription
+                          ? "lg:whitespace-nowrap lg:text-sm xl:text-base"
+                          : ""
+                      }`}
+                    >
                       {m.description}
                     </p>
                     {m.links && (

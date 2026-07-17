@@ -4,9 +4,9 @@ const MUSIC_VIDEO_IDS = [
   "ApegC5BGrd4",
   "c5_mX-M7fmk",
   "1_2J3gKpbSQ",
-  "QnISXAW2ZTQ",
-  "PeB1aFZDpHw",
-  "SM4HToR__xo",
+  "cwWPPrOHxqw",
+  "8L4DaUp-SoA",
+  "uPdUoCwuuXI",
 ];
 
 const Music = () => {
@@ -41,19 +41,18 @@ const Music = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-transparent flex justify-center items-center overflow-hidden">
+    <div className="fixed inset-0 overflow-hidden bg-transparent">
       <div 
-        className={`w-[1920px] h-[1080px] max-w-full transition-opacity duration-2000 ease-in-out ${
+        className={`absolute left-0 top-0 aspect-video w-screen transition-opacity duration-2000 ease-in-out ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
         {currentVideo && (
           <iframe
-            className="w-full h-full border-none"
+            className="absolute inset-0 h-full w-full border-none"
             src={currentVideo}
             title="YouTube video player"
             allow="autoplay; encrypted-media"
-            loading="lazy"
             referrerPolicy="strict-origin-when-cross-origin"
           />
         )}

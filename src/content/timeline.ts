@@ -11,6 +11,7 @@ export interface Milestone {
   description: string;
   icon: TimelineIcon;
   links?: TimelineLink[];
+  singleLineDescription?: boolean;
 }
 
 export const milestones: Milestone[] = [
@@ -37,6 +38,7 @@ export const milestones: Milestone[] = [
     title: "Автор курса",
     description: "«Разработчик игр на Unreal Engine 5 с нуля».",
     icon: "rocket",
+    singleLineDescription: true,
     links: [
       {
         label: "Подробнее о курсе",

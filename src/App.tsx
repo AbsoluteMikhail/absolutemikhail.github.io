@@ -30,7 +30,7 @@ const App = () => (
           <Route path="/projects" element={<Projects />} />
           <Route path="/music" element={<Music />} />
           <Route path="/twitch" element={<Twitch />} />
-          <Route path="/og-snippet" element={<OGSnippet />} />
+          <Route path="/snippet" element={<OGSnippet />} />
           <Route path="/academy/*" element={<Academy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
