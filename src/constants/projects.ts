@@ -39,7 +39,7 @@ export const projects: Project[] = [
     id: 2,
     title: "DUELANT",
     genre: "Duel Simulator",
-    year: "2026",
+    year: "2027",
     cover: duelantCover,
     shortDesc:
       "Адреналиновые дуэли в разных эпохах под присмотром ИИ-помощницы Малены. Кровь, деньги и 30 секунд, чтобы доказать, кто здесь лучший стрелок.",
@@ -62,7 +62,7 @@ export const projects: Project[] = [
     fullDesc:
       "Герой просыпается в светлом, но пугающем лесу. Единственное спасение — ржавый кибер-холодильник, который служит базой. Если не вернуться к нему до темноты, лес поглотит вас. \n\nОсобенности игры:\n— Атмосферная Low-Poly графика в духе эпохи PlayStation 1;\n— Кибернизированные герои русских народных сказок;\n— Глубокое взаимодействие с грибами и вариативность прохождения;\n— Нарративное окружение и музыка, отсылающая к классике S.T.A.L.K.E.R. и Doom;\n— Две концовки, раскрывающие истинный смысл происходящего.",
     tech: ["Unreal Engine 5", "Blender", "PSX Shader Stack"],
-    stats: "В разработке",
+    stats: "В релизе",
     storeUrl: "https://vkplay.ru/play/game/gribnik-the-forest-of-fools-44079",
     videoUrl: "https://rutube.ru/play/embed/1dbe0a668db24c94fdbead56fb2a6dac/",
     screenshots: [gribnik1, gribnik2, gribnik3, gribnik4, gribnik5],
@@ -78,7 +78,7 @@ export const projects: Project[] = [
     fullDesc:
       "Ящеры вторглись на Русь! Лишь Колобок, выпрыгнувший из печки, готов принять вызов. Катитесь, отскакивайте и крушите врагов в этом динамичном переосмыслении классического арканоида. \n\nВас ждет:\n— 21 уникальный уровень в разных локациях;\n— 3 уровня сложности: от новичка до мастера;\n— Бесконечный режим для самых стойких защитников;\n— 18 оригинальных музыкальных треков;\n— Легионы ящеров с уникальным поведением;\n— Море юмора и достижений.",
     tech: ["Unreal Engine 5", "Niagara VFX", "Original OST"],
-    stats: "10K+ Игроков",
+    stats: "В релизе",
     storeUrl: "https://vkplay.ru/play/game/kolobok-protiv-jascherov-arkanoid-40059",
     videoUrl: "https://rutube.ru/play/embed/8523cff58d38eb1de92fedfc21ccbfab/",
     screenshots: [kolobok1, kolobok2, kolobok3, kolobok4, kolobok5],

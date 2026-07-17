@@ -3,9 +3,15 @@ import { useEffect } from "react";
 import heroPhoto from "@/assets/hero-photo.jpg";
 import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
 import Logo from "@/components/Logo";
+import { ProtectedSocialButton } from "@/components/ProtectedSocialButton";
 
 const OGSnippet = () => {
   useEffect(() => {
+    const isCaptureMode = new URLSearchParams(window.location.search).has('capture');
+    if (isCaptureMode) {
+      document.documentElement.classList.add('snippet-capture');
+    }
+
     const handleResize = () => {
       const scaleW = window.innerWidth / 1200;
       const scaleH = window.innerHeight / 630;
@@ -17,6 +23,7 @@ const OGSnippet = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
       document.documentElement.style.removeProperty('--snippet-scale');
+      document.documentElement.classList.remove('snippet-capture');
     };
   }, []);
 
@@ -69,8 +76,9 @@ const OGSnippet = () => {
         >
           <img
               src={heroPhoto}
-              alt="Absolute Mikhail, game developer и ментор по Unreal Engine 5"
-              loading="lazy"
+              alt="Absolute Mikhail, инди-разработчик игр на Unreal Engine 5"
+              loading="eager"
+              {...{ fetchpriority: "high" }}
               decoding="async"
               // Оставляем настройки картинки
               className="absolute inset-0 h-full w-full object-cover object-top scale-[1.05] translate-x-[5%]"
@@ -99,7 +107,7 @@ const OGSnippet = () => {
             className="inline-block mb-6 px-5 py-2 rounded-full border border-primary/40 bg-primary/10 w-fit"
           >
             <span className="text-sm font-display tracking-[0.3em] text-primary uppercase font-bold">
-              Game Developer & UE5 Mentor
+              Инди-разработчик • Unreal Engine
             </span>
           </motion.div>
 
@@ -121,8 +129,9 @@ const OGSnippet = () => {
             className="flex items-center gap-4 mb-10"
           >
             <div className="h-px w-12 bg-primary/50" />
-            <p className="text-2xl text-muted-foreground font-medium tracking-wide">
-              Создаю миры, которые захватывают дух
+            <p className="text-2xl text-muted-foreground font-medium tracking-wide leading-snug">
+              <span className="block">C++, Blueprint</span>
+              <span className="block">игровые системы и архитектура</span>
             </p>
           </motion.div>
 
@@ -133,19 +142,27 @@ const OGSnippet = () => {
             className="flex gap-4"
           >
             {[
-              { icon: YoutubeIcon, label: "YouTube" },
-              { icon: TwitchIcon, label: "Twitch" },
-              { icon: TelegramIcon, label: "Telegram" },
-              { icon: DiscordIcon, label: "Discord" },
-              { icon: SteamIcon, label: "Steam" },
-            ].map((social, i) => (
-              <div
-                key={i}
-                className="w-16 h-16 rounded-2xl border border-border bg-card/40 backdrop-blur-md flex items-center justify-center text-muted-foreground shadow-xl"
+              { icon: YoutubeIcon, label: "YouTube", href: "https://www.youtube.com/@Absolute-Unreal" },
+              { icon: TwitchIcon, label: "Twitch", href: "https://www.twitch.tv/absolutemikhail" },
+              { icon: DiscordIcon, label: "Discord-сообщество", href: "https://discord.gg/NkwZ8pqyS6" },
+              { icon: SteamIcon, label: "Steam", href: "https://store.steampowered.com/developer/GamePunk-Studio" },
+              { icon: TelegramIcon, label: "Telegram", href: "https://t.me/AbsoluteUnderground" },
+            ].map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className="w-16 h-16 rounded-2xl border border-border bg-card/40 backdrop-blur-md flex items-center justify-center text-muted-foreground shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:bg-primary/10 hover:text-primary hover:shadow-lg hover:shadow-primary/20 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
               >
                 <social.icon className="w-8 h-8" />
-              </div>
+              </a>
             ))}
+            <ProtectedSocialButton
+              className="w-16 h-16 rounded-2xl border border-border bg-card/40 backdrop-blur-md flex items-center justify-center text-muted-foreground shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:bg-primary/10 hover:text-primary hover:shadow-lg hover:shadow-primary/20 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+              iconClassName="w-8 h-8"
+            />
           </motion.div>
         </div>
 
@@ -154,30 +171,29 @@ const OGSnippet = () => {
           <Logo className="text-3xl font-bold tracking-tighter" />
 
           {/* Твоя стеклянная карточка теперь на месте */}
-          <div className="flex flex-col items-end bg-background/40 backdrop-blur-md px-5 py-3 rounded-xl border border-white/5 shadow-2xl">
-            <p className="text-[10px] uppercase tracking-[0.4em] text-primary/80 mb-2 font-black leading-none">
-              Official Portfolio
+          <a
+            href="https://absolutemikhail.github.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Открыть портфолио Absolute Mikhail"
+            className="group flex flex-col items-end bg-background/40 backdrop-blur-md px-5 py-3 rounded-xl border border-white/5 shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:bg-primary/10 hover:shadow-primary/20 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+          >
+              <p className="text-[10px] uppercase tracking-[0.4em] text-primary/80 mb-2 font-black leading-none transition-colors group-hover:text-primary">
+              Портфолио разработчика
             </p>
 
             {/* Тонкая линия-разделитель в стиле UI игровых движков */}
             <div className="h-[1px] w-full bg-gradient-to-l from-primary/50 to-transparent mb-2" />
 
-              <p className="text-sm font-display font-bold text-foreground/90 tracking-wider leading-none antialiased">
+              <p className="text-sm font-display font-bold text-foreground/90 tracking-wider leading-none antialiased transition-colors group-hover:text-primary">
                   absolutemikhail.github.io
               </p>
-          </div>
+          </a>
         </div>
 
         {/* Decorative corner accents */}
         <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent blur-3xl" />
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[120px]" />
-      </div>
-      
-      {/* 
-        Floating info for the user taking the screenshot 
-      */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-card/80 backdrop-blur-md border border-border px-6 py-3 rounded-full text-xs text-muted-foreground pointer-events-none">
-        Разрешение контейнера выше: <span className="text-primary font-bold">1200 x 630 px</span> (1.91:1)
       </div>
     </div>
   );

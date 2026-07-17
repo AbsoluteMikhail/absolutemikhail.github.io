@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, ShieldCheck } from "lucide-react";
-import { ContactTelegram } from "@/components/ContactTelegram";
+import { ContactMessenger } from "@/components/ContactMessenger";
 
 const FinalTrustSection = () => (
   <section className="relative overflow-hidden border-y border-border/50 bg-secondary/20 py-20">
@@ -24,19 +24,19 @@ const FinalTrustSection = () => (
             Не уверены, какой формат выбрать?
           </h2>
           <p className="mt-5 text-lg leading-8 text-muted-foreground">
-            Опишите свой проект в Telegram. Я помогу определить, какой формат
+            Опишите свой проект в удобном мессенджере. Я помогу определить, какой формат
             консультации действительно нужен. Если окажется, что я не смогу
             помочь, честно скажу об этом.
           </p>
         </div>
 
-        <ContactTelegram
+        <ContactMessenger
           message="Привет! Хочу описать проект и понять, какой формат консультации подойдет."
           className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full gradient-primary px-8 py-4 font-display text-sm font-semibold uppercase tracking-wider text-primary-foreground box-glow transition-transform hover:scale-105"
         >
-          Написать в Telegram
+          Выбрать мессенджер
           <ArrowUpRight className="h-4 w-4" />
-        </ContactTelegram>
+        </ContactMessenger>
       </motion.div>
     </div>
   </section>

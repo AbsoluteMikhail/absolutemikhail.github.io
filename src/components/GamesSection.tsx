@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Calendar, Users, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { ExternalLink, Calendar, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { projects } from "@/constants/projects";
 import ProjectDetailModal from "@/components/ProjectDetailModal";
 import type { Project } from "@/constants/projects";
+import ProjectStatusIcon from "@/components/ProjectStatusIcon";
 
 const GamesSection = () => {
   const [selectedGame, setSelectedGame] = useState<Project | null>(null);
@@ -37,7 +38,7 @@ const GamesSection = () => {
             viewport={{ once: true }}
             className="text-3xl md:text-5xl font-display font-bold mb-6"
           >
-            <span className="gradient-text uppercase">Я не только учу</span>
+            <span className="gradient-text uppercase">Я не только преподаю —</span>
             <br />
             <span className="text-foreground uppercase">я сам делаю игры</span>
           </motion.h2>
@@ -88,7 +89,10 @@ const GamesSection = () => {
                 <div className="flex items-center gap-3">
                   <Calendar className="w-4 h-4 text-muted-foreground" />
                   <span className="text-sm text-muted-foreground">{game.year}</span>
-                  <Users className="w-4 h-4 text-muted-foreground ml-4" />
+                  <ProjectStatusIcon
+                    status={game.stats}
+                    className="ml-4 h-4 w-4 text-muted-foreground"
+                  />
                   <span className="text-sm text-muted-foreground">{game.stats}</span>
                 </div>
                 <h3 className="text-2xl md:text-4xl font-display font-bold text-foreground group-hover:text-glow transition-all">

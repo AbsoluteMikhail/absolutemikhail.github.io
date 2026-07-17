@@ -1,60 +1,13 @@
 import { motion } from "framer-motion";
 import { Check, MessageCircle, SearchCode, Network } from "lucide-react";
-import { ContactTelegram } from "@/components/ContactTelegram";
+import { ContactMessenger } from "@/components/ContactMessenger";
+import { mentoringPackages, type MentoringIcon } from "@/content/mentoring";
 
-const packages = [
-  {
-    icon: MessageCircle,
-    title: "Консультация",
-    price: "1 000 ₽",
-    period: "/ час",
-    description:
-      "Быстро разберем любой вопрос по Unreal Engine, C++, Blueprint или разработке игр.",
-    features: [
-      "Разберем именно вашу проблему в Unreal Engine.",
-      "Blueprint, C++, архитектура проекта и gameplay systems.",
-      "Карьерный совет, портфолио и подготовка к собеседованию.",
-      "Оценка идеи и выбор следующего шага в разработке.",
-      "Лучший вариант, если не знаете, с чего начать или застряли в развитии проекта.",
-    ],
-    buttonText: "Выбрать консультацию",
-    telegramMessage: "Привет! Хочу записаться на консультацию по Unreal Engine.",
-    popular: false,
-  },
-  {
-    icon: SearchCode,
-    title: "Разбор проекта",
-    price: "3 000 ₽",
-    period: "/ час",
-    description:
-      "Приходишь со своим проектом - уходишь с понятным планом действий.",
-    features: [
-      "Смотрим код, Blueprint-графы, структуру проекта и проблемные места.",
-      "Ищем архитектурные ошибки, баги, узкие места и лишнюю сложность.",
-      "Составляем roadmap: что чинить сейчас, что отложить, что удалить.",
-      "Определяем следующие шаги, чтобы проект стал ближе к релизу.",
-    ],
-    buttonText: "Разобрать проект",
-    telegramMessage: "Привет! Хочу записаться на разбор проекта.",
-    popular: true,
-  },
-  {
-    icon: Network,
-    title: "Архитектурная сессия",
-    price: "5 000 ₽",
-    period: "/ час",
-    description: "Для сложных систем, production-решений и технических развилок.",
-    features: [
-      "GAS, Subsystems, Multiplayer, Plugin Architecture и Mass.",
-      "Проектирование gameplay systems и production-подходов.",
-      "Code Review сложных модулей, технических рисков и зависимостей.",
-      "Разбор архитектурной задачи, которую опасно решать наугад.",
-    ],
-    buttonText: "Обсудить архитектуру",
-    telegramMessage: "Привет! Хочу записаться на архитектурную сессию.",
-    popular: false,
-  },
-];
+const packageIcons: Record<MentoringIcon, typeof MessageCircle> = {
+  consultation: MessageCircle,
+  project: SearchCode,
+  architecture: Network,
+};
 
 const MentoringSection = () => {
   return (
@@ -90,8 +43,8 @@ const MentoringSection = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {packages.map((pkg, index) => {
-            const Icon = pkg.icon;
+          {mentoringPackages.map((pkg, index) => {
+            const Icon = packageIcons[pkg.icon];
             return (
               <motion.div
                 key={pkg.title}
@@ -129,15 +82,29 @@ const MentoringSection = () => {
                   </p>
                 </div>
 
-                <div className="mb-8 pb-8 border-b border-border/50">
-                  <div className="flex items-baseline gap-1">
+                <div className="mb-7 border-b border-border/50 pb-7">
+                  <div className="flex items-baseline gap-2">
                     <span className="text-4xl font-display font-bold text-foreground">
                       {pkg.price}
                     </span>
-                    <span className="text-muted-foreground text-sm font-medium">
-                      {pkg.period}
+                    <span className="text-sm font-medium text-muted-foreground">
+                      за сессию
                     </span>
                   </div>
+                  <dl className="mt-5 space-y-3 text-sm">
+                    <div>
+                      <dt className="font-semibold text-foreground">Длительность</dt>
+                      <dd className="mt-1 text-muted-foreground">{pkg.duration}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-semibold text-foreground">Подготовка</dt>
+                      <dd className="mt-1 text-muted-foreground">{pkg.preparation}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-semibold text-foreground">Результат</dt>
+                      <dd className="mt-1 text-muted-foreground">{pkg.result}</dd>
+                    </div>
+                  </dl>
                 </div>
 
                 <ul className="space-y-4 mb-10 flex-1">
@@ -154,7 +121,7 @@ const MentoringSection = () => {
                   ))}
                 </ul>
 
-                <ContactTelegram
+                <ContactMessenger
                   message={pkg.telegramMessage}
                   className={`block text-center py-4 rounded-2xl font-display text-xs font-bold uppercase tracking-[0.15em] transition-all duration-300 ${
                     pkg.popular
@@ -163,7 +130,7 @@ const MentoringSection = () => {
                   }`}
                 >
                   {pkg.buttonText}
-                </ContactTelegram>
+                </ContactMessenger>
               </motion.div>
             );
           })}

@@ -59,6 +59,8 @@ const Twitch = () => {
 
   useEffect(() => {
     let isMounted = true;
+    let pingInterval: ReturnType<typeof setInterval> | null = null;
+    let lifecycleInterval: ReturnType<typeof setInterval> | null = null;
 
     const initPixi = async () => {
       const app = new PIXI.Application();
@@ -79,6 +81,7 @@ const Twitch = () => {
       }
 
       const bunnyTexture = await PIXI.Assets.load('https://pixijs.com/assets/bunny.png');
+      if (!isMounted) return;
 
       const connectWebSocket = () => {
         const ws = new WebSocket(twitchConfig.wsUrl);
@@ -121,7 +124,7 @@ const Twitch = () => {
 
       connectWebSocket();
 
-      const pingInterval = setInterval(() => {
+      pingInterval = setInterval(() => {
         fetch(twitchConfig.pingUrl).catch(e => console.error('Ping error', e));
       }, twitchConfig.pingInterval);
 
@@ -129,12 +132,7 @@ const Twitch = () => {
         bunniesRef.current.forEach(bunny => updateBunny(bunny, app));
       });
 
-      const lifecycleInterval = setInterval(updateBunnyLifecycle, twitchConfig.updateInterval);
-
-      return () => {
-        clearInterval(pingInterval);
-        clearInterval(lifecycleInterval);
-      };
+      lifecycleInterval = setInterval(updateBunnyLifecycle, twitchConfig.updateInterval);
     };
 
     const addOrUpdateBunny = (username: string, color: string | undefined, texture: PIXI.Texture) => {
@@ -305,6 +303,8 @@ const Twitch = () => {
 
     return () => {
       isMounted = false;
+      if (pingInterval !== null) clearInterval(pingInterval);
+      if (lifecycleInterval !== null) clearInterval(lifecycleInterval);
       wsRef.current?.close();
       appRef.current?.destroy(true, { children: true, texture: true });
     };

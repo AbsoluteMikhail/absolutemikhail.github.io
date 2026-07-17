@@ -1,26 +1,30 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToHashElement from "./components/ScrollToHashElement";
-import Index from "./pages/Index";
-import Projects from "./pages/Projects";
-import Music from "./pages/Music";
-import Twitch from "./pages/Twitch";
-import OGSnippet from "./pages/OGSnippet";
-import Academy from "./pages/Academy";
-import NotFound from "./pages/NotFound";
+import RouteMetadata from "./components/RouteMetadata";
+import CustomCursor from "./components/CustomCursor";
 
-const queryClient = new QueryClient();
+const Index = lazy(() => import("./pages/Index"));
+const Projects = lazy(() => import("./pages/Projects"));
+const Music = lazy(() => import("./pages/Music"));
+const Twitch = lazy(() => import("./pages/Twitch"));
+const OGSnippet = lazy(() => import("./pages/OGSnippet"));
+const Academy = lazy(() => import("./pages/Academy"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+const PageFallback = () => (
+  <div className="flex min-h-screen items-center justify-center bg-background text-sm text-muted-foreground">
+    Загрузка…
+  </div>
+);
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToHashElement />
+  <>
+    <CustomCursor />
+    <BrowserRouter>
+      <ScrollToHashElement />
+      <RouteMetadata />
+      <Suspense fallback={<PageFallback />}>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/projects" element={<Projects />} />
@@ -31,9 +35,9 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+      </Suspense>
+    </BrowserRouter>
+  </>
 );
 
 export default App;

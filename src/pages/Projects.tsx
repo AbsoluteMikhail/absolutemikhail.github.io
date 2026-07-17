@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ExternalLink, Calendar, Users, Rocket, Code, Layout } from "lucide-react";
+import { ChevronLeft, ExternalLink, Calendar } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
 import LegalModal from "@/components/LegalModal";
@@ -8,6 +8,7 @@ import { legalContent } from "@/constants/legalContent";
 import { projects } from "@/constants/projects";
 import ProjectDetailModal from "@/components/ProjectDetailModal";
 import type { Project } from "@/constants/projects";
+import ProjectStatusIcon from "@/components/ProjectStatusIcon";
 
 const Projects = () => {
   const [activeLegalModal, setActiveLegalModal] = useState<"privacy" | "terms" | null>(null);
@@ -54,14 +55,22 @@ const Projects = () => {
           {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, i) => (
-              <motion.div
+              <motion.article
                 key={project.id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 className="group relative bg-card/40 backdrop-blur-sm border border-border rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 cursor-pointer"
-                onClick={() => setSelectedProject(project)}
               >
+                <button
+                  type="button"
+                  onClick={() => setSelectedProject(project)}
+                  aria-label={`Подробнее о проекте ${project.title}`}
+                  className="absolute inset-0 z-20 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+                >
+                  <span className="sr-only">Подробнее о проекте {project.title}</span>
+                </button>
+
                 {/* Project Image */}
                 <div className="relative aspect-video overflow-hidden">
                   <img 
@@ -87,7 +96,7 @@ const Projects = () => {
                       {project.year}
                     </span>
                     <span className="flex items-center gap-1.5">
-                      <Users className="w-3 h-3" />
+                      <ProjectStatusIcon status={project.stats} className="h-3 w-3" />
                       {project.stats}
                     </span>
                   </div>
@@ -111,21 +120,22 @@ const Projects = () => {
                     ))}
                   </div>
 
-                  <button
-                    className="w-full py-3 rounded-xl border border-primary/20 bg-primary/5 text-primary text-xs font-display tracking-widest uppercase font-bold hover:bg-primary hover:text-primary-foreground transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+                  <span
+                    aria-hidden="true"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-primary/20 bg-primary/5 py-3 font-display text-xs font-bold uppercase tracking-widest text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground"
                   >
                     Подробнее
-                    <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                  </button>
+                    <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </span>
                 </div>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
           
           {/* Footer inside container */}
           <div className="pt-8 mt-24 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-xs text-muted-foreground">
-              © 2026 Absolute Mikhail. Crafted with passion for GameDev.
+              © 2026 Absolute Mikhail. Разработка игр и менторинг.
             </p>
             <div className="flex gap-8">
               <button
@@ -138,7 +148,7 @@ const Projects = () => {
                 onClick={() => setActiveLegalModal("terms")}
                 className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
               >
-                Terms of Service
+                Пользовательское соглашение
               </button>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import ProofSection from "@/components/ProofSection";
 import TimelineSection from "@/components/TimelineSection";
 import GamesSection from "@/components/GamesSection";
 import MentoringSection from "@/components/MentoringSection";
@@ -11,7 +12,8 @@ import ReviewsSection from "@/components/ReviewsSection";
 import { motion } from "framer-motion";
 import { Mail, MapPin, ArrowUpRight } from "lucide-react";
 import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
-import { ContactEmail } from "@/components/ContactEmail";
+import { ProtectedSocialButton } from "@/components/ProtectedSocialButton";
+import { ContactMessenger } from "@/components/ContactMessenger";
 import ScrollToTop from "@/components/ScrollToTop";
 import LegalModal from "@/components/LegalModal";
 import Logo from "@/components/Logo";
@@ -24,12 +26,13 @@ const Index = () => {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
       <HeroSection />
-      <TimelineSection />
+      <ProofSection />
       <MentoringSection />
-      <FAQSection />
       <MenteeReviewsSection />
       <GamesSection />
       <ReviewsSection />
+      <TimelineSection />
+      <FAQSection />
       <FinalTrustSection />
 
       {/* Footer */}
@@ -42,26 +45,31 @@ const Index = () => {
             <div className="space-y-6">
               <Logo className="font-display text-2xl font-bold tracking-tighter" />
               <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
-                Создаю захватывающие игровые миры и обучаю искусству разработки на Unreal Engine 5. Путь от идеи до реализации.
+                Помогаю разработчикам доводить Unreal-проекты до релиза и создаю собственные игры.
               </p>
               <div className="flex gap-4">
                 {[
-                  { icon: YoutubeIcon, href: "https://www.youtube.com/@Absolute-Unreal" },
-                  { icon: TwitchIcon, href: "https://www.twitch.tv/absolutemikhail" },
-                  { icon: TelegramIcon, href: "https://t.me/AbsoluteUnderground" },
-                  { icon: DiscordIcon, href: "https://discord.gg/NkwZ8pqyS6" },
-                  { icon: SteamIcon, href: "https://store.steampowered.com/developer/GamePunk-Studio" },
+                  { icon: YoutubeIcon, href: "https://www.youtube.com/@Absolute-Unreal", label: "YouTube" },
+                  { icon: TwitchIcon, href: "https://www.twitch.tv/absolutemikhail", label: "Twitch" },
+                  { icon: DiscordIcon, href: "https://discord.gg/NkwZ8pqyS6", label: "Discord-сообщество" },
+                  { icon: SteamIcon, href: "https://store.steampowered.com/developer/GamePunk-Studio", label: "Steam" },
+                  { icon: TelegramIcon, href: "https://t.me/AbsoluteUnderground", label: "Telegram" },
                 ].map((social, i) => (
                   <a 
                     key={i} 
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={social.label}
                     className="w-10 h-10 rounded-xl bg-secondary/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300"
                   >
                     <social.icon className="w-5 h-5" />
                   </a>
                 ))}
+                <ProtectedSocialButton
+                  className="w-10 h-10 rounded-xl bg-secondary/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300"
+                  iconClassName="w-5 h-5"
+                />
               </div>
             </div>
 
@@ -70,9 +78,10 @@ const Index = () => {
               <h4 className="font-display font-bold uppercase tracking-widest text-xs mb-6 text-foreground">Навигация</h4>
               <ul className="space-y-4">
                 {[
-                  { label: "Опыт", href: "#timeline" },
+                  { label: "Форматы работы", href: "#mentoring" },
+                  { label: "Отзывы учеников", href: "#mentee-reviews" },
                   { label: "Проекты", href: "#games" },
-                  { label: "Менторинг", href: "#mentoring" },
+                  { label: "Опыт", href: "#timeline" },
                   { label: "Все проекты", href: "/projects" },
                 ].map((link) => (
                   <li key={link.label}>
@@ -90,14 +99,14 @@ const Index = () => {
               <h4 className="font-display font-bold uppercase tracking-widest text-xs mb-6 text-foreground">Контакты</h4>
               <ul className="space-y-4">
                 <li>
-                  <ContactEmail className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3">
+                  <ContactMessenger className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3">
                     <Mail className="w-4 h-4 text-primary" />
                     Написать мне
-                  </ContactEmail>
+                  </ContactMessenger>
                 </li>
                 <li className="text-sm text-muted-foreground flex items-center gap-3">
                   <MapPin className="w-4 h-4 text-primary" />
-                  Remote / Worldwide
+                  Удалённо / по всему миру
                 </li>
               </ul>
             </div>
@@ -124,7 +133,7 @@ const Index = () => {
           <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex flex-col items-center md:items-start gap-2">
               <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em]">
-                © 2026 Absolute Mikhail. Crafted with passion for GameDev.
+                © 2026 Absolute Mikhail. Разработка игр и менторинг.
               </p>
               <p className="text-xs font-display font-bold text-foreground/60 tracking-wider leading-none antialiased">
                 absolutemikhail.github.io
@@ -141,7 +150,7 @@ const Index = () => {
                 onClick={() => setActiveLegalModal("terms")}
                 className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
               >
-                Terms of Service
+                Пользовательское соглашение
               </button>
             </div>
           </div>

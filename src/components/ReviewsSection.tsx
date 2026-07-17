@@ -1,82 +1,8 @@
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
+import { gameReviews, type GameReview } from "@/content/reviews";
 
-const reviews = [
-  {
-    name: "Филька",
-    game: "ДУЭЛЯНТ",
-    text: "Рикошетом попал мужику в печень :) Игра имба!",
-    rating: 5,
-  },
-  {
-    name: "Сэтрий",
-    game: "КОЛОБОК против ЯЩЕРОВ",
-    text: "Она драйвовая, весёлая, забавная. Это очень качественный арканоид.",
-    rating: 5,
-  },
-  {
-    name: "MaSeK",
-    game: "ДУЭЛЯНТ",
-    text: "Вы отстрелили друг другу руки и стоите злобно сопите.. А \"Малена\" в это время истерически хохочет =)",
-    rating: 5,
-  },
-  {
-    name: "blakSou1",
-    game: "ГРИБНИК в лесу дураков",
-    text: "хахаха топчик топчик, вспомнил игры из детства)",
-    rating: 5,
-  },
-  {
-    name: "Machaon maackii",
-    game: "ЗВЁЗДНЫЙ КОЧЕВНИК",
-    text: "Все в игре - от начальной заставки до концовки - вызывает восхищение.",
-    rating: 5,
-  },
-  {
-    name: "Kunreys",
-    game: "КОЛОБОК против ЯЩЕРОВ",
-    text: "Музыка хороша! Как время убивалка в самый раз.",
-    rating: 4,
-  },
-  {
-    name: "PolyaTriton",
-    game: "ГРИБНИК в лесу дураков",
-    text: "Игра, от которой мурашки побежали.",
-    rating: 5,
-  },
-  {
-    name: "vlados241",
-    game: "ЗВЁЗДНЫЙ КОЧЕВНИК",
-    text: "Игра мне понравилось, очень красивые планеты и черные дыры)) Даже лор затянул))",
-    rating: 5,
-  },
-  {
-    name: "Iridemo",
-    game: "ГРИБНИК в лесу дураков",
-    text: "Рекомендую для прохождения фанатам Деревни дураков и любителей старого дума. Лайк!",
-    rating: 5,
-  },
-  {
-    name: "Nick",
-    game: "ГРИБНИК в лесу дураков",
-    text: "Игра реально необычная и веселая! Механика с грибами забавная, озвучка на уровне) ",
-    rating: 5,
-  },
-  {
-    name: "RigorousT",
-    game: "ГРИБНИК в лесу дураков",
-    text: "Никогда так не боялся Деревни Дураков)))",
-    rating: 5,
-  },
-  {
-    name: "korovka110",
-    game: "ДУЭЛЯНТ",
-    text: "Необычная и крутая игра. На мой взгляд достойный кандидат в борьбе за шляпу, как минимум)",
-    rating: 5,
-  },
-];
-
-const ReviewCard = ({ review }: { review: (typeof reviews)[0] }) => (
+const ReviewCard = ({ review }: { review: GameReview }) => (
   <div className="flex-shrink-0 w-[350px] p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors">
     <div className="flex gap-1 mb-3">
       {Array.from({ length: 5 }).map((_, i) => (
@@ -102,7 +28,7 @@ const ReviewCard = ({ review }: { review: (typeof reviews)[0] }) => (
 
 const ReviewsSection = () => {
   // Triple the reviews for very long desktop screens to ensure seamless loop
-  const duplicated = [...reviews, ...reviews, ...reviews];
+  const duplicated = [...gameReviews, ...gameReviews, ...gameReviews];
 
   return (
     <section className="py-24 overflow-hidden bg-background/30">

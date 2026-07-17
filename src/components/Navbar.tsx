@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { ContactTelegram } from "@/components/ContactTelegram";
+import { ContactMessenger } from "@/components/ContactMessenger";
 import Logo from "@/components/Logo";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const contactTriggerRef = useRef<HTMLButtonElement>(null);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
@@ -17,10 +18,25 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
   const navLinks = [
-    { label: "Опыт", href: "#timeline" },
+    { label: "Форматы", href: "#mentoring" },
+    { label: "Отзывы", href: "#mentee-reviews" },
     { label: "Проекты", href: "#games" },
-    { label: "Менторинг", href: "#mentoring" },
+    { label: "Опыт", href: "#timeline" },
   ];
 
   return (
@@ -41,7 +57,7 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="flex items-center gap-4">
-          <div className="hidden md:flex items-center gap-8 mr-4">
+          <div className="hidden items-center gap-6 mr-4 md:flex lg:gap-8">
             {navLinks.map((link) => (
               isHomePage ? (
                 <a
@@ -63,17 +79,18 @@ const Navbar = () => {
             ))}
           </div>
 
-          <ContactTelegram
+          <ContactMessenger
+            buttonRef={contactTriggerRef}
             className="hidden sm:block px-5 py-2 rounded-lg text-xs font-display tracking-wider uppercase gradient-primary text-primary-foreground font-semibold hover:scale-105 transition-transform whitespace-nowrap"
           >
             Связаться
-          </ContactTelegram>
+          </ContactMessenger>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 text-foreground hover:text-primary transition-colors z-50"
-            aria-label="Toggle Menu"
+            aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -112,11 +129,16 @@ const Navbar = () => {
                   </Link>
                 )
               ))}
-              <ContactTelegram
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  contactTriggerRef.current?.click();
+                }}
                 className="mt-2 px-5 py-4 rounded-lg text-center text-sm font-display tracking-wider uppercase gradient-primary text-primary-foreground font-semibold"
               >
                 Связаться
-              </ContactTelegram>
+              </button>
             </div>
           </motion.div>
         )}

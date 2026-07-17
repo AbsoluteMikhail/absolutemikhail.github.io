@@ -1,44 +1,14 @@
 import { motion } from "framer-motion";
-import { Trophy, Star, Rocket, Award } from "lucide-react";
+import { ArrowUpRight, Trophy, Star, Rocket, Award } from "lucide-react";
+import { Link } from "react-router-dom";
+import { milestones, type TimelineIcon } from "@/content/timeline";
 
-const milestones = [
-  {
-    year: "2026",
-    title: "Лучший геймдизайн — G.R.I.B.N.I.K.",
-    desc: "Награда за геймдизайн",
-    icon: Award,
-  },
-  {
-    year: "2025",
-    title: "«Золотой Орёл» и Сколково",
-    desc: "VFX в фильме «Воздух», отмеченном премией «Золотой Орёл», и резидентство кластера видеоигр «Сколково»",
-    icon: Award,
-  },
-  {
-    year: "2024",
-    title: "Автор курса «C++ в UE»",
-    desc: "Записал курс для крупнейшей EdTech‑платформы",
-    icon: Rocket,
-  },
-  {
-    year: "2023",
-    title: "Соло‑победа на «Синеус»",
-    desc: "Первое место на офлайн‑хакатоне «Синеус»",
-    icon: Trophy,
-  },
-  {
-    year: "2022",
-    title: "Кино и лайв‑ивенты",
-    desc: "Работа над фильмом «Воздух» и концертом «Выпускной ВКонтакте 2022»",
-    icon: Star,
-  },
-  {
-    year: "2021",
-    title: "Победа на Gamebox Hack",
-    desc: "Также — «Выбор tinyBuild» на Unreal Engine Dev Contest",
-    icon: Trophy,
-  },
-];
+const timelineIcons: Record<TimelineIcon, typeof Trophy> = {
+  award: Award,
+  rocket: Rocket,
+  trophy: Trophy,
+  star: Star,
+};
 
 const TimelineSection = () => {
   return (
@@ -106,7 +76,10 @@ const TimelineSection = () => {
                   <div className="bg-card/40 backdrop-blur-sm border border-border p-6 rounded-2xl hover:border-primary/50 transition-all duration-300 group hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1">
                     <div className={`flex items-center gap-4 mb-3 ${i % 2 === 0 ? "md:flex-row-reverse" : "md:flex-row"}`}>
                       <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                        <m.icon className="w-6 h-6" />
+                        {(() => {
+                          const Icon = timelineIcons[m.icon];
+                          return <Icon className="h-6 w-6" />;
+                        })()}
                       </div>
                       <span className="font-display text-2xl font-bold text-primary/80">
                         {m.year}
@@ -116,8 +89,35 @@ const TimelineSection = () => {
                       {m.title}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed">
-                      {m.desc}
+                      {m.description}
                     </p>
+                    {m.links && (
+                      <div className={`mt-4 flex flex-wrap gap-x-4 gap-y-2 ${i % 2 === 0 ? "md:justify-end" : "md:justify-start"}`}>
+                        {m.links.map((link) =>
+                          link.href.startsWith("http") ? (
+                            <a
+                              className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-primary hover:text-primary/80"
+                              href={link.href}
+                              key={link.href}
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              {link.label}
+                              <ArrowUpRight className="h-3.5 w-3.5" />
+                            </a>
+                          ) : (
+                            <Link
+                              className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-primary hover:text-primary/80"
+                              key={link.href}
+                              to={link.href}
+                            >
+                              {link.label}
+                              <ArrowUpRight className="h-3.5 w-3.5" />
+                            </Link>
+                          ),
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </motion.div>
