@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight, Trophy, Star, Rocket, Award } from "lucide-react";
+import { ArrowUpRight, Trophy, Star, Rocket, Award, Moon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { milestones, type TimelineIcon } from "@/content/timeline";
 
@@ -130,6 +130,24 @@ const TimelineSection = () => {
             ))}
           </div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          className="mx-auto mt-16 max-w-3xl"
+        >
+          <div className="relative flex items-center gap-5 overflow-hidden rounded-2xl border border-primary/20 bg-card/35 px-6 py-5 shadow-xl shadow-black/10 backdrop-blur-sm sm:px-8">
+            <div className="absolute -right-10 -top-12 h-32 w-32 rounded-full bg-primary/10 blur-3xl" />
+            <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary shadow-lg shadow-primary/10">
+              <Moon className="h-6 w-6" aria-hidden="true" />
+            </span>
+            <p className="relative text-sm leading-relaxed text-muted-foreground sm:text-base">
+              Днём я внедрял цифровые системы, а по ночам осваивал геймдев. <br/>
+              <span className="ml-1 text-foreground">Вместо плаща у меня был Unreal Engine =)</span>
+            </p>
+          </div>
+        </motion.div>
 
       </div>
     </section>
