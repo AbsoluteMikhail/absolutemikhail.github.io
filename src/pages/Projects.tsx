@@ -3,15 +3,14 @@ import { Link } from "react-router-dom";
 import { ChevronLeft, ExternalLink, Calendar } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
-import LegalModal from "@/components/LegalModal";
-import { legalContent } from "@/constants/legalContent";
 import { projects } from "@/constants/projects";
 import ProjectDetailModal from "@/components/ProjectDetailModal";
 import type { Project } from "@/constants/projects";
 import ProjectStatusIcon from "@/components/ProjectStatusIcon";
+import SiteFooter from "@/components/SiteFooter";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const Projects = () => {
-  const [activeLegalModal, setActiveLegalModal] = useState<"privacy" | "terms" | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
@@ -132,35 +131,10 @@ const Projects = () => {
             ))}
           </div>
           
-          {/* Footer inside container */}
-          <div className="pt-8 mt-24 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-xs text-muted-foreground">
-              © 2026 Absolute Mikhail. Разработка игр и менторинг.
-            </p>
-            <div className="flex gap-8">
-              <button
-                onClick={() => setActiveLegalModal("privacy")}
-                className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
-              >
-                Политика конфиденциальности
-              </button>
-              <button
-                onClick={() => setActiveLegalModal("terms")}
-                className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
-              >
-                Пользовательское соглашение
-              </button>
-            </div>
-          </div>
         </div>
       </main>
-
-      <LegalModal
-        isOpen={activeLegalModal !== null}
-        onClose={() => setActiveLegalModal(null)}
-        title={activeLegalModal ? legalContent[activeLegalModal].title : ""}
-        content={activeLegalModal ? legalContent[activeLegalModal].content : null}
-      />
+      <SiteFooter projectsPage />
+      <ScrollToTop />
 
       <ProjectDetailModal
         project={selectedProject}

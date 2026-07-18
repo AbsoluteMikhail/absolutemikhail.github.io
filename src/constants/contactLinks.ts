@@ -6,7 +6,7 @@ export const encodedContactLinks = {
   email: "bWFpbHRvOnJ1YWdlQHZrLmNvbQ==",
 } as const;
 
-export const discordUsername = "absolutemikhail";
+export const encodedDiscordUsername = "YWJzb2x1dGVtaWtoYWls";
 
 export const decodeContactLink = (encodedLink: string) =>
   window.atob(encodedLink);

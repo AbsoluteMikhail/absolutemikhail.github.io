@@ -9,7 +9,7 @@ import {
 } from "@/components/SocialIcons";
 import {
   decodeContactLink,
-  discordUsername,
+  encodedDiscordUsername,
   encodedContactLinks,
 } from "@/constants/contactLinks";
 
@@ -76,6 +76,7 @@ export const ContactMessenger = ({
   };
 
   const openDiscord = () => {
+    const discordUsername = decodeContactLink(encodedDiscordUsername);
     void navigator.clipboard
       .writeText(discordUsername)
       .then(() => setDiscordCopied(true))
@@ -172,7 +173,7 @@ export const ContactMessenger = ({
                         <Check className="h-3 w-3" /> Ник скопирован
                       </span>
                     ) : (
-                      <>Открыть профиль @{discordUsername}</>
+                      <>Профиль откроется после нажатия</>
                     )}
                   </span>
                 </span>
