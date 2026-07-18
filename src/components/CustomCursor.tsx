@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 const FINE_POINTER_QUERY = "(hover: hover) and (pointer: fine)";
 const INTERACTIVE_SELECTOR =
@@ -73,8 +74,9 @@ const CustomCursor = () => {
 
     const handlePointerOver = (event: PointerEvent) => {
       const target = event.target instanceof Element ? event.target : null;
-      const useNativeCursor = Boolean(target?.closest(NATIVE_CURSOR_SELECTOR));
       const interactive = Boolean(target?.closest(INTERACTIVE_SELECTOR));
+      const useNativeCursor =
+        Boolean(target?.closest(NATIVE_CURSOR_SELECTOR)) && !interactive;
 
       dot.classList.toggle("is-hidden", useNativeCursor);
       ring.classList.toggle("is-hidden", useNativeCursor);
@@ -117,11 +119,12 @@ const CustomCursor = () => {
 
   if (!enabled) return null;
 
-  return (
+  return createPortal(
     <>
       <div ref={ringRef} className="custom-cursor custom-cursor-ring" aria-hidden="true" />
       <div ref={dotRef} className="custom-cursor custom-cursor-dot" aria-hidden="true" />
-    </>
+    </>,
+    document.body,
   );
 };
 

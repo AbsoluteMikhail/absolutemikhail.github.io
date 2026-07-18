@@ -58,7 +58,7 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
               <h4 className="mb-6 font-display text-xs font-bold uppercase tracking-widest text-foreground">Навигация</h4>
               <ul className="space-y-4">
                 {[
-                  { label: "Форматы работы", href: `${homePrefix}#mentoring` },
+                  { label: "Менторинг", href: `${homePrefix}#mentoring` },
                   { label: "Отзывы учеников", href: `${homePrefix}#mentee-reviews` },
                   { label: "Проекты", href: `${homePrefix}#games` },
                   { label: "Опыт", href: `${homePrefix}#timeline` },

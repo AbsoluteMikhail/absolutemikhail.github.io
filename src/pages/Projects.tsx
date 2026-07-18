@@ -9,6 +9,8 @@ import type { Project } from "@/constants/projects";
 import ProjectStatusIcon from "@/components/ProjectStatusIcon";
 import SiteFooter from "@/components/SiteFooter";
 import ScrollToTop from "@/components/ScrollToTop";
+import ItchProjectsSection from "@/components/ItchProjectsSection";
+import MentoredProjectsSection from "@/components/MentoredProjectsSection";
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -130,6 +132,9 @@ const Projects = () => {
               </motion.article>
             ))}
           </div>
+
+          <ItchProjectsSection />
+          <MentoredProjectsSection />
           
         </div>
       </main>

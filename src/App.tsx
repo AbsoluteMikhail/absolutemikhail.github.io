@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, type ComponentType } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToHashElement from "./components/ScrollToHashElement";
 import RouteMetadata from "./components/RouteMetadata";
@@ -18,24 +18,54 @@ const PageFallback = () => (
   </div>
 );
 
-const App = () => (
+export type InitialRoute = "academy" | "home" | "projects";
+
+type AppContentProps = {
+  InitialPage?: ComponentType;
+  initialRoute?: InitialRoute;
+};
+
+const getRouteElement = (
+  route: InitialRoute,
+  initialRoute: InitialRoute | undefined,
+  InitialPage: ComponentType | undefined,
+  LazyPage: ComponentType,
+) => (initialRoute === route && InitialPage ? <InitialPage /> : <LazyPage />);
+
+export const AppContent = ({ InitialPage, initialRoute }: AppContentProps = {}) => {
+  const routes = (
+    <Routes>
+        <Route path="/" element={getRouteElement("home", initialRoute, InitialPage, Index)} />
+        <Route
+          path="/projects"
+          element={getRouteElement("projects", initialRoute, InitialPage, Projects)}
+        />
+        <Route path="/music" element={<Music />} />
+        <Route path="/twitch" element={<Twitch />} />
+        <Route path="/snippet" element={<OGSnippet />} />
+        <Route
+          path="/academy/*"
+          element={getRouteElement("academy", initialRoute, InitialPage, Academy)}
+        />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+
+  return (
+    <>
+      <ScrollToHashElement />
+      <RouteMetadata />
+      <Suspense fallback={<PageFallback />}>{routes}</Suspense>
+    </>
+  );
+};
+
+const App = (props: AppContentProps) => (
   <>
     <CustomCursor />
     <BrowserRouter>
-      <ScrollToHashElement />
-      <RouteMetadata />
-      <Suspense fallback={<PageFallback />}>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/music" element={<Music />} />
-          <Route path="/twitch" element={<Twitch />} />
-          <Route path="/snippet" element={<OGSnippet />} />
-          <Route path="/academy/*" element={<Academy />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
+      <AppContent {...props} />
     </BrowserRouter>
   </>
 );

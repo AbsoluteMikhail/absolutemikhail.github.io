@@ -34,7 +34,7 @@ const FinalTrustSection = () => (
           message="Привет! Хочу описать проект и понять, какой формат консультации подойдет."
           className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full gradient-primary px-8 py-4 font-display text-sm font-semibold uppercase tracking-wider text-primary-foreground box-glow transition-transform hover:scale-105"
         >
-          Выбрать мессенджер
+          Помогите выбрать
           <ArrowUpRight className="h-4 w-4" />
         </ContactMessenger>
       </motion.div>

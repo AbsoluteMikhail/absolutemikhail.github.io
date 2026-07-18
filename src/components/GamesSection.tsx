@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Calendar, ChevronRight } from "lucide-react";
+import {
+  ArrowUpRight,
+  Calendar,
+  ChevronRight,
+  ExternalLink,
+  Gamepad2,
+  GraduationCap,
+  Trophy,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { projects } from "@/constants/projects";
 import ProjectDetailModal from "@/components/ProjectDetailModal";
@@ -120,10 +128,94 @@ const GamesSection = () => {
         </div>
 
         <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-20 grid gap-6 lg:grid-cols-2"
+        >
+          <Link
+            to="/projects#jams"
+            className="group relative overflow-hidden rounded-3xl border border-border bg-card/40 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 md:p-8"
+          >
+            <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl transition-colors group-hover:bg-primary/15" />
+            <div className="relative">
+              <div className="mb-6 flex items-start justify-between gap-4">
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                  <Gamepad2 className="h-6 w-6" />
+                </span>
+                <ArrowUpRight className="h-5 w-5 text-primary transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+              </div>
+              <p className="font-display text-[10px] uppercase tracking-[0.2em] text-primary">
+                Публичная практика
+              </p>
+              <h3 className="mt-3 font-display text-2xl font-bold text-foreground md:text-3xl">
+                12+ опубликованных проектов
+              </h3>
+              <p className="mt-4 max-w-lg text-sm leading-6 text-muted-foreground">
+                От прототипов, собранных за несколько дней, до полноценных
+                релизов. DUELANT тоже начался как джемовая идея и вырос в большой
+                коммерческий проект.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="rounded-full border border-border bg-background/50 px-3 py-1.5 text-xs text-muted-foreground">
+                  От джемов до релизов
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/50 px-3 py-1.5 text-xs text-muted-foreground">
+                  <Trophy className="h-3.5 w-3.5 text-primary" /> 6-е место
+                </span>
+                <span className="rounded-full border border-border bg-background/50 px-3 py-1.5 text-xs text-muted-foreground">
+                  Steam · VK Play · itch.io
+                </span>
+              </div>
+            </div>
+          </Link>
+
+          <Link
+            to="/projects#mentored"
+            className="group relative overflow-hidden rounded-3xl border border-primary/20 bg-primary/[0.04] p-7 transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 md:p-8"
+          >
+            <div className="absolute -bottom-20 -right-10 h-56 w-56 rounded-full bg-primary/10 blur-3xl transition-colors group-hover:bg-primary/15" />
+            <div className="relative">
+              <div className="mb-6 flex items-start justify-between gap-4">
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                  <GraduationCap className="h-6 w-6" />
+                </span>
+                <ArrowUpRight className="h-5 w-5 text-primary transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+              </div>
+              <p className="font-display text-[10px] uppercase tracking-[0.2em] text-primary">
+                Результаты менторинга
+              </p>
+              <h3 className="mt-3 font-display text-2xl font-bold text-foreground md:text-3xl">
+                4 публичных проекта команд
+              </h3>
+              <p className="mt-4 max-w-lg text-sm leading-6 text-muted-foreground">
+                Помогаю командам пройти путь от идеи и архитектуры до рабочего
+                билда, который можно скачать и показать игрокам.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {[
+                  "Гость древности",
+                  "Phantasma",
+                  "Potato Ded",
+                  "Any World",
+                ].map((title) => (
+                  <span
+                    key={title}
+                    className="rounded-full border border-border bg-background/50 px-3 py-1.5 text-xs text-muted-foreground"
+                  >
+                    {title}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </Link>
+        </motion.div>
+
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-20 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <a
             href="#mentoring"

@@ -123,8 +123,6 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
                           style={{ border: "none" }}
                           loading="lazy"
                           allow="clipboard-write; autoplay"
-                          webkitAllowFullScreen
-                          mozAllowFullScreen
                           allowFullScreen
                         />
                       ) : (

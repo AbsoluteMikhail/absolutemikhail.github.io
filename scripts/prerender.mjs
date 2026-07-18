@@ -1,10 +1,22 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { routeMetadata, siteUrl } from "../src/constants/routeMetadata.js";
+import { pathToFileURL } from "node:url";
+import {
+  findRouteMetadata,
+  notFoundMetadata,
+  routeMetadata,
+  siteUrl,
+} from "../src/constants/routeMetadata.js";
 
 const distDirectory = resolve("dist");
+const serverEntryPath = resolve("dist-ssr", "entry-server.js");
 const templatePath = resolve(distDirectory, "index.html");
 const template = await readFile(templatePath, "utf8");
+
+// The client bundle is a production build, so React's server renderer must use
+// the same mode. Otherwise the generated Suspense markup can fail hydration.
+process.env.NODE_ENV ??= "production";
+const { prerenderPaths, render } = await import(pathToFileURL(serverEntryPath).href);
 
 const escapeAttribute = (value) =>
   value
@@ -18,8 +30,8 @@ const replaceOrInsertHeadTag = (html, matcher, tag) => {
   return html.replace("</head>", `    ${tag}\n  </head>`);
 };
 
-const renderRouteHtml = (metadata) => {
-  const canonicalUrl = `${siteUrl}${metadata.path === "/" ? "/" : metadata.path}`;
+const renderRouteHtml = (pathname, metadata, renderedMarkup = "") => {
+  const canonicalUrl = `${siteUrl}${pathname === "/" ? "/" : pathname}`;
   const title = escapeAttribute(metadata.title);
   const description = escapeAttribute(metadata.description);
   const robots = escapeAttribute(metadata.robots);
@@ -37,20 +49,35 @@ const renderRouteHtml = (metadata) => {
     [/<meta\b[^>]*\bname=["']twitter:description["'][^>]*>/i, `<meta name="twitter:description" content="${description}" />`],
   ];
 
-  return tags.reduce(
+  const html = tags.reduce(
     (html, [matcher, tag]) => replaceOrInsertHeadTag(html, matcher, tag),
     template,
   );
+
+  return html.replace(
+    /<div\s+id=["']root["']\s*><\/div>/i,
+    () => `<div id="root">${renderedMarkup}</div>`,
+  );
 };
 
-for (const metadata of routeMetadata) {
-  const outputDirectory = metadata.path === "/"
+const outputPaths = new Set([
+  ...routeMetadata.map((metadata) => metadata.path),
+  ...prerenderPaths,
+]);
+const renderedPaths = new Set(prerenderPaths);
+
+for (const pathname of outputPaths) {
+  const metadata = findRouteMetadata(pathname) ?? notFoundMetadata;
+  const renderedMarkup = renderedPaths.has(pathname) ? await render(pathname) : "";
+  const outputDirectory = pathname === "/"
     ? distDirectory
-    : resolve(distDirectory, metadata.path.slice(1));
+    : resolve(distDirectory, pathname.slice(1));
   const outputPath = resolve(outputDirectory, "index.html");
 
   await mkdir(outputDirectory, { recursive: true });
-  await writeFile(outputPath, renderRouteHtml(metadata), "utf8");
+  await writeFile(outputPath, renderRouteHtml(pathname, metadata, renderedMarkup), "utf8");
 }
 
-console.log(`Generated ${routeMetadata.length} route HTML files in ${distDirectory}`);
+console.log(
+  `Generated ${outputPaths.size} route HTML files (${renderedPaths.size} with rendered content) in ${distDirectory}`,
+);

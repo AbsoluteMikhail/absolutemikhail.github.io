@@ -66,6 +66,24 @@ const ProofSection = () => (
           );
         })}
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        transition={{ duration: 0.45 }}
+        viewport={{ once: true }}
+        whileInView={{ opacity: 1, y: 0 }}
+        className="mt-6 grid gap-3 rounded-2xl border border-primary/20 bg-primary/[0.04] px-6 py-5 md:grid-cols-[minmax(0,0.7fr)_minmax(0,2fr)] md:items-center md:gap-8"
+      >
+        <p className="font-display text-sm font-bold uppercase tracking-wider text-foreground">
+          От джемов до релизов
+        </p>
+        <p className="text-sm leading-6 text-muted-foreground">
+          Начинал с небольших джемов, где учился выпускать игры в жёсткие сроки.
+          Затем Unreal привёл меня в интерактивные трансляции и кино — там я увидел,
+          как архитектура влияет на результат всей команды. Теперь использую этот
+          опыт в менторинге: помогаю доводить проекты до рабочего билда.
+        </p>
+      </motion.div>
     </div>
   </section>
 );
