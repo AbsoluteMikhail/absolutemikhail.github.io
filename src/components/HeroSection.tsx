@@ -8,7 +8,7 @@ const trustItems = [
   { icon: Building2, lines: ["Резидент игрового кластера", "Сколково"] },
   { icon: Film, lines: ["Премия «Золотой орёл»", "За VFX фильма «Воздух»"] },
   { icon: Trophy, lines: ["Победитель", "Хакатон «Синеус»"] },
-  { icon: GraduationCap, lines: ["Автор курса", "По Unreal Engine"] },
+  { icon: GraduationCap, lines: ["Unreal Authorized", "Instructor"] },
 ];
 
 const HeroSection = () => {
