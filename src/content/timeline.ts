@@ -17,8 +17,9 @@ export interface Milestone {
 export const milestones: Milestone[] = [
   {
     year: "2026",
-    title: "Лучший геймдизайн — G.R.I.B.N.I.K.",
-    description: "Награда за геймдизайн и развитие собственного игрового проекта.",
+    title: "Unreal Authorized Instructor",
+    description:
+      "Получил статус Unreal Authorized Instructor; G.R.I.B.N.I.K. отмечена наградой «Лучший геймдизайн».",
     icon: "award",
     links: [{ label: "Открыть проект", href: "/projects" }],
   },
@@ -30,7 +31,14 @@ export const milestones: Milestone[] = [
     icon: "award",
     links: [
       { label: "О визуальных эффектах", href: "https://xovp.ru/vozduh" },
-      { label: "Профиль и достижения", href: "https://boosty.to/mikhail_e" },
+      {
+        label: "Награда фильма",
+        href: "https://www.kinopoisk.ru/media/news/4010661/",
+      },
+      {
+        label: "Резидентство в Сколково",
+        href: "https://t.me/AbsoluteUnderground/482",
+      },
     ],
   },
   {
@@ -72,8 +80,12 @@ export const milestones: Milestone[] = [
     icon: "trophy",
     links: [
       {
-        label: "Подтверждение наград",
-        href: "https://skillbox.ru/media/gamedev/story-mihail-efremov/",
+        label: "Gamebox Hack",
+        href: "https://www.youtube.com/watch?v=Bb_tg1Rl10Y&t=8400s",
+      },
+      {
+        label: "Выбор tinyBuild",
+        href: "https://unrealcontest.ru/2021/winners/",
       },
     ],
   },

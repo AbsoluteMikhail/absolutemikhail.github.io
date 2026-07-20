@@ -25,6 +25,22 @@ const escapeAttribute = (value) =>
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;");
 
+const isIndexable = (metadata) =>
+  !metadata.robots
+    .toLowerCase()
+    .split(",")
+    .map((directive) => directive.trim())
+    .includes("noindex");
+
+const renderSitemap = (paths) => {
+  const urls = paths
+    .map((pathname) => `${siteUrl}${pathname === "/" ? "/" : pathname}`)
+    .map((url) => `  <url>\n    <loc>${escapeAttribute(url)}</loc>\n  </url>`)
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+};
+
 const replaceOrInsertHeadTag = (html, matcher, tag) => {
   if (matcher.test(html)) return html.replace(matcher, tag);
   return html.replace("</head>", `    ${tag}\n  </head>`);
@@ -116,6 +132,13 @@ for (const pathname of outputPaths) {
   await writeFile(outputPath, renderRouteHtml(pathname, metadata, renderedMarkup), "utf8");
 }
 
+const sitemapPaths = [...outputPaths].filter((pathname) => {
+  const metadata = findRouteMetadata(pathname) ?? notFoundMetadata;
+  return isIndexable(metadata);
+});
+const sitemapPath = resolve(distDirectory, "sitemap.xml");
+await writeFile(sitemapPath, renderSitemap(sitemapPaths), "utf8");
+
 console.log(
-  `Generated ${outputPaths.size} route HTML files (${renderedPaths.size} with rendered content) in ${distDirectory}`,
+  `Generated ${outputPaths.size} route HTML files (${renderedPaths.size} with rendered content) and a sitemap with ${sitemapPaths.length} URLs in ${distDirectory}`,
 );

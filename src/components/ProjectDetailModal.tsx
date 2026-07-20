@@ -59,6 +59,11 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
   ];
 
   const slides = getSlides(project);
+  const storeLinks = project.storeLinks ?? (
+    project.storeUrl
+      ? [{ label: "Смотреть проект", url: project.storeUrl }]
+      : []
+  );
 
   return (
     <AnimatePresence>
@@ -254,17 +259,20 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
                 ))}
               </div>
 
-              {project.storeUrl && (
-                <div className="pt-6 flex justify-center">
-                  <a
-                    href={project.storeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-8 py-4 rounded-xl gradient-primary text-primary-foreground font-display text-sm tracking-wider uppercase hover:shadow-lg hover:shadow-primary/20 transition-all group"
-                  >
-                    Смотреть проект
-                    <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </a>
+              {storeLinks.length > 0 && (
+                <div className="flex flex-wrap justify-center gap-3 pt-6">
+                  {storeLinks.map((store) => (
+                    <a
+                      key={store.url}
+                      href={store.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-2 rounded-xl px-8 py-4 gradient-primary font-display text-sm uppercase tracking-wider text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/20"
+                    >
+                      {store.label}
+                      <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </a>
+                  ))}
                 </div>
               )}
             </div>

@@ -30,6 +30,10 @@ export interface Project {
   tech: string[];
   stats: string;
   storeUrl?: string;
+  storeLinks?: Array<{
+    label: string;
+    url: string;
+  }>;
   videoUrl: string;
   screenshots: string[];
 }
@@ -47,7 +51,16 @@ export const projects: Project[] = [
       "Недалекое будущее. Виртуальные дуэли стали легальным способом заработка и развлечения. В роли молодого дуэлянта вам предстоит сражаться в разных сеттингах — от Дикого Запада до киберпанка. \n\nКлючевые фишки:\n— 30-секундные динамичные поединки;\n— Сопровождение харизматичной ИИ-спутницы Малены;\n— Система отстрела конечностей и прокачка способностей;\n— Элементы Roguelike: риск обнуления прогресса в турнирном режиме;\n— Динамическая смена погоды и времени суток, влияющая на геймплей.",
     tech: ["Unreal Engine 5", "Niagara VFX", "Advanced IK System"],
     stats: "В разработке",
-    storeUrl: "https://store.steampowered.com/app/2854500?curator_clanid=45056388&utm_source=absolute&utm_medium=portfolio",
+    storeLinks: [
+      {
+        label: "Steam",
+        url: "https://store.steampowered.com/app/2854500?curator_clanid=45056388&utm_source=absolute&utm_medium=portfolio",
+      },
+      {
+        label: "VK Play",
+        url: "https://vkplay.ru/play/game/duelant/",
+      },
+    ],
     videoUrl: "https://rutube.ru/play/embed/d3e024f488a0e97cb7cf69a4629156a0/",
     screenshots: [duelant1, duelant2, duelant3, duelant4, duelant5],
   },
