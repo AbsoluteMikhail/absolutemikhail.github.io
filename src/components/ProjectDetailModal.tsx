@@ -165,7 +165,8 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
               </AnimatePresence>
 
               {/* Navigation Arrows */}
-              <button
+              {slides.length > 1 && <>
+                <button
                 type="button"
                 aria-label="Предыдущий кадр"
                 onClick={(e) => {
@@ -175,8 +176,8 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
                 className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white md:opacity-0 md:group-hover/carousel:opacity-100 opacity-100 transition-all hover:bg-primary/50 z-20"
               >
                 <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
+                </button>
+                <button
                 type="button"
                 aria-label="Следующий кадр"
                 onClick={(e) => {
@@ -186,23 +187,24 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
                 className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white md:opacity-0 md:group-hover/carousel:opacity-100 opacity-100 transition-all hover:bg-primary/50 z-20"
               >
                 <ChevronRight className="w-6 h-6" />
-              </button>
+                </button>
 
-              {/* Slide Indicators */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                {slides.map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    aria-label={`Открыть кадр ${idx + 1} из ${slides.length}`}
-                    aria-current={idx === currentSlide ? "true" : undefined}
-                    onClick={() => setCurrentSlide(idx)}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      idx === currentSlide ? "bg-primary w-4" : "bg-white/30"
-                    }`}
-                  />
-                ))}
-              </div>
+                {/* Slide Indicators */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                  {slides.map((_, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      aria-label={`Открыть кадр ${idx + 1} из ${slides.length}`}
+                      aria-current={idx === currentSlide ? "true" : undefined}
+                      onClick={() => setCurrentSlide(idx)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        idx === currentSlide ? "bg-primary w-4" : "bg-white/30"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </>}
             </div>
 
             <div className="flex-1 space-y-4 overflow-x-hidden overflow-y-auto p-5 sm:p-8">

@@ -1,4 +1,4 @@
-export type ProofIcon = "experience" | "award" | "course" | "projects";
+export type ProofIcon = "experience" | "award" | "instructor" | "projects";
 
 export interface ProofItem {
   icon: ProofIcon;
@@ -11,28 +11,28 @@ export interface ProofItem {
 export const proofItems: ProofItem[] = [
   {
     icon: "experience",
-    value: "6+ лет",
-    label: "разработки игр и интерактивных систем на Unreal Engine",
-    linkLabel: "Как всё начиналось",
-    href: "https://skillbox.ru/media/gamedev/story-mihail-efremov/",
+    value: "11 лет",
+    label: "в экосистеме Unreal Engine;\n6+ лет — в коммерческой разработке",
+    linkLabel: "Production-опыт",
+    href: "#production",
+  },
+  {
+    icon: "instructor",
+    value: "UAI 2026",
+    label: "Unreal Authorized Instructor и автор образовательных программ",
+    linkLabel: "Об обучении",
+    href: "#mentoring",
   },
   {
     icon: "award",
-    value: "4 игровые награды",
-    label: "Победы на хакатонах и участие в VFX фильма «Воздух», получившего «Золотой орёл»",
-    linkLabel: "Смотреть достижения",
-    href: "#timeline",
-  },
-  {
-    icon: "course",
-    value: "Автор курса",
-    label: "«Разработчик игр на Unreal Engine 5 с нуля»",
-    linkLabel: "Подробнее о программе",
-    href: "https://l.skbx.pro/4TR7gF",
+    value: "1-е место",
+    label: "соло-победа и главный приз офлайн-хакатона «Синеус»",
+    linkLabel: "История победы",
+    href: "https://skillbox.ru/media/gamedev/story-mihail-efremov/",
   },
   {
     icon: "projects",
-    value: "12+ проектов",
+    value: "20 проектов",
     label: "публичные релизы, джемы и игровые прототипы",
     linkLabel: "Открыть портфолио",
     href: "/projects",

@@ -33,10 +33,10 @@ const Navbar = () => {
   }, [isOpen]);
 
   const navLinks = [
-    { label: "Менторинг", href: "#mentoring" },
-    { label: "Отзывы", href: "#mentee-reviews" },
+    { label: "Опыт", href: "#production" },
     { label: "Проекты", href: "#games" },
-    { label: "Опыт", href: "#timeline" },
+    { label: "Путь", href: "#timeline" },
+    { label: "Менторинг", href: "#mentoring" },
   ];
 
   return (

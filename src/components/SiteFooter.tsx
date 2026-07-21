@@ -30,7 +30,7 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
             <div className="space-y-6">
               <Logo className="font-display text-2xl font-bold tracking-tighter" />
               <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
-                Помогаю разработчикам доводить Unreal-проекты до релиза и создаю собственные игры.
+                Senior Gameplay Programmer и Unreal Authorized Instructor. Создаю игровые системы, собственные проекты и помогаю командам доходить до релиза.
               </p>
               <div className="flex gap-4">
                 {[

@@ -29,16 +29,17 @@ const MentoringSection = () => {
         >
           <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5">
             <span className="text-[10px] font-display tracking-[0.2em] text-primary uppercase">
-              Работаем один на один
+              Unreal Authorized Instructor · 2026
             </span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">
-            <span className="gradient-text uppercase">Менторинг</span>
+          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
+            <span className="gradient-text uppercase">Преподавание</span>
+            <span className="mt-2 block text-foreground uppercase">и менторинг</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
-            Помогаю разработчикам на Unreal Engine быстрее доводить проекты до
-            рабочего состояния, готовиться к собеседованиям и строить
-            масштабируемую архитектуру.
+            Автор курсов по Unreal Engine и C++, ментор 100+ разработчиков.
+            Разбираю код и проекты вместе со студентами, помогаю готовиться к
+            собеседованиям и находить решения без лишней сложности.
           </p>
         </motion.div>
 

@@ -1,6 +1,8 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ProofSection from "@/components/ProofSection";
+import ProductionExperienceSection from "@/components/ProductionExperienceSection";
+import EngineeringFoundationSection from "@/components/EngineeringFoundationSection";
 import TimelineSection from "@/components/TimelineSection";
 import GamesSection from "@/components/GamesSection";
 import MentoringSection from "@/components/MentoringSection";
@@ -17,11 +19,13 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <ProofSection />
-      <MentoringSection />
-      <MenteeReviewsSection />
+      <ProductionExperienceSection />
+      <EngineeringFoundationSection />
       <GamesSection />
       <ReviewsSection />
       <TimelineSection />
+      <MentoringSection />
+      <MenteeReviewsSection />
       <FAQSection />
       <FinalTrustSection />
 

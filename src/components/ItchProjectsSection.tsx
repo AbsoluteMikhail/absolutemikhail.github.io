@@ -10,7 +10,7 @@ import {
 import { itchProjects } from "@/constants/itchProjects";
 
 const authorityFacts = [
-  { icon: Gamepad2, value: "12+", label: "опубликованных проектов" },
+  { icon: Gamepad2, value: "20", label: "игровых проектов" },
   { icon: Timer, value: "2–8 дней", label: "на джемовый проект" },
   { icon: Users, value: "Соло + команда", label: "оба формата разработки" },
 ] as const;

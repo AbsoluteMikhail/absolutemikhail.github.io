@@ -1,15 +1,9 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { Building2, CheckCircle2, Film, GraduationCap, Trophy } from "lucide-react";
+import { Award, CheckCircle2 } from "lucide-react";
 import heroPhoto from "@/assets/hero-photo.jpg";
+import uaiBadge from "@/assets/uai-badge-2026.png";
 import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
-
-const trustItems = [
-  { icon: Building2, lines: ["Резидент игрового кластера", "Сколково"] },
-  { icon: Film, lines: ["Премия «Золотой орёл»", "За VFX фильма «Воздух»"] },
-  { icon: Trophy, lines: ["Победитель", "Хакатон «Синеус»"] },
-  { icon: GraduationCap, lines: ["Unreal Authorized", "Instructor"] },
-];
 
 const HeroSection = () => {
   const trustCardRef = useRef<HTMLAnchorElement>(null);
@@ -63,7 +57,7 @@ const HeroSection = () => {
         >
           <img
             src={heroPhoto}
-            alt="Absolute Mikhail, инди-разработчик игр на Unreal Engine 5"
+            alt="Михаил Ефремов, Senior Gameplay Programmer и Unreal Authorized Instructor"
             loading="eager"
             {...{ fetchpriority: "high" }}
             decoding="async"
@@ -97,7 +91,7 @@ const HeroSection = () => {
         >
           <img
             src={heroPhoto}
-            alt="Absolute Mikhail, инди-разработчик игр на Unreal Engine 5"
+            alt="Михаил Ефремов, Senior Gameplay Programmer и Unreal Authorized Instructor"
             loading="eager"
             {...{ fetchpriority: "high" }}
             decoding="async"
@@ -114,34 +108,37 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Compact facts card: the whole card leads to the proof section. */}
+      {/* Desktop credential card: the supplied badge stays replaceable as one asset. */}
       <a
         ref={trustCardRef}
         href="#proof"
-        aria-label="Перейти к разделу «Проверяемый опыт»"
-        className="group absolute bottom-10 right-8 z-20 hidden w-72 rounded-2xl border border-white/10 bg-background/55 p-5 shadow-2xl shadow-black/35 backdrop-blur-md transition-[border-color,background-color,box-shadow] duration-300 will-change-[transform,opacity] hover:border-primary/35 hover:bg-background/70 hover:shadow-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 lg:block xl:right-12"
+        aria-label="Unreal Authorized Instructor — перейти к подтверждённому опыту"
+        className="group absolute bottom-10 right-8 z-20 hidden w-[310px] rounded-3xl border border-white/15 bg-background/65 p-4 shadow-2xl shadow-black/45 backdrop-blur-xl transition-[border-color,background-color,box-shadow] duration-300 will-change-[transform,opacity] hover:border-primary/40 hover:bg-background/80 hover:shadow-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 lg:block xl:right-12"
       >
-        <span className="mb-4 block font-display text-[10px] font-bold uppercase tracking-[0.24em] text-primary/85">
-          Проверяемый опыт
+        <span className="flex items-center gap-4">
+          <span className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-white via-zinc-300 to-zinc-500 p-1 shadow-inner shadow-white/50">
+            <img src={uaiBadge} alt="Unreal Authorized Instructor 2026" className="h-full w-full object-contain" />
+          </span>
+          <span className="min-w-0">
+            <span className="mb-2 flex items-center gap-1.5 text-primary">
+              <Award className="h-4 w-4" />
+              <span className="font-display text-[9px] font-bold uppercase tracking-[0.2em]">Статус 2026</span>
+            </span>
+            <strong className="block font-display text-sm uppercase leading-5 tracking-[0.08em] text-foreground">
+              Unreal Authorized Instructor
+            </strong>
+            <span className="mt-2 block text-xs leading-5 text-muted-foreground">Преподаю то, с чем сам работаю: код, архитектуру и путь до релиза</span>
+          </span>
         </span>
-        <span className="block space-y-3">
-          {trustItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <span key={item.lines.join("-")} className="flex items-center gap-3">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-primary transition-colors group-hover:bg-primary/20">
-                  <Icon className="h-4 w-4" />
-                </span>
-                <span className="font-display text-[11px] font-bold uppercase leading-4 tracking-[0.09em] text-foreground/85">
-                  {item.lines.map((line) => (
-                    <span key={line} className="block whitespace-nowrap">
-                      {line}
-                    </span>
-                  ))}
-                </span>
-              </span>
-            );
-          })}
+        <span className="mt-4 grid grid-cols-2 gap-2 border-t border-white/10 pt-4">
+          <span className="rounded-xl bg-white/[0.035] px-3 py-2">
+            <strong className="block font-display text-lg text-foreground">11 лет</strong>
+            <span className="text-[10px] text-muted-foreground">в экосистеме UE</span>
+          </span>
+          <span className="rounded-xl bg-white/[0.035] px-3 py-2">
+            <strong className="block font-display text-lg text-foreground">6+ лет</strong>
+            <span className="text-[10px] text-muted-foreground">в коммерции</span>
+          </span>
         </span>
       </a>
 
@@ -157,10 +154,13 @@ const HeroSection = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="mb-4 inline-block rounded-full border border-primary/40 bg-primary/10 px-4 py-2"
+            className="mb-4 inline-block rounded-2xl border border-primary/40 bg-primary/10 px-4 py-2.5"
           >
-            <span className="block font-display text-[10px] font-bold uppercase tracking-[0.2em] text-primary sm:text-xs md:text-sm md:tracking-[0.3em]">
-              Инди-разработчик на Unreal Engine
+            <span className="mb-1 block font-display text-[9px] font-semibold uppercase tracking-[0.18em] text-foreground/65 sm:text-[10px]">
+              Михаил Ефремов
+            </span>
+            <span className="block font-display text-[10px] font-bold uppercase tracking-[0.16em] text-primary sm:text-xs md:text-sm md:tracking-[0.2em]">
+              Senior Gameplay Programmer · GamePunk Studio
             </span>
           </motion.div>
 
@@ -171,7 +171,7 @@ const HeroSection = () => {
             className="mb-4 font-display text-[1.75rem] font-black leading-[1.05] tracking-tight min-[360px]:text-[2rem] sm:text-5xl md:mb-6 md:text-7xl md:leading-tight"
             style={{ textShadow: '0 0 40px rgba(0,0,0,0.5)' }}
           >
-            <span className="gradient-text whitespace-nowrap">UNREAL-ПРОЕКТ</span>
+            <span className="gradient-text whitespace-nowrap">UNREAL-ПРОЕКТЫ</span>
             <br />
             <span className="text-foreground">ДО РЕЛИЗА</span>
           </motion.h1>
@@ -180,46 +180,63 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.7 }}
-            className="mb-6 max-w-xl space-y-2 md:mb-8 md:space-y-3"
+            className="mb-5 max-w-xl space-y-3 md:mb-6"
           >
             <p className="text-base leading-relaxed text-foreground sm:text-lg md:text-xl">
-              Помогаю Blueprint и C++ разработчикам доводить Unreal проекты до
-              релиза без архитектурного хаоса и бесконечных переделок.
+              Создаю игровые механики, сетевой геймплей и поведение AI на C++ —
+              от первых прототипов до рабочего релиза.
             </p>
             <p className="text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg">
-              Разбираем игровые системы, архитектуру, производительность и
-              сложные технические узлы проекта.
+              <span className="block">В Unreal Engine с 2015 года.</span>
+              <span className="block">Более шести лет — в коммерческой разработке.</span>
             </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.72, duration: 0.6 }}
+            className="mb-6 flex max-w-xl items-center gap-3 rounded-2xl border border-white/10 bg-card/55 p-3 shadow-lg shadow-black/20 backdrop-blur-md lg:hidden"
+          >
+            <span className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-white via-zinc-300 to-zinc-500 p-0.5">
+              <img src={uaiBadge} alt="Unreal Authorized Instructor 2026" className="h-full w-full object-contain" />
+            </span>
+            <span>
+              <span className="block font-display text-[9px] uppercase tracking-[0.2em] text-primary">Статус 2026</span>
+              <strong className="mt-1 block font-display text-xs uppercase leading-5 tracking-[0.07em] text-foreground">
+                Unreal Authorized Instructor
+              </strong>
+            </span>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.7 }}
-            className="flex flex-col gap-4 mb-8 sm:flex-row"
+            transition={{ delay: 0.82, duration: 0.7 }}
+            className="mb-6 flex flex-col gap-4 sm:flex-row"
           >
             <a
-              href="#mentoring"
+              href="#production"
               className="px-8 py-3 rounded-lg font-display text-sm tracking-wider uppercase gradient-primary text-primary-foreground font-semibold box-glow hover:scale-105 transition-transform"
             >
-              Выбрать формат работы
+              Мой опыт
             </a>
             <a
-              href="#timeline"
+              href="#mentoring"
               className="px-8 py-3 rounded-lg font-display text-sm tracking-wider uppercase border border-border text-foreground hover:border-primary/50 hover:text-primary transition-colors"
             >
-              Почему мне доверяют
+              Обсудить проект
             </a>
           </motion.div>
 
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
-            className="-mt-4 mb-8 flex items-center gap-2 text-sm text-muted-foreground"
+            transition={{ delay: 0.92, duration: 0.6 }}
+            className="mb-7 flex items-center gap-2 text-sm text-muted-foreground"
           >
             <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
-            Перед первой консультацией бесплатно помогу выбрать формат.
+            20 игровых проектов · победы на Gamebox Hack и «Синеус» · выбор tinyBuild
           </motion.p>
 
           <motion.div

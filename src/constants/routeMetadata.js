@@ -4,9 +4,9 @@ export const routeMetadata = [
   {
     path: "/",
     match: "exact",
-    title: "Портфолио и менторинг Unreal Engine | Absolute Mikhail",
+    title: "Senior Gameplay Programmer и Unreal Authorized Instructor | Михаил Ефремов",
     description:
-      "Инди-разработчик и ментор по Unreal Engine 5. Игры, C++, Blueprint, архитектура игровых систем и помощь с доведением проектов до релиза.",
+      "Михаил Ефремов — Senior Gameplay Programmer и Unreal Authorized Instructor. 11 лет в экосистеме Unreal Engine, 6+ лет коммерческой разработки: C++, multiplayer, AI и архитектура игровых систем.",
     robots: "index, follow",
   },
   {
@@ -42,9 +42,9 @@ export const routeMetadata = [
   {
     path: "/snippet",
     match: "exact",
-    title: "Absolute Mikhail | Разработчик игр на Unreal Engine",
+    title: "Михаил Ефремов | Senior Gameplay Programmer",
     description:
-      "Инди-разработчик и ментор по Unreal Engine. C++, Blueprint, игровые системы, архитектура, проекты и социальные сети.",
+      "Senior Gameplay Programmer и Unreal Authorized Instructor. Unreal Engine, C++, multiplayer, AI и архитектура игровых систем.",
     robots: "index, follow",
   },
 ];

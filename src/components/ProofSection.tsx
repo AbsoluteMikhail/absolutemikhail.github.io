@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight, BookOpen, BriefcaseBusiness, Gamepad2, Trophy } from "lucide-react";
+import { ArrowUpRight, BriefcaseBusiness, Gamepad2, GraduationCap, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
 import { proofItems, type ProofIcon } from "@/content/proof";
 
 const icons: Record<ProofIcon, typeof Trophy> = {
   experience: BriefcaseBusiness,
   award: Trophy,
-  course: BookOpen,
+  instructor: GraduationCap,
   projects: Gamepad2,
 };
 
@@ -23,7 +23,7 @@ const ProofSection = () => (
           </h2>
         </div>
         <p className="max-w-xl text-sm leading-6 text-muted-foreground">
-          Курс, награды и проекты открываются по ссылкам — факты можно проверить до первой встречи.
+          Несколько фактов обо мне — без длинного резюме и общих обещаний.
         </p>
       </div>
 
@@ -37,7 +37,7 @@ const ProofSection = () => (
                 <Icon className="h-5 w-5" />
               </span>
               <strong className="block font-display text-2xl text-foreground">{item.value}</strong>
-              <span className="mt-2 block min-h-12 text-sm leading-6 text-muted-foreground">{item.label}</span>
+              <span className="mt-2 block min-h-12 whitespace-pre-line text-sm leading-6 text-muted-foreground">{item.label}</span>
               <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
                 {item.linkLabel}
                 <ArrowUpRight className="h-3.5 w-3.5" />
@@ -75,13 +75,11 @@ const ProofSection = () => (
         className="mt-6 grid gap-3 rounded-2xl border border-primary/20 bg-primary/[0.04] px-6 py-5 md:grid-cols-[minmax(0,0.7fr)_minmax(0,2fr)] md:items-center md:gap-8"
       >
         <p className="font-display text-sm font-bold uppercase tracking-wider text-foreground">
-          От джемов до релизов
+          Что получилось за это время
         </p>
         <p className="text-sm leading-6 text-muted-foreground">
-          Начинал с небольших джемов, где учился выпускать игры в жёсткие сроки.
-          Затем Unreal привёл меня в интерактивные трансляции и кино — там я увидел,
-          как архитектура влияет на результат всей команды. Теперь использую этот
-          опыт в менторинге: помогаю доводить проекты до рабочего билда.
+          Gamebox Hack — победитель · Unreal Engine Dev Contest — выбор tinyBuild ·
+          «Синеус» — 1-е место и главный приз · G.R.I.B.N.I.K. — награда «Лучший геймдизайн».
         </p>
       </motion.div>
     </div>

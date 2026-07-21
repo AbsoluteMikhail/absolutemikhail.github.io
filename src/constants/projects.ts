@@ -19,6 +19,19 @@ import kolobok3 from "@/assets/projects/kolobok/3.jpg";
 import kolobok4 from "@/assets/projects/kolobok/4.jpg";
 import kolobok5 from "@/assets/projects/kolobok/5.jpg";
 
+import starNomadCover from "@/assets/projects/star-nomad/cover.jpg";
+import starNomad2 from "@/assets/projects/star-nomad/2.jpg";
+import starNomad3 from "@/assets/projects/star-nomad/3.jpg";
+
+import dixotomiaCover from "@/assets/projects/dixotomia/cover.png";
+import dixotomia1 from "@/assets/projects/dixotomia/1.jpg";
+import dixotomia2 from "@/assets/projects/dixotomia/2.jpg";
+import dixotomia3 from "@/assets/projects/dixotomia/3.jpg";
+import dixotomia4 from "@/assets/projects/dixotomia/4.jpg";
+
+import moonshineMayhemCover from "@/assets/projects/moonshine-mayhem/cover.jpg";
+import knittedInflatableCover from "@/assets/projects/knitted-inflatable/cover.jpg";
+
 export interface Project {
   id: number;
   title: string;
@@ -65,6 +78,31 @@ export const projects: Project[] = [
     screenshots: [duelant1, duelant2, duelant3, duelant4, duelant5],
   },
   {
+    id: 5,
+    title: "Dixotomia",
+    genre: "VR Action Shooter",
+    year: "2026",
+    cover: dixotomiaCover,
+    shortDesc:
+      "Иммерсивный VR-шутер, где футуристичное оружие встречается с вампирскими способностями в мрачной сай-фай антиутопии.",
+    fullDesc:
+      "Иммерсивный VR экшен-шутер с футуристичным оружием и вампирскими способностями. В роли бойца специального назначения вам предстоит уничтожить вампирский культ и его лидеров, раскрыть тёмные секреты далёкой планеты и решить, удастся ли герою остаться прежним.\n\nКомбинируйте огнестрельное оружие и сверхъестественные силы, развивайте оба боевых направления и сражайтесь с культистами, андроидами, наёмниками и могущественными боссами.",
+    tech: ["Unreal Engine", "OpenXR", "VR"],
+    stats: "В релизе",
+    storeLinks: [
+      {
+        label: "Steam",
+        url: "https://store.steampowered.com/app/1367710/Dixotomia/?curator_clanid=45056388",
+      },
+      {
+        label: "Meta Quest",
+        url: "https://www.meta.com/ru-ru/experiences/dixotomia/8341732499261883/",
+      },
+    ],
+    videoUrl: "https://rutube.ru/play/embed/fde007fe6c3dfdcd4dfab21cc3562209/",
+    screenshots: [dixotomia1, dixotomia2, dixotomia3, dixotomia4],
+  },
+  {
     id: 1,
     title: "G.R.I.B.N.I.K. в лесу дураков",
     genre: "FPS / Horror",
@@ -95,5 +133,52 @@ export const projects: Project[] = [
     storeUrl: "https://vkplay.ru/play/game/kolobok-protiv-jascherov-arkanoid-40059",
     videoUrl: "https://rutube.ru/play/embed/8523cff58d38eb1de92fedfc21ccbfab/",
     screenshots: [kolobok1, kolobok2, kolobok3, kolobok4, kolobok5],
+  },
+  {
+    id: 4,
+    title: "ЗВЁЗДНЫЙ КОЧЕВНИК",
+    genre: "Top-down Action",
+    year: "2022",
+    cover: starNomadCover,
+    shortDesc:
+      "Приключенческий экшен по мотивам башкирского эпоса «Урал-батыр»: меч, лук и ледяная магия в путешествии по удивительному миру.",
+    fullDesc:
+      "За основу игры взят башкирский эпос «Урал-батыр». Отправляйтесь в путешествие по фантастическому миру, сражайтесь с врагами и знакомьтесь с легендарным сказанием башкирского народа.\n\nВ бою можно рубить врагов мечом, метко стрелять из лука, а когда становится слишком жарко — использовать ледяной посох.",
+    tech: ["Unreal Engine 4", "Blueprints", "Action RPG"],
+    stats: "В релизе",
+    storeUrl: "https://vkplay.ru/play/game/zvezdnyj-kochevnik-34552",
+    videoUrl: "https://rutube.ru/play/embed/9b06ff817cf4c60ac87d6d45572b83da/",
+    screenshots: [starNomadCover, starNomad2, starNomad3],
+  },
+  {
+    id: 6,
+    title: "Moonshine Mayhem",
+    genre: "Multiplayer FPS",
+    year: "2023",
+    cover: moonshineMayhemCover,
+    shortDesc:
+      "Юмористический мультиплеерный шутер с отстрелом конечностей: братья-реднеки спасают родную свинью от нашествия инопланетян.",
+    fullDesc:
+      "Юмористический мультиплеерный шутер от первого лица с отстрелом конечностей. Отвязные братья-реднеки спасают родную свинью от нашествия инопланетян.\n\nПушки, кантри, самогон и безумная физика — всё, что нужно для хорошей вечеринки на краю света.",
+    tech: ["Unreal Engine", "Multiplayer", "Physics"],
+    stats: "Заморожен",
+    videoUrl: "https://www.youtube.com/embed/RR4vJeqrg54",
+    screenshots: [],
+  },
+  {
+    id: 7,
+    title: "ВЯЗАННЫЕ и НАДУВНЫЕ",
+    genre: "Physics Adventure",
+    year: "2021",
+    cover: knittedInflatableCover,
+    shortDesc:
+      "Красочное приключение от первого лица о противостоянии Вязаного и Надувного миров — с физическими головоломками и без жестокости.",
+    fullDesc:
+      "Надувные захватчики вторглись в Вязаный мир, и только юная защитница города может их остановить. Её главное оружие — «Ураган», устройство, способное притягивать и отталкивать предметы.\n\nИспользуйте физику, стройте путь из окружающих объектов, решайте головоломки и отправляйте резиновых противников прямиком на вязальные спицы — без крови и жестокости.",
+    tech: ["Unreal Engine", "Physics", "First-person"],
+    stats: "Заморожен",
+    storeUrl: "https://store.steampowered.com/app/1324840/Knitted_And_Inflatable/",
+    videoUrl: "https://www.youtube.com/embed/oa8H-8lzL7E",
+    screenshots: [],
   },
 ];

@@ -28,7 +28,7 @@ const TimelineSection = () => {
             className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5"
           >
             <span className="text-xs font-display tracking-widest text-primary uppercase">
-              Мой путь
+              Путь в Unreal Engine
             </span>
           </motion.div>
           <motion.h2
@@ -37,7 +37,8 @@ const TimelineSection = () => {
             viewport={{ once: true }}
             className="text-3xl md:text-5xl font-display font-bold mb-6"
           >
-            <span className="gradient-text uppercase">Почему мне доверяют</span>
+            <span className="gradient-text uppercase">От самообучения</span>
+            <span className="mt-2 block text-foreground uppercase">до Unreal Authorized Instructor</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -46,9 +47,8 @@ const TimelineSection = () => {
             transition={{ delay: 0.1 }}
             className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground"
           >
-            За каждым пунктом в этой истории - реальные проекты, ошибки, релизы
-            и сотни часов разработки. Именно этот практический опыт я использую
-            во время менторинга.
+            Начал изучать Unreal Engine в 2015 году. Через пять лет он стал
+            профессией, а затем привёл меня к релизам, кино, наградам и преподаванию.
           </motion.p>
         </div>
 
@@ -143,8 +143,9 @@ const TimelineSection = () => {
               <Moon className="h-6 w-6" aria-hidden="true" />
             </span>
             <p className="relative text-sm leading-relaxed text-muted-foreground sm:text-base">
-              Днём я внедрял цифровые системы, а по ночам осваивал геймдев. <br/>
-              <span className="ml-1 text-foreground">Вместо плаща у меня был Unreal Engine =)</span>
+              Днём я проектировал и внедрял IT-системы, а по ночам осваивал геймдев.
+              Со временем ночные прототипы превратились в профессию, победы и публичные продукты. <br/>
+              <span className="text-foreground">Вместо плаща у меня всё ещё Unreal Engine =)</span>
             </p>
           </div>
         </motion.div>

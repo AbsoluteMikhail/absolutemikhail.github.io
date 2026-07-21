@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { projects } from "@/constants/projects";
+import { mentoredProjects } from "@/constants/mentoredProjects";
 import ProjectDetailModal from "@/components/ProjectDetailModal";
 import type { Project } from "@/constants/projects";
 import ProjectStatusIcon from "@/components/ProjectStatusIcon";
@@ -37,7 +38,7 @@ const GamesSection = () => {
             className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5"
           >
             <span className="text-xs font-display tracking-widest text-primary uppercase">
-              Практика
+              Авторские проекты
             </span>
           </motion.div>
           <motion.h2
@@ -46,9 +47,9 @@ const GamesSection = () => {
             viewport={{ once: true }}
             className="text-3xl md:text-5xl font-display font-bold mb-6"
           >
-            <span className="gradient-text uppercase">Я не только преподаю —</span>
+            <span className="gradient-text uppercase">Системы становятся</span>
             <br />
-            <span className="text-foreground uppercase">я сам делаю игры</span>
+            <span className="text-foreground uppercase">живым геймплеем</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -57,13 +58,13 @@ const GamesSection = () => {
             transition={{ delay: 0.1 }}
             className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground"
           >
-            Все, что обсуждаем на консультациях, основано не на теории, а на
-            реальных проектах.
+            20 игровых проектов: от соло-прототипов за несколько дней
+            до полноценных релизов и коммерческой разработки.
           </motion.p>
         </div>
 
         <div className="space-y-16">
-          {projects.map((game, i) => (
+          {projects.filter((game) => game.stats !== "Заморожен").map((game, i) => (
             <motion.div
               key={game.id}
               initial={{ opacity: 0, y: 40 }}
@@ -149,7 +150,7 @@ const GamesSection = () => {
                 Публичная практика
               </p>
               <h3 className="mt-3 font-display text-2xl font-bold text-foreground md:text-3xl">
-                12+ опубликованных проектов
+                20 игровых проектов
               </h3>
               <p className="mt-4 max-w-lg text-sm leading-6 text-muted-foreground">
                 От прототипов, собранных за несколько дней, до полноценных
@@ -186,19 +187,14 @@ const GamesSection = () => {
                 Результаты менторинга
               </p>
               <h3 className="mt-3 font-display text-2xl font-bold text-foreground md:text-3xl">
-                4 публичных проекта команд
+                {mentoredProjects.length} публичных проектов команд
               </h3>
               <p className="mt-4 max-w-lg text-sm leading-6 text-muted-foreground">
                 Помогаю командам пройти путь от идеи и архитектуры до рабочего
                 билда, который можно скачать и показать игрокам.
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
-                {[
-                  "Гость древности",
-                  "Phantasma",
-                  "Potato Ded",
-                  "Any World",
-                ].map((title) => (
+                {mentoredProjects.map(({ title }) => (
                   <span
                     key={title}
                     className="rounded-full border border-border bg-background/50 px-3 py-1.5 text-xs text-muted-foreground"

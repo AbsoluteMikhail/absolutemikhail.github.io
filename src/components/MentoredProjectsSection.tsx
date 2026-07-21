@@ -30,7 +30,7 @@ const MentoredProjectsSection = () => (
             <CheckCircle2 className="h-6 w-6" />
           </div>
           <div>
-            <div className="font-display text-2xl font-bold text-foreground">4</div>
+            <div className="font-display text-2xl font-bold text-foreground">{mentoredProjects.length}</div>
             <div className="text-xs text-muted-foreground">публичных проекта</div>
           </div>
         </div>

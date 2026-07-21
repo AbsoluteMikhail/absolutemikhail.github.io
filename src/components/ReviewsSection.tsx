@@ -1,30 +1,58 @@
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { gameReviews, type GameReview } from "@/content/reviews";
+import { projects } from "@/constants/projects";
 
-const ReviewCard = ({ review }: { review: GameReview }) => (
-  <div className="flex-shrink-0 w-[350px] p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors">
-    <div className="flex gap-1 mb-3">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          className={`w-4 h-4 ${
-            i < review.rating
-              ? "fill-accent text-accent"
-              : "text-muted-foreground/30"
-          }`}
-        />
-      ))}
+const storeUrls = new Map(
+  projects.map((project) => [
+    project.id,
+    project.storeLinks?.[0]?.url ?? project.storeUrl,
+  ]),
+);
+
+const ReviewCard = ({ review }: { review: GameReview }) => {
+  const storeUrl = review.projectId ? storeUrls.get(review.projectId) : undefined;
+
+  return (
+    <div className="flex-shrink-0 w-[350px] p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors">
+    <div className="flex gap-1 mb-3" aria-label={`Оценка ${review.rating} из 5`}>
+      {Array.from({ length: 5 }).map((_, i) => {
+        const fill = Math.max(0, Math.min(1, review.rating - i));
+        return (
+          <span key={i} className="relative h-4 w-4" aria-hidden="true">
+            <Star className="absolute inset-0 h-4 w-4 text-muted-foreground/30" />
+            {fill > 0 && (
+              <Star
+                className="absolute inset-0 h-4 w-4 fill-accent text-accent"
+                style={{ clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }}
+              />
+            )}
+          </span>
+        );
+      })}
     </div>
     <p className="text-foreground/90 text-sm leading-relaxed mb-4">
       "{review.text}"
     </p>
     <div className="flex items-center justify-between">
       <span className="text-sm font-semibold text-foreground">{review.name}</span>
-      <span className="text-xs text-muted-foreground">{review.game}</span>
+      {storeUrl ? (
+        <a
+          href={storeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 rounded-sm"
+          aria-label={`${review.game} — открыть страницу игры`}
+        >
+          {review.game}
+        </a>
+      ) : (
+        <span className="text-xs text-muted-foreground">{review.game}</span>
+      )}
     </div>
   </div>
-);
+  );
+};
 
 const ReviewsSection = () => {
   // Triple the reviews for very long desktop screens to ensure seamless loop

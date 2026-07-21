@@ -43,10 +43,10 @@ export const milestones: Milestone[] = [
   },
   {
     year: "2024",
-    title: "Автор курса",
-    description: "«Разработчик игр на Unreal Engine 5 с нуля».",
+    title: "GamePunk Studio и авторский курс",
+    description:
+      "Перешёл к core gameplay и multiplayer коммерческого проекта; выпустил программу «Разработчик игр на Unreal Engine 5 с нуля».",
     icon: "rocket",
-    singleLineDescription: true,
     links: [
       {
         label: "Подробнее о курсе",
@@ -68,8 +68,9 @@ export const milestones: Milestone[] = [
   },
   {
     year: "2022",
-    title: "Кино и прямые трансляции",
-    description: "Работа над фильмом «Воздух» и концертом «Выпускной ВКонтакте 2022».",
+    title: "Коммерческий production",
+    description:
+      "Virtual production фильма «Воздух», интерактивные трансляции и разработка больших пространств в StepApp.",
     icon: "star",
     links: [{ label: "Производство фильма", href: "https://xovp.ru/vozduh" }],
   },
@@ -88,5 +89,19 @@ export const milestones: Milestone[] = [
         href: "https://unrealcontest.ru/2021/winners/",
       },
     ],
+  },
+  {
+    year: "2020",
+    title: "Unreal становится профессией",
+    description:
+      "Начало коммерческой разработки: gameplay, AI, VR и первые production-задачи на Unreal Engine.",
+    icon: "rocket",
+  },
+  {
+    year: "2015",
+    title: "Начало пути в Unreal Engine",
+    description:
+      "Самостоятельное изучение движка, C++, игровых систем и первые собственные прототипы.",
+    icon: "star",
   },
 ];

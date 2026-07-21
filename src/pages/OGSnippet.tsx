@@ -76,7 +76,7 @@ const OGSnippet = () => {
         >
           <img
               src={heroPhoto}
-              alt="Absolute Mikhail, инди-разработчик игр на Unreal Engine 5"
+              alt="Михаил Ефремов, Senior Gameplay Programmer и Unreal Authorized Instructor"
               loading="eager"
               {...{ fetchpriority: "high" }}
               decoding="async"
@@ -107,7 +107,7 @@ const OGSnippet = () => {
             className="inline-block mb-6 px-5 py-2 rounded-full border border-primary/40 bg-primary/10 w-fit"
           >
             <span className="text-sm font-display tracking-[0.3em] text-primary uppercase font-bold">
-              Инди-разработчик • Unreal Engine
+              Senior Gameplay Programmer • UAI
             </span>
           </motion.div>
 
@@ -130,8 +130,8 @@ const OGSnippet = () => {
           >
             <div className="h-px w-12 bg-primary/50" />
             <p className="text-2xl text-muted-foreground font-medium tracking-wide leading-snug">
-              <span className="block">C++, Blueprint</span>
-              <span className="block">игровые системы и архитектура</span>
+              <span className="block">Unreal Engine с 2015 года</span>
+              <span className="block">6+ лет коммерческой разработки</span>
             </p>
           </motion.div>
 
@@ -179,7 +179,7 @@ const OGSnippet = () => {
             className="group flex flex-col items-end bg-background/40 backdrop-blur-md px-5 py-3 rounded-xl border border-white/5 shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:bg-primary/10 hover:shadow-primary/20 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
           >
               <p className="text-[10px] uppercase tracking-[0.4em] text-primary/80 mb-2 font-black leading-none transition-colors group-hover:text-primary">
-              Портфолио разработчика
+              Production-портфолио
             </p>
 
             {/* Тонкая линия-разделитель в стиле UI игровых движков */}

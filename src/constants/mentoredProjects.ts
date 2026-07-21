@@ -2,6 +2,7 @@ import guestOfAntiquityCover from "@/assets/projects/mentored/guest-of-antiquity
 import phantasmaCover from "@/assets/projects/mentored/phantasma.gif";
 import potatoDedCover from "@/assets/projects/mentored/potato-ded.png";
 import anyWorldCover from "@/assets/projects/mentored/any-world.png";
+import relsuCover from "@/assets/projects/mentored/relsu.jpg";
 
 export interface MentoredProject {
   title: string;
@@ -14,6 +15,16 @@ export interface MentoredProject {
 }
 
 export const mentoredProjects: MentoredProject[] = [
+  {
+    title: "RELSU",
+    genre: "Co-op Action Roguelite",
+    status: "В релизе",
+    cover: relsuCover,
+    description:
+      "Динамичный roguelite для одного–четырёх игроков: волны противников, боссы, случайные задания и уникальные деревья навыков.",
+    contribution: "Ментор команды",
+    url: "https://store.steampowered.com/app/3783850/RELSU/?curator_clanid=45056388",
+  },
   {
     title: "Гость древности",
     genre: "Puzzle-platformer",
