@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import { Award } from "lucide-react";
 import heroPhoto from "@/assets/hero-photo.jpg";
-import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
+import uaiBadge from "@/assets/uai-badge-2026.png";
+import { DiscordIcon, MaxIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
 import Logo from "@/components/Logo";
-import { ProtectedSocialButton } from "@/components/ProtectedSocialButton";
+import { decodeContactLink, encodedContactLinks } from "@/constants/contactLinks";
 
 const OGSnippet = () => {
   useEffect(() => {
@@ -26,6 +28,10 @@ const OGSnippet = () => {
       document.documentElement.classList.remove('snippet-capture');
     };
   }, []);
+
+  const openPrivateContact = (encodedLink: string) => {
+    window.open(decodeContactLink(encodedLink), "_blank", "noopener,noreferrer");
+  };
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-0 overflow-hidden">
@@ -100,7 +106,7 @@ const OGSnippet = () => {
         {/* ============================================================================== */}
 
         {/* Left Side Content */}
-        <div className="relative z-10 h-full flex flex-col justify-center px-20 max-w-3xl">
+        <div className="relative z-10 flex h-full max-w-3xl -translate-y-14 flex-col justify-center px-10">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -114,7 +120,7 @@ const OGSnippet = () => {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-8xl font-display font-black leading-[0.9] mb-8 tracking-tight"
+            className="mb-8 font-display text-8xl font-black leading-[0.9] tracking-[0.05em]"
             style={{ textShadow: '0 0 40px rgba(0,0,0,0.5)' }}
           >
             <span className="text-foreground">ABSOLUTE</span>
@@ -129,9 +135,9 @@ const OGSnippet = () => {
             className="flex items-center gap-4 mb-10"
           >
             <div className="h-px w-12 bg-primary/50" />
-            <p className="text-2xl text-muted-foreground font-medium tracking-wide leading-snug">
-              <span className="block">Unreal Engine с 2015 года</span>
-              <span className="block">6+ лет коммерческой разработки</span>
+            <p className="font-display text-2xl font-bold uppercase leading-tight tracking-[0.08em]">
+              <span className="block text-foreground">Unreal-проекты</span>
+              <span className="block text-foreground/70">до релиза</span>
             </p>
           </motion.div>
 
@@ -139,57 +145,109 @@ const OGSnippet = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="flex gap-4"
+            className="flex gap-12"
           >
-            {[
-              { icon: YoutubeIcon, label: "YouTube", href: "https://www.youtube.com/@Absolute-Unreal" },
-              { icon: TwitchIcon, label: "Twitch", href: "https://www.twitch.tv/absolutemikhail" },
-              { icon: DiscordIcon, label: "Discord-сообщество", href: "https://discord.gg/NkwZ8pqyS6" },
-              { icon: SteamIcon, label: "Steam", href: "https://store.steampowered.com/developer/GamePunk-Studio" },
-              { icon: TelegramIcon, label: "Telegram", href: "https://t.me/AbsoluteUnderground" },
-            ].map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.label}
-                className="w-16 h-16 rounded-2xl border border-border bg-card/40 backdrop-blur-md flex items-center justify-center text-muted-foreground shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:bg-primary/10 hover:text-primary hover:shadow-lg hover:shadow-primary/20 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
-              >
-                <social.icon className="w-8 h-8" />
-              </a>
-            ))}
-            <ProtectedSocialButton
-              className="w-16 h-16 rounded-2xl border border-border bg-card/40 backdrop-blur-md flex items-center justify-center text-muted-foreground shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:bg-primary/10 hover:text-primary hover:shadow-lg hover:shadow-primary/20 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
-              iconClassName="w-8 h-8"
-            />
+            <span className="flex gap-4">
+              {[
+                { icon: YoutubeIcon, label: "YouTube", href: "https://www.youtube.com/@Absolute-Unreal" },
+                { icon: TwitchIcon, label: "Twitch", href: "https://www.twitch.tv/absolutemikhail" },
+                { icon: SteamIcon, label: "Steam", href: "https://store.steampowered.com/developer/GamePunk-Studio" },
+              ].map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-card/40 text-muted-foreground shadow-xl backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:bg-primary/10 hover:text-primary hover:shadow-lg hover:shadow-primary/20 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+                >
+                  <social.icon className="h-8 w-8" />
+                </a>
+              ))}
+            </span>
+
+            <span className="flex gap-4">
+              {[
+                { icon: DiscordIcon, label: "Discord — личный профиль", encodedLink: encodedContactLinks.discordProfile },
+                { icon: TelegramIcon, label: "Telegram — личный профиль", encodedLink: encodedContactLinks.telegram },
+                { icon: MaxIcon, label: "MAX — личный профиль", encodedLink: encodedContactLinks.max },
+              ].map((social) => (
+                <button
+                  key={social.label}
+                  type="button"
+                  onClick={() => openPrivateContact(social.encodedLink)}
+                  aria-label={social.label}
+                  title={social.label}
+                  className="flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-card/40 text-muted-foreground shadow-xl backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:bg-primary/10 hover:text-primary hover:shadow-lg hover:shadow-primary/20 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+                >
+                  <social.icon className="h-8 w-8" />
+                </button>
+              ))}
+            </span>
           </motion.div>
         </div>
 
-        {/* Bottom Bar / Branding */}
-        <div className="absolute bottom-12 left-20 right-20 flex justify-between items-end z-20">
-          <Logo className="text-3xl font-bold tracking-tighter" />
+        {/* Compact credential card: mirrors the trust block from the main hero. */}
+        <a
+          href="https://absolutemikhail.github.io/#proof"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Unreal Authorized Instructor — открыть подтверждённый опыт"
+          className="group absolute bottom-10 right-10 z-20 w-[390px] rounded-2xl border border-white/15 bg-background/70 p-3.5 shadow-2xl shadow-black/50 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-background/85 hover:shadow-primary/10 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+        >
+          <span className="flex items-center gap-4">
+            <span className="flex h-[92px] w-[92px] shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-white via-zinc-300 to-zinc-500 p-1 shadow-inner shadow-white/50">
+              <img
+                src={uaiBadge}
+                alt="Unreal Authorized Instructor 2026"
+                className="h-full w-full object-contain"
+              />
+            </span>
 
-          {/* Твоя стеклянная карточка теперь на месте */}
-          <a
-            href="https://absolutemikhail.github.io/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Открыть портфолио Absolute Mikhail"
-            className="group flex flex-col items-end bg-background/40 backdrop-blur-md px-5 py-3 rounded-xl border border-white/5 shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:bg-primary/10 hover:shadow-primary/20 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
-          >
-              <p className="text-[10px] uppercase tracking-[0.4em] text-primary/80 mb-2 font-black leading-none transition-colors group-hover:text-primary">
-              Production-портфолио
-            </p>
+            <span className="min-w-0 flex-1">
+              <span className="mb-1.5 flex items-center gap-1.5 text-primary">
+                <Award className="h-4 w-4" />
+                <span className="font-display text-[9px] font-bold uppercase tracking-[0.22em]">
+                  Статус 2026
+                </span>
+              </span>
+              <strong className="block font-display text-[13px] uppercase leading-5 tracking-[0.09em] text-foreground">
+                Unreal Authorized Instructor
+              </strong>
+              <span className="mt-2 grid grid-cols-2 gap-2 border-t border-white/10 pt-2">
+                <span>
+                  <strong className="font-display text-base text-foreground">11 лет</strong>
+                  <span className="ml-1.5 text-[9px] text-muted-foreground">в UE</span>
+                </span>
+                <span>
+                  <strong className="font-display text-base text-foreground">6+ лет</strong>
+                  <span className="ml-1.5 text-[9px] text-muted-foreground">в коммерции</span>
+                </span>
+              </span>
+            </span>
+          </span>
+        </a>
 
-            {/* Тонкая линия-разделитель в стиле UI игровых движков */}
-            <div className="h-[1px] w-full bg-gradient-to-l from-primary/50 to-transparent mb-2" />
+        {/* Corner branding */}
+        <Logo className="absolute right-10 top-10 z-20 rounded-xl border border-white/10 bg-background/35 px-4 py-2 text-3xl font-bold tracking-tighter shadow-xl shadow-black/25 backdrop-blur-md" />
 
-              <p className="text-sm font-display font-bold text-foreground/90 tracking-wider leading-none antialiased transition-colors group-hover:text-primary">
-                  absolutemikhail.github.io
-              </p>
-          </a>
-        </div>
+        <a
+          href="https://absolutemikhail.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Открыть портфолио Absolute Mikhail"
+          className="group absolute bottom-10 left-10 z-20 flex flex-col items-start rounded-xl border border-white/5 bg-background/40 px-5 py-3 shadow-2xl backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:bg-primary/10 hover:shadow-primary/20 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+        >
+          <p className="mb-2 text-[10px] font-black uppercase leading-none tracking-[0.4em] text-primary/80 transition-colors group-hover:text-primary">
+            Production-портфолио
+          </p>
+
+          <div className="mb-2 h-px w-full bg-gradient-to-r from-primary/50 to-transparent" />
+
+          <p className="font-display text-sm font-bold leading-none tracking-[0.092em] text-foreground/90 antialiased transition-colors group-hover:text-primary">
+            absolutemikhail.github.io
+          </p>
+        </a>
 
         {/* Decorative corner accents */}
         <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent blur-3xl" />
