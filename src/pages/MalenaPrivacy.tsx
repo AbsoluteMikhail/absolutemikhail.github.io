@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Eye, Languages, Mail, Send, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { MarkdownContent } from "@/components/academy/MarkdownContent";
+import { MaxIcon } from "@/components/SocialIcons";
+import { decodeContactLink, encodedContactLinks } from "@/constants/contactLinks";
 import privacyPolicyRu from "@/content/malena/PRIVACY_POLICY.md?raw";
 import privacyPolicyEn from "@/content/malena/PRIVACY_POLICY_EN.md?raw";
 
@@ -23,6 +25,7 @@ const ProtectedContacts = ({ language }: { language: Language }) => {
     if (!revealed) return null;
     return {
       email: decodeContact(contactParts.email),
+      max: decodeContactLink(encodedContactLinks.max),
       telegram: decodeContact(contactParts.telegram),
     };
   }, [revealed]);
@@ -31,6 +34,7 @@ const ProtectedContacts = ({ language }: { language: Language }) => {
     ? {
         description: "Контакты скрыты от простых автоматических сборщиков и появятся только после вашего действия.",
         email: "Электронная почта",
+        max: "Написать в MAX",
         reveal: "Показать контакты",
         telegram: "Написать в Telegram",
         title: "Связаться с разработчиком",
@@ -38,6 +42,7 @@ const ProtectedContacts = ({ language }: { language: Language }) => {
     : {
         description: "Contact details are hidden from basic automated harvesters and appear only after your action.",
         email: "Email",
+        max: "Message on MAX",
         reveal: "Show contacts",
         telegram: "Message on Telegram",
         title: "Contact the Developer",
@@ -69,7 +74,7 @@ const ProtectedContacts = ({ language }: { language: Language }) => {
               {copy.reveal}
             </button>
           ) : (
-            <div className="mt-5 grid gap-3 sm:grid-cols-2" role="group">
+            <div className="mt-5 grid gap-3 sm:grid-cols-3" role="group">
               <a
                 className="flex min-h-12 items-center gap-3 rounded-xl border border-border bg-background/65 px-4 py-3 text-sm font-semibold text-foreground transition hover:border-primary/45 hover:text-primary"
                 href={`https://t.me/${contacts.telegram}`}
@@ -78,6 +83,15 @@ const ProtectedContacts = ({ language }: { language: Language }) => {
               >
                 <Send aria-hidden="true" className="h-4 w-4 shrink-0" />
                 <span className="truncate">{copy.telegram}</span>
+              </a>
+              <a
+                className="flex min-h-12 items-center gap-3 rounded-xl border border-border bg-background/65 px-4 py-3 text-sm font-semibold text-foreground transition hover:border-primary/45 hover:text-primary"
+                href={contacts.max}
+                rel="nofollow noreferrer"
+                target="_blank"
+              >
+                <MaxIcon aria-hidden="true" className="h-4 w-4 shrink-0" />
+                <span className="truncate">{copy.max}</span>
               </a>
               <a
                 className="flex min-h-12 items-center gap-3 rounded-xl border border-border bg-background/65 px-4 py-3 text-sm font-semibold text-foreground transition hover:border-primary/45 hover:text-primary"
