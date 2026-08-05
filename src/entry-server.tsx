@@ -11,7 +11,7 @@ const academyPaths = academyCourses.flatMap((course) => [
   ...course.lessons.map((lesson) => `/academy/${course.slug}/${lesson.slug}`),
 ]);
 
-export const prerenderPaths = ["/", "/projects", "/academy", ...academyPaths];
+export const prerenderPaths = ["/", "/projects", "/academy", "/malena/privacy", ...academyPaths];
 
 const loadInitialPage = async (url: string) => {
   if (url === "/") {
@@ -22,6 +22,11 @@ const loadInitialPage = async (url: string) => {
   if (url === "/projects") {
     const module = await import("./pages/Projects");
     return { InitialPage: module.default, initialRoute: "projects" as InitialRoute };
+  }
+
+  if (url === "/malena/privacy") {
+    const module = await import("./pages/MalenaPrivacy");
+    return { InitialPage: module.default, initialRoute: "malenaPrivacy" as InitialRoute };
   }
 
   const module = await import("./pages/Academy");

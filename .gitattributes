@@ -1,0 +1,19 @@
+# По умолчанию обрабатываем всё как текст и принуждаем к LF
+* text=auto eol=lf
+
+# Явно помечаем бинарные файлы, чтобы Git ДАЖЕ НЕ ПЫТАЛСЯ их анализировать
+*.png binary
+*.jpg binary
+*.png binary
+*.exe binary
+*.dll binary
+*.so binary
+
+# Проекты Unreal / 3D (если актуально)
+*.uasset binary
+*.umap binary
+*.fbx binary
+
+# Windows-скрипты, которым реально нужен CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf

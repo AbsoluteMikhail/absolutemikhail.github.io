@@ -26,6 +26,13 @@ export const routeMetadata = [
     robots: "index, follow",
   },
   {
+    path: "/malena/privacy",
+    match: "exact",
+    title: "Политика конфиденциальности Malena",
+    description: "Политика конфиденциальности и правила использования Telegram-бота Malena.",
+    robots: "noindex, nofollow, noarchive, nosnippet, noimageindex",
+  },
+  {
     path: "/music",
     match: "exact",
     title: "Музыка из игр | Absolute Mikhail",

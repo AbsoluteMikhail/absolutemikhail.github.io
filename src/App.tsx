@@ -10,6 +10,7 @@ const Music = lazy(() => import("./pages/Music"));
 const Twitch = lazy(() => import("./pages/Twitch"));
 const OGSnippet = lazy(() => import("./pages/OGSnippet"));
 const Academy = lazy(() => import("./pages/Academy"));
+const MalenaPrivacy = lazy(() => import("./pages/MalenaPrivacy"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const PageFallback = () => (
@@ -18,7 +19,7 @@ const PageFallback = () => (
   </div>
 );
 
-export type InitialRoute = "academy" | "home" | "projects";
+export type InitialRoute = "academy" | "home" | "malenaPrivacy" | "projects";
 
 type AppContentProps = {
   InitialPage?: ComponentType;
@@ -46,6 +47,10 @@ export const AppContent = ({ InitialPage, initialRoute }: AppContentProps = {}) 
         <Route
           path="/academy/*"
           element={getRouteElement("academy", initialRoute, InitialPage, Academy)}
+        />
+        <Route
+          path="/malena/privacy"
+          element={getRouteElement("malenaPrivacy", initialRoute, InitialPage, MalenaPrivacy)}
         />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />

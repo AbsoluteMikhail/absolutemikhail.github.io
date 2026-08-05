@@ -101,9 +101,16 @@ const renderRouteHtml = (pathname, metadata, renderedMarkup = "") => {
     [/<meta\b[^>]*\bname=["']twitter:description["'][^>]*>/i, `<meta name="twitter:description" content="${description}" />`],
   ];
 
+  const routeTemplate = pathname === "/malena/privacy"
+    ? template
+        .replace(/\s*<!-- Google tag \(gtag\.js\) -->[\s\S]*?<\/script>/i, "")
+        .replace(/\s*<!-- Yandex\.Metrika counter -->[\s\S]*?<!-- \/Yandex\.Metrika counter -->/i, "")
+        .replace(/\s*<meta\b[^>]*\bname=["']twitter:site["'][^>]*>/i, "")
+    : template;
+
   const html = tags.reduce(
     (html, [matcher, tag]) => replaceOrInsertHeadTag(html, matcher, tag),
-    template,
+    routeTemplate,
   );
 
   const visibleMarkup = revealPrerenderedContent(renderedMarkup);
