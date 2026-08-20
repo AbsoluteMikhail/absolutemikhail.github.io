@@ -33,6 +33,7 @@ import {
 } from "@/lib/academy";
 import { MarkdownContent, TableOfContents } from "@/components/academy/MarkdownContent";
 import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
+import InstructorBadgeCard from "@/components/InstructorBadgeCard";
 
 const AcademyShell = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-screen bg-background pt-16 text-foreground">
@@ -241,20 +242,25 @@ const CourseCard = ({ course }: { course: AcademyCourse }) => (
 const AcademyHome = () => (
   <AcademyShell>
     <main className="container mx-auto px-6 py-10 lg:py-14">
-      <section className="mb-12 max-w-4xl">
-        <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-primary">База знаний</p>
-        <h1 className="mb-6 font-display text-4xl font-bold leading-tight md:text-6xl">
-          Absolute Mikhail Academy
-        </h1>
-        <p className="max-w-2xl text-lg leading-8 text-muted-foreground">
-          Практические материалы о разработке, Unreal Engine, C++, нейросетях и инструментах.
-        </p>
-        <blockquote className="mt-8 max-w-2xl rounded-lg border-l-4 border-primary bg-card/45 px-5 py-4">
-          <p className="text-xl font-display font-bold leading-8">
-            "Нормально делай, нормально будет!"
+      <section className="mb-12 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_460px]">
+        <div>
+          <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-primary">База знаний</p>
+          <h1 className="mb-6 font-display text-4xl font-bold leading-tight md:text-6xl">
+            Absolute Mikhail Academy
+          </h1>
+          <p className="max-w-2xl text-lg leading-8 text-muted-foreground">
+            <span className="block">Практические материалы о разработке, Unreal Engine, C++,</span>
+            <span className="block">нейросетях и инструментах.</span>
           </p>
-          <footer className="mt-3 text-sm text-muted-foreground">Абсолютный Михаил</footer>
-        </blockquote>
+          <blockquote className="mt-8 max-w-2xl rounded-lg border-l-4 border-primary bg-card/45 px-5 py-4">
+            <p className="text-xl font-display font-bold leading-8">
+              "Нормально делай, нормально будет!"
+            </p>
+            <footer className="mt-3 text-sm text-muted-foreground">Абсолютный Михаил</footer>
+          </blockquote>
+        </div>
+
+        <InstructorBadgeCard className="w-full max-w-[460px] justify-self-start lg:justify-self-end" />
       </section>
 
       <section aria-labelledby="academy-topics" className="mb-16">
