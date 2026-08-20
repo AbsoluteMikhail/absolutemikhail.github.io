@@ -3,8 +3,10 @@ type: course
 slug: useful-ue
 title: Полезное по UE
 description: Отдельная подборка практичных Unreal Engine материалов, которые можно быстро открыть и применить в своих проектах.
+format: Подборка
 tags: Unreal Engine
-status: Подборка
+topics: unreal-engine
+status: Пополняется
 order: 2
 ---
 

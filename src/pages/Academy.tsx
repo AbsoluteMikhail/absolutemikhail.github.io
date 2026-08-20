@@ -4,24 +4,32 @@ import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeft,
   ArrowRight,
+  BrainCircuit,
+  Braces,
   BookOpen,
   Boxes,
   ChevronLeft,
   Code2,
   Compass,
   FileText,
+  Gamepad2,
   GraduationCap,
   Layers,
   PlayCircle,
   Tag,
+  Wrench,
 } from "lucide-react";
 import {
   academyCourses,
+  academyTopics,
   getAcademyCourse,
+  getAcademyCoursesByTopic,
   getAcademyLesson,
+  getAcademyTopic,
   groupLessonsByBlock,
   type AcademyCourse,
   type AcademyLesson,
+  type AcademyTopic,
 } from "@/lib/academy";
 import { MarkdownContent, TableOfContents } from "@/components/academy/MarkdownContent";
 import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
@@ -29,7 +37,7 @@ import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
 const AcademyShell = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-screen bg-background pt-16 text-foreground">
     <header className="fixed left-0 top-0 z-40 w-full border-b border-border bg-background/90 backdrop-blur-xl">
-      <div className="container mx-auto flex h-16 items-center justify-between px-6">
+      <div className="container mx-auto flex h-16 items-center justify-between gap-6 px-6">
         <Link
           className="flex items-center gap-3 transition-all duration-300 hover:drop-shadow-[0_0_10px_hsl(var(--primary))]"
           to="/academy"
@@ -45,13 +53,27 @@ const AcademyShell = ({ children }: { children: React.ReactNode }) => (
           </span>
         </Link>
 
-        <Link
-          className="hidden items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary sm:flex"
-          to="/"
-        >
-          <ChevronLeft className="h-4 w-4" />
-          На сайт
-        </Link>
+        <div className="flex items-center gap-5">
+          <nav className="hidden items-center gap-4 xl:flex" aria-label="Направления Academy">
+            {academyTopics.map((topic) => (
+              <Link
+                className="text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:text-primary"
+                key={topic.slug}
+                to={`/academy/topics/${topic.slug}`}
+              >
+                {topic.title}
+              </Link>
+            ))}
+          </nav>
+
+          <Link
+            className="hidden items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary sm:flex"
+            to="/"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            На сайт
+          </Link>
+        </div>
       </div>
     </header>
 
@@ -63,15 +85,17 @@ const CourseMeta = ({ course }: { course: AcademyCourse }) => (
   <div className="grid gap-3 sm:grid-cols-3">
     <div className="rounded-lg border border-border bg-card/40 p-4">
       <BookOpen className="mb-3 h-5 w-5 text-primary" />
-      <p className="text-2xl font-display font-bold">{course.lessons.length || "Docs"}</p>
+      <p className="text-2xl font-display font-bold">{course.lessons.length || 1}</p>
       <p className="text-xs uppercase tracking-widest text-muted-foreground">
-        {course.lessons.length ? "уроков" : "материалы"}
+        {course.lessons.length ? "уроков" : "материал"}
       </p>
     </div>
     <div className="rounded-lg border border-border bg-card/40 p-4">
       <Boxes className="mb-3 h-5 w-5 text-accent" />
-      <p className="text-lg font-display font-bold">{course.project || "Не задан"}</p>
-      <p className="text-xs uppercase tracking-widest text-muted-foreground">сквозной проект</p>
+      <p className="text-lg font-display font-bold">{course.project || course.format}</p>
+      <p className="text-xs uppercase tracking-widest text-muted-foreground">
+        {course.project ? "сквозной проект" : "формат"}
+      </p>
     </div>
     <div className="rounded-lg border border-border bg-card/40 p-4">
       <Compass className="mb-3 h-5 w-5 text-emerald-400" />
@@ -96,11 +120,11 @@ const LessonSidebar = ({
           to="/academy"
         >
           <ArrowLeft className="h-4 w-4" />
-          Все курсы
+          Все материалы
         </Link>
 
         <div className="rounded-lg border border-border bg-card/35 p-4">
-          <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.24em] text-primary">Курс</p>
+          <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.24em] text-primary">{course.format}</p>
           <Link className="font-display text-lg font-bold transition-colors hover:text-primary" to={`/academy/${course.slug}`}>
             {course.title}
           </Link>
@@ -136,6 +160,44 @@ const LessonSidebar = ({
   </aside>
 );
 
+const TopicIcon = ({ slug, className = "h-5 w-5" }: { slug: string; className?: string }) => {
+  if (slug === "cpp") return <Braces className={className} />;
+  if (slug === "unreal-engine") return <Gamepad2 className={className} />;
+  if (slug === "ai") return <BrainCircuit className={className} />;
+  if (slug === "tools") return <Wrench className={className} />;
+  return <Code2 className={className} />;
+};
+
+const formatMaterialCount = (count: number) => {
+  if (count % 10 === 1 && count % 100 !== 11) return `${count} материал`;
+  if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) {
+    return `${count} материала`;
+  }
+  return `${count} материалов`;
+};
+
+const TopicCard = ({ topic }: { topic: AcademyTopic }) => {
+  const materialCount = getAcademyCoursesByTopic(topic.slug).length;
+
+  return (
+    <Link
+      className="group flex min-h-56 flex-col rounded-lg border border-border bg-card/45 p-5 transition-all hover:-translate-y-1 hover:border-primary/45 hover:bg-card/70 hover:shadow-2xl hover:shadow-primary/10"
+      to={`/academy/topics/${topic.slug}`}
+    >
+      <div className="mb-8 flex h-11 w-11 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+        <TopicIcon slug={topic.slug} />
+      </div>
+      <h2 className="mb-3 font-display text-2xl font-bold transition-colors group-hover:text-primary">
+        {topic.title}
+      </h2>
+      <p className="text-sm leading-6 text-muted-foreground">{topic.description}</p>
+      <p className="mt-auto pt-6 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+        {formatMaterialCount(materialCount)}
+      </p>
+    </Link>
+  );
+};
+
 const CourseCard = ({ course }: { course: AcademyCourse }) => (
   <Link
     className="group flex h-full flex-col rounded-lg border border-border bg-card/45 p-5 transition-all hover:border-primary/45 hover:bg-card/70 hover:shadow-2xl hover:shadow-primary/10"
@@ -143,10 +205,10 @@ const CourseCard = ({ course }: { course: AcademyCourse }) => (
   >
     <div className="mb-5 flex items-start justify-between gap-4">
       <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary">
-        <Code2 className="h-5 w-5" />
+        <TopicIcon slug={course.topics[0]} />
       </div>
       <span className="rounded-md border border-border bg-secondary/50 px-2.5 py-1 text-[10px] uppercase tracking-widest text-muted-foreground">
-        {course.status || "В работе"}
+        {course.format}
       </span>
     </div>
 
@@ -160,6 +222,12 @@ const CourseCard = ({ course }: { course: AcademyCourse }) => (
         <BookOpen className="h-3.5 w-3.5" />
         {course.lessons.length ? `${course.lessons.length} уроков` : "материалы"}
       </span>
+      {course.status ? (
+        <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/40 px-2.5 py-1">
+          <Compass className="h-3.5 w-3.5" />
+          {course.status}
+        </span>
+      ) : null}
       {course.tags.map((tag) => (
         <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/40 px-2.5 py-1" key={tag}>
           <Tag className="h-3.5 w-3.5" />
@@ -174,10 +242,13 @@ const AcademyHome = () => (
   <AcademyShell>
     <main className="container mx-auto px-6 py-10 lg:py-14">
       <section className="mb-12 max-w-4xl">
-        <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-primary">Документация к курсам</p>
+        <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-primary">База знаний</p>
         <h1 className="mb-6 font-display text-4xl font-bold leading-tight md:text-6xl">
-          Absolute Unreal Engine Academy
+          Absolute Mikhail Academy
         </h1>
+        <p className="max-w-2xl text-lg leading-8 text-muted-foreground">
+          Практические материалы о разработке, Unreal Engine, C++, нейросетях и инструментах.
+        </p>
         <blockquote className="mt-8 max-w-2xl rounded-lg border-l-4 border-primary bg-card/45 px-5 py-4">
           <p className="text-xl font-display font-bold leading-8">
             "Нормально делай, нормально будет!"
@@ -186,14 +257,81 @@ const AcademyHome = () => (
         </blockquote>
       </section>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        {academyCourses.map((course) => (
-          <CourseCard course={course} key={course.slug} />
-        ))}
-      </div>
+      <section aria-labelledby="academy-topics" className="mb-16">
+        <div className="mb-6 flex items-end justify-between gap-4">
+          <div>
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.24em] text-primary">О чём</p>
+            <h2 className="font-display text-3xl font-bold" id="academy-topics">Направления</h2>
+          </div>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {academyTopics.map((topic) => (
+            <TopicCard key={topic.slug} topic={topic} />
+          ))}
+        </div>
+      </section>
+
+      <section aria-labelledby="academy-materials">
+        <div className="mb-6">
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.24em] text-primary">Что изучить</p>
+          <h2 className="font-display text-3xl font-bold" id="academy-materials">Материалы</h2>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          {academyCourses.map((course) => (
+            <CourseCard course={course} key={course.slug} />
+          ))}
+        </div>
+      </section>
     </main>
   </AcademyShell>
 );
+
+const TopicPage = ({ topic }: { topic: AcademyTopic }) => {
+  const courses = getAcademyCoursesByTopic(topic.slug);
+
+  return (
+    <AcademyShell>
+      <main className="container mx-auto px-6 py-10 lg:py-14">
+        <Link
+          className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
+          to="/academy"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Все направления
+        </Link>
+
+        <section className="mb-12 max-w-3xl">
+          <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary">
+            <TopicIcon className="h-7 w-7" slug={topic.slug} />
+          </div>
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-primary">Направление</p>
+          <h1 className="mb-5 font-display text-4xl font-bold leading-tight md:text-6xl">{topic.title}</h1>
+          <p className="text-lg leading-8 text-muted-foreground">{topic.description}</p>
+        </section>
+
+        <section aria-labelledby="topic-materials">
+          <div className="mb-6 flex items-end justify-between gap-4">
+            <h2 className="font-display text-2xl font-bold" id="topic-materials">Материалы</h2>
+            <span className="text-sm text-muted-foreground">{formatMaterialCount(courses.length)}</span>
+          </div>
+
+          {courses.length ? (
+            <div className="grid gap-4 md:grid-cols-2">
+              {courses.map((course) => (
+                <CourseCard course={course} key={course.slug} />
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-lg border border-dashed border-border bg-card/25 px-6 py-12">
+              <p className="mb-2 font-display text-xl font-bold">Раздел готов к новым материалам</p>
+              <p className="max-w-2xl leading-7 text-muted-foreground">{topic.emptyState}</p>
+            </div>
+          )}
+        </section>
+      </main>
+    </AcademyShell>
+  );
+};
 
 const CoursePage = ({ course }: { course: AcademyCourse }) => (
   <AcademyShell>
@@ -202,7 +340,7 @@ const CoursePage = ({ course }: { course: AcademyCourse }) => (
 
       <article>
         <div className="mb-8 rounded-lg border border-border bg-card/30 p-5">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-primary">Курс</p>
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-primary">{course.format}</p>
           <h1 className="mb-4 font-display text-4xl font-bold leading-tight md:text-5xl">{course.title}</h1>
           <p className="text-lg leading-8 text-muted-foreground">{course.description}</p>
         </div>
@@ -370,27 +508,32 @@ const AcademyNotFound = () => (
 const Academy = () => {
   const params = useParams();
   const path = params["*"] || "";
-  const [courseSlug, lessonSlug] = path.split("/").filter(Boolean);
+  const [sectionSlug, childSlug, extraSlug] = path.split("/").filter(Boolean);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [path]);
 
-  if (!courseSlug) {
+  if (!sectionSlug) {
     return <AcademyHome />;
   }
 
-  const course = getAcademyCourse(courseSlug);
+  if (sectionSlug === "topics") {
+    const topic = childSlug && !extraSlug ? getAcademyTopic(childSlug) : undefined;
+    return topic ? <TopicPage topic={topic} /> : <AcademyNotFound />;
+  }
+
+  const course = getAcademyCourse(sectionSlug);
 
   if (!course) {
     return <AcademyNotFound />;
   }
 
-  if (!lessonSlug) {
+  if (!childSlug) {
     return <CoursePage course={course} />;
   }
 
-  const lesson = getAcademyLesson(courseSlug, lessonSlug);
+  const lesson = !extraSlug ? getAcademyLesson(sectionSlug, childSlug) : undefined;
 
   if (!lesson) {
     return <AcademyNotFound />;

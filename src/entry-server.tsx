@@ -4,14 +4,23 @@ import { StaticRouter } from "react-router-dom/server";
 import { AppContent } from "./App";
 import type { InitialRoute } from "./App";
 import CustomCursor from "./components/CustomCursor";
-import { academyCourses } from "./lib/academy";
+import { academyCourses, academyTopics } from "./lib/academy";
 
 const academyPaths = academyCourses.flatMap((course) => [
   `/academy/${course.slug}`,
   ...course.lessons.map((lesson) => `/academy/${course.slug}/${lesson.slug}`),
 ]);
 
-export const prerenderPaths = ["/", "/projects", "/academy", "/malena/privacy", ...academyPaths];
+const academyTopicPaths = academyTopics.map((topic) => `/academy/topics/${topic.slug}`);
+
+export const prerenderPaths = [
+  "/",
+  "/projects",
+  "/academy",
+  "/malena/privacy",
+  ...academyTopicPaths,
+  ...academyPaths,
+];
 
 const loadInitialPage = async (url: string) => {
   if (url === "/") {

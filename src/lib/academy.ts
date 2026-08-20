@@ -1,5 +1,12 @@
 export type AcademyDocType = "course" | "lesson";
 
+export type AcademyTopic = {
+  description: string;
+  emptyState: string;
+  slug: string;
+  title: string;
+};
+
 export type AcademyHeading = {
   depth: number;
   id: string;
@@ -22,13 +29,42 @@ export type AcademyLesson = AcademyDocument & {
 
 export type AcademyCourse = AcademyDocument & {
   description: string;
+  format: string;
   lessons: AcademyLesson[];
   order: number;
   project?: string;
   status?: string;
   tags: string[];
   title: string;
+  topics: string[];
 };
+
+export const academyTopics: AcademyTopic[] = [
+  {
+    slug: "cpp",
+    title: "C++",
+    description: "Язык, архитектура и инженерное мышление разработчика.",
+    emptyState: "Здесь появятся материалы о современном C++, памяти, архитектуре и практиках разработки.",
+  },
+  {
+    slug: "unreal-engine",
+    title: "Unreal Engine",
+    description: "От Blueprint до production-систем и масштабируемого gameplay.",
+    emptyState: "Здесь появятся курсы, разборы и практические материалы по Unreal Engine.",
+  },
+  {
+    slug: "ai",
+    title: "Нейросети",
+    description: "Модели, AI-инструменты и собственные практические проекты.",
+    emptyState: "Здесь появятся сравнения нейросетей, практические гайды и проекты с AI.",
+  },
+  {
+    slug: "tools",
+    title: "Инструменты и IT",
+    description: "Движки, программы, сервисы и рабочие процессы.",
+    emptyState: "Здесь появятся обзоры инструментов, сравнения движков и материалы об IT-практике.",
+  },
+];
 
 const contentModules = import.meta.glob<string>("../content/academy/**/*.md", {
   eager: true,
@@ -155,12 +191,14 @@ export const academyCourses: AcademyCourse[] = sortByOrder(
       return {
         ...course,
         description: course.meta.description || "",
+        format: course.meta.format || "Курс",
         lessons,
         order: Number(course.meta.order || 0),
         project: course.meta.project,
         status: course.meta.status,
         tags: parseCommaSeparatedValues(course.meta.tags),
         title: course.meta.title || course.slug,
+        topics: parseCommaSeparatedValues(course.meta.topics),
       };
     }),
 );
@@ -170,6 +208,12 @@ export const getAcademyCourse = (courseSlug: string) =>
 
 export const getAcademyLesson = (courseSlug: string, lessonSlug: string) =>
   getAcademyCourse(courseSlug)?.lessons.find((lesson) => lesson.slug === lessonSlug);
+
+export const getAcademyTopic = (topicSlug: string) =>
+  academyTopics.find((topic) => topic.slug === topicSlug);
+
+export const getAcademyCoursesByTopic = (topicSlug: string) =>
+  academyCourses.filter((course) => course.topics.includes(topicSlug));
 
 export const groupLessonsByBlock = (lessons: AcademyLesson[]) =>
   lessons.reduce<Array<{ title: string; lessons: AcademyLesson[] }>>((groups, lesson) => {

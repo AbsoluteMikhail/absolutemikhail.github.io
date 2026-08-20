@@ -20,9 +20,9 @@ export const routeMetadata = [
   {
     path: "/academy",
     match: "prefix",
-    title: "Academy: C++ и Blueprint в Unreal Engine | Absolute Mikhail",
+    title: "Academy: Unreal Engine, C++, нейросети и инструменты | Absolute Mikhail",
     description:
-      "Практические материалы по C++, Blueprint, архитектуре и разработке игровых систем в Unreal Engine.",
+      "Практические курсы, статьи и подборки об Unreal Engine, C++, нейросетях, инструментах и разработке.",
     robots: "index, follow",
   },
   {
