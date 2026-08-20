@@ -112,7 +112,6 @@ const HeroSection = () => {
       {/* Desktop credential card: the supplied badge stays replaceable as one asset. */}
       <InstructorBadgeCard
         ref={trustCardRef}
-        href="#proof"
         className="absolute bottom-10 right-8 z-20 hidden w-[460px] will-change-[transform,opacity] lg:block xl:right-12"
       />
 
@@ -166,10 +165,14 @@ const HeroSection = () => {
             </p>
           </motion.div>
 
-          <motion.div
+          <motion.a
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.72, duration: 0.6 }}
+            href="https://credential.unrealengine.com/b0a726a2-6749-4f13-a1c9-8ebfcc3d6034"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Unreal Authorized Instructor — открыть официальный credential"
             className="mb-6 flex max-w-xl items-center gap-3 rounded-2xl border border-white/10 bg-card/55 p-3 shadow-lg shadow-black/20 backdrop-blur-md lg:hidden"
           >
             <span className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-white via-zinc-300 to-zinc-500 p-0.5">
@@ -181,7 +184,7 @@ const HeroSection = () => {
                 Unreal Authorized Instructor
               </strong>
             </span>
-          </motion.div>
+          </motion.a>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}

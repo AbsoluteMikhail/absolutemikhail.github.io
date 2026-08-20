@@ -1,16 +1,27 @@
 import { forwardRef, type AnchorHTMLAttributes } from "react";
-import { Award } from "lucide-react";
+import { Award, ExternalLink } from "lucide-react";
 import uaiBadge from "@/assets/uai-badge-2026.png";
 import { cn } from "@/lib/utils";
 
 type InstructorBadgeCardProps = AnchorHTMLAttributes<HTMLAnchorElement>;
 
 const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardProps>(
-  ({ className, href = "/#proof", ...props }, ref) => (
+  (
+    {
+      className,
+      href = "https://credential.unrealengine.com/b0a726a2-6749-4f13-a1c9-8ebfcc3d6034",
+      rel = "noopener noreferrer",
+      target = "_blank",
+      ...props
+    },
+    ref,
+  ) => (
     <a
       ref={ref}
       href={href}
-      aria-label="Unreal Authorized Instructor — перейти к подтверждённому опыту"
+      rel={rel}
+      target={target}
+      aria-label="Unreal Authorized Instructor — открыть официальный credential"
       className={cn(
         "group block rounded-3xl border border-white/15 bg-background/65 p-4 shadow-2xl shadow-black/45 backdrop-blur-xl transition-[border-color,background-color,box-shadow] duration-300 hover:border-primary/40 hover:bg-background/80 hover:shadow-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60",
         className,
@@ -30,7 +41,8 @@ const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardPro
             Unreal Authorized Instructor
           </strong>
           <span className="mt-2 block text-xs leading-5 text-muted-foreground">
-            Преподаю то, с чем сам работаю: код, архитектуру и путь до релиза
+            <span className="block">Преподаю то, с чем сам работаю:</span>
+            <span className="block">код, архитектуру и путь до релиза</span>
           </span>
         </span>
       </span>
@@ -43,6 +55,10 @@ const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardPro
           <strong className="block font-display text-lg text-foreground">6+ лет</strong>
           <span className="text-[10px] text-muted-foreground">в коммерции</span>
         </span>
+      </span>
+      <span className="mt-3 flex items-center justify-end gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-primary transition-colors group-hover:text-primary/80">
+        Открыть официальный credential
+        <ExternalLink className="h-3.5 w-3.5" />
       </span>
     </a>
   ),

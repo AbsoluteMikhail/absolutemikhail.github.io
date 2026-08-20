@@ -16,6 +16,10 @@ order: 2
 
 ## Видео
 
+:::youtube Задача с собеседования | Как я починил систему баффов в UE
+https://youtu.be/Q8SXNGHKD8s
+:::
+
 :::youtube Как добавить персонажа | GASP 5.7 😉👌🔥
 https://youtu.be/DTJO8LTG8iw
 :::
