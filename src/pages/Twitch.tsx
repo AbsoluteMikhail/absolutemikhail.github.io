@@ -31,8 +31,8 @@ type TwitchEmotePayload = {
 };
 
 const twitchConfig = {
-  wsUrl: 'wss://api.cg-studio.ru/',
-  pingUrl: 'https://api.cg-studio.ru/',
+  wsUrl: 'wss://api.gamepunk.ru/',
+  pingUrl: 'https://api.gamepunk.ru/',
   pingInterval: 10 * 60 * 1000,
   maxBunnies: 10,
   bunnySize: 64,
