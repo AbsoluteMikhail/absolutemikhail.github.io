@@ -33,3 +33,8 @@ desktop.ini
 # System files
 .DS_Store
 ЗАМЕТКИ.txt
+AKI
+
+# Codex
+.codex-full-deck
+.codex-poster-edit
