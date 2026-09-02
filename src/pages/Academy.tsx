@@ -82,13 +82,21 @@ const AcademyShell = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
+const formatLessonCount = (count: number) => {
+  if (count % 10 === 1 && count % 100 !== 11) return `${count} урок`;
+  if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) {
+    return `${count} урока`;
+  }
+  return `${count} уроков`;
+};
+
 const CourseMeta = ({ course }: { course: AcademyCourse }) => (
   <div className="grid gap-3 sm:grid-cols-3">
     <div className="rounded-lg border border-border bg-card/40 p-4">
       <BookOpen className="mb-3 h-5 w-5 text-primary" />
       <p className="text-2xl font-display font-bold">{course.lessons.length || 1}</p>
       <p className="text-xs uppercase tracking-widest text-muted-foreground">
-        {course.lessons.length ? "уроков" : "материал"}
+        {course.lessons.length ? formatLessonCount(course.lessons.length).replace(/^\d+\s/, "") : "материал"}
       </p>
     </div>
     <div className="rounded-lg border border-border bg-card/40 p-4">
@@ -177,6 +185,22 @@ const formatMaterialCount = (count: number) => {
   return `${count} материалов`;
 };
 
+const AcademyCover = ({ alt, className = "", src }: { alt?: string; className?: string; src?: string }) => {
+  if (!src) return null;
+
+  return (
+    <div className={`overflow-hidden bg-secondary/30 ${className}`}>
+      <img
+        alt={alt || "Обложка материала"}
+        className="h-full w-full object-cover"
+        decoding="async"
+        loading="lazy"
+        src={src}
+      />
+    </div>
+  );
+};
+
 const TopicCard = ({ topic }: { topic: AcademyTopic }) => {
   const materialCount = getAcademyCoursesByTopic(topic.slug).length;
 
@@ -201,40 +225,44 @@ const TopicCard = ({ topic }: { topic: AcademyTopic }) => {
 
 const CourseCard = ({ course }: { course: AcademyCourse }) => (
   <Link
-    className="group flex h-full flex-col rounded-lg border border-border bg-card/45 p-5 transition-all hover:border-primary/45 hover:bg-card/70 hover:shadow-2xl hover:shadow-primary/10"
+    className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card/45 transition-all hover:border-primary/45 hover:bg-card/70 hover:shadow-2xl hover:shadow-primary/10"
     to={`/academy/${course.slug}`}
   >
-    <div className="mb-5 flex items-start justify-between gap-4">
-      <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary">
-        <TopicIcon slug={course.topics[0]} />
+    <AcademyCover alt={course.coverAlt} className="aspect-video border-b border-border" src={course.cover} />
+
+    <div className="flex flex-1 flex-col p-5">
+      <div className="mb-5 flex items-start justify-between gap-4">
+        <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary">
+          <TopicIcon slug={course.topics[0]} />
+        </div>
+        <span className="rounded-md border border-border bg-secondary/50 px-2.5 py-1 text-[10px] uppercase tracking-widest text-muted-foreground">
+          {course.format}
+        </span>
       </div>
-      <span className="rounded-md border border-border bg-secondary/50 px-2.5 py-1 text-[10px] uppercase tracking-widest text-muted-foreground">
-        {course.format}
-      </span>
-    </div>
 
-    <h2 className="mb-3 font-display text-2xl font-bold transition-colors group-hover:text-primary">
-      {course.title}
-    </h2>
-    <p className="mb-5 text-sm leading-6 text-muted-foreground">{course.description}</p>
+      <h2 className="mb-3 font-display text-2xl font-bold transition-colors group-hover:text-primary">
+        {course.title}
+      </h2>
+      <p className="mb-5 text-sm leading-6 text-muted-foreground">{course.description}</p>
 
-    <div className="mt-auto flex flex-wrap gap-2 text-xs text-muted-foreground">
-      <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/40 px-2.5 py-1">
-        <BookOpen className="h-3.5 w-3.5" />
-        {course.lessons.length ? `${course.lessons.length} уроков` : "материалы"}
-      </span>
-      {course.status ? (
+      <div className="mt-auto flex flex-wrap gap-2 text-xs text-muted-foreground">
         <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/40 px-2.5 py-1">
-          <Compass className="h-3.5 w-3.5" />
-          {course.status}
+          <BookOpen className="h-3.5 w-3.5" />
+          {course.lessons.length ? formatLessonCount(course.lessons.length) : "материалы"}
         </span>
-      ) : null}
-      {course.tags.map((tag) => (
-        <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/40 px-2.5 py-1" key={tag}>
-          <Tag className="h-3.5 w-3.5" />
-          {tag}
-        </span>
-      ))}
+        {course.status ? (
+          <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/40 px-2.5 py-1">
+            <Compass className="h-3.5 w-3.5" />
+            {course.status}
+          </span>
+        ) : null}
+        {course.tags.map((tag) => (
+          <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/40 px-2.5 py-1" key={tag}>
+            <Tag className="h-3.5 w-3.5" />
+            {tag}
+          </span>
+        ))}
+      </div>
     </div>
   </Link>
 );
@@ -344,7 +372,12 @@ const CoursePage = ({ course }: { course: AcademyCourse }) => (
     <main className="container mx-auto grid gap-10 px-6 py-8 lg:grid-cols-[280px_minmax(0,1fr)] lg:py-10 xl:grid-cols-[280px_minmax(0,760px)_220px]">
       <LessonSidebar course={course} />
 
-      <article>
+      <article className="min-w-0">
+        <AcademyCover
+          alt={course.coverAlt}
+          className="mb-6 aspect-video rounded-lg border border-border"
+          src={course.cover}
+        />
         <div className="mb-8 rounded-lg border border-border bg-card/30 p-5">
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-primary">{course.format}</p>
           <h1 className="mb-4 font-display text-4xl font-bold leading-tight md:text-5xl">{course.title}</h1>
@@ -443,7 +476,12 @@ const LessonPage = ({ course, lesson }: { course: AcademyCourse; lesson: Academy
     <main className="container mx-auto grid gap-10 px-6 py-8 lg:grid-cols-[280px_minmax(0,1fr)] lg:py-10 xl:grid-cols-[280px_minmax(0,760px)_220px]">
       <LessonSidebar activeLessonSlug={lesson.slug} course={course} />
 
-      <article>
+      <article className="min-w-0">
+        <AcademyCover
+          alt={lesson.coverAlt}
+          className="mb-6 aspect-video rounded-lg border border-border"
+          src={lesson.cover}
+        />
         <div className="mb-8 rounded-lg border border-border bg-card/30 p-5">
           <div className="mb-4 flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-xs text-primary">
@@ -478,6 +516,11 @@ const LessonPage = ({ course, lesson }: { course: AcademyCourse; lesson: Academy
 
         {lesson.meta.youtube ? (
           <div className="mb-10">
+            {lesson.meta.videoIntro ? (
+              <p className="mb-4 rounded-lg border border-primary/25 bg-primary/10 px-4 py-3 leading-7 text-muted-foreground">
+                {lesson.meta.videoIntro}
+              </p>
+            ) : null}
             <YouTubeEmbed title={lesson.meta.title} url={lesson.meta.youtube} />
           </div>
         ) : null}

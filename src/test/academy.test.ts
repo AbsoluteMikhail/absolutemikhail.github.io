@@ -28,4 +28,14 @@ describe("academy content structure", () => {
     expect(getAcademyTopic("ai")?.title).toBe("Нейросети");
     expect(getAcademyCoursesByTopic("ai")).toEqual([]);
   });
+
+  it("publishes Data-Driven as a covered mini-course with one video lesson", () => {
+    const course = getAcademyCourse("data-driven-speed-modifiers");
+
+    expect(course?.format).toBe("Мини-курс");
+    expect(course?.cover).toBe("/academy/data-driven-speed-modifiers/cover.jpg");
+    expect(course?.lessons).toHaveLength(1);
+    expect(course?.lessons[0].meta.youtube).toBe("https://youtu.be/Q8SXNGHKD8s");
+    expect(course?.lessons[0].meta.videoIntro).toContain("Лень читать");
+  });
 });

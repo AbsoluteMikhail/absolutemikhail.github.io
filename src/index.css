@@ -184,6 +184,14 @@
     @apply w-full object-cover;
   }
 
+  .academy-prose .academy-image-link {
+    @apply block overflow-hidden;
+  }
+
+  .academy-prose .academy-image-link img {
+    @apply transition-transform duration-300 hover:scale-[1.01];
+  }
+
   .academy-prose figcaption {
     @apply border-t border-border px-4 py-2 text-sm text-muted-foreground;
   }
@@ -206,6 +214,92 @@
 
   .academy-callout .academy-prose > * + * {
     @apply mt-3;
+  }
+
+  .academy-table-wrap {
+    @apply overflow-x-auto rounded-lg border border-border bg-card/35;
+  }
+
+  .academy-table-wrap table {
+    @apply w-full min-w-[560px] border-collapse text-left text-sm;
+  }
+
+  .academy-table-wrap th {
+    @apply border-b border-border bg-secondary/70 px-4 py-3 font-semibold text-foreground;
+  }
+
+  .academy-table-wrap td {
+    @apply border-b border-border/70 px-4 py-3 align-top text-foreground/85;
+  }
+
+  .academy-table-wrap tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  .academy-table-wrap tbody tr:hover {
+    @apply bg-primary/5;
+  }
+
+  .academy-flow {
+    @apply rounded-xl border border-primary/25 bg-gradient-to-b from-primary/10 to-card/45 p-4 sm:p-6;
+  }
+
+  .academy-prose .academy-flow__title {
+    @apply mb-5 border-0 p-0 text-center font-display text-lg font-bold text-foreground;
+  }
+
+  .academy-flow__layers {
+    @apply flex flex-col items-stretch;
+  }
+
+  .academy-flow__step {
+    @apply flex flex-col items-stretch;
+  }
+
+  .academy-flow__layer {
+    @apply rounded-lg border border-border bg-background/75 p-4;
+  }
+
+  .academy-flow__label {
+    @apply mb-3 block text-center text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground;
+  }
+
+  .academy-flow__nodes {
+    @apply grid gap-2 sm:grid-cols-[repeat(auto-fit,minmax(150px,1fr))];
+  }
+
+  .academy-flow__node {
+    @apply flex min-h-12 items-center justify-center rounded-md border border-primary/30 bg-primary/10 px-3 py-2 text-center font-semibold text-foreground;
+    overflow-wrap: anywhere;
+  }
+
+  .academy-flow__arrow {
+    @apply flex h-11 items-center justify-center text-primary;
+  }
+
+  .academy-blueprintue {
+    @apply overflow-hidden rounded-lg border border-border bg-card/35;
+  }
+
+  .academy-blueprintue__header {
+    @apply flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3;
+  }
+
+  .academy-prose .academy-blueprintue__header figcaption {
+    @apply border-0 p-0 font-display font-bold text-foreground;
+  }
+
+  .academy-blueprintue__header a {
+    @apply inline-flex items-center gap-1.5 text-xs;
+  }
+
+  .academy-blueprintue__frame {
+    @apply block w-full border-0 bg-[#171717];
+    height: clamp(420px, 68vh, 760px);
+  }
+
+  .academy-blueprintue__fallback {
+    @apply border-t border-border px-4 py-2 text-xs text-muted-foreground;
   }
 }
 

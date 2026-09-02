@@ -34,7 +34,10 @@ desktop.ini
 .DS_Store
 ЗАМЕТКИ.txt
 AKI
+AbsoluteAcademySource
 
 # Codex
-.codex-full-deck
-.codex-poster-edit
+.codex*
+
+# Absolute Academy: heavy/private local source materials
+AbsoluteAcademySource/**/_local/

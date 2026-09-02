@@ -15,6 +15,8 @@ export type AcademyHeading = {
 
 export type AcademyDocument = {
   body: string;
+  cover?: string;
+  coverAlt?: string;
   headings: AcademyHeading[];
   meta: Record<string, string>;
   path: string;
@@ -157,6 +159,8 @@ const documents = Object.entries(contentModules).map(([path, raw]) => {
 
   return {
     body,
+    cover: meta.cover || undefined,
+    coverAlt: meta.coverAlt || meta.title || undefined,
     headings: getHeadings(body),
     meta,
     path,

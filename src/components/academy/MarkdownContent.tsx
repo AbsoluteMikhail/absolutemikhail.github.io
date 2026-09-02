@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { AlertTriangle, Info, Lightbulb } from "lucide-react";
 import { slugify, type AcademyHeading } from "@/lib/academy";
 import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
+import { AcademyFlowDiagram } from "@/components/academy/AcademyFlowDiagram";
+import { BlueprintUEEmbed } from "@/components/academy/BlueprintUEEmbed";
 
 type MarkdownContentProps = {
   className?: string;
@@ -17,7 +19,23 @@ type MarkdownBlock =
   | { type: "hr" }
   | { type: "image"; alt: string; src: string }
   | { type: "list"; ordered: boolean; items: string[] }
+  | { type: "table"; headers: string[]; rows: string[][] }
   | { type: "paragraph"; text: string };
+
+const isTableRow = (line: string) => /^\|.*\|$/.test(line.trim());
+
+const isTableDivider = (line: string) => {
+  if (!isTableRow(line)) return false;
+  const cells = line.trim().slice(1, -1).split("|");
+  return cells.length > 0 && cells.every((cell) => /^\s*:?-{3,}:?\s*$/.test(cell));
+};
+
+const parseTableRow = (line: string) =>
+  line
+    .trim()
+    .slice(1, -1)
+    .split("|")
+    .map((cell) => cell.trim());
 
 const isStructuralLine = (line: string) =>
   /^(#{1,6})\s+/.test(line) ||
@@ -103,6 +121,20 @@ const parseMarkdown = (content: string): MarkdownBlock[] => {
         type: "heading",
       });
       index += 1;
+      continue;
+    }
+
+    if (isTableRow(trimmedLine) && index + 1 < lines.length && isTableDivider(lines[index + 1])) {
+      const headers = parseTableRow(trimmedLine);
+      const rows: string[][] = [];
+      index += 2;
+
+      while (index < lines.length && isTableRow(lines[index])) {
+        rows.push(parseTableRow(lines[index]));
+        index += 1;
+      }
+
+      blocks.push({ headers, rows, type: "table" });
       continue;
     }
 
@@ -275,6 +307,35 @@ export const MarkdownContent = ({ className = "", content }: MarkdownContentProp
           );
         }
 
+        if (block.type === "table") {
+          return (
+            <div className="academy-table-wrap" key={index}>
+              <table>
+                <thead>
+                  <tr>
+                    {block.headers.map((header, headerIndex) => (
+                      <th key={`${header}-${headerIndex}`} scope="col">
+                        {renderInline(header)}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {block.rows.map((row, rowIndex) => (
+                    <tr key={`${row.join("-")}-${rowIndex}`}>
+                      {block.headers.map((_, cellIndex) => (
+                        <td key={`${row[cellIndex] || "cell"}-${cellIndex}`}>
+                          {renderInline(row[cellIndex] || "")}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        }
+
         if (block.type === "code") {
           return (
             <pre key={index}>
@@ -286,13 +347,41 @@ export const MarkdownContent = ({ className = "", content }: MarkdownContentProp
         if (block.type === "image") {
           return (
             <figure key={index}>
-              <img alt={block.alt} decoding="async" loading="lazy" src={block.src} />
+              <a
+                aria-label={`${block.alt || "Изображение"} — открыть в полном размере`}
+                className="academy-image-link"
+                href={block.src}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <img alt={block.alt} decoding="async" loading="lazy" src={block.src} />
+              </a>
               {block.alt ? <figcaption>{block.alt}</figcaption> : null}
             </figure>
           );
         }
 
         if (block.type === "callout") {
+          if (block.intent === "blueprintue") {
+            const [url] = block.body.map((line) => line.trim()).filter(Boolean);
+            return (
+              <BlueprintUEEmbed
+                key={index}
+                title={block.title || "Интерактивный Blueprint"}
+                url={url || ""}
+              />
+            );
+          }
+
+          if (block.intent === "flow") {
+            const layers = block.body
+              .map((line) => line.trim())
+              .filter(Boolean)
+              .map((line) => line.split("|").map((node) => node.trim()).filter(Boolean));
+
+            return <AcademyFlowDiagram key={index} layers={layers} title={block.title} />;
+          }
+
           if (block.intent === "youtube") {
             const [url, ...captionLines] = block.body.map((line) => line.trim()).filter(Boolean);
             const title = block.title || captionLines.join(" ");
