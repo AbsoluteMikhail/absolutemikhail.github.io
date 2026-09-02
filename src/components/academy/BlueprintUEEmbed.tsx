@@ -31,7 +31,7 @@ const getBlueprintUEUrls = (value: string) => {
 };
 
 export const BlueprintUEEmbed = ({ fallbackAlt, fallbackImage, title, url }: BlueprintUEEmbedProps) => {
-  const [view, setView] = useState<"graph" | "image">("graph");
+  const [view, setView] = useState<"graph" | "image">(fallbackImage ? "image" : "graph");
   const urls = getBlueprintUEUrls(url);
 
   if (!urls) {
@@ -49,13 +49,13 @@ export const BlueprintUEEmbed = ({ fallbackAlt, fallbackImage, title, url }: Blu
         <div className="academy-blueprintue__actions">
           {fallbackImage ? (
             <div aria-label="Способ просмотра Blueprint" className="academy-blueprintue__switcher" role="group">
-              <button aria-pressed={view === "graph"} onClick={() => setView("graph")} type="button">
-                <Code2 className="h-3.5 w-3.5" />
-                Граф
-              </button>
               <button aria-pressed={view === "image"} onClick={() => setView("image")} type="button">
                 <ImageIcon className="h-3.5 w-3.5" />
                 Скриншот
+              </button>
+              <button aria-pressed={view === "graph"} onClick={() => setView("graph")} type="button">
+                <Code2 className="h-3.5 w-3.5" />
+                Граф
               </button>
             </div>
           ) : null}
@@ -85,8 +85,12 @@ export const BlueprintUEEmbed = ({ fallbackAlt, fallbackImage, title, url }: Blu
         />
       ) : null}
       <p className="academy-blueprintue__fallback">
-        {fallbackImage ? "Если внешний viewer недоступен, переключитесь на «Скриншот». " : "Не загрузилось? "}
-        <a href={urls.pageUrl} rel="noreferrer" target="_blank">Открыть BlueprintUE в новой вкладке</a>.
+        {fallbackImage && view === "image"
+          ? "Для масштабирования и разбора нод выберите «Граф» или "
+          : fallbackImage
+            ? "Если граф не загрузился, вернитесь к «Скриншоту» или "
+            : "Если граф не загрузился, "}
+        <a href={urls.pageUrl} rel="noreferrer" target="_blank">откройте BlueprintUE отдельно</a>.
       </p>
     </figure>
   );

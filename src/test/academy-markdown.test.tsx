@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import { MarkdownContent } from "../components/academy/MarkdownContent";
@@ -40,38 +40,31 @@ describe("Academy Markdown extensions", () => {
     );
   });
 
-  it("switches a BlueprintUE embed to its local screenshot", () => {
+  it("shows a Blueprint screenshot first and switches to the interactive graph", () => {
     renderMarkdown(`:::blueprintue RecalculateSpeed
 https://blueprintue.com/render/abc_123-/
 /academy/course/recalculate.jpg
 Резервный кадр RecalculateSpeed
 :::`);
 
-    fireEvent.click(screen.getByRole("button", { name: /Скриншот/ }));
-
     expect(screen.queryByTitle("RecalculateSpeed")).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Резервный кадр RecalculateSpeed — увеличить/ })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /Граф/ }));
+    expect(screen.getByTitle("RecalculateSpeed")).toHaveAttribute(
+      "src",
+      "https://blueprintue.com/render/abc_123-/",
+    );
   });
 
-  it("opens Markdown images in an in-page lightbox", () => {
-    Object.defineProperty(HTMLDialogElement.prototype, "showModal", {
-      configurable: true,
-      value(this: HTMLDialogElement) {
-        this.setAttribute("open", "");
-      },
-    });
-    Object.defineProperty(HTMLDialogElement.prototype, "close", {
-      configurable: true,
-      value(this: HTMLDialogElement) {
-        this.removeAttribute("open");
-      },
-    });
-
+  it("opens Markdown images in an in-page lightbox", async () => {
     renderMarkdown(`![Тестовая сцена](/academy/course/scene.jpg)`);
     fireEvent.click(screen.getByRole("button", { name: /Тестовая сцена — увеличить/ }));
 
-    expect(screen.getByRole("dialog", { name: "Тестовая сцена" })).toHaveAttribute("open");
+    expect(screen.getByRole("dialog", { name: "Тестовая сцена" })).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Закрыть изображение" }));
-    expect(screen.queryByRole("dialog", { name: "Тестовая сцена" })).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByRole("dialog", { name: "Тестовая сцена" })).not.toBeInTheDocument();
+    });
   });
 });
