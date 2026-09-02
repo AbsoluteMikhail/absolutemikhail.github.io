@@ -1,6 +1,10 @@
-import { ExternalLink } from "lucide-react";
+import { useState } from "react";
+import { Code2, ExternalLink, ImageIcon } from "lucide-react";
+import { AcademyImageLightbox } from "@/components/academy/AcademyImageLightbox";
 
 type BlueprintUEEmbedProps = {
+  fallbackAlt?: string;
+  fallbackImage?: string;
   title: string;
   url: string;
 };
@@ -26,7 +30,8 @@ const getBlueprintUEUrls = (value: string) => {
   }
 };
 
-export const BlueprintUEEmbed = ({ title, url }: BlueprintUEEmbedProps) => {
+export const BlueprintUEEmbed = ({ fallbackAlt, fallbackImage, title, url }: BlueprintUEEmbedProps) => {
+  const [view, setView] = useState<"graph" | "image">("graph");
   const urls = getBlueprintUEUrls(url);
 
   if (!urls) {
@@ -41,22 +46,47 @@ export const BlueprintUEEmbed = ({ title, url }: BlueprintUEEmbedProps) => {
     <figure className="academy-blueprintue">
       <div className="academy-blueprintue__header">
         <figcaption>{title}</figcaption>
-        <a href={urls.pageUrl} rel="noreferrer" target="_blank">
-          Открыть отдельно
-          <ExternalLink className="h-3.5 w-3.5" />
-        </a>
+        <div className="academy-blueprintue__actions">
+          {fallbackImage ? (
+            <div aria-label="Способ просмотра Blueprint" className="academy-blueprintue__switcher" role="group">
+              <button aria-pressed={view === "graph"} onClick={() => setView("graph")} type="button">
+                <Code2 className="h-3.5 w-3.5" />
+                Граф
+              </button>
+              <button aria-pressed={view === "image"} onClick={() => setView("image")} type="button">
+                <ImageIcon className="h-3.5 w-3.5" />
+                Скриншот
+              </button>
+            </div>
+          ) : null}
+          <a href={urls.pageUrl} rel="noreferrer" target="_blank">
+            Открыть отдельно
+            <ExternalLink className="h-3.5 w-3.5" />
+          </a>
+        </div>
       </div>
-      <iframe
-        allowFullScreen
-        className="academy-blueprintue__frame"
-        loading="lazy"
-        referrerPolicy="no-referrer"
-        sandbox="allow-scripts allow-same-origin allow-popups"
-        src={urls.embedUrl}
-        title={title}
-      />
+      {view === "graph" ? (
+        <iframe
+          allowFullScreen
+          className="academy-blueprintue__frame"
+          loading="lazy"
+          onError={() => fallbackImage && setView("image")}
+          referrerPolicy="no-referrer"
+          sandbox="allow-scripts allow-same-origin allow-popups"
+          scrolling="no"
+          src={urls.embedUrl}
+          title={title}
+        />
+      ) : fallbackImage ? (
+        <AcademyImageLightbox
+          alt={fallbackAlt || `${title} — резервный скриншот`}
+          className="academy-blueprintue__image"
+          src={fallbackImage}
+        />
+      ) : null}
       <p className="academy-blueprintue__fallback">
-        Не загрузилось? <a href={urls.pageUrl} rel="noreferrer" target="_blank">Откройте BlueprintUE в новой вкладке</a>.
+        {fallbackImage ? "Если внешний viewer недоступен, переключитесь на «Скриншот». " : "Не загрузилось? "}
+        <a href={urls.pageUrl} rel="noreferrer" target="_blank">Открыть BlueprintUE в новой вкладке</a>.
       </p>
     </figure>
   );

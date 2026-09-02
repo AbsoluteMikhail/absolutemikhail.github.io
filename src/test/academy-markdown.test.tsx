@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import { MarkdownContent } from "../components/academy/MarkdownContent";
@@ -33,9 +33,45 @@ describe("Academy Markdown extensions", () => {
       "src",
       "https://blueprintue.com/render/abc_123-/",
     );
+    expect(screen.getByTitle("RecalculateSpeed")).toHaveAttribute("scrolling", "no");
     expect(screen.getByRole("link", { name: /Открыть отдельно/ })).toHaveAttribute(
       "href",
       "https://blueprintue.com/blueprint/abc_123-/",
     );
+  });
+
+  it("switches a BlueprintUE embed to its local screenshot", () => {
+    renderMarkdown(`:::blueprintue RecalculateSpeed
+https://blueprintue.com/render/abc_123-/
+/academy/course/recalculate.jpg
+Резервный кадр RecalculateSpeed
+:::`);
+
+    fireEvent.click(screen.getByRole("button", { name: /Скриншот/ }));
+
+    expect(screen.queryByTitle("RecalculateSpeed")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Резервный кадр RecalculateSpeed — увеличить/ })).toBeInTheDocument();
+  });
+
+  it("opens Markdown images in an in-page lightbox", () => {
+    Object.defineProperty(HTMLDialogElement.prototype, "showModal", {
+      configurable: true,
+      value(this: HTMLDialogElement) {
+        this.setAttribute("open", "");
+      },
+    });
+    Object.defineProperty(HTMLDialogElement.prototype, "close", {
+      configurable: true,
+      value(this: HTMLDialogElement) {
+        this.removeAttribute("open");
+      },
+    });
+
+    renderMarkdown(`![Тестовая сцена](/academy/course/scene.jpg)`);
+    fireEvent.click(screen.getByRole("button", { name: /Тестовая сцена — увеличить/ }));
+
+    expect(screen.getByRole("dialog", { name: "Тестовая сцена" })).toHaveAttribute("open");
+    fireEvent.click(screen.getByRole("button", { name: "Закрыть изображение" }));
+    expect(screen.queryByRole("dialog", { name: "Тестовая сцена" })).not.toBeInTheDocument();
   });
 });

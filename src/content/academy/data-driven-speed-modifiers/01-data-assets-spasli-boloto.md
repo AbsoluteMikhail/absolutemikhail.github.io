@@ -32,7 +32,7 @@ coverAlt: Михаил в болоте рядом с рабочим столом
 
 Соберём систему, в которой итог принадлежит одному месту, а объекты мира только сообщают: «такой эффект начался» или «такой эффект закончился».
 
-![Тестовая сцена: персонаж, болота, источник ядовитых снарядов и ускоряющая зона](/academy/data-driven-speed-modifiers/final-result-overview.jpg)
+![Тестовая сцена: персонаж, болота и источник ядовитых снарядов](/academy/data-driven-speed-modifiers/final-result-overview.jpg)
 
 ## Сначала посмотрим на ожидаемый результат
 
@@ -41,21 +41,19 @@ coverAlt: Михаил в болоте рядом с рабочим столом
 | Ситуация | Ожидаемая скорость | Что проверяем |
 |---|---:|---|
 | Нет эффектов | 600 | Базовое значение сохранено |
-| Ускоряющая платформа | 750 | `Additive +150` |
 | Болото | 300 | `Multiplicative ×0.5` |
 | Два пересекающихся болота | 300 | `Unique` не удваивает эффект |
-| Платформа + болото | 450 | Порядок операций зафиксирован |
 | Яд вне болота | 580 | Временный `Additive -20` |
 | Яд + болото | 280 | Разные типы комбинируются |
 
-Значения `600`, `300`, два болота без двойного замедления и комбинация яда с болотом подтверждены кадрами тестовой сцены ниже. `750` и `450` — контрольные расчёты для `DA_SpeedUp`: overlap-обвязка повторяет болото, меняется только Data Asset.
+Все значения в таблице подтверждены кадрами тестовой сцены ниже. Отдельной ускоряющей зоны в сцене нет: `DA_SpeedUp` понадобится дальше как пример того, что ту же Blueprint-логику зоны легко превратить из замедляющей в ускоряющую простой заменой Data Asset.
 
-Ни один объект мира не решает, какую итоговую скорость выставить. Болото не знает о яде, яд не знает об ускорении, а зона ускорения не пытается восстановить «свою» старую скорость.
+Ни один объект мира не решает, какую итоговую скорость выставить. Болото не знает о яде, а яд не пытается восстановить «свою» старую скорость.
 
 ## Архитектура в одном экране
 
 :::flow Data-Driven архитектура модификаторов
-Болото | Ядовитый снаряд | Ускоряющая платформа
+Болото | Ядовитый снаряд | Та же зона с другим Data Asset
 PDA_SpeedModifier | F_ActiveModifier | BPC_SpeedManagerComponent
 Character Movement: итоговая Max Walk Speed
 :::
@@ -74,11 +72,15 @@ Character Movement: итоговая Max Walk Speed
 
 ## Шаг 1. Сначала правила, потом ноды
 
-Создаём `E_ModifierType` — способ участия эффекта в расчёте.
+В Content Browser нажимаем **Add → Blueprint → Enumeration**. Этот asset хранит ограниченный набор именованных вариантов и не даёт случайно записать в настройку что-то кроме предусмотренных значений.
+
+![Меню создания Blueprint Enumeration и Structure](/academy/data-driven-speed-modifiers/create-blueprint-types-menu.png)
+
+Создаём перечисление `E_ModifierType` — способ участия эффекта в расчёте. Открываем новый asset, добавляем два значения и переименовываем их:
 
 | Значение | Смысл | Пример |
 |---|---|---|
-| `Additive` | Фиксированное изменение | яд `-20`, платформа `+150` |
+| `Additive` | Фиксированное изменение | яд `-20`, ускорение `+150` |
 | `Multiplicative` | Коэффициент от базового значения | болото `×0.5` |
 
 Затем `E_StackPolicy` — что делать с повторным применением.
@@ -97,7 +99,9 @@ Character Movement: итоговая Max Walk Speed
 
 ## Шаг 2. Описание эффекта в Data Asset
 
-Создаём Blueprint Class с родителем `PrimaryDataAsset` и называем его `PDA_SpeedModifier`.
+Создаём **Blueprint Class**, раскрываем список всех классов, находим родителя `PrimaryDataAsset` и называем новый класс `PDA_SpeedModifier`.
+
+![Выбор PrimaryDataAsset как родительского класса Blueprint](/academy/data-driven-speed-modifiers/create-primary-data-asset.png)
 
 | Поле | Назначение |
 |---|---|
@@ -109,7 +113,13 @@ Character Movement: итоговая Max Walk Speed
 
 ![PDA_SpeedModifier: пять полей описания эффекта и Duration со значением по умолчанию -1](/academy/data-driven-speed-modifiers/pda-speed-modifier-fields.jpg)
 
-Три демонстрационных ассета:
+Теперь создаём экземпляры нашего шаблона: **Add → Miscellaneous → Data Asset**, затем выбираем класс `PDA_SpeedModifier`.
+
+![Создание Data Asset через меню Miscellaneous](/academy/data-driven-speed-modifiers/create-data-asset-menu.png)
+
+![Выбор PDA_SpeedModifier для нового Data Asset](/academy/data-driven-speed-modifiers/select-speed-modifier-data-asset.png)
+
+Таким способом создаём три демонстрационных ассета:
 
 | Data Asset | ID | Тип | Value | Duration | Policy |
 |---|---|---|---:|---:|---|
@@ -131,7 +141,7 @@ Character Movement: итоговая Max Walk Speed
 
 ## Шаг 3. Runtime-состояние — отдельная сущность
 
-Создаём `F_ActiveModifier`:
+Возвращаемся в **Add → Blueprint → Structure**, создаём структуру `F_ActiveModifier`, открываем её и добавляем три поля. В отличие от Data Asset, это будет runtime-запись конкретного применения эффекта:
 
 | Поле | Что хранит |
 |---|---|
@@ -165,8 +175,12 @@ Character Movement: итоговая Max Walk Speed
 2. сохраняет исходный `Max Walk Speed` в `DefaultSpeed`;
 3. начинает с пустого `ActiveModifiers`.
 
+На этом же Event Graph уже виден вызов `ModifierTick` из `Event Tick`. Пока оставляем его как заготовку и возвращаемся к нему после того, как соберём функции поиска, добавления, удаления и пересчёта.
+
 :::blueprintue EventGraph компонента BPC_SpeedManagerComponent
 https://blueprintue.com/render/yzc8wvn8/
+/academy/data-driven-speed-modifiers/component-event-graph.jpg
+EventGraph компонента: BeginPlay и вызов ModifierTick из Event Tick
 :::
 
 ### FindModifierIndex
@@ -181,6 +195,8 @@ ModifierData + SourceActor
 
 :::blueprintue FindModifierIndex
 https://blueprintue.com/render/zrxh6i0t/
+/academy/data-driven-speed-modifiers/find-modifier-index.jpg
+Функция FindModifierIndex
 :::
 
 ### RecalculateSpeed
@@ -200,23 +216,31 @@ AdditiveSum = 0
 
 Если множитель начать с нуля, после умножения скорость всегда останется нулевой.
 
-Для `Unique` функция держит локальный Set уже обработанных `ModifierId`. Все применения остаются в массиве со своими источниками, но в расчёте болото участвует один раз.
+Для `Unique` функция держит локальный **Set** уже обработанных `ModifierId`. `Set` — это контейнер уникальных значений: один и тот же ID нельзя добавить в него дважды. Поэтому он удобно отвечает на вопрос «этот тип эффекта уже участвовал в расчёте?».
+
+Создаём локальную переменную `UsedModifierIds` типа `Name`, открываем меню контейнера справа от типа и выбираем **Set** вместо одиночного значения или массива.
+
+![Выбор контейнера Set для локальной переменной UsedModifierIds](/academy/data-driven-speed-modifiers/create-used-modifier-ids-set.png)
+
+Все применения по-прежнему остаются в массиве со своими источниками, но в расчёте болото участвует один раз.
 
 Это ключевой приём:
 
 - **храним** применения по источникам;
 - **считаем** уникальный эффект один раз по ID.
 
-Порядок операций здесь является частью дизайна. При базе `600`, болоте `×0.5` и платформе `+150` получаем:
+Порядок операций здесь является частью дизайна. При базе `600`, болоте `×0.5` и яде `-20` получаем:
 
 ```text
-600 × 0.5 + 150 = 450
+600 × 0.5 - 20 = 280
 ```
 
-Если бы сначала сложили, а потом умножили, было бы `375`. Ни один вариант не «истинный по движку» — команда должна выбрать правило и закрепить его тестом.
+Если бы сначала применили яд, а потом умножили результат, было бы `290`. Ни один вариант не «истинный по движку» — команда должна выбрать правило и закрепить его тестом. `DA_SpeedUp` показывает ещё одно преимущество системы: та же зона может начать ускорять персонажа без нового Blueprint-кода, если заменить назначенный Data Asset.
 
 :::blueprintue RecalculateSpeed
 https://blueprintue.com/render/hztfjdxy/
+/academy/data-driven-speed-modifiers/recalculate-speed.jpg
+Функция RecalculateSpeed
 :::
 
 ### ApplySpeed
@@ -227,6 +251,8 @@ https://blueprintue.com/render/hztfjdxy/
 
 :::blueprintue ApplySpeed
 https://blueprintue.com/render/upk4tva1/
+/academy/data-driven-speed-modifiers/apply-speed.jpg
+Функция ApplySpeed
 :::
 
 ### AddModifier
@@ -241,6 +267,8 @@ https://blueprintue.com/render/upk4tva1/
 
 :::blueprintue AddModifier
 https://blueprintue.com/render/dyqp9tye/
+/academy/data-driven-speed-modifiers/add-modifier.jpg
+Функция AddModifier
 :::
 
 ### RemoveModifier
@@ -251,6 +279,8 @@ https://blueprintue.com/render/dyqp9tye/
 
 :::blueprintue RemoveModifier
 https://blueprintue.com/render/dbm-dgoz/
+/academy/data-driven-speed-modifiers/remove-modifier.jpg
+Функция RemoveModifier
 :::
 
 ### ModifierTick
@@ -261,7 +291,15 @@ https://blueprintue.com/render/dbm-dgoz/
 
 Для демонстрации подойдёт `Tick Interval = 0.1`. Погрешность окончания эффекта — до одного интервала. В production-варианте можно включать Timer только при наличии временных эффектов.
 
-![ModifierTick: обратный проход, обновление времени и один пересчёт после удаления](/academy/data-driven-speed-modifiers/modifier-tick.jpg)
+![Настройка Tick Interval компонента на 0.1 секунды](/academy/data-driven-speed-modifiers/component-tick-interval.png)
+
+:::blueprintue ModifierTick: время жизни эффектов и безопасное удаление
+https://blueprintue.com/render/-k6qvr5y/
+/academy/data-driven-speed-modifiers/modifier-tick.jpg
+ModifierTick: обратный проход, обновление времени и один пересчёт после удаления
+:::
+
+Теперь возвращаемся к Event Graph, который видели в начале шага: подключаем `Event Tick` к `ModifierTick` и передаём `Delta Seconds`. Так функция действительно будет обслуживать временные эффекты с заданным интервалом компонента.
 
 :::note Проверка понимания
 Почему полный пересчёт устойчивее, чем попытка «вернуть старую скорость»? Что произойдёт, если яд закончится, пока персонаж остаётся в болоте?
@@ -269,7 +307,7 @@ https://blueprintue.com/render/dbm-dgoz/
 
 ## Шаг 5. Объекты мира остаются тонкими
 
-### Болото и ускоряющая платформа
+### Болото и та же логика для других зон
 
 На `BeginOverlap`:
 
@@ -282,23 +320,31 @@ https://blueprintue.com/render/dbm-dgoz/
 
 :::blueprintue BP_Swamp: применение и снятие эффекта
 https://blueprintue.com/render/twk3uix1/
+/academy/data-driven-speed-modifiers/swamp-overlap.jpg
+BP_Swamp: применение и снятие эффекта
 :::
 
 В ролике `OverlapAll` используется ради быстрого прототипа. В настоящем проекте лучше создать отдельный collision channel/profile и фильтровать нужных акторов.
+
+В тестовой сцене есть только болото. Но если назначить этой же зоне `DA_SpeedUp`, она станет ускоряющей без изменений в overlap-графе — меняются данные, а не код.
 
 ### Ядовитый снаряд
 
 Projectile находит компонент и передаёт `DA_Poison`. В `SourceActor` уходит `Owner` снаряда, поэтому повторное попадание того же spawner или врага обновляет один эффект. После применения снаряд можно уничтожить.
 
-![Ядовитый projectile передаёт свой Owner как SourceActor модификатора](/academy/data-driven-speed-modifiers/poison-projectile-owner.jpg)
+:::blueprintue BP_PoisonProjectail: применение временного яда
+https://blueprintue.com/render/1yweiiji/
+/academy/data-driven-speed-modifiers/poison-projectile-owner.jpg
+Ядовитый projectile передаёт свой Owner как SourceActor модификатора
+:::
 
 `Owner` не появляется автоматически только потому, что Actor был создан через `SpawnActor`: у ноды [Spawn Actor from Class](https://dev.epicgames.com/documentation/unreal-engine/BlueprintAPI/Game/SpawnActorfromClass) этот вход может остаться пустым. На узле создания снаряда нужно раскрыть Advanced Pins и явно передать `Self` spawner в `Owner` — либо вызвать `Set Owner` сразу после создания.
 
 :::blueprintue BP_Spawner: создание projectile и назначение Owner
 https://blueprintue.com/render/we8pj4_7/
+/academy/data-driven-speed-modifiers/bp-spawner.jpg
+BP_Spawner явно назначает себя владельцем созданного projectile
 :::
-
-![BP_Spawner явно назначает себя владельцем созданного projectile](/academy/data-driven-speed-modifiers/bp-spawner.jpg)
 
 В примере `BP_Spawner` после создания снаряда вызывает `Set Owner`: созданный projectile подключён к `Target`, а `Self` spawner — к `New Owner`. Теперь `Get Owner` внутри projectile возвращает стабильный источник для политики `Refresh`.
 
@@ -309,9 +355,6 @@ https://blueprintue.com/render/we8pj4_7/
 | Действие | Ожидание |
 |---|---:|
 | Стоим без эффектов | 600 |
-| Входим на платформу | 750 |
-| С платформы входим в болото | 450 |
-| Выходим с платформы, остаёмся в болоте | 300 |
 | Входим в пересечение двух болот | 300 |
 | Выходим только из первого болота | 300 |
 | Выходим из второго | 600 |
@@ -320,7 +363,7 @@ https://blueprintue.com/render/we8pj4_7/
 | Ждём окончание яда в болоте | 300 |
 | Получаем повторный яд от того же Owner | сила остаётся -20, время снова 10 секунд |
 
-Теперь меняем у яда только `StackPolicy`: `Refresh → Stack`. Компонент не трогаем. Последовательные попадания должны дать `580 → 560 → 540`.
+Если поменять у яда только `StackPolicy` с `Refresh` на `Stack`, компонент трогать не придётся. Последовательные попадания должны дать `580 → 560 → 540`.
 
 Вот здесь Data-Driven подход перестаёт быть красивым словом и становится наблюдаемым свойством системы.
 
@@ -350,7 +393,7 @@ https://blueprintue.com/render/we8pj4_7/
 2. Эффект создаётся новым Data Asset без изменений в персонаже и объектах мира.
 3. Повтор от одного владельца обновляет срок, но не силу.
 4. Два владельца имеют независимое runtime-состояние.
-5. Сценарий проверен вместе с болотом и ускорением.
+5. Сценарий проверен вместе с болотом и ядом.
 6. Если текущая модель не выражает нужное правило, вы можете точно назвать недостающую часть логики.
 
 :::tip Упражнение со смыслом
@@ -359,11 +402,11 @@ https://blueprintue.com/render/we8pj4_7/
 
 ## Когда этого достаточно, а когда нужен GAS
 
-Такой компонент подходит небольшому или среднему проекту, если набор операций ограничен, правила прозрачны и сложная сетевая prediction не требуется.
+Такой компонент подходит небольшому или среднему проекту, если набор операций ограничен, правила прозрачны и сложные сетевые предсказания не требуются.
 
 Скорость — только учебный пример. Тот же шаблон переносится на здоровье, выносливость, защиту или силу атаки и может вырасти в `StatsComponent`.
 
-Если нужны abilities, attributes, Gameplay Effects, Gameplay Tags, репликация и prediction как единая система, пора смотреть в сторону Gameplay Ability System. GAS не отменяет идеи урока: данные, активные экземпляры, источники и stacking rules там тоже нужно понимать.
+Если нужны abilities, attributes, Gameplay Effects, Gameplay Tags, репликация и предсказание как единая система, пора смотреть в сторону Gameplay Ability System. GAS не отменяет идеи урока: данные, активные экземпляры, источники и stacking rules там тоже нужно понимать.
 
 ## Главное, что нужно унести
 

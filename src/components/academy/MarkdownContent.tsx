@@ -5,6 +5,7 @@ import { slugify, type AcademyHeading } from "@/lib/academy";
 import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
 import { AcademyFlowDiagram } from "@/components/academy/AcademyFlowDiagram";
 import { BlueprintUEEmbed } from "@/components/academy/BlueprintUEEmbed";
+import { AcademyImageLightbox } from "@/components/academy/AcademyImageLightbox";
 
 type MarkdownContentProps = {
   className?: string;
@@ -347,15 +348,7 @@ export const MarkdownContent = ({ className = "", content }: MarkdownContentProp
         if (block.type === "image") {
           return (
             <figure key={index}>
-              <a
-                aria-label={`${block.alt || "Изображение"} — открыть в полном размере`}
-                className="academy-image-link"
-                href={block.src}
-                rel="noreferrer"
-                target="_blank"
-              >
-                <img alt={block.alt} decoding="async" loading="lazy" src={block.src} />
-              </a>
+              <AcademyImageLightbox alt={block.alt} src={block.src} />
               {block.alt ? <figcaption>{block.alt}</figcaption> : null}
             </figure>
           );
@@ -363,9 +356,11 @@ export const MarkdownContent = ({ className = "", content }: MarkdownContentProp
 
         if (block.type === "callout") {
           if (block.intent === "blueprintue") {
-            const [url] = block.body.map((line) => line.trim()).filter(Boolean);
+            const [url, fallbackImage, fallbackAlt] = block.body.map((line) => line.trim()).filter(Boolean);
             return (
               <BlueprintUEEmbed
+                fallbackAlt={fallbackAlt}
+                fallbackImage={fallbackImage}
                 key={index}
                 title={block.title || "Интерактивный Blueprint"}
                 url={url || ""}
