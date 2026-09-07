@@ -45,7 +45,7 @@ const HeroSection = () => {
   return (
     <section 
       id="about" 
-      className="relative flex min-h-svh flex-col overflow-hidden bg-background pt-[72px] md:min-h-[850px] md:flex-row md:items-center md:pt-0 lg:min-h-svh"
+      className="relative flex min-h-svh flex-col overflow-hidden bg-background pt-[72px] md:min-h-[850px] md:flex-row md:items-center md:pt-0 lg:min-h-[max(850px,100svh)]"
       style={{
         backgroundImage: `
           radial-gradient(ellipse at 0% 70%, hsl(var(--primary) / 0.14), transparent 55%),
@@ -101,7 +101,7 @@ const HeroSection = () => {
             loading="eager"
             {...{ fetchpriority: "high" }}
             decoding="async"
-            className="h-full w-full object-cover object-top"
+            className="h-full w-full object-cover object-[center_15%]"
             style={{ filter: 'brightness(0.9) contrast(1.1) saturate(0.8)' }}
           />
           {/* Gradients for smooth transition and depth */}

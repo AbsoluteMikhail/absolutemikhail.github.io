@@ -26,6 +26,20 @@ export const routeMetadata = [
     robots: "index, follow",
   },
   {
+    path: "/privacy",
+    match: "exact",
+    title: "Политика конфиденциальности | Absolute Mikhail",
+    description: "Как gamepunk.ru использует аналитику, обрабатывает обращения и позволяет управлять выбором посетителя.",
+    robots: "noindex, follow",
+  },
+  {
+    path: "/terms",
+    match: "exact",
+    title: "Пользовательское соглашение | Absolute Mikhail",
+    description: "Условия использования материалов gamepunk.ru и свободная лицензия на авторские учебные примеры кода.",
+    robots: "noindex, follow",
+  },
+  {
     path: "/malena/privacy",
     match: "exact",
     title: "Политика конфиденциальности Malena",

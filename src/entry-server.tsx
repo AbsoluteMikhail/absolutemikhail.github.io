@@ -18,11 +18,17 @@ export const prerenderPaths = [
   "/projects",
   "/academy",
   "/malena/privacy",
+  "/privacy",
+  "/terms",
   ...academyTopicPaths,
   ...academyPaths,
 ];
 
 const loadInitialPage = async (url: string) => {
+  if (url === "/privacy" || url === "/terms") {
+    const module = await import("@/pages/Legal");
+    return { InitialPage: module.default, initialRoute: "legal" as InitialRoute };
+  }
   if (url === "/") {
     const module = await import("./pages/Index");
     return { InitialPage: module.default, initialRoute: "home" as InitialRoute };

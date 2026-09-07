@@ -11,6 +11,10 @@ const distDirectory = resolve("dist");
 const serverEntryPath = resolve("dist-ssr", "entry-server.js");
 const templatePath = resolve(distDirectory, "index.html");
 const template = await readFile(templatePath, "utf8");
+// Tracking loaders must stay behind the client consent choice on every route.
+if (/googletagmanager\.com|google-analytics\.com|mc\.yandex\./i.test(template)) {
+  throw new Error("Analytics must not load unconditionally from the HTML template");
+}
 
 // The client bundle is a production build, so React's server renderer must use
 // the same mode. Otherwise the generated Suspense markup can fail hydration.
@@ -100,12 +104,15 @@ const renderRouteHtml = (pathname, metadata, renderedMarkup = "") => {
     [/<meta\b[^>]*\bname=["']twitter:description["'][^>]*>/i, `<meta name="twitter:description" content="${description}" />`],
   ];
 
+  const documentTemplate = ["/privacy", "/terms", "/malena/privacy"].includes(pathname)
+    ? template.replace(/\s*<!-- Local command queue only:[\s\S]*?<\/script>/i, "")
+    : template;
   const routeTemplate = pathname === "/malena/privacy"
-    ? template
+    ? documentTemplate
         .replace(/\s*<!-- Google tag \(gtag\.js\) -->[\s\S]*?<\/script>/i, "")
         .replace(/\s*<!-- Yandex\.Metrika counter -->[\s\S]*?<!-- \/Yandex\.Metrika counter -->/i, "")
         .replace(/\s*<meta\b[^>]*\bname=["']twitter:site["'][^>]*>/i, "")
-    : template;
+    : documentTemplate;
 
   const html = tags.reduce(
     (html, [matcher, tag]) => replaceOrInsertHeadTag(html, matcher, tag),
@@ -131,6 +138,15 @@ const academyTitles = new Set();
 const validateHtml = (html, pathname) => {
   if (html.includes("\u0000") || html.includes("\ufffd")) {
     throw new Error(`${pathname}: corrupted Unicode in prerendered HTML`);
+  }
+  if (pathname === "/privacy" || pathname === "/terms") {
+    const { document } = new JSDOM(html).window;
+    if (document.querySelectorAll("h1").length !== 1 || !document.querySelector("article section")) {
+      throw new Error(`${pathname}: legal document must be readable in the prerendered HTML`);
+    }
+    if (!document.querySelector('meta[name="robots"]')?.content.includes("noindex")) {
+      throw new Error(`${pathname}: legal route must retain noindex`);
+    }
   }
   if (pathname !== "/academy" && !pathname.startsWith("/academy/")) return;
   const { document } = new JSDOM(html).window;

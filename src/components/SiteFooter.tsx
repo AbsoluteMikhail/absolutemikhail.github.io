@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { ArrowUpRight, Mail, MapPin } from "lucide-react";
 import { ContactMessenger } from "@/components/ContactMessenger";
-import LegalModal from "@/components/LegalModal";
+import LegalLinks from "@/components/LegalLinks";
 import Logo from "@/components/Logo";
 import {
   DiscordIcon,
@@ -10,14 +9,12 @@ import {
   TwitchIcon,
   YoutubeIcon,
 } from "@/components/SocialIcons";
-import { legalContent } from "@/constants/legalContent";
 
 interface SiteFooterProps {
   projectsPage?: boolean;
 }
 
 const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
-  const [activeLegalModal, setActiveLegalModal] = useState<"privacy" | "terms" | null>(null);
   const homePrefix = projectsPage ? "/" : "";
 
   return (
@@ -118,24 +115,11 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
                 gamepunk.ru
               </p>
             </div>
-            <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 md:justify-end">
-              <button onClick={() => setActiveLegalModal("privacy")} className="text-[10px] uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary">
-                Политика конфиденциальности
-              </button>
-              <button onClick={() => setActiveLegalModal("terms")} className="text-[10px] uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary">
-                Пользовательское соглашение
-              </button>
-            </div>
+            <LegalLinks />
           </div>
         </div>
       </footer>
 
-      <LegalModal
-        isOpen={activeLegalModal !== null}
-        onClose={() => setActiveLegalModal(null)}
-        title={activeLegalModal ? legalContent[activeLegalModal].title : ""}
-        content={activeLegalModal ? legalContent[activeLegalModal].content : null}
-      />
     </>
   );
 };

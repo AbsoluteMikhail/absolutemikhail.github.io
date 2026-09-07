@@ -65,8 +65,7 @@ const TimelineSection = () => (
         <Moon className="mt-1 h-7 w-7 shrink-0 text-accent" aria-hidden="true" />
         <p className="text-base leading-7 text-muted-foreground md:text-lg md:leading-8">
           Днём я проектировал и внедрял IT-системы, а по ночам осваивал геймдев.
-          Со временем ночные прототипы превратились в профессию, победы и публичные продукты.
-          <span className="mt-3 block text-foreground">Вместо плаща у меня всё ещё Unreal Engine =)</span>
+          <span className="mt-3 block text-foreground">Такой вот геймдев-Бэтмен =)</span>
         </p>
       </div>
     </div>

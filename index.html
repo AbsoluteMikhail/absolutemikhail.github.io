@@ -1,30 +1,10 @@
 <!doctype html>
 <html lang="ru">
   <head>
-    <!-- Google tag (gtag.js) -->
+    <!-- Local command queue only: no Google script or network request before consent. -->
     <script>
-      if (window.location.pathname !== '/malena/privacy') {
-        var googleTag = document.createElement('script');
-        googleTag.async = true;
-        googleTag.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZXRCS636DL';
-        document.head.appendChild(googleTag);
-
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('consent', 'default', {
-          ad_storage: 'denied',
-          ad_user_data: 'denied',
-          ad_personalization: 'denied',
-          analytics_storage: 'granted'
-        });
-
-        gtag('config', 'G-ZXRCS636DL', {
-          allow_google_signals: false,
-          allow_ad_personalization_signals: false
-        });
-      }
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -56,25 +36,6 @@
     <meta name="twitter:description" content="Инди-разработчик и ментор по Unreal Engine 5. Игры, C++, Blueprint, архитектура игровых систем и помощь с доведением проектов до релиза." />
     <meta name="twitter:image" content="https://gamepunk.ru/snippet.jpg" />
     <meta name="twitter:image:alt" content="Absolute Mikhail: портфолио игр и менторинг по Unreal Engine 5" />
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-      if (window.location.pathname !== '/malena/privacy') {
-        (function(m,e,t,r,i,k,a){
-          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-          m[i].l=1*new Date();
-          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=110478218', 'ym');
-
-        ym(110478218, 'init', {
-          clickmap: false,
-          trackLinks: false,
-          accurateTrackBounce: false,
-          webvisor: false
-        });
-      }
-    </script>
-    <!-- /Yandex.Metrika counter -->
     <script type="text/javascript">
       // Single Page Apps for GitHub Pages
       // https://github.com/rafgraph/spa-github-pages

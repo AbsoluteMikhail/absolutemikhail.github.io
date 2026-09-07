@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToHashElement from "./components/ScrollToHashElement";
 import RouteMetadata from "./components/RouteMetadata";
 import CustomCursor from "./components/CustomCursor";
+import PrivacyControls from "@/components/PrivacyControls";
 
 const Index = lazy(() => import("./pages/Index"));
 const Projects = lazy(() => import("./pages/Projects"));
@@ -13,6 +14,7 @@ const OGSnippet = lazy(() => import("./pages/OGSnippet"));
 const Academy = lazy(() => import("./pages/Academy"));
 const MalenaPrivacy = lazy(() => import("./pages/MalenaPrivacy"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Legal = lazy(() => import("@/pages/Legal"));
 
 const PageFallback = () => (
   <div className="flex min-h-screen items-center justify-center bg-background text-sm text-muted-foreground">
@@ -20,7 +22,7 @@ const PageFallback = () => (
   </div>
 );
 
-export type InitialRoute = "academy" | "home" | "malenaPrivacy" | "projects";
+export type InitialRoute = "academy" | "home" | "malenaPrivacy" | "projects" | "legal";
 
 type AppContentProps = {
   InitialPage?: ComponentType;
@@ -45,6 +47,8 @@ export const AppContent = ({ InitialPage, initialRoute }: AppContentProps = {}) 
         <Route path="/music" element={<Music />} />
         <Route path="/twitch" element={<Twitch />} />
         <Route path="/snippet" element={<OGSnippet />} />
+        <Route path="/privacy" element={getRouteElement("legal", initialRoute, InitialPage, Legal)} />
+        <Route path="/terms" element={getRouteElement("legal", initialRoute, InitialPage, Legal)} />
         <Route
           path="/academy/*"
           element={getRouteElement("academy", initialRoute, InitialPage, Academy)}
@@ -63,6 +67,7 @@ export const AppContent = ({ InitialPage, initialRoute }: AppContentProps = {}) 
       <ScrollToHashElement />
       <RouteMetadata />
       <Suspense fallback={<PageFallback />}>{routes}</Suspense>
+      <PrivacyControls />
     </MotionConfig>
   );
 };

@@ -7,6 +7,11 @@ const rootElement = document.getElementById("root")!;
 const loadInitialPage = async () => {
   const pathname = window.location.pathname;
 
+  if (["/privacy", "/privacy/", "/terms", "/terms/"].includes(pathname)) {
+    const module = await import("@/pages/Legal");
+    return { InitialPage: module.default, initialRoute: "legal" as InitialRoute };
+  }
+
   if (pathname === "/") {
     const module = await import("./pages/Index");
     return { InitialPage: module.default, initialRoute: "home" as InitialRoute };
