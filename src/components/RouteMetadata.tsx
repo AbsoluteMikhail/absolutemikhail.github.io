@@ -6,6 +6,7 @@ import {
   notFoundMetadata,
   siteUrl,
 } from "@/constants/routeMetadata.js";
+import { resolvePageMetadata } from "@/lib/resolvePageMetadata";
 
 const upsertMeta = (selector: string, attribute: "name" | "property", key: string, value: string) => {
   let element = document.head.querySelector<HTMLMetaElement>(selector);
@@ -21,21 +22,27 @@ const RouteMetadata = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    let active = true;
     const normalizedPathname = normalizePathname(pathname);
-    const metadata = findRouteMetadata(normalizedPathname) ?? notFoundMetadata;
+    const fallback = findRouteMetadata(normalizedPathname) ?? notFoundMetadata;
     const canonicalUrl = `${siteUrl}${normalizedPathname === "/" ? "/" : normalizedPathname}`;
 
-    document.title = metadata.title;
-    upsertMeta('meta[name="description"]', "name", "description", metadata.description);
-    upsertMeta('meta[name="robots"]', "name", "robots", metadata.robots ?? "index, follow");
-    upsertMeta('meta[property="og:title"]', "property", "og:title", metadata.title);
-    upsertMeta('meta[property="og:description"]', "property", "og:description", metadata.description);
-    upsertMeta('meta[property="og:url"]', "property", "og:url", canonicalUrl);
-    upsertMeta('meta[name="twitter:title"]', "name", "twitter:title", metadata.title);
-    upsertMeta('meta[name="twitter:description"]', "name", "twitter:description", metadata.description);
+    const applyMetadata = (metadata: typeof fallback) => {
+      if (!active) return;
+      document.title = metadata.title;
+      upsertMeta('meta[name="description"]', "name", "description", metadata.description);
+      upsertMeta('meta[name="robots"]', "name", "robots", metadata.robots ?? "index, follow");
+      upsertMeta('meta[property="og:title"]', "property", "og:title", metadata.title);
+      upsertMeta('meta[property="og:description"]', "property", "og:description", metadata.description);
+      upsertMeta('meta[property="og:url"]', "property", "og:url", canonicalUrl);
+      upsertMeta('meta[name="twitter:title"]', "name", "twitter:title", metadata.title);
+      upsertMeta('meta[name="twitter:description"]', "name", "twitter:description", metadata.description);
 
-    const canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    canonical?.setAttribute("href", canonicalUrl);
+      const canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+      canonical?.setAttribute("href", canonicalUrl);
+    };
+    void resolvePageMetadata(normalizedPathname).then(applyMetadata, () => applyMetadata(fallback));
+    return () => { active = false; };
   }, [pathname]);
 
   return null;

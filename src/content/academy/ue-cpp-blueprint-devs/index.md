@@ -9,9 +9,8 @@ tags: Unreal Engine, C++
 topics: unreal-engine, cpp
 status: Тестируется
 order: 1
+updated: 2026-08-20
 ---
-
-# UE C++ для Blueprint разработчиков
 
 Главная цель курса - перестать писать BP spaghetti и начать мыслить как gameplay programmer.
 
@@ -60,15 +59,3 @@ order: 1
 Документация нужна для полного API, edge cases и полного списка specifier.
 
 Этот курс - про мышление gameplay programmer'а.
-
-## Как добавлять контент
-
-Каждый урок курса лежит отдельным Markdown-файлом в папке `src/content/academy/ue-cpp-blueprint-devs`.
-
-Картинки, архивы и дополнительные материалы лучше класть в `public/academy/ue-cpp-blueprint-devs`, а в тексте подключать так:
-
-```md
-![Скриншот Greybox Arena](/academy/ue-cpp-blueprint-devs/arena.jpg)
-```
-
-Для обычного оформления достаточно Markdown: заголовки, списки, цитаты, картинки, ссылки и блоки кода.

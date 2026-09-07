@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import { MarkdownContent } from "../components/academy/MarkdownContent";
+import { getHeadings } from "@/lib/academyMarkdown";
 
 const renderMarkdown = (content: string) =>
   render(
@@ -11,6 +12,19 @@ const renderMarkdown = (content: string) =>
   );
 
 describe("Academy Markdown extensions", () => {
+  it("keeps headings from code examples out of the table of contents", () => {
+    const content = "```md\n## Практика\n```\n\n## Практика\n\n## Практика";
+    renderMarkdown(content);
+    const headings = getHeadings(content);
+    expect(headings.map((heading) => heading.id)).toEqual(["практика", "практика-2"]);
+    headings.forEach((heading) => expect(document.getElementById(heading.id)).toBeInTheDocument());
+  });
+
+  it("renders a stray callout delimiter without getting stuck", () => {
+    renderMarkdown("::: \n\nТекст после разделителя");
+    expect(screen.getByText("Текст после разделителя")).toBeInTheDocument();
+  });
+
   it("renders Markdown tables", () => {
     renderMarkdown(`| Эффект | Скорость |\n|---|---:|\n| Болото | 300 |`);
 

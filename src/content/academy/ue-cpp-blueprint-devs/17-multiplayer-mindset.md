@@ -10,8 +10,6 @@ pain: Multiplayer ломает весь проект
 mainIdea: В multiplayer сервер - источник истины.
 ---
 
-# Multiplayer mindset - сервер главный
-
 :::warning
 Если вы делаете только singleplayer - можете пропустить этот блок.
 :::

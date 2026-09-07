@@ -1,10 +1,11 @@
 import type React from "react";
 import { Link } from "react-router-dom";
 import { AlertTriangle, Info, Lightbulb } from "lucide-react";
-import { slugify, type AcademyHeading } from "@/lib/academy";
+import { slugify, type AcademyHeading } from "@/lib/academyMarkdown";
 import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
 import { AcademyFlowDiagram } from "@/components/academy/AcademyFlowDiagram";
 import { BlueprintUEEmbed } from "@/components/academy/BlueprintUEEmbed";
+import { AcademyDisclosure } from "@/components/academy/AcademyDisclosure";
 import { AcademyImageLightbox } from "@/components/academy/AcademyImageLightbox";
 
 type MarkdownContentProps = {
@@ -107,6 +108,13 @@ const parseMarkdown = (content: string): MarkdownBlock[] => {
         title: calloutMatch[2],
         type: "callout",
       });
+      index += 1;
+      continue;
+    }
+
+    // A stray closing delimiter is visible text, never a parser loop.
+    if (trimmedLine.startsWith(":::")) {
+      blocks.push({ type: "paragraph", text: trimmedLine });
       index += 1;
       continue;
     }
@@ -404,33 +412,19 @@ export const MarkdownContent = ({ className = "", content }: MarkdownContentProp
   );
 };
 
-export const TableOfContents = ({ headings }: { headings: AcademyHeading[] }) => {
+export const TableOfContents = ({ headings, mobile = false }: { headings: AcademyHeading[]; mobile?: boolean }) => {
   const visibleHeadings = headings.filter((heading) => heading.depth > 1 && heading.depth <= 3);
-
-  if (!visibleHeadings.length) {
-    return null;
-  }
-
-  return (
-    <aside className="hidden self-start xl:block">
-      <nav className="fixed right-6 top-[6.5rem] max-h-[calc(100vh-6.5rem)] w-[220px] overflow-y-auto 2xl:right-[calc((100vw-1400px)/2+1.5rem)]">
-        <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.24em] text-muted-foreground">
-          На странице
-        </p>
-        <div className="space-y-2 border-l border-border">
-          {visibleHeadings.map((heading) => (
-            <a
-              className={`block py-1.5 pr-2 text-sm text-muted-foreground transition-colors hover:text-primary ${
-                heading.depth === 3 ? "pl-7" : "pl-4"
-              }`}
-              href={`#${heading.id}`}
-              key={heading.id}
-            >
-              {heading.text}
-            </a>
-          ))}
-        </div>
-      </nav>
-    </aside>
-  );
+  if (!visibleHeadings.length) return null;
+  const links = <nav aria-label="На странице" className="space-y-2 border-l border-border">
+    {visibleHeadings.map((heading) => (
+      <a className={`block py-2 pr-2 text-sm text-muted-foreground transition-colors hover:text-primary ${heading.depth === 3 ? "pl-7" : "pl-4"}`} href={`#${heading.id}`} key={heading.id}>
+        {heading.text}
+      </a>
+    ))}
+  </nav>;
+  if (mobile) return <div className="mb-6 xl:hidden"><AcademyDisclosure label="На странице">{links}</AcademyDisclosure></div>;
+  return <aside className="sticky top-24 hidden max-h-[calc(100vh-8rem)] self-start overflow-y-auto xl:block">
+    <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.24em] text-muted-foreground">На странице</p>
+    {links}
+  </aside>;
 };

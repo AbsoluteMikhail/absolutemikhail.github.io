@@ -10,8 +10,6 @@ pain: GameInstance превратился в мусорку
 mainIdea: Global systems тоже должны иметь архитектуру.
 ---
 
-# Subsystems - как перестать делать singleton помойки
-
 ## Главная боль
 
 > GameInstance превратился в мусорку.

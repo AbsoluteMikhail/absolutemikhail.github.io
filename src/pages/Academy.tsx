@@ -1,6 +1,6 @@
 import type React from "react";
-import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   ArrowLeft,
   ArrowRight,
@@ -20,13 +20,11 @@ import {
   Wrench,
 } from "lucide-react";
 import {
-  academyCourses,
+  recentAcademyCourses,
   academyTopics,
-  getAcademyCourse,
   getAcademyCoursesByTopic,
-  getAcademyLesson,
-  getAcademyTopic,
   groupLessonsByBlock,
+  sortAcademyCoursesByUpdated,
   type AcademyCourse,
   type AcademyLesson,
   type AcademyTopic,
@@ -34,6 +32,12 @@ import {
 import { MarkdownContent, TableOfContents } from "@/components/academy/MarkdownContent";
 import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
 import InstructorBadgeCard from "@/components/InstructorBadgeCard";
+import { cn } from "@/lib/utils";
+import { AcademyDisclosure } from "@/components/academy/AcademyDisclosure";
+import { Button } from "@/components/ui/button";
+import { academyContent, type AcademyContent } from "@/lib/academyContent";
+import { getAcademyRoute } from "@/lib/academyRoutes";
+import { slugify } from "@/lib/academyMarkdown";
 
 const AcademyShell = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-screen bg-background pt-16 text-foreground">
@@ -68,7 +72,7 @@ const AcademyShell = ({ children }: { children: React.ReactNode }) => (
           </nav>
 
           <Link
-            className="hidden items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary sm:flex"
+            className="inline-flex min-h-11 shrink-0 items-center gap-1 whitespace-nowrap text-xs text-muted-foreground transition-colors hover:text-primary sm:gap-2 sm:text-sm"
             to="/"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -114,58 +118,52 @@ const CourseMeta = ({ course }: { course: AcademyCourse }) => (
   </div>
 );
 
-const LessonSidebar = ({
-  activeLessonSlug,
-  course,
-}: {
-  activeLessonSlug?: string;
-  course: AcademyCourse;
-}) => (
-  <aside className="lg:self-start">
-    <div className="lg:fixed lg:left-6 lg:top-[6.5rem] lg:flex lg:max-h-[calc(100vh-6.5rem)] lg:w-[280px] lg:flex-col 2xl:left-[calc((100vw-1400px)/2+1.5rem)]">
-      <div className="shrink-0">
-        <Link
-          className="mb-5 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
-          to="/academy"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Все материалы
-        </Link>
-
-        <div className="rounded-lg border border-border bg-card/35 p-4">
-          <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.24em] text-primary">{course.format}</p>
-          <Link className="font-display text-lg font-bold transition-colors hover:text-primary" to={`/academy/${course.slug}`}>
-            {course.title}
-          </Link>
+const LessonLinks = ({ course, activeLessonSlug }: { course: AcademyCourse; activeLessonSlug?: string }) => (
+  <nav aria-label="Уроки курса" className="space-y-6">
+    {groupLessonsByBlock(course.lessons).map((block) => (
+      <div key={block.title}>
+        <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-muted-foreground">
+          {block.title}
+        </p>
+        <div className="space-y-1">
+          {block.lessons.map((lesson) => (
+            <Link
+              className={`block rounded-md border px-3 py-2 text-sm transition-colors ${
+                activeLessonSlug === lesson.slug
+                  ? "border-primary/40 bg-primary/10 text-primary"
+                  : "border-transparent text-muted-foreground hover:border-border hover:bg-secondary/30 hover:text-foreground"
+              }`}
+              aria-current={activeLessonSlug === lesson.slug ? "page" : undefined}
+              key={lesson.slug}
+              to={`/academy/${course.slug}/${lesson.slug}`}
+            >
+              <span className="mr-2 text-xs opacity-60">{lesson.meta.video}</span>
+              {lesson.meta.title}
+            </Link>
+          ))}
         </div>
       </div>
+    ))}
+  </nav>
+);
 
-      <div className="mt-6 space-y-6 lg:min-h-0 lg:overflow-y-auto lg:pr-2">
-        {groupLessonsByBlock(course.lessons).map((block) => (
-          <div key={block.title}>
-            <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-muted-foreground">
-              {block.title}
-            </p>
-            <div className="space-y-1">
-              {block.lessons.map((lesson) => (
-                <Link
-                  className={`block rounded-md border px-3 py-2 text-sm transition-colors ${
-                    activeLessonSlug === lesson.slug
-                      ? "border-primary/40 bg-primary/10 text-primary"
-                      : "border-transparent text-muted-foreground hover:border-border hover:bg-secondary/30 hover:text-foreground"
-                  }`}
-                  key={lesson.slug}
-                  to={`/academy/${course.slug}/${lesson.slug}`}
-                >
-                  <span className="mr-2 text-xs opacity-60">{lesson.meta.video}</span>
-                  {lesson.meta.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+const LessonSidebar = ({ activeLessonSlug, course }: { activeLessonSlug?: string; course: AcademyCourse }) => (
+  <aside className="min-w-0 lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:self-start lg:overflow-y-auto lg:pr-2">
+    <Link className="mb-4 inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-primary" to="/academy">
+      <ArrowLeft className="h-4 w-4" /> Все материалы
+    </Link>
+    <div className="mb-4 rounded-lg border border-border bg-card/35 p-4">
+      <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.24em] text-primary">{course.format}</p>
+      <Link className="font-display text-lg font-bold hover:text-primary" to={`/academy/${course.slug}`}>{course.title}</Link>
     </div>
+    {course.lessons.length > 0 && <>
+      <div className="lg:hidden">
+        <AcademyDisclosure label={`Уроки курса · ${course.lessons.length}`}>
+          <LessonLinks course={course} activeLessonSlug={activeLessonSlug} />
+        </AcademyDisclosure>
+      </div>
+      <div className="hidden pt-2 lg:block"><LessonLinks course={course} activeLessonSlug={activeLessonSlug} /></div>
+    </>}
   </aside>
 );
 
@@ -223,41 +221,53 @@ const TopicCard = ({ topic }: { topic: AcademyTopic }) => {
   );
 };
 
+const updatedDateFormatter = new Intl.DateTimeFormat("ru-RU", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
 const CourseCard = ({ course }: { course: AcademyCourse }) => (
   <Link
-    className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card/45 transition-all hover:border-primary/45 hover:bg-card/70 hover:shadow-2xl hover:shadow-primary/10"
+    className={cn(
+      "group grid items-start gap-5 rounded-lg border border-border bg-card/35 p-5 transition-colors hover:border-primary/45 hover:bg-card/60 md:gap-8 md:p-6",
+      course.cover && "md:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)]",
+    )}
     to={`/academy/${course.slug}`}
   >
-    <AcademyCover alt={course.coverAlt} className="aspect-video border-b border-border" src={course.cover} />
+    <AcademyCover alt={course.coverAlt} className="aspect-video rounded-md" src={course.cover} />
 
-    <div className="flex flex-1 flex-col p-5">
-      <div className="mb-5 flex items-start justify-between gap-4">
-        <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary">
-          <TopicIcon slug={course.topics[0]} />
-        </div>
-        <span className="rounded-md border border-border bg-secondary/50 px-2.5 py-1 text-[10px] uppercase tracking-widest text-muted-foreground">
+    <div className="min-w-0">
+      <div className="mb-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">
+        <span className="font-semibold uppercase tracking-widest text-primary">
           {course.format}
         </span>
+        {course.updated ? (
+          <time className="text-muted-foreground" dateTime={course.updated}>
+            Обновлено {updatedDateFormatter.format(new Date(`${course.updated}T00:00:00Z`))}
+          </time>
+        ) : null}
       </div>
 
-      <h2 className="mb-3 font-display text-2xl font-bold transition-colors group-hover:text-primary">
+      <h3 className="mb-3 font-display text-xl font-bold leading-snug transition-colors group-hover:text-primary xl:text-2xl">
         {course.title}
-      </h2>
-      <p className="mb-5 text-sm leading-6 text-muted-foreground">{course.description}</p>
+      </h3>
+      <p className="mb-5 max-w-3xl text-sm leading-6 text-muted-foreground md:text-base md:leading-7">{course.description}</p>
 
-      <div className="mt-auto flex flex-wrap gap-2 text-xs text-muted-foreground">
-        <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/40 px-2.5 py-1">
+      <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground">
+        <span className="inline-flex items-center gap-1.5">
           <BookOpen className="h-3.5 w-3.5" />
           {course.lessons.length ? formatLessonCount(course.lessons.length) : "материалы"}
         </span>
         {course.status ? (
-          <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/40 px-2.5 py-1">
+          <span className="inline-flex items-center gap-1.5">
             <Compass className="h-3.5 w-3.5" />
             {course.status}
           </span>
         ) : null}
         {course.tags.map((tag) => (
-          <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/40 px-2.5 py-1" key={tag}>
+          <span className="inline-flex items-center gap-1.5" key={tag}>
             <Tag className="h-3.5 w-3.5" />
             {tag}
           </span>
@@ -307,11 +317,11 @@ const AcademyHome = () => (
 
       <section aria-labelledby="academy-materials">
         <div className="mb-6">
-          <p className="mb-2 text-xs font-bold uppercase tracking-[0.24em] text-primary">Что изучить</p>
-          <h2 className="font-display text-3xl font-bold" id="academy-materials">Материалы</h2>
+          <h2 className="scroll-mt-24 font-display text-3xl font-bold" id="academy-materials">Свежее</h2>
+          <p className="mt-3 text-sm text-muted-foreground">Курсы, разборы и подборки — сначала недавно обновлённые.</p>
         </div>
-        <div className="grid gap-4 md:grid-cols-2">
-          {academyCourses.map((course) => (
+        <div className="grid gap-4">
+          {recentAcademyCourses.map((course) => (
             <CourseCard course={course} key={course.slug} />
           ))}
         </div>
@@ -321,7 +331,7 @@ const AcademyHome = () => (
 );
 
 const TopicPage = ({ topic }: { topic: AcademyTopic }) => {
-  const courses = getAcademyCoursesByTopic(topic.slug);
+  const courses = sortAcademyCoursesByUpdated(getAcademyCoursesByTopic(topic.slug));
 
   return (
     <AcademyShell>
@@ -350,7 +360,7 @@ const TopicPage = ({ topic }: { topic: AcademyTopic }) => {
           </div>
 
           {courses.length ? (
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4">
               {courses.map((course) => (
                 <CourseCard course={course} key={course.slug} />
               ))}
@@ -367,12 +377,13 @@ const TopicPage = ({ topic }: { topic: AcademyTopic }) => {
   );
 };
 
-const CoursePage = ({ course }: { course: AcademyCourse }) => (
+const CoursePage = ({ course, content }: { course: AcademyCourse; content: AcademyContent }) => (
   <AcademyShell>
     <main className="container mx-auto grid gap-10 px-6 py-8 lg:grid-cols-[280px_minmax(0,1fr)] lg:py-10 xl:grid-cols-[280px_minmax(0,760px)_220px]">
       <LessonSidebar course={course} />
 
       <article className="min-w-0">
+        <TableOfContents headings={content.headings} mobile />
         <AcademyCover
           alt={course.coverAlt}
           className="mb-6 aspect-video rounded-lg border border-border"
@@ -380,13 +391,13 @@ const CoursePage = ({ course }: { course: AcademyCourse }) => (
         />
         <div className="mb-8 rounded-lg border border-border bg-card/30 p-5">
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-primary">{course.format}</p>
-          <h1 className="mb-4 font-display text-4xl font-bold leading-tight md:text-5xl">{course.title}</h1>
+          <h1 id={slugify(course.title)} className="mb-4 scroll-mt-24 font-display text-4xl font-bold leading-tight md:text-5xl">{course.title}</h1>
           <p className="text-lg leading-8 text-muted-foreground">{course.description}</p>
         </div>
 
         <CourseMeta course={course} />
 
-        <MarkdownContent className="mt-10" content={course.body} />
+        <MarkdownContent className="mt-10" content={content.body} />
 
         {course.lessons.length ? (
           <section className="mt-14">
@@ -422,7 +433,7 @@ const CoursePage = ({ course }: { course: AcademyCourse }) => (
         ) : null}
       </article>
 
-      <TableOfContents headings={course.headings} />
+      <TableOfContents headings={content.headings} />
     </main>
   </AcademyShell>
 );
@@ -471,12 +482,13 @@ const LessonPager = ({
   );
 };
 
-const LessonPage = ({ course, lesson }: { course: AcademyCourse; lesson: AcademyLesson }) => (
+const LessonPage = ({ course, lesson, content }: { course: AcademyCourse; lesson: AcademyLesson; content: AcademyContent }) => (
   <AcademyShell>
     <main className="container mx-auto grid gap-10 px-6 py-8 lg:grid-cols-[280px_minmax(0,1fr)] lg:py-10 xl:grid-cols-[280px_minmax(0,760px)_220px]">
       <LessonSidebar activeLessonSlug={lesson.slug} course={course} />
 
       <article className="min-w-0">
+        <TableOfContents headings={content.headings} mobile />
         <AcademyCover
           alt={lesson.coverAlt}
           className="mb-6 aspect-video rounded-lg border border-border"
@@ -493,7 +505,7 @@ const LessonPage = ({ course, lesson }: { course: AcademyCourse; lesson: Academy
               {lesson.meta.block}
             </span>
           </div>
-          <h1 className="mb-4 font-display text-4xl font-bold leading-tight md:text-5xl">{lesson.meta.title}</h1>
+          <h1 id={slugify(lesson.meta.title)} className="mb-4 scroll-mt-24 font-display text-4xl font-bold leading-tight md:text-5xl">{lesson.meta.title}</h1>
           <p className="text-lg leading-8 text-muted-foreground">{lesson.meta.description}</p>
         </div>
 
@@ -525,11 +537,11 @@ const LessonPage = ({ course, lesson }: { course: AcademyCourse; lesson: Academy
           </div>
         ) : null}
 
-        <MarkdownContent content={lesson.body} />
+        <MarkdownContent content={content.body} />
         <LessonPager course={course} lesson={lesson} />
       </article>
 
-      <TableOfContents headings={lesson.headings} />
+      <TableOfContents headings={content.headings} />
     </main>
   </AcademyShell>
 );
@@ -554,41 +566,42 @@ const AcademyNotFound = () => (
   </AcademyShell>
 );
 
-const Academy = () => {
-  const params = useParams();
-  const path = params["*"] || "";
-  const [sectionSlug, childSlug, extraSlug] = path.split("/").filter(Boolean);
+const AcademyDocumentPage = ({ course, lesson }: { course: AcademyCourse; lesson?: AcademyLesson }) => {
+  const document = lesson || course;
+  const [content, setContent] = useState(() => academyContent.peek(document.path));
+  const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [path]);
+    let active = true;
+    academyContent.load(document.path).then(
+      (loaded) => { if (active) setContent(loaded); },
+      () => { if (active) setFailed(true); },
+    );
+    return () => { active = false; };
+  }, [document.path, attempt]);
 
-  if (!sectionSlug) {
-    return <AcademyHome />;
-  }
+  if (content) return lesson ? <LessonPage course={course} lesson={lesson} content={content} /> : <CoursePage course={course} content={content} />;
+  return <AcademyShell>
+    <main className="container mx-auto px-6 py-12">
+      <h1 className="mb-6 font-display text-2xl font-bold">{document.meta.title}</h1>
+      {failed ? <div role="alert">
+        <p className="mb-5 text-muted-foreground">Не удалось загрузить материал. Попробуйте ещё раз.</p>
+        <Button onClick={() => { setFailed(false); setAttempt((value) => value + 1); }}>Повторить загрузку</Button>
+      </div> : <p role="status" className="text-muted-foreground">Загрузка материала…</p>}
+    </main>
+  </AcademyShell>;
+};
 
-  if (sectionSlug === "topics") {
-    const topic = childSlug && !extraSlug ? getAcademyTopic(childSlug) : undefined;
-    return topic ? <TopicPage topic={topic} /> : <AcademyNotFound />;
-  }
-
-  const course = getAcademyCourse(sectionSlug);
-
-  if (!course) {
-    return <AcademyNotFound />;
-  }
-
-  if (!childSlug) {
-    return <CoursePage course={course} />;
-  }
-
-  const lesson = !extraSlug ? getAcademyLesson(sectionSlug, childSlug) : undefined;
-
-  if (!lesson) {
-    return <AcademyNotFound />;
-  }
-
-  return <LessonPage course={course} lesson={lesson} />;
+const Academy = () => {
+  const { pathname } = useLocation();
+  const route = getAcademyRoute(pathname);
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  if (route.type === "home") return <AcademyHome />;
+  if (route.type === "topic") return <TopicPage topic={route.topic} />;
+  if (route.type === "course") return <AcademyDocumentPage key={route.course.path} course={route.course} />;
+  if (route.type === "lesson") return <AcademyDocumentPage key={route.lesson.path} course={route.course} lesson={route.lesson} />;
+  return <AcademyNotFound />;
 };
 
 export default Academy;

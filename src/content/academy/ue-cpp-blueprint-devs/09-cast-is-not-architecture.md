@@ -10,8 +10,6 @@ pain: Весь проект - цепочка Cast'ов
 mainIdea: Cast - временное решение. Interfaces - scalable solution.
 ---
 
-# Cast To Character - это не архитектура
-
 ## Главная боль
 
 > Весь проект - цепочка Cast'ов.

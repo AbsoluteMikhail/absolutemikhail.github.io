@@ -10,8 +10,6 @@ pain: Character.cpp уже невозможно поддерживать
 mainIdea: Gameplay systems должны расширяться без переписывания Character.
 ---
 
-# Giant god classes убивают разработку
-
 ## Главная боль
 
 > Character.cpp уже невозможно поддерживать.

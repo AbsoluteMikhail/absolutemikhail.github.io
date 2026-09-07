@@ -1,10 +1,10 @@
-import { PassThrough } from "node:stream";
-import { renderToPipeableStream } from "react-dom/server";
+import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import { AppContent } from "./App";
 import type { InitialRoute } from "./App";
 import CustomCursor from "./components/CustomCursor";
 import { academyCourses, academyTopics } from "./lib/academy";
+export { resolvePageMetadata } from "@/lib/resolvePageMetadata";
 
 const academyPaths = academyCourses.flatMap((course) => [
   `/academy/${course.slug}`,
@@ -39,54 +39,22 @@ const loadInitialPage = async (url: string) => {
   }
 
   const module = await import("./pages/Academy");
+  const { preloadAcademyPage } = await import("@/lib/academyContent");
+  await preloadAcademyPage(url);
   return { InitialPage: module.default, initialRoute: "academy" as InitialRoute };
 };
 
 export const render = async (url: string) => {
   const initialPage = await loadInitialPage(url);
-
-  return new Promise<string>((resolve, reject) => {
-    let settled = false;
-
-    const finish = (callback: () => void) => {
-      if (settled) return;
-      settled = true;
-      clearTimeout(timeout);
-      callback();
-    };
-
-    const timeout = setTimeout(() => {
-      stream?.abort();
-      finish(() => reject(new Error(`SSR timed out for ${url}`)));
-    }, 15_000);
-
-    const stream = renderToPipeableStream(
-      <>
-        <CustomCursor />
-        <StaticRouter location={url}>
-          <AppContent {...initialPage} />
-        </StaticRouter>
-      </>,
-      {
-        onAllReady() {
-          const output = new PassThrough();
-          let html = "";
-
-          output.setEncoding("utf8");
-          output.on("data", (chunk) => {
-            html += chunk;
-          });
-          output.on("end", () => finish(() => resolve(html)));
-          output.on("error", (error) => finish(() => reject(error)));
-          stream.pipe(output);
-        },
-        onShellError(error) {
-          finish(() => reject(error));
-        },
-        onError(error) {
-          console.error(`SSR error for ${url}:`, error);
-        },
-      },
-    );
-  });
+  // Every route and its selected article are ready before rendering. A string
+  // renderer avoids the byte-boundary corruption observed in the React 18
+  // streaming output for Cyrillic attributes on the local Node runtime.
+  return renderToString(
+    <>
+      <CustomCursor />
+      <StaticRouter location={url}>
+        <AppContent {...initialPage} />
+      </StaticRouter>
+    </>,
+  );
 };

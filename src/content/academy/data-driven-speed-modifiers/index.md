@@ -8,6 +8,7 @@ tags: Unreal Engine, Blueprint, Data Assets, Архитектура
 topics: unreal-engine
 status: Опубликован
 order: 2
+updated: 2026-09-02
 cover: /academy/data-driven-speed-modifiers/cover.jpg
 coverAlt: Михаил в болоте рядом с рабочим столом и заголовком Data Assets спасли моё болото
 ---

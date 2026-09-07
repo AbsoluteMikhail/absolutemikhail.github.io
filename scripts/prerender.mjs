@@ -1,9 +1,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import { JSDOM } from "jsdom";
 import {
-  findRouteMetadata,
-  notFoundMetadata,
   routeMetadata,
   siteUrl,
 } from "../src/constants/routeMetadata.js";
@@ -16,7 +15,7 @@ const template = await readFile(templatePath, "utf8");
 // The client bundle is a production build, so React's server renderer must use
 // the same mode. Otherwise the generated Suspense markup can fail hydration.
 process.env.NODE_ENV ??= "production";
-const { prerenderPaths, render } = await import(pathToFileURL(serverEntryPath).href);
+const { prerenderPaths, render, resolvePageMetadata } = await import(pathToFileURL(serverEntryPath).href);
 
 const escapeAttribute = (value) =>
   value
@@ -126,21 +125,44 @@ const outputPaths = new Set([
   ...prerenderPaths,
 ]);
 const renderedPaths = new Set(prerenderPaths);
+const resolvedMetadata = new Map();
+const academyTitles = new Set();
+
+const validateHtml = (html, pathname) => {
+  if (html.includes("\u0000") || html.includes("\ufffd")) {
+    throw new Error(`${pathname}: corrupted Unicode in prerendered HTML`);
+  }
+  if (pathname !== "/academy" && !pathname.startsWith("/academy/")) return;
+  const { document } = new JSDOM(html).window;
+  if (document.querySelectorAll("h1").length !== 1) throw new Error(`${pathname}: expected exactly one H1`);
+  if (academyTitles.has(document.title)) throw new Error(`${pathname}: duplicate Academy title`);
+  academyTitles.add(document.title);
+  for (const link of document.querySelectorAll('nav[aria-label="На странице"] a[href^="#"]')) {
+    const id = decodeURIComponent(link.getAttribute("href").slice(1));
+    if (!document.getElementById(id)) throw new Error(`${pathname}: missing heading #${id}`);
+  }
+  if (document.querySelector('[role="status"]')?.textContent.includes("Загрузка материала")) {
+    throw new Error(`${pathname}: article was not ready for prerendering`);
+  }
+};
 
 for (const pathname of outputPaths) {
-  const metadata = findRouteMetadata(pathname) ?? notFoundMetadata;
+  const metadata = await resolvePageMetadata(pathname);
+  resolvedMetadata.set(pathname, metadata);
   const renderedMarkup = renderedPaths.has(pathname) ? await render(pathname) : "";
   const outputDirectory = pathname === "/"
     ? distDirectory
     : resolve(distDirectory, pathname.slice(1));
   const outputPath = resolve(outputDirectory, "index.html");
+  const html = renderRouteHtml(pathname, metadata, renderedMarkup);
+  validateHtml(html, pathname);
 
   await mkdir(outputDirectory, { recursive: true });
-  await writeFile(outputPath, renderRouteHtml(pathname, metadata, renderedMarkup), "utf8");
+  await writeFile(outputPath, html, "utf8");
 }
 
 const sitemapPaths = [...outputPaths].filter((pathname) => {
-  const metadata = findRouteMetadata(pathname) ?? notFoundMetadata;
+  const metadata = resolvedMetadata.get(pathname);
   return isIndexable(metadata);
 });
 const sitemapPath = resolve(distDirectory, "sitemap.xml");

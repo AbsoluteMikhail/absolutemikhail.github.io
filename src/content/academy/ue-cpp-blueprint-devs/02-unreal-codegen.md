@@ -10,8 +10,6 @@ pain: Что вообще делают GENERATED_BODY и макросы?
 mainIdea: Сначала Unreal строит reflection system. Потом gameplay.
 ---
 
-# Что Unreal делает с твоим кодом под капотом
-
 ## Главная боль
 
 > Что вообще делают GENERATED_BODY и макросы?

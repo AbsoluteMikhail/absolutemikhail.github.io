@@ -19,6 +19,10 @@ const loadInitialPage = async () => {
 
   if (pathname === "/academy" || pathname.startsWith("/academy/")) {
     const module = await import("./pages/Academy");
+    const { preloadAcademyPage } = await import("@/lib/academyContent");
+    // Keep the prerendered article visible until its own chunk is ready.
+    // The reader provides a retry UI if loading fails.
+    await preloadAcademyPage(pathname).catch(() => undefined);
     return { InitialPage: module.default, initialRoute: "academy" as InitialRoute };
   }
 

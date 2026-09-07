@@ -10,8 +10,6 @@ pain: Все системы знают друг о друге
 mainIdea: Production gameplay architecture - event-driven.
 ---
 
-# Делегаты - переход от BP spaghetti к production коду
-
 ## Главная боль
 
 > Все системы знают друг о друге.

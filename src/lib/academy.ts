@@ -7,21 +7,14 @@ export type AcademyTopic = {
   title: string;
 };
 
-export type AcademyHeading = {
-  depth: number;
-  id: string;
-  text: string;
-};
-
 export type AcademyDocument = {
-  body: string;
   cover?: string;
   coverAlt?: string;
-  headings: AcademyHeading[];
   meta: Record<string, string>;
   path: string;
   slug: string;
   type: AcademyDocType;
+  updated?: string;
 };
 
 export type AcademyLesson = AcademyDocument & {
@@ -68,77 +61,11 @@ export const academyTopics: AcademyTopic[] = [
   },
 ];
 
-const contentModules = import.meta.glob<string>("../content/academy/**/*.md", {
+const contentModules = import.meta.glob<Record<string, string>>("../content/academy/*/*.md", {
   eager: true,
   import: "default",
-  query: "?raw",
+  query: "?academy-meta",
 });
-
-const parseFrontmatter = (raw: string) => {
-  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
-
-  if (!match) {
-    return { body: raw.trim(), meta: {} as Record<string, string> };
-  }
-
-  const meta = match[1].split(/\r?\n/).reduce<Record<string, string>>((acc, line) => {
-    const separatorIndex = line.indexOf(":");
-
-    if (separatorIndex === -1) {
-      return acc;
-    }
-
-    const key = line.slice(0, separatorIndex).trim();
-    const value = line
-      .slice(separatorIndex + 1)
-      .trim()
-      .replace(/^["']|["']$/g, "");
-
-    if (key) {
-      acc[key] = value;
-    }
-
-    return acc;
-  }, {});
-
-  return {
-    body: raw.slice(match[0].length).trim(),
-    meta,
-  };
-};
-
-export const slugify = (value: string) => {
-  const slug = value
-    .toLowerCase()
-    .trim()
-    .replace(/[^\p{L}\p{N}]+/gu, "-")
-    .replace(/^-+|-+$/g, "");
-
-  return slug || "section";
-};
-
-export const getHeadings = (body: string): AcademyHeading[] => {
-  const usedIds = new Map<string, number>();
-
-  return body
-    .split(/\r?\n/)
-    .map((line) => line.match(/^(#{1,3})\s+(.+)$/))
-    .filter(Boolean)
-    .map((match) => {
-      const text = match![2].trim();
-      const baseId = slugify(text);
-      const currentCount = usedIds.get(baseId) ?? 0;
-      const id = currentCount === 0 ? baseId : `${baseId}-${currentCount + 1}`;
-
-      usedIds.set(baseId, currentCount + 1);
-
-      return {
-        depth: match![1].length,
-        id,
-        text,
-      };
-    });
-};
 
 const getSlugFromPath = (path: string) => {
   const parts = path.replace(/\\/g, "/").split("/");
@@ -153,19 +80,30 @@ const parseCommaSeparatedValues = (value?: string) =>
     .map((item) => item.trim())
     .filter(Boolean);
 
-const documents = Object.entries(contentModules).map(([path, raw]) => {
-  const { body, meta } = parseFrontmatter(raw);
+export const parseAcademyUpdatedDate = (value?: string, path = "Academy material") => {
+  if (!value) return undefined;
+  const date = new Date(`${value}T00:00:00Z`);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value) {
+    throw new Error(`${path}: updated must be a valid YYYY-MM-DD date`);
+  }
+  return value;
+};
+
+export const getLatestAcademyUpdate = (documents: ReadonlyArray<{ updated?: string }>) =>
+  documents.reduce<string | undefined>((latest, document) =>
+    document.updated && (!latest || document.updated > latest) ? document.updated : latest, undefined);
+
+const documents = Object.entries(contentModules).map(([path, meta]) => {
   const type = (meta.type || "lesson") as AcademyDocType;
 
   return {
-    body,
     cover: meta.cover || undefined,
     coverAlt: meta.coverAlt || meta.title || undefined,
-    headings: getHeadings(body),
     meta,
     path,
     slug: meta.slug || getSlugFromPath(path),
     type,
+    updated: parseAcademyUpdatedDate(meta.updated, path),
   } satisfies AcademyDocument;
 });
 
@@ -203,9 +141,18 @@ export const academyCourses: AcademyCourse[] = sortByOrder(
         tags: parseCommaSeparatedValues(course.meta.tags),
         title: course.meta.title || course.slug,
         topics: parseCommaSeparatedValues(course.meta.topics),
+        updated: getLatestAcademyUpdate([course, ...lessons]),
       };
     }),
 );
+
+export const sortAcademyCoursesByUpdated = (courses: readonly AcademyCourse[]) =>
+  [...courses].sort((a, b) =>
+    (b.updated || "").localeCompare(a.updated || "") ||
+    a.order - b.order ||
+    a.title.localeCompare(b.title, "ru"));
+
+export const recentAcademyCourses = sortAcademyCoursesByUpdated(academyCourses);
 
 export const getAcademyCourse = (courseSlug: string) =>
   academyCourses.find((course) => course.slug === courseSlug);

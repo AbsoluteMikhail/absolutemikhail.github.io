@@ -10,8 +10,6 @@ pain: Почему Unreal не использует std::string
 mainIdea: Не все строки одинаковы.
 ---
 
-# FString, FName и FText - три строки, три разных мира
-
 ## Главная боль
 
 > Почему Unreal не использует std::string.

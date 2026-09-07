@@ -10,8 +10,6 @@ pain: Какие specifier реально нужны?
 mainIdea: Gameplay programmer делает удобный editor API.
 ---
 
-# UPROPERTY без API-энциклопедии
-
 ## Главная боль
 
 > Какие specifier реально нужны?
