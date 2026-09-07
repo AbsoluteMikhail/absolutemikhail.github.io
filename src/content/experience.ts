@@ -17,7 +17,7 @@ export const productionExperience: ExperienceCase[] = [
     period: "2024 — сейчас",
     role: "Senior Gameplay Programmer",
     summary:
-      "Развиваю core gameplay и сетевые системы коммерческого проекта на Unreal Engine 5.",
+      "Делаю игровые механики и сетевые системы на Unreal Engine 5 — от поведения оружия до стрельбы в co-op и PvP.",
     details: [
       "Data-driven архитектура оружия, снарядов и эффектов на C++ и Asset Manager.",
       "Server-authoritative стрельба с client-side prediction для co-op и PvP.",
@@ -35,7 +35,7 @@ export const productionExperience: ExperienceCase[] = [
     period: "2022",
     role: "Unreal Engine 5 Developer",
     summary:
-      "Строил системы для масштабного интерактивного пространства в условиях жёстких лимитов памяти.",
+      "Строил большое интерактивное пространство: подгружал его по частям и оптимизировал системы, чтобы уложиться в ограничения памяти.",
     details: [
       "Level Streaming и асинхронная подгрузка секторов.",
       "Модульные системы экономики и крафта на Data Assets.",
@@ -52,7 +52,7 @@ export const productionExperience: ExperienceCase[] = [
     period: "2021 — 2022",
     role: "UE Technical Artist / Developer",
     summary:
-      "Разрабатывал real-time инструменты для virtual production, кино и интерактивных трансляций.",
+      "Использовал Unreal Engine за пределами игр: делал инструменты для кино, виртуальных съёмок и интерактивных трансляций.",
     details: [
       "Blueprint/C++-плагин синхронизации виртуального освещения и камеры.",
       "Оптимизация шейдеров и Niagara для LED Volume.",
@@ -80,7 +80,7 @@ export const engineeringFoundation: EngineeringStage[] = [
     company: "Первый коммерческий IT-опыт",
     role: "Системный администратор",
     description:
-      "Поддержка рабочих мест, сетей и инфраструктуры — ответственность за системы, которыми люди пользуются каждый день.",
+      "Поддерживал рабочие места, сети и инфраструктуру. Учился отвечать за системы, которыми люди пользуются каждый день.",
   },
   {
     period: "2014 — 2017",

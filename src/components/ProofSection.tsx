@@ -12,32 +12,33 @@ const icons: Record<ProofIcon, typeof Trophy> = {
 };
 
 const ProofSection = () => (
-  <section id="proof" aria-labelledby="proof-title" className="scroll-mt-20 border-y border-border/60 bg-card/25 py-12 md:py-16">
+  <section id="proof" aria-labelledby="proof-title" className="scroll-mt-20 border-y border-border/60 bg-card/40 py-10 md:py-14">
     <div className="container mx-auto px-6">
       <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="mb-2 font-display text-[10px] uppercase tracking-[0.22em] text-primary">
-            Проверяемый опыт
+          <p className="exhibition-label">
+            Если мы ещё не знакомы
           </p>
           <SectionTitle id="proof-title" size="compact">
-            Коротко о практике и результатах
+            Несколько ориентиров
           </SectionTitle>
         </div>
         <p className="max-w-xl text-sm leading-6 text-muted-foreground">
-          Несколько фактов обо мне — без длинного резюме и общих обещаний.
+          Разработка, хакатоны и преподавание — разные стороны того, чем я занимаюсь.
+          Отсюда можно перейти к работам, занятиям или истории победы.
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
         {proofItems.map((item, index) => {
           const Icon = icons[item.icon];
           const external = item.href.startsWith("http");
           const content = (
             <>
-              <span className="mb-5 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <span className="mb-4 flex h-8 items-center text-primary">
                 <Icon className="h-5 w-5" />
               </span>
-              <strong className="block font-display text-2xl text-foreground">{item.value}</strong>
+              <strong className="block font-display text-3xl font-bold tracking-tight text-foreground">{item.value}</strong>
               <span className="mt-2 block min-h-12 whitespace-pre-line text-sm leading-6 text-muted-foreground">{item.label}</span>
               <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
                 {item.linkLabel}
@@ -55,11 +56,11 @@ const ProofSection = () => (
               whileInView={{ opacity: 1, y: 0 }}
             >
               {external ? (
-                <a className="group block h-full rounded-2xl border border-border bg-background/55 p-6 transition-all hover:-translate-y-1 hover:border-primary/45" href={item.href} rel="noopener noreferrer" target="_blank">
+                <a className="group block h-full border-t border-border py-6 transition-colors hover:border-primary" href={item.href} rel="noopener noreferrer" target="_blank">
                   {content}
                 </a>
               ) : (
-                <Link className="group block h-full rounded-2xl border border-border bg-background/55 p-6 transition-all hover:-translate-y-1 hover:border-primary/45" to={item.href}>
+                <Link className="group block h-full border-t border-border py-6 transition-colors hover:border-primary" to={item.href}>
                   {content}
                 </Link>
               )}
@@ -73,10 +74,10 @@ const ProofSection = () => (
         transition={{ duration: 0.45 }}
         viewport={{ once: true }}
         whileInView={{ opacity: 1, y: 0 }}
-        className="mt-6 grid gap-3 rounded-2xl border border-primary/20 bg-primary/[0.04] px-6 py-5 md:grid-cols-[minmax(0,0.7fr)_minmax(0,2fr)] md:items-center md:gap-8"
+        className="mt-3 grid gap-3 border-t border-primary/30 pt-6 md:grid-cols-[minmax(0,0.7fr)_minmax(0,2fr)] md:items-center md:gap-8"
       >
         <p className="font-display text-sm font-bold uppercase tracking-wider text-foreground">
-          Что получилось за это время
+          Победы и награды
         </p>
         <p className="text-sm leading-6 text-muted-foreground">
           Gamebox Hack — победитель · Unreal Engine Dev Contest — выбор tinyBuild ·

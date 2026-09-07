@@ -4,9 +4,9 @@ export const routeMetadata = [
   {
     path: "/",
     match: "exact",
-    title: "Senior Gameplay Programmer и Unreal Authorized Instructor | Михаил Ефремов",
+    title: "Михаил Ефремов / Absolute Mikhail — игры, опыт и менторинг Unreal Engine",
     description:
-      "Михаил Ефремов — Senior Gameplay Programmer и Unreal Authorized Instructor. 11 лет в экосистеме Unreal Engine, 6+ лет коммерческой разработки: C++, multiplayer, AI и архитектура игровых систем.",
+      "Игры и история Михаила Ефремова / Absolute Mikhail: проекты на Unreal Engine, работа в командах, путь в разработке и менторинг от Unreal Authorized Instructor.",
     robots: "index, follow",
   },
   {
@@ -14,7 +14,7 @@ export const routeMetadata = [
     match: "exact",
     title: "Игры и проекты на Unreal Engine | Absolute Mikhail",
     description:
-      "Авторские игры Absolute Mikhail на Unreal Engine: DUELANT, G.R.I.B.N.I.K. и «КОЛОБОК против ЯЩЕРОВ».",
+      "Игровой архив Absolute Mikhail: собственные и командные проекты на Unreal Engine, релизы, джемы, эксперименты и замороженные разработки.",
     robots: "index, follow",
   },
   {

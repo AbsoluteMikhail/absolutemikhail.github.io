@@ -27,7 +27,7 @@ export const milestones: Milestone[] = [
     year: "2025",
     title: "«Золотой орёл» и Сколково",
     description:
-      "Работа над визуальными эффектами фильма «Воздух», отмеченного премией «Золотой орёл», и резидентство игрового кластера «Сколково».",
+      "Фильм «Воздух», в VP/VFX-производстве которого я участвовал, получил «Золотого орла» за визуальные эффекты. В том же году — резидентство игрового кластера «Сколково».",
     icon: "award",
     links: [
       { label: "О визуальных эффектах", href: "https://xovp.ru/vozduh" },
@@ -57,7 +57,7 @@ export const milestones: Milestone[] = [
   {
     year: "2023",
     title: "Соло-победа на «Синеус»",
-    description: "Первое место на офлайн-хакатоне и главный приз за игровой проект.",
+    description: "Выступил соло на офлайн-хакатоне «Синеус» и занял первое место, получив главный приз за игровой проект.",
     icon: "trophy",
     links: [
       {
@@ -70,14 +70,14 @@ export const milestones: Milestone[] = [
     year: "2022",
     title: "Коммерческий production",
     description:
-      "Virtual production фильма «Воздух», интерактивные трансляции и разработка больших пространств в StepApp.",
+      "Работал с Unreal Engine в разных задачах: virtual production фильма «Воздух», интерактивные трансляции и большие пространства в StepApp.",
     icon: "star",
     links: [{ label: "Производство фильма", href: "https://xovp.ru/vozduh" }],
   },
   {
     year: "2021",
     title: "Победа на Gamebox Hack",
-    description: "Также — «Выбор tinyBuild» на Unreal Engine Dev Contest.",
+    description: "Победил на Gamebox Hack и получил «Выбор tinyBuild» на Unreal Engine Dev Contest.",
     icon: "trophy",
     links: [
       {
@@ -94,14 +94,14 @@ export const milestones: Milestone[] = [
     year: "2020",
     title: "Unreal становится профессией",
     description:
-      "Начало коммерческой разработки: gameplay, AI, VR и первые production-задачи на Unreal Engine.",
+      "Начал работать с Unreal Engine коммерчески: игровые механики, AI, VR и первые задачи в рабочих проектах.",
     icon: "rocket",
   },
   {
     year: "2015",
     title: "Начало пути в Unreal Engine",
     description:
-      "Самостоятельное изучение движка, C++, игровых систем и первые собственные прототипы.",
+      "Самостоятельно осваивал движок, C++ и игровые системы, собирал первые собственные прототипы.",
     icon: "star",
   },
 ];

@@ -17,26 +17,27 @@ const authorityFacts = [
 ] as const;
 
 const ItchProjectsSection = () => (
-  <section id="jams" className="scroll-mt-24 mt-32" aria-labelledby="itch-projects-title">
+  <section id="jams" className="scroll-mt-24 mt-20 border-t border-border pt-12 md:mt-28" aria-labelledby="itch-projects-title">
     <div className="mb-12 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
       <div className="max-w-2xl">
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-display uppercase tracking-widest text-primary">
+        <div className="exhibition-label">
           <Trophy className="h-3.5 w-3.5" />
           Избранные джемы и эксперименты
         </div>
         <SectionTitle id="itch-projects-title">
-          Быстро проверяю идеи —
-          <span className="gradient-text"> довожу до игры</span>
+          Небольшие игры,
+          <span className="gradient-text"> быстрые эксперименты</span>
         </SectionTitle>
         <p className="mt-5 max-w-xl leading-relaxed text-muted-foreground">
-          Небольшие законченные проекты, созданные в жёстких временных рамках.
-          Здесь — практика системного дизайна, прототипирования и командной разработки.
+          На джемах у меня было от двух до восьми дней, чтобы превратить идею
+          в игру. Здесь собраны соло- и командные работы: короткие проекты,
+          с которых тоже складывался мой опыт.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:min-w-[560px]">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 lg:w-[45%] lg:shrink-0">
         {authorityFacts.map((fact) => (
-          <div key={fact.value} className="rounded-2xl border border-border bg-card/40 p-4 backdrop-blur-sm">
+          <div key={fact.value} className="border-t border-primary/40 pt-4">
             <fact.icon className="mb-3 h-5 w-5 text-primary" />
             <div className="font-display text-sm font-bold text-foreground">{fact.value}</div>
             <div className="mt-1 text-[11px] leading-4 text-muted-foreground">{fact.label}</div>
@@ -45,7 +46,7 @@ const ItchProjectsSection = () => (
       </div>
     </div>
 
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
       {itchProjects.map((project, index) => (
         <motion.a
           key={project.title}
@@ -56,9 +57,9 @@ const ItchProjectsSection = () => (
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ delay: Math.min(index * 0.06, 0.24) }}
-          className="group overflow-hidden rounded-3xl border border-border bg-card/40 transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+          className="group min-w-0"
         >
-          <div className="relative aspect-[315/250] overflow-hidden bg-secondary">
+          <div className="relative aspect-[315/250] overflow-hidden rounded-xl bg-secondary">
             <img
               src={project.cover}
               alt={`Обложка игры ${project.title}`}
@@ -67,7 +68,7 @@ const ItchProjectsSection = () => (
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
-            <span className="absolute left-4 top-4 rounded-full border border-white/10 bg-background/80 px-3 py-1 text-[10px] font-display uppercase tracking-widest text-primary backdrop-blur-md">
+            <span className="absolute left-4 top-4 rounded bg-background/85 px-3 py-1 text-[10px] font-display uppercase tracking-widest text-primary backdrop-blur-md">
               {project.genre}
             </span>
             <span className="absolute bottom-4 left-4 text-xs font-display tracking-widest text-white/70">
@@ -75,7 +76,7 @@ const ItchProjectsSection = () => (
             </span>
           </div>
 
-          <div className="p-6">
+          <div className="pt-5">
             <div className="mb-4 flex items-start justify-between gap-4">
               <h3 className="font-display text-xl font-bold text-foreground transition-colors group-hover:text-primary">
                 {project.title}
@@ -109,7 +110,7 @@ const ItchProjectsSection = () => (
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
-        className="group flex min-h-[360px] flex-col justify-between overflow-hidden rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/15 via-card/50 to-card/30 p-8 transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+        className="group flex min-h-[360px] flex-col justify-between gap-8 overflow-hidden rounded-xl border-t border-primary/50 bg-gradient-to-br from-primary/15 to-card/30 p-7 transition-colors hover:bg-primary/10"
       >
         <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
           <Gamepad2 className="h-7 w-7" />

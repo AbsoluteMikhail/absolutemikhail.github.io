@@ -5,7 +5,7 @@ import { MessageSquareQuote } from "lucide-react";
 import { menteeReviews } from "@/content/reviews";
 
 const MenteeReviewsSection = () => (
-  <section id="mentee-reviews" className="relative overflow-hidden bg-background py-24">
+  <section id="mentee-reviews" className="exhibition-section border-y border-border/60 bg-card/25">
     <div className="container relative z-10 mx-auto px-6">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -23,10 +23,10 @@ const MenteeReviewsSection = () => (
         </p>
       </motion.div>
 
-      <div className="grid gap-5 lg:grid-cols-3">
+      <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
         {menteeReviews.map((review, index) => (
           <motion.article
-            className="flex h-full flex-col rounded-lg border border-border bg-card/45 p-6 transition-colors hover:border-primary/35 hover:bg-card/65"
+            className="flex h-full flex-col border-t border-primary/40 pt-6"
             initial={{ opacity: 0, y: 30 }}
             key={review.name}
             transition={{ delay: index * 0.12, duration: 0.5 }}
@@ -34,7 +34,7 @@ const MenteeReviewsSection = () => (
             whileInView={{ opacity: 1, y: 0 }}
           >
             <MessageSquareQuote className="mb-5 h-7 w-7 text-primary" />
-            <div className="mb-6 flex-1 space-y-4 text-sm leading-7 text-foreground/80">
+            <div className="mb-6 flex-1 space-y-4 text-sm leading-7 text-foreground/85">
               {review.paragraphs.map((paragraph, paragraphIndex) => (
                 <p key={paragraph}>
                   {paragraphIndex === 0 ? `"${paragraph}` : paragraph}
@@ -43,7 +43,7 @@ const MenteeReviewsSection = () => (
               ))}
             </div>
             <div className="border-t border-border/60 pt-4">
-              <p className="font-display text-sm font-bold uppercase tracking-[0.16em] text-foreground">
+              <p className="font-display text-xs font-bold uppercase tracking-[0.12em] text-primary">
                 {review.name}
               </p>
             </div>

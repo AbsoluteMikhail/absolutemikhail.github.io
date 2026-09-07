@@ -14,7 +14,7 @@ const packageIcons: Record<MentoringIcon, typeof MessageCircle> = {
 
 const MentoringSection = () => {
   return (
-    <section id="mentoring" className="py-24 relative overflow-hidden bg-background">
+    <section id="mentoring" className="exhibition-section relative overflow-hidden bg-background">
       {/* Background glow decoration */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/5 blur-[120px]" />
@@ -28,21 +28,22 @@ const MentoringSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          className="mb-12 max-w-4xl"
         >
           <SectionBadge>Unreal Authorized Instructor · 2026</SectionBadge>
           <SectionTitle className="mb-6">
-            <span className="gradient-text uppercase">Преподавание</span>
-            <span className="mt-2 block text-foreground uppercase">и менторинг</span>
+            <span className="gradient-text">Делюсь тем,</span>
+            <span className="mt-2 block text-foreground">с чем работаю сам</span>
           </SectionTitle>
-          <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
-            Автор курсов по Unreal Engine и C++, ментор 100+ разработчиков.
-            Разбираю код и проекты вместе со студентами, помогаю готовиться к
-            собеседованиям и находить решения без лишней сложности.
+          <p className="text-muted-foreground text-base md:text-lg max-w-3xl leading-7">
+            Пишу курсы по Unreal Engine и C++, занимаюсь со студентами
+            и помогаю командам с их играми. За это время работал как ментор
+            со 100+ разработчиками. Если хотите разобрать свой код, продумать систему
+            или подготовиться к собеседованию — ниже форматы встреч.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid gap-6 lg:grid-cols-3">
           {mentoringPackages.map((pkg, index) => {
             const Icon = packageIcons[pkg.icon];
             return (
@@ -52,29 +53,29 @@ const MentoringSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.15 }}
-                className={`group relative rounded-3xl border p-8 md:p-10 flex flex-col transition-all duration-500 hover:-translate-y-2 ${
+                className={`group relative rounded-xl border-t-2 p-6 md:p-7 flex flex-col ${
                   pkg.popular
-                    ? "border-primary/50 bg-primary/5 shadow-2xl shadow-primary/10"
-                    : "border-border bg-card/40 backdrop-blur-sm hover:border-primary/30"
+                    ? "border-primary bg-gradient-to-b from-primary/10 to-card/35"
+                    : "border-border bg-card/30"
                 }`}
               >
                 {pkg.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-1.5 rounded-full text-[10px] font-display font-bold uppercase tracking-widest gradient-primary text-primary-foreground shadow-lg shadow-primary/20">
+                  <div className="absolute top-7 right-6 text-[9px] font-display font-bold uppercase tracking-widest text-primary">
                     Популярный
                   </div>
                 )}
 
-                <div className="mb-8">
+                <div className="mb-6">
                   <div
-                    className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 duration-500 ${
+                    className={`h-8 w-8 flex items-center justify-center mb-6 ${
                       pkg.popular
-                        ? "gradient-primary text-primary-foreground shadow-lg shadow-primary/20"
-                        : "bg-secondary text-primary"
+                        ? "text-primary"
+                        : "text-primary"
                     }`}
                   >
                     <Icon className="w-7 h-7" />
                   </div>
-                  <h3 className="text-2xl font-display font-bold text-foreground mb-2">
+                  <h3 className="text-xl xl:text-2xl font-display font-bold text-foreground mb-3">
                     {pkg.title}
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
@@ -83,8 +84,8 @@ const MentoringSection = () => {
                 </div>
 
                 <div className="mb-7 border-b border-border/50 pb-7">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl font-display font-bold text-foreground">
+                  <div className="flex flex-wrap items-baseline gap-2">
+                    <span className="text-3xl font-display font-bold text-foreground">
                       {pkg.price}
                     </span>
                     <span className="text-sm font-medium text-muted-foreground">
@@ -107,13 +108,13 @@ const MentoringSection = () => {
                   </dl>
                 </div>
 
-                <ul className="space-y-4 mb-10 flex-1">
+                <ul className="space-y-3 mb-8 flex-1">
                   {pkg.features.map((feature) => (
                     <li
                       key={feature}
-                      className="flex items-start gap-3 text-sm text-foreground/70 group-hover:text-foreground/90 transition-colors"
+                      className="flex items-start gap-3 text-sm leading-6 text-muted-foreground"
                     >
-                      <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                      <div className="w-4 h-5 flex items-center justify-center shrink-0 mt-0.5">
                         <Check className="w-3 h-3 text-primary" />
                       </div>
                       {feature}
@@ -138,13 +139,13 @@ const MentoringSection = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-center mt-12"
+          className="mt-8 border-t border-border pt-6"
         >
           <p className="text-muted-foreground text-sm font-medium">
             Если не уверены, какой формат выбрать - помогу определиться и не
             переплачивать.
           </p>
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-muted-foreground/80">
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground/80">
             <span className="block">
               Большинство вопросов решаются за одну встречу.
             </span>

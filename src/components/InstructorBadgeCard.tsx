@@ -23,13 +23,13 @@ const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardPro
       target={target}
       aria-label="Unreal Authorized Instructor — открыть официальный credential"
       className={cn(
-        "group block rounded-3xl border border-white/15 bg-background/65 p-4 shadow-2xl shadow-black/45 backdrop-blur-xl transition-[border-color,background-color,box-shadow] duration-300 hover:border-primary/40 hover:bg-background/80 hover:shadow-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60",
+        "group block rounded-xl border-t border-white/25 bg-background/85 p-5 shadow-2xl shadow-black/30 backdrop-blur-xl transition-colors hover:bg-background/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60",
         className,
       )}
       {...props}
     >
       <span className="flex items-center gap-4">
-        <span className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-white via-zinc-300 to-zinc-500 p-1 shadow-inner shadow-white/50">
+        <span className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-white via-zinc-300 to-zinc-500 p-1 shadow-inner shadow-white/50">
           <img src={uaiBadge} alt="Unreal Authorized Instructor 2026" className="h-full w-full object-contain" />
         </span>
         <span className="min-w-0">
@@ -47,16 +47,16 @@ const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardPro
         </span>
       </span>
       <span className="mt-4 grid grid-cols-2 gap-2 border-t border-white/10 pt-4">
-        <span className="rounded-xl bg-white/[0.035] px-3 py-2">
+        <span className="py-1">
           <strong className="block font-display text-lg text-foreground">11 лет</strong>
           <span className="text-[10px] text-muted-foreground">в экосистеме UE</span>
         </span>
-        <span className="rounded-xl bg-white/[0.035] px-3 py-2">
+        <span className="py-1">
           <strong className="block font-display text-lg text-foreground">6+ лет</strong>
           <span className="text-[10px] text-muted-foreground">в коммерции</span>
         </span>
       </span>
-      <span className="mt-3 flex items-center justify-end gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-primary transition-colors group-hover:text-primary/80">
+      <span className="mt-4 flex items-center justify-start gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-primary transition-colors group-hover:text-primary/80">
         Открыть официальный credential
         <ExternalLink className="h-3.5 w-3.5" />
       </span>

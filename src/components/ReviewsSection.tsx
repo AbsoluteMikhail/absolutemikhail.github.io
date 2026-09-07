@@ -17,7 +17,7 @@ const ReviewCard = ({ review, decorative = false }: { review: GameReview; decora
   const storeUrl = review.projectId ? storeUrls.get(review.projectId) : undefined;
 
   return (
-    <div className="review-card flex-shrink-0 w-[350px] p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors">
+    <div className="review-card flex-shrink-0 w-[min(350px,85vw)] p-6 rounded-lg bg-card/50 border-t border-primary/40">
     <div className="flex gap-1 mb-3" aria-label={`Оценка ${review.rating} из 5`}>
       {Array.from({ length: 5 }).map((_, i) => {
         const fill = Math.max(0, Math.min(1, review.rating - i));
@@ -62,7 +62,7 @@ const ReviewsSection = () => {
   const trackId = useId();
 
   return (
-    <section className="py-24 overflow-hidden bg-background/30">
+    <section className="py-14 md:py-20 overflow-hidden bg-card/25">
       <div className="container mx-auto px-6 mb-16 text-center">
         <SectionBadge
           initial={{ opacity: 0, scale: 0.9 }}

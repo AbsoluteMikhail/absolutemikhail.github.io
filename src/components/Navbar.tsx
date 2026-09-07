@@ -43,9 +43,10 @@ const Navbar = () => {
   }, [isOpen]);
 
   const navLinks = [
-    { label: "Опыт", href: "#production" },
-    { label: "Проекты", href: "#games" },
-    { label: "Путь", href: "#timeline" },
+    { label: "Работа", href: "#production" },
+    { label: "Игры", href: "#games" },
+    { label: "История", href: "#timeline" },
+    { label: "Академия", href: "/academy" },
     { label: "Менторинг", href: "#mentoring" },
   ];
 
@@ -57,7 +58,7 @@ const Navbar = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled || isOpen
           ? "bg-background/95 backdrop-blur-lg border-b border-border"
-          : "bg-transparent"
+          : "bg-background/65 backdrop-blur-md"
       }`}
     >
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
@@ -67,21 +68,21 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="flex items-center gap-4">
-          <div className="hidden items-center gap-6 mr-4 md:flex lg:gap-8">
+          <div className="hidden items-center gap-8 mr-2 lg:flex">
             {navLinks.map((link) => (
-              isHomePage ? (
+              isHomePage && link.href.startsWith("#") ? (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-sm font-display tracking-wider uppercase text-foreground/70 hover:text-primary transition-colors"
+                  className="text-xs font-display tracking-wider uppercase text-foreground/80 hover:text-primary transition-colors"
                 >
                   {link.label}
                 </a>
               ) : (
                 <Link
                   key={link.label}
-                  to={`/${link.href.startsWith("#") ? link.href : ""}`}
-                  className="text-sm font-display tracking-wider uppercase text-foreground/70 hover:text-primary transition-colors"
+                  to={link.href.startsWith("#") ? `/${link.href}` : link.href}
+                  className="text-xs font-display tracking-wider uppercase text-foreground/80 hover:text-primary transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -103,7 +104,7 @@ const Navbar = () => {
             ref={menuButtonRef}
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-foreground hover:text-primary transition-colors z-50"
+            className="lg:hidden p-2 text-foreground hover:text-primary transition-colors z-50"
             aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
             aria-expanded={isOpen}
             aria-controls={menuId}
@@ -122,25 +123,25 @@ const Navbar = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-background border-b border-border overflow-hidden"
+            className="lg:hidden max-h-[calc(100svh-76px)] overflow-y-auto bg-background border-b border-border"
           >
             <div className="flex flex-col gap-4 p-6">
               {navLinks.map((link) => (
-                isHomePage ? (
+                isHomePage && link.href.startsWith("#") ? (
                   <a
                     key={link.label}
                     href={link.href}
                     onClick={() => setIsOpen(false)}
-                    className="text-lg font-display tracking-widest uppercase text-foreground/80 hover:text-primary transition-colors py-2"
+                    className="text-xl font-display tracking-wider uppercase text-foreground hover:text-primary transition-colors border-b border-border py-4"
                   >
                     {link.label}
                   </a>
                 ) : (
                   <Link
                     key={link.label}
-                    to={`/${link.href.startsWith("#") ? link.href : ""}`}
+                    to={link.href.startsWith("#") ? `/${link.href}` : link.href}
                     onClick={() => setIsOpen(false)}
-                    className="text-lg font-display tracking-widest uppercase text-foreground/80 hover:text-primary transition-colors py-2"
+                    className="text-xl font-display tracking-wider uppercase text-foreground hover:text-primary transition-colors border-b border-border py-4"
                   >
                     {link.label}
                   </Link>

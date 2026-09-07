@@ -50,13 +50,13 @@ const MessengerOption = ({ icon, title, description, onClick, textClassName }: M
   <button
     type="button"
     onClick={onClick}
-    className="group flex w-full items-center gap-4 rounded-2xl border border-border bg-background/50 p-4 text-left transition-all hover:border-primary/50 hover:bg-primary/5"
+    className="group flex w-full items-center gap-4 rounded-lg border-t border-border px-2 py-4 text-left transition-colors hover:bg-primary/5"
   >
-    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secondary text-primary transition-colors group-hover:bg-primary/10">
+    <span className="flex h-11 w-11 shrink-0 items-center justify-center text-primary">
       {icon}
     </span>
     <span className={textClassName}>
-      <span className="block font-display text-sm font-semibold uppercase tracking-wider text-foreground">
+      <span className="block font-body text-base font-semibold text-foreground">
         {title}
       </span>
       <span className="mt-1 block text-xs text-muted-foreground">
@@ -119,7 +119,7 @@ export const ContactMessenger = ({
       className="backdrop:bg-background/85 backdrop:backdrop-blur-md"
     >
       <motion.div
-        className="relative max-h-[calc(100svh-2rem)] w-full max-w-sm overflow-y-auto rounded-3xl border border-border bg-card p-6 shadow-2xl shadow-black/40"
+        className="relative max-h-[calc(100svh-2rem)] w-full max-w-sm overflow-y-auto rounded-xl border border-border bg-card p-6 shadow-2xl shadow-black/40"
         initial={{ opacity: 0, y: 18, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.2 }}

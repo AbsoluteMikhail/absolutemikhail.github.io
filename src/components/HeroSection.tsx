@@ -45,18 +45,16 @@ const HeroSection = () => {
   return (
     <section 
       id="about" 
-      className="relative min-h-screen flex flex-col md:flex-row md:items-center overflow-hidden bg-background"
+      className="relative flex min-h-svh flex-col overflow-hidden bg-background pt-[72px] md:min-h-[850px] md:flex-row md:items-center md:pt-0 lg:min-h-svh"
       style={{
-        // Глубина и объем: Внутренняя фаска (стеклянный край) и диагональные отблески
-        boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.05)',
         backgroundImage: `
-          linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 30%),
+          radial-gradient(ellipse at 0% 70%, hsl(var(--primary) / 0.14), transparent 55%),
           linear-gradient(225deg, rgba(255,255,255,0.01) 0%, transparent 20%)
         `
       }}
     >
       {/* Mobile: photo on top */}
-      <div className="relative h-[40svh] min-h-[300px] max-h-[360px] w-full md:hidden">
+      <div className="relative h-[42svh] min-h-[280px] max-h-[400px] w-full md:hidden">
         <motion.div
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -85,7 +83,7 @@ const HeroSection = () => {
 
       {/* Desktop: photo on the right */}
       <div 
-        className="hidden md:block absolute top-0 right-0 h-full w-[50%] lg:w-[45%] pointer-events-none"
+        className="hidden md:block absolute top-0 right-0 h-full w-[52%] pointer-events-none"
         style={{
           maskImage: 'linear-gradient(to right, transparent 0%, black 40%)',
           WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 40%)'
@@ -119,27 +117,27 @@ const HeroSection = () => {
       {/* Desktop credential card: the supplied badge stays replaceable as one asset. */}
       <InstructorBadgeCard
         ref={trustCardRef}
-        className="absolute bottom-10 right-8 z-20 hidden w-[460px] will-change-[transform,opacity] lg:block xl:right-12"
+        className="absolute bottom-12 right-8 z-20 hidden w-[390px] will-change-[transform,opacity] lg:block xl:right-12"
       />
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 py-6 md:py-20">
+      <div className="relative z-10 container mx-auto px-6 pb-12 pt-2 md:pb-24 md:pt-32">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-2xl"
+          className="max-w-2xl md:max-w-[62%] lg:max-w-[60%]"
         >
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="mb-4 inline-block rounded-2xl border border-primary/40 bg-primary/10 px-4 py-2.5"
+            className="mb-7 border-l-2 border-primary pl-4"
           >
-            <span className="mb-1 block font-display text-[9px] font-semibold uppercase tracking-[0.18em] text-foreground/65 sm:text-[10px]">
-              Михаил Ефремов
+            <span className="mb-2 block font-display text-sm font-semibold uppercase tracking-[0.18em] text-foreground sm:text-base">
+              Михаил Ефремов · Absolute Mikhail
             </span>
-            <span className="block font-display text-[10px] font-bold uppercase tracking-[0.16em] text-primary sm:text-xs md:text-sm md:tracking-[0.2em]">
+            <span className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-primary sm:text-xs">
               Senior Gameplay Programmer · GamePunk Studio
             </span>
           </motion.div>
@@ -148,23 +146,24 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.7 }}
-            className="mb-4 font-display text-[clamp(1.5rem,7.6vw,2rem)] font-black leading-[1.05] tracking-tight sm:text-5xl md:mb-6 md:text-[clamp(3rem,5vw,4.5rem)] md:leading-tight"
+            className="mb-6 font-display text-[clamp(1.5rem,7.6vw,2rem)] font-black leading-[1.15] tracking-tight sm:text-5xl md:mb-8 md:text-[clamp(2.4rem,4.9vw,4.7rem)]"
             style={{ textShadow: '0 0 40px rgba(0,0,0,0.5)' }}
           >
-            <span className="gradient-text whitespace-nowrap">UNREAL-ПРОЕКТЫ</span>
+            <span className="gradient-text">ИГРЫ, КОД</span>
             <br />
-            <span className="text-foreground">ДО РЕЛИЗА</span>
+            <span className="text-foreground">И МОЯ ИСТОРИЯ</span>
           </motion.h1>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.7 }}
-            className="mb-5 max-w-xl space-y-3 md:mb-6"
+            className="mb-6 max-w-lg space-y-4 md:mb-8"
           >
             <p className="text-base leading-relaxed text-foreground sm:text-lg md:text-xl">
-              Создаю игровые механики, сетевой геймплей и поведение AI на C++ —
-              от первых прототипов до рабочего релиза.
+              Делаю игры на Unreal Engine, пишу игровые системы на C++ и делюсь опытом.
+              Здесь собрал свои проекты, работу в командах и путь от первых
+              прототипов до релизов.
             </p>
             <p className="text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg">
               <span className="block">В Unreal Engine с 2015 года.</span>
@@ -180,7 +179,7 @@ const HeroSection = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Unreal Authorized Instructor — открыть официальный credential"
-            className="mb-6 flex max-w-xl items-center gap-3 rounded-2xl border border-white/10 bg-card/55 p-3 shadow-lg shadow-black/20 backdrop-blur-md lg:hidden"
+            className="mb-6 flex max-w-xl items-center gap-3 border-y border-border py-3 lg:hidden"
           >
             <span className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-white via-zinc-300 to-zinc-500 p-0.5">
               <img src={uaiBadge} alt="Unreal Authorized Instructor 2026" className="h-full w-full object-contain" />
@@ -197,19 +196,25 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.82, duration: 0.7 }}
-            className="mb-6 flex flex-col gap-4 sm:flex-row"
+            className="mb-6 flex flex-wrap gap-3"
           >
             <a
-              href="#production"
-              className={buttonStyles({ className: "box-glow" })}
+              href="#games"
+              className={buttonStyles({ className: "box-glow", size: "sm" })}
             >
-              Мой опыт
+              Смотреть игры
+            </a>
+            <a
+              href="#timeline"
+              className={buttonStyles({ variant: "outline", size: "sm" })}
+            >
+              Моя история
             </a>
             <a
               href="#mentoring"
-              className={buttonStyles({ variant: "outline" })}
+              className={buttonStyles({ variant: "text", size: "none", className: "inline-flex min-h-11 items-center px-3 text-sm" })}
             >
-              Обсудить проект
+              За менторингом →
             </a>
           </motion.div>
 
@@ -227,7 +232,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.6 }}
-            className="hidden gap-3 sm:flex"
+            className="flex gap-2"
           >
             {[
               { icon: YoutubeIcon, href: "https://www.youtube.com/@Absolute-Unreal", label: "YouTube" },
@@ -242,7 +247,7 @@ const HeroSection = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className="w-10 h-10 rounded-lg border border-border bg-card/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+                className="flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary"
               >
                 <social.icon className="w-5 h-5" />
               </a>
@@ -256,7 +261,7 @@ const HeroSection = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 md:block"
+        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 lg:block"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}

@@ -10,14 +10,14 @@ import {
 import { faqItems } from "@/content/faq";
 
 const FAQSection = () => (
-  <section id="faq" className="relative overflow-hidden bg-background py-24">
-    <div className="container relative z-10 mx-auto px-6">
+  <section id="faq" className="exhibition-section bg-background">
+    <div className="container mx-auto grid gap-x-16 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55 }}
         viewport={{ once: true }}
-        className="mx-auto mb-12 max-w-3xl text-center"
+        className="mb-8 max-w-xl lg:sticky lg:top-28"
       >
         <SectionBadge>FAQ</SectionBadge>
         <SectionTitle>
@@ -30,7 +30,7 @@ const FAQSection = () => (
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, delay: 0.1 }}
         viewport={{ once: true }}
-        className="mx-auto max-w-3xl rounded-2xl border border-border bg-card/35 px-5 md:px-7"
+        className="min-w-0 border-t border-border"
       >
         <Accordion type="single" collapsible className="w-full">
           {faqItems.map((item) => (
@@ -39,7 +39,7 @@ const FAQSection = () => (
               value={item.question}
               className="border-border/70"
             >
-              <AccordionTrigger className="py-5 text-left font-display text-sm font-bold uppercase tracking-[0.12em] text-foreground hover:text-primary hover:no-underline">
+              <AccordionTrigger className="py-6 text-left font-body text-base font-semibold leading-6 text-foreground hover:text-primary hover:no-underline">
                 {item.question}
               </AccordionTrigger>
               <AccordionContent className="pb-5 text-base leading-7 text-muted-foreground">
@@ -55,7 +55,7 @@ const FAQSection = () => (
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.2 }}
         viewport={{ once: true }}
-        className="mx-auto mt-8 max-w-2xl text-center text-sm leading-6 text-muted-foreground"
+        className="mt-6 max-w-2xl text-sm leading-6 text-muted-foreground lg:col-start-2"
       >
         Не нашли ответа? Опишите задачу в Telegram — я помогу выбрать формат.
       </motion.p>

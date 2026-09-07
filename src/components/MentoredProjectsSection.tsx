@@ -4,30 +4,28 @@ import { ArrowUpRight, CheckCircle2, GraduationCap } from "lucide-react";
 import { mentoredProjects } from "@/constants/mentoredProjects";
 
 const MentoredProjectsSection = () => (
-  <section id="mentored" className="scroll-mt-24 mt-32" aria-labelledby="mentored-projects-title">
-    <div className="relative overflow-hidden rounded-[2rem] border border-primary/20 bg-primary/[0.04] p-6 md:p-10 lg:p-12">
-      <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-40 -left-24 h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
+  <section id="mentored" className="scroll-mt-24 mt-20 border-t border-border pt-12 md:mt-28" aria-labelledby="mentored-projects-title">
+    <div className="relative">
 
       <div className="relative mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-2xl">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 font-display text-xs uppercase tracking-widest text-primary">
+          <div className="exhibition-label">
             <GraduationCap className="h-4 w-4" />
-            Результат наставничества
+            Рядом с другими разработчиками
           </div>
           <SectionTitle id="mentored-projects-title">
             Проекты под моим
             <span className="gradient-text"> наставничеством</span>
           </SectionTitle>
           <p className="mt-5 max-w-xl leading-relaxed text-muted-foreground">
-            Игры, которым я помогал пройти путь от идеи и первых систем до
-            рабочего билда. Здесь результат принадлежит командам — моя задача
-            была помочь им принять сильные технические и продуктовые решения.
+            Эти игры создали команды, с которыми я работал как ментор.
+            Помогал продумывать архитектуру, разбирать технические вопросы
+            и доводить проекты до рабочего билда. Авторство и результат — их.
           </p>
         </div>
 
-        <div className="flex items-center gap-4 rounded-2xl border border-border bg-background/50 px-5 py-4 backdrop-blur-sm">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+        <div className="flex items-center gap-4 border-l-2 border-primary pl-5 py-2">
+          <div className="flex h-11 w-11 items-center justify-center text-primary">
             <CheckCircle2 className="h-6 w-6" />
           </div>
           <div>
@@ -37,7 +35,7 @@ const MentoredProjectsSection = () => (
         </div>
       </div>
 
-      <div className="relative grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div className="relative grid grid-cols-1 gap-x-10 gap-y-10 md:grid-cols-2">
         {mentoredProjects.map((project, index) => (
           <motion.a
             key={project.title}
@@ -48,9 +46,9 @@ const MentoredProjectsSection = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ delay: index * 0.07 }}
-            className="group grid overflow-hidden rounded-3xl border border-border bg-card/60 transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 sm:grid-cols-[190px_1fr]"
+            className="group grid min-w-0 gap-5 xl:grid-cols-[170px_1fr]"
           >
-            <div className="relative aspect-[315/250] overflow-hidden bg-secondary sm:aspect-auto sm:min-h-[240px]">
+            <div className="relative aspect-[315/250] overflow-hidden rounded-xl bg-secondary xl:aspect-auto xl:min-h-[240px]">
               <img
                 src={project.cover}
                 alt={`Обложка проекта ${project.title}`}
@@ -61,7 +59,7 @@ const MentoredProjectsSection = () => (
               <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent sm:bg-gradient-to-r" />
             </div>
 
-            <div className="flex min-w-0 flex-col p-6">
+            <div className="flex min-w-0 flex-col">
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>
                   <span className="text-[10px] font-display uppercase tracking-widest text-primary">
@@ -78,7 +76,7 @@ const MentoredProjectsSection = () => (
                 {project.description}
               </p>
 
-              <div className="mt-auto space-y-2 border-t border-border/60 pt-5 text-xs">
+              <div className="mt-5 space-y-2 border-t border-border/60 pt-4 text-xs">
                 <div className="flex items-center gap-2 text-foreground">
                   <GraduationCap className="h-4 w-4 shrink-0 text-primary" />
                   <span className="font-medium">{project.contribution}</span>

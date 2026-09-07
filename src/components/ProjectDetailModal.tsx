@@ -48,7 +48,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", damping: 25, stiffness: 300 }}
-        className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-border bg-card"
+        className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-xl border border-border bg-card"
       >
         <IconButton
           type="button"
@@ -174,7 +174,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
 
         <div className="flex-1 space-y-4 overflow-x-hidden overflow-y-auto p-5 sm:p-8">
           <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-            <span className="px-3 py-1 rounded-full gradient-primary text-xs font-display text-primary-foreground tracking-wider uppercase">
+            <span className="border-l-2 border-primary pl-3 text-xs font-display text-primary tracking-wider uppercase">
               {project.genre}
             </span>
             <span className="text-sm text-muted-foreground">{project.year}</span>
@@ -184,11 +184,11 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
             </span>
           </div>
 
-          <h2 id={titleId} className="text-3xl md:text-4xl font-display font-bold text-foreground">
+          <h2 id={titleId} className="text-2xl md:text-4xl font-display font-bold tracking-tight text-foreground">
             {project.title}
           </h2>
 
-          <div className="text-muted-foreground leading-relaxed text-lg">
+          <div className="text-muted-foreground leading-7 text-base md:text-lg md:leading-8">
             {project.fullDesc.split("\n").map((line, idx) => {
               const trimmed = line.trim();
               if (!trimmed) return <div key={idx} className="h-2" />;
@@ -219,7 +219,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
             {project.tech.map((t) => (
               <span
                 key={t}
-                className="px-4 py-2 rounded-lg bg-secondary text-sm text-secondary-foreground font-medium"
+                className="border-l border-primary/40 pl-3 pr-2 text-xs text-muted-foreground"
               >
                 {t}
               </span>

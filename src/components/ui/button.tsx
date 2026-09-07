@@ -18,7 +18,7 @@ const sizes = {
   none: "",
 };
 const effects = {
-  scale: "transition-transform hover:scale-105",
+  glow: "transition-[filter,box-shadow] hover:brightness-110 hover:shadow-lg hover:shadow-primary/20",
   shadow: "transition-all hover:shadow-lg hover:shadow-primary/20",
   none: "",
 };
@@ -31,9 +31,9 @@ export interface ButtonStyleProps {
 }
 
 // Shared by native buttons, anchors and Router links; layout stays with the caller.
-export function buttonStyles({ variant = "primary", size = "md", effect = "scale", className }: ButtonStyleProps = {}) {
+export function buttonStyles({ variant = "primary", size = "md", effect = "glow", className }: ButtonStyleProps = {}) {
   return cn(
-    variant !== "text" && variant !== "unstyled" && "rounded-lg font-display uppercase tracking-wider",
+    variant !== "text" && variant !== "unstyled" && "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg font-display uppercase tracking-wider",
     variant !== "unstyled" && sizes[size],
     variants[variant],
     variant === "primary" && effects[effect],
@@ -43,7 +43,7 @@ export function buttonStyles({ variant = "primary", size = "md", effect = "scale
 
 export function mentoringButtonStyles(highlighted = false) {
   return cn(
-    "block text-center py-4 rounded-2xl font-display text-xs font-bold uppercase tracking-[0.15em] transition-all duration-300 active:scale-95",
+    "block text-center py-4 px-3 rounded-lg font-display text-xs font-bold uppercase tracking-[0.12em] transition-colors duration-300",
     highlighted
       ? cn(primaryColors, "shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30")
       : "border border-primary/20 text-primary hover:bg-primary/5",

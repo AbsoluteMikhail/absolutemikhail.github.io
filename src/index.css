@@ -6,31 +6,31 @@
 
 @layer base {
   :root {
-    --background: 220 20% 6%;
-    --foreground: 0 0% 95%;
+    --background: 225 15% 7%;
+    --foreground: 35 20% 96%;
 
-    --card: 220 18% 10%;
+    --card: 225 12% 11%;
     --card-foreground: 0 0% 95%;
 
     --popover: 220 18% 10%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 0 85% 55%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 5 92% 60%;
+    --primary-foreground: 225 15% 7%;
 
     --secondary: 220 15% 16%;
     --secondary-foreground: 0 0% 90%;
 
     --muted: 220 15% 14%;
-    --muted-foreground: 220 10% 55%;
+    --muted-foreground: 220 8% 68%;
 
-    --accent: 25 100% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 27 100% 60%;
+    --accent-foreground: 225 15% 7%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 15% 18%;
+    --border: 225 10% 23%;
     --input: 220 15% 18%;
     --ring: 0 85% 55%;
 
@@ -67,6 +67,17 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.35);
+    color: hsl(var(--foreground));
+  }
+
+  :where(a, button):focus-visible {
+    outline: 2px solid hsl(var(--accent));
+    outline-offset: 5px;
   }
 }
 
@@ -103,6 +114,31 @@
 }
 
 @layer components {
+  .exhibition-section {
+    @apply py-16 md:py-24 lg:py-28;
+  }
+
+  .exhibition-header {
+    @apply mb-10 grid gap-6 lg:mb-14 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:gap-16;
+  }
+
+  .exhibition-link {
+    @apply inline-flex min-h-10 items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary transition-colors hover:text-accent;
+  }
+
+  .exhibition-label {
+    @apply mb-4 flex items-center gap-3 font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-primary;
+  }
+
+  .exhibition-label::before {
+    content: "";
+    @apply h-px w-8 shrink-0 bg-current;
+  }
+
+  .exhibition-warm {
+    background: radial-gradient(ellipse at 90% 0%, hsl(var(--primary) / 0.14), transparent 60%), hsl(var(--card) / 0.35);
+  }
+
   .academy-prose {
     @apply text-base leading-8 text-foreground/90;
   }

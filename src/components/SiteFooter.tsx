@@ -22,17 +22,17 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
 
   return (
     <>
-      <footer className="relative overflow-hidden border-t border-border/50 pb-12 pt-24">
+      <footer className="relative overflow-hidden border-t border-border/50 bg-card/20 pb-8 pt-14 md:pt-20">
         <div className="absolute left-1/2 top-0 h-px w-full -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
         <div className="container relative z-10 mx-auto px-6">
-          <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mb-12 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_1fr_1fr]">
             <div className="space-y-6">
               <Logo className="font-display text-2xl font-bold tracking-tighter" />
               <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
-                Senior Gameplay Programmer и Unreal Authorized Instructor. Создаю игровые системы, собственные проекты и помогаю командам доходить до релиза.
+                Я Михаил Ефремов, он же Absolute Mikhail. Делаю игры, работаю с Unreal Engine и помогаю другим разработчикам. Здесь храню проекты и свою историю.
               </p>
-              <div className="flex gap-4">
+              <div className="flex gap-2">
                 {[
                   { icon: YoutubeIcon, href: "https://www.youtube.com/@Absolute-Unreal", label: "YouTube" },
                   { icon: TwitchIcon, href: "https://www.twitch.tv/absolutemikhail", label: "Twitch" },
@@ -46,7 +46,7 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/50 text-muted-foreground transition-all duration-300 hover:bg-primary/10 hover:text-primary"
+                    className="flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary"
                   >
                     <social.icon className="h-5 w-5" />
                   </a>
@@ -58,10 +58,12 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
               <h4 className="mb-6 font-display text-xs font-bold uppercase tracking-widest text-foreground">Навигация</h4>
               <ul className="space-y-4">
                 {[
+                  { label: "Академия", href: "/academy" },
                   { label: "Менторинг", href: `${homePrefix}#mentoring` },
                   { label: "Отзывы учеников", href: `${homePrefix}#mentee-reviews` },
                   { label: "Проекты", href: `${homePrefix}#games` },
-                  { label: "Опыт", href: `${homePrefix}#timeline` },
+                  { label: "Моя история", href: `${homePrefix}#timeline` },
+                  { label: "Работа в командах", href: `${homePrefix}#production` },
                   { label: "Все проекты", href: "/projects" },
                 ].map((link) => (
                   <li key={link.label}>
@@ -91,7 +93,6 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
             </div>
 
             <div className="group relative">
-              <div className="absolute -inset-4 rounded-3xl border border-primary/10 bg-primary/5 opacity-0 transition-opacity group-hover:opacity-100" />
               <div className="relative">
                 <h4 className="mb-6 font-display text-xs font-bold uppercase tracking-widest text-foreground">Статус</h4>
                 <div className="mb-4 flex items-center gap-2">
@@ -117,7 +118,7 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
                 gamepunk.ru
               </p>
             </div>
-            <div className="flex gap-8">
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 md:justify-end">
               <button onClick={() => setActiveLegalModal("privacy")} className="text-[10px] uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary">
                 Политика конфиденциальности
               </button>

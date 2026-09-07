@@ -13,7 +13,7 @@ export const proofItems: ProofItem[] = [
     icon: "experience",
     value: "11 лет",
     label: "в экосистеме Unreal Engine;\n6+ лет — в коммерческой разработке",
-    linkLabel: "Production-опыт",
+    linkLabel: "Работа в командах",
     href: "#production",
   },
   {
@@ -34,7 +34,7 @@ export const proofItems: ProofItem[] = [
     icon: "projects",
     value: "20 проектов",
     label: "публичные релизы, джемы и игровые прототипы",
-    linkLabel: "Открыть портфолио",
+    linkLabel: "Посмотреть игры",
     href: "/projects",
   },
 ];
