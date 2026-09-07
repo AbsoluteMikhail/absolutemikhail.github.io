@@ -83,7 +83,7 @@ const HeroSection = () => {
 
       {/* Desktop: photo on the right */}
       <div 
-        className="hidden md:block absolute top-0 right-0 h-full w-[52%] pointer-events-none"
+        className="hidden md:block absolute top-[76px] right-0 bottom-0 w-[52%] pointer-events-none"
         style={{
           maskImage: 'linear-gradient(to right, transparent 0%, black 40%)',
           WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 40%)'
@@ -101,7 +101,7 @@ const HeroSection = () => {
             loading="eager"
             {...{ fetchpriority: "high" }}
             decoding="async"
-            className="h-full w-full object-cover object-center"
+            className="h-full w-full object-cover object-top"
             style={{ filter: 'brightness(0.9) contrast(1.1) saturate(0.8)' }}
           />
           {/* Gradients for smooth transition and depth */}
@@ -158,16 +158,11 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.7 }}
-            className="mb-6 max-w-lg space-y-4 md:mb-8"
+            className="mb-6 max-w-lg md:mb-8"
           >
             <p className="text-base leading-relaxed text-foreground sm:text-lg md:text-xl">
-              Делаю игры на Unreal Engine, пишу игровые системы на C++ и делюсь опытом.
-              Здесь собрал свои проекты, работу в командах и путь от первых
-              прототипов до релизов.
-            </p>
-            <p className="text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg">
-              <span className="block">В Unreal Engine с 2015 года.</span>
-              <span className="block">Более шести лет — в коммерческой разработке.</span>
+              Делаю игры и делюсь опытом. Здесь — мои проекты, эксперименты и путь
+              от первых прототипов до релизов.
             </p>
           </motion.div>
 
@@ -232,7 +227,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.6 }}
-            className="flex gap-2"
+            className="flex flex-wrap gap-1 sm:gap-2"
           >
             {[
               { icon: YoutubeIcon, href: "https://www.youtube.com/@Absolute-Unreal", label: "YouTube" },
@@ -247,9 +242,9 @@ const HeroSection = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className="flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary"
+                className="flex h-14 w-14 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary"
               >
-                <social.icon className="w-5 h-5" />
+                <social.icon className="h-10 w-10" />
               </a>
             ))}
           </motion.div>
