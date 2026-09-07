@@ -57,7 +57,9 @@ const EngineeringFoundationSection = () => (
       </div>
 
       <div className="mt-10 max-w-3xl border-l-2 border-accent pl-5 text-sm leading-7 text-foreground md:text-base">
-        Этот подход я и принёс в Unreal Engine: разобраться в задаче, собрать устойчивое решение и довести его до результата.
+        Этот подход я и принёс в Unreal Engine:
+        <br />
+        разобраться в задаче, собрать устойчивое решение и довести его до результата.
       </div>
     </div>
   </section>

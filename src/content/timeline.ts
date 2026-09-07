@@ -72,7 +72,13 @@ export const milestones: Milestone[] = [
     description:
       "Работал с Unreal Engine в разных задачах: virtual production фильма «Воздух», интерактивные трансляции и большие пространства в StepApp.",
     icon: "star",
-    links: [{ label: "Производство фильма", href: "https://xovp.ru/vozduh" }],
+    links: [
+      { label: "Производство фильма", href: "https://xovp.ru/vozduh" },
+      {
+        label: "Выпускной ВКонтакте",
+        href: "https://vkvideo.ru/video-22079806_456239422",
+      },
+    ],
   },
   {
     year: "2021",

@@ -15,7 +15,7 @@ const AcademySection = () => (
         <SectionTitle id="academy-heading" size="compact" className="mb-5">
           {academyIntro.title}
         </SectionTitle>
-        <p className="text-base leading-7 text-muted-foreground md:text-lg md:leading-8">
+        <p className="whitespace-pre-line text-base leading-7 text-muted-foreground md:text-lg md:leading-8">
           {academyIntro.description}
         </p>
       </div>

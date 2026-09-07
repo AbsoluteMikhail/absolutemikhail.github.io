@@ -81,7 +81,9 @@ const ProofSection = () => (
         </p>
         <p className="text-sm leading-6 text-muted-foreground">
           Gamebox Hack — победитель · Unreal Engine Dev Contest — выбор tinyBuild ·
-          «Синеус» — 1-е место и главный приз · G.R.I.B.N.I.K. — награда «Лучший геймдизайн».
+          «Синеус» — 1-е место и главный приз
+          <br />
+          G.R.I.B.N.I.K. — награда «Лучший геймдизайн».
         </p>
       </motion.div>
     </div>
