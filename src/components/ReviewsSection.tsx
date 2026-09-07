@@ -1,5 +1,8 @@
-import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { SectionTitle } from "@/components/ui/section-title";
+import { SectionBadge } from "@/components/ui/section-badge";
+import { useId, useState } from "react";
+import { IconButton } from "@/components/ui/icon-button";
+import { Pause, Play, Star } from "lucide-react";
 import { gameReviews, type GameReview } from "@/content/reviews";
 import { projects } from "@/constants/projects";
 
@@ -10,11 +13,11 @@ const storeUrls = new Map(
   ]),
 );
 
-const ReviewCard = ({ review }: { review: GameReview }) => {
+const ReviewCard = ({ review, decorative = false }: { review: GameReview; decorative?: boolean }) => {
   const storeUrl = review.projectId ? storeUrls.get(review.projectId) : undefined;
 
   return (
-    <div className="flex-shrink-0 w-[350px] p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors">
+    <div className="review-card flex-shrink-0 w-[350px] p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors">
     <div className="flex gap-1 mb-3" aria-label={`Оценка ${review.rating} из 5`}>
       {Array.from({ length: 5 }).map((_, i) => {
         const fill = Math.max(0, Math.min(1, review.rating - i));
@@ -36,7 +39,7 @@ const ReviewCard = ({ review }: { review: GameReview }) => {
     </p>
     <div className="flex items-center justify-between">
       <span className="text-sm font-semibold text-foreground">{review.name}</span>
-      {storeUrl ? (
+      {storeUrl && !decorative ? (
         <a
           href={storeUrl}
           target="_blank"
@@ -55,54 +58,68 @@ const ReviewCard = ({ review }: { review: GameReview }) => {
 };
 
 const ReviewsSection = () => {
-  // Triple the reviews for very long desktop screens to ensure seamless loop
-  const duplicated = [...gameReviews, ...gameReviews, ...gameReviews];
+  const [paused, setPaused] = useState(false);
+  const trackId = useId();
 
   return (
     <section className="py-24 overflow-hidden bg-background/30">
       <div className="container mx-auto px-6 mb-16 text-center">
-        <motion.div
+        <SectionBadge
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="inline-block mb-4 px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5"
+          tone="accent"
+          size="md"
         >
-          <span className="text-xs font-display tracking-widest text-accent uppercase">
-            Фидбек
-          </span>
-        </motion.div>
-        <motion.h2
+          Фидбек
+        </SectionBadge>
+        <SectionTitle
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-display font-bold"
+
         >
           <span className="gradient-text uppercase">Отзывы игроков</span>
-        </motion.h2>
+        </SectionTitle>
+        <IconButton
+          type="button"
+          variant="outline"
+          aria-label={paused ? "Возобновить прокрутку отзывов" : "Приостановить прокрутку отзывов"}
+          aria-pressed={paused}
+          aria-controls={trackId}
+          onClick={() => setPaused((value) => !value)}
+          className="review-motion-toggle mt-5"
+        >
+          {paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+        </IconButton>
       </div>
 
-      <div className="relative group overflow-hidden">
+      <div
+        className="review-viewport relative overflow-hidden"
+        onTouchStart={() => setPaused(true)}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)
+            && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            event.currentTarget.scrollLeft = 0;
+          }
+        }}
+      >
         {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-background via-background/80 to-transparent z-20 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-background via-background/80 to-transparent z-20 pointer-events-none" />
+        <div className="review-fade absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-background via-background/80 to-transparent z-20 pointer-events-none" />
+        <div className="review-fade absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-background via-background/80 to-transparent z-20 pointer-events-none" />
 
-        <div className="flex w-fit">
-          <motion.div 
-            className="flex gap-6 py-4 px-3"
-            animate={{
-              x: ["0%", "-33.333%"]
-            }}
-            transition={{
-              duration: 80,
-              ease: "linear",
-              repeat: Infinity,
-            }}
-            style={{ x: 0 }}
-          >
-            {duplicated.map((review, i) => (
+        <div id={trackId} className="review-marquee flex w-max" data-paused={paused}>
+          <div className="flex shrink-0 gap-6 px-3 py-4">
+            {gameReviews.map((review, i) => (
               <ReviewCard key={i} review={review} />
             ))}
-          </motion.div>
+          </div>
+          {/* One matching copy makes the loop seamless without duplicate tab stops. */}
+          <div className="review-copy flex shrink-0 gap-6 px-3 py-4" aria-hidden="true">
+            {gameReviews.map((review, i) => (
+              <ReviewCard key={i} review={review} decorative />
+            ))}
+          </div>
         </div>
       </div>
     </section>

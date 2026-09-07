@@ -364,12 +364,48 @@
   100% { transform: translateX(-50%); }
 }
 
-.animate-marquee {
-  animation: marquee 30s linear infinite;
+.review-marquee {
+  animation: marquee 80s linear infinite;
 }
 
-.animate-marquee:hover {
+.review-marquee[data-paused="true"],
+.review-marquee:has(.review-card:hover),
+.review-marquee:focus-within {
   animation-play-state: paused;
+}
+
+/* Keyboard navigation must reveal links even after their cards moved offscreen. */
+.review-marquee:focus-within {
+  transform: translateX(0) !important;
+}
+
+.review-viewport:focus-within {
+  overflow-x: auto;
+}
+
+.review-viewport:focus-within .review-fade {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .review-marquee {
+    animation: none !important;
+  }
+
+  .review-viewport {
+    overflow-x: auto;
+  }
+
+  .review-copy, .review-fade, .review-motion-toggle {
+    display: none;
+  }
 }
 
 html.snippet-capture .custom-cursor {
@@ -394,6 +430,13 @@ html.snippet-capture .custom-cursor {
 
   html.custom-cursor-enabled :is([class*="cursor-grab"], [class*="cursor-grabbing"]) {
     cursor: grab !important;
+  }
+
+  .custom-cursor-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483646;
+    pointer-events: none;
   }
 
   .custom-cursor {

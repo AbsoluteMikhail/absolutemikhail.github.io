@@ -1,5 +1,8 @@
+import { SectionTitle } from "@/components/ui/section-title";
+import { SectionBadge } from "@/components/ui/section-badge";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { buttonStyles } from "@/components/ui/button";
 import {
   ArrowUpRight,
   Calendar,
@@ -31,26 +34,24 @@ const GamesSection = () => {
     <section id="games" className="py-24">
       <div className="container mx-auto px-6">
         <div className="mb-16 text-center">
-          <motion.div
+          <SectionBadge
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5"
+            size="md"
           >
-            <span className="text-xs font-display tracking-widest text-primary uppercase">
-              Авторские проекты
-            </span>
-          </motion.div>
-          <motion.h2
+            Авторские проекты
+          </SectionBadge>
+          <SectionTitle
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-display font-bold mb-6"
+            className="mb-6"
           >
             <span className="gradient-text uppercase">Системы становятся</span>
             <br />
             <span className="text-foreground uppercase">живым геймплеем</span>
-          </motion.h2>
+          </SectionTitle>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -65,21 +66,30 @@ const GamesSection = () => {
 
         <div className="space-y-16">
           {projects.filter((game) => game.stats !== "Заморожен").map((game, i) => (
-            <motion.div
+            <motion.article
               key={game.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.6 }}
-              className={`flex flex-col ${
+              className={`relative flex flex-col ${
                 i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
               } gap-8 items-center cursor-pointer group`}
-              onClick={() => handleOpenModal(game)}
             >
+              <button
+                type="button"
+                onClick={() => handleOpenModal(game)}
+                aria-label={`Подробнее о проекте ${game.title}`}
+                className="absolute inset-0 z-20 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                <span className="sr-only">Подробнее о проекте {game.title}</span>
+              </button>
               {/* Cover */}
               <div className="w-full md:w-1/2 relative overflow-hidden rounded-xl">
                 <img
                   src={game.cover}
+                  srcSet={game.coverSrcSet}
+                  sizes="(min-width: 768px) 50vw, 100vw"
                   alt={`Обложка игры ${game.title} в жанре ${game.genre}`}
                   loading="lazy"
                   decoding="async"
@@ -124,7 +134,7 @@ const GamesSection = () => {
                   Подробнее <ExternalLink className="w-4 h-4" />
                 </span>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
 
@@ -215,13 +225,13 @@ const GamesSection = () => {
         >
           <a
             href="#mentoring"
-            className="inline-flex items-center justify-center px-8 py-4 rounded-full gradient-primary text-primary-foreground font-display text-sm font-semibold tracking-wider uppercase box-glow transition-transform hover:scale-105"
+            className={buttonStyles({ size: "lg", className: "inline-flex items-center justify-center rounded-full box-glow" })}
           >
             Обсудить менторинг
           </a>
           <Link
             to="/projects"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-secondary border border-border text-foreground font-display text-sm tracking-wider uppercase hover:bg-primary/10 hover:border-primary/50 transition-all group"
+            className={buttonStyles({ variant: "secondary", size: "lg", className: "group inline-flex items-center gap-2 rounded-full" })}
           >
             Все проекты
             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

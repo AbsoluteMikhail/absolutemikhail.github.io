@@ -1,3 +1,5 @@
+import { SectionTitle } from "@/components/ui/section-title";
+import { SectionBadge } from "@/components/ui/section-badge";
 import { motion } from "framer-motion";
 import {
   Accordion,
@@ -17,14 +19,10 @@ const FAQSection = () => (
         viewport={{ once: true }}
         className="mx-auto mb-12 max-w-3xl text-center"
       >
-        <div className="mb-4 inline-block rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5">
-          <span className="font-display text-[10px] uppercase tracking-[0.2em] text-primary">
-            FAQ
-          </span>
-        </div>
-        <h2 className="font-display text-3xl font-bold md:text-5xl">
+        <SectionBadge>FAQ</SectionBadge>
+        <SectionTitle>
           Что важно знать перед консультацией
-        </h2>
+        </SectionTitle>
       </motion.div>
 
       <motion.div

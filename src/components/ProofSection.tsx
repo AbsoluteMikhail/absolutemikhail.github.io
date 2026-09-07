@@ -1,3 +1,4 @@
+import { SectionTitle } from "@/components/ui/section-title";
 import { motion } from "framer-motion";
 import { ArrowUpRight, BriefcaseBusiness, Gamepad2, GraduationCap, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -18,9 +19,9 @@ const ProofSection = () => (
           <p className="mb-2 font-display text-[10px] uppercase tracking-[0.22em] text-primary">
             Проверяемый опыт
           </p>
-          <h2 id="proof-title" className="font-display text-2xl font-bold md:text-3xl">
+          <SectionTitle id="proof-title" size="compact">
             Коротко о практике и результатах
-          </h2>
+          </SectionTitle>
         </div>
         <p className="max-w-xl text-sm leading-6 text-muted-foreground">
           Несколько фактов обо мне — без длинного резюме и общих обещаний.

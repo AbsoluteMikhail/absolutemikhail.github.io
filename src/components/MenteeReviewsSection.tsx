@@ -1,3 +1,5 @@
+import { SectionTitle } from "@/components/ui/section-title";
+import { SectionBadge } from "@/components/ui/section-badge";
 import { motion } from "framer-motion";
 import { MessageSquareQuote } from "lucide-react";
 import { menteeReviews } from "@/content/reviews";
@@ -12,15 +14,11 @@ const MenteeReviewsSection = () => (
         viewport={{ once: true }}
         className="mb-12 max-w-5xl"
       >
-        <div className="mb-4 inline-block rounded-full border border-accent/20 bg-accent/5 px-4 py-1.5">
-          <span className="font-display text-[10px] uppercase tracking-[0.2em] text-accent">
-            Отзывы учеников
-          </span>
-        </div>
-        <h2 className="font-display text-3xl font-bold md:text-5xl">
+        <SectionBadge tone="accent">Отзывы учеников</SectionBadge>
+        <SectionTitle>
           Что говорят после занятий
-        </h2>
-        <p className="mt-5 text-lg leading-8 text-foreground/70 md:whitespace-nowrap">
+        </SectionTitle>
+        <p className="mt-5 text-lg leading-8 text-foreground/70">
           Большинство учеников приходят с собственными проектами или готовятся к работе в индустрии.
         </p>
       </motion.div>

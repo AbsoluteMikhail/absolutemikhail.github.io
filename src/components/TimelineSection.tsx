@@ -1,3 +1,5 @@
+import { SectionTitle } from "@/components/ui/section-title";
+import { SectionBadge } from "@/components/ui/section-badge";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Trophy, Star, Rocket, Award, Moon } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -21,25 +23,23 @@ const TimelineSection = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="mb-16 text-center">
-          <motion.div
+          <SectionBadge
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5"
+            size="md"
           >
-            <span className="text-xs font-display tracking-widest text-primary uppercase">
-              Путь в Unreal Engine
-            </span>
-          </motion.div>
-          <motion.h2
+            Путь в Unreal Engine
+          </SectionBadge>
+          <SectionTitle
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-display font-bold mb-6"
+            className="mb-6"
           >
             <span className="gradient-text uppercase">От самообучения</span>
             <span className="mt-2 block text-foreground uppercase">до Unreal Authorized Instructor</span>
-          </motion.h2>
+          </SectionTitle>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

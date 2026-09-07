@@ -9,6 +9,7 @@ const NATIVE_CURSOR_SELECTOR =
 
 const CustomCursor = () => {
   const [enabled, setEnabled] = useState(false);
+  const [cursorLayer, setCursorLayer] = useState<HTMLDivElement | null>(null);
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
 
@@ -27,6 +28,31 @@ const CustomCursor = () => {
       motionQuery.removeEventListener("change", updateAvailability);
     };
   }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
+
+    const layer = document.createElement("div");
+    layer.className = "custom-cursor-layer";
+    layer.setAttribute("aria-hidden", "true");
+    const updateLayer = () => {
+      const dialogs = Array.from(document.querySelectorAll<HTMLDialogElement>("dialog[open]"));
+      const target = dialogs.reverse().find((dialog) => dialog.matches(":modal")) ?? document.body;
+      // A modal lives in the browser's top layer. Move the portal host into it
+      // while preserving the same cursor elements and their current position.
+      if (layer.parentElement !== target) target.appendChild(layer);
+    };
+    updateLayer();
+    setCursorLayer(layer);
+    const observer = new MutationObserver(updateLayer);
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["open"] });
+
+    return () => {
+      observer.disconnect();
+      layer.remove();
+      setCursorLayer(null);
+    };
+  }, [enabled]);
 
   useEffect(() => {
     if (!enabled) return;
@@ -115,16 +141,16 @@ const CustomCursor = () => {
       document.documentElement.removeEventListener("mouseleave", hideCursor);
       document.documentElement.removeEventListener("mouseenter", showCursor);
     };
-  }, [enabled]);
+  }, [enabled, cursorLayer]);
 
-  if (!enabled) return null;
+  if (!enabled || !cursorLayer) return null;
 
   return createPortal(
     <>
       <div ref={ringRef} className="custom-cursor custom-cursor-ring" aria-hidden="true" />
       <div ref={dotRef} className="custom-cursor custom-cursor-dot" aria-hidden="true" />
     </>,
-    document.body,
+    cursorLayer,
   );
 };
 

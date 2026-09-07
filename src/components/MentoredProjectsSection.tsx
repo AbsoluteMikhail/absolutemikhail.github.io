@@ -1,3 +1,4 @@
+import { SectionTitle } from "@/components/ui/section-title";
 import { motion } from "framer-motion";
 import { ArrowUpRight, CheckCircle2, GraduationCap } from "lucide-react";
 import { mentoredProjects } from "@/constants/mentoredProjects";
@@ -14,10 +15,10 @@ const MentoredProjectsSection = () => (
             <GraduationCap className="h-4 w-4" />
             Результат наставничества
           </div>
-          <h2 id="mentored-projects-title" className="font-display text-3xl font-bold md:text-5xl">
+          <SectionTitle id="mentored-projects-title">
             Проекты под моим
             <span className="gradient-text"> наставничеством</span>
-          </h2>
+          </SectionTitle>
           <p className="mt-5 max-w-xl leading-relaxed text-muted-foreground">
             Игры, которым я помогал пройти путь от идеи и первых систем до
             рабочего билда. Здесь результат принадлежит командам — моя задача

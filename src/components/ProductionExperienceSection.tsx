@@ -1,3 +1,4 @@
+import { SectionTitle } from "@/components/ui/section-title";
 import { motion } from "framer-motion";
 import { Check, Clapperboard, Code2, Gauge, Network, Sparkles } from "lucide-react";
 import { productionExperience, type ExperienceCase } from "@/content/experience";
@@ -21,10 +22,10 @@ const ProductionExperienceSection = () => (
           <p className="mb-3 font-display text-[10px] uppercase tracking-[0.24em] text-primary">
             6+ лет коммерческой разработки
           </p>
-          <h2 className="font-display text-3xl font-bold leading-tight md:text-5xl">
+          <SectionTitle className="leading-tight">
             <span className="gradient-text uppercase">Коммерческий опыт</span>
             <span className="mt-2 block text-foreground">Что я делал в командах</span>
-          </h2>
+          </SectionTitle>
         </div>
         <p className="max-w-2xl text-base leading-7 text-muted-foreground lg:justify-self-end lg:text-lg">
           Работал с сетевым геймплеем, большими интерактивными пространствами,

@@ -1,4 +1,5 @@
 import { lazy, Suspense, type ComponentType } from "react";
+import { MotionConfig } from "framer-motion";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToHashElement from "./components/ScrollToHashElement";
 import RouteMetadata from "./components/RouteMetadata";
@@ -58,11 +59,11 @@ export const AppContent = ({ InitialPage, initialRoute }: AppContentProps = {}) 
   );
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <ScrollToHashElement />
       <RouteMetadata />
       <Suspense fallback={<PageFallback />}>{routes}</Suspense>
-    </>
+    </MotionConfig>
   );
 };
 

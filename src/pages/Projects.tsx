@@ -1,5 +1,6 @@
+import { SectionTitle } from "@/components/ui/section-title";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ChevronLeft, ExternalLink, Calendar } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
@@ -38,6 +39,8 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => (
     <div className="relative aspect-video overflow-hidden">
       <img
         src={project.cover}
+        srcSet={project.coverSrcSet}
+        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
         alt={`Обложка проекта ${project.title} в жанре ${project.genre}`}
         loading="lazy"
         decoding="async"
@@ -94,31 +97,32 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => (
 );
 
 const Projects = () => {
+  const { hash } = useLocation();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const activeProjects = projects.filter((project) => project.stats !== "Заморожен");
   const frozenProjects = projects.filter((project) => project.stats === "Заморожен");
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    if (!hash) window.scrollTo(0, 0);
+  }, [hash]);
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      
+
       <main className="pt-32">
         <div className="container mx-auto px-6">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
             <div>
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6 group"
               >
                 <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                 Назад на главную
               </Link>
-              <motion.h1 
+              <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="text-4xl md:text-6xl font-display font-bold"
@@ -126,7 +130,7 @@ const Projects = () => {
                 ВСЕ <span className="gradient-text">ПРОЕКТЫ</span>
               </motion.h1>
             </div>
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -148,9 +152,9 @@ const Projects = () => {
                 <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-sky-300/20 bg-sky-300/5 px-4 py-1.5 text-xs font-display uppercase tracking-widest text-sky-300">
                   Архив разработки
                 </div>
-                <h2 id="frozen-projects-title" className="text-3xl font-display font-bold md:text-5xl">
+                <SectionTitle id="frozen-projects-title">
                   Заморожены, <span className="gradient-text">но не забыты</span>
-                </h2>
+                </SectionTitle>
                 <p className="mt-5 max-w-2xl leading-relaxed text-muted-foreground">
                   Проекты, которые не дошли до релиза, но оставили после себя работающие механики,
                   сильные идеи и опыт, пригодившийся в следующих играх.
@@ -167,7 +171,7 @@ const Projects = () => {
 
           <ItchProjectsSection />
           <MentoredProjectsSection />
-          
+
         </div>
       </main>
       <ReviewsSection />

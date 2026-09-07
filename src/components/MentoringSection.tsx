@@ -1,6 +1,9 @@
+import { SectionTitle } from "@/components/ui/section-title";
+import { SectionBadge } from "@/components/ui/section-badge";
 import { motion } from "framer-motion";
 import { Check, MessageCircle, SearchCode, Network } from "lucide-react";
 import { ContactMessenger } from "@/components/ContactMessenger";
+import { mentoringButtonStyles } from "@/components/ui/button";
 import { mentoringPackages, type MentoringIcon } from "@/content/mentoring";
 
 const packageIcons: Record<MentoringIcon, typeof MessageCircle> = {
@@ -27,15 +30,11 @@ const MentoringSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5">
-            <span className="text-[10px] font-display tracking-[0.2em] text-primary uppercase">
-              Unreal Authorized Instructor · 2026
-            </span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
+          <SectionBadge>Unreal Authorized Instructor · 2026</SectionBadge>
+          <SectionTitle className="mb-6">
             <span className="gradient-text uppercase">Преподавание</span>
             <span className="mt-2 block text-foreground uppercase">и менторинг</span>
-          </h2>
+          </SectionTitle>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
             Автор курсов по Unreal Engine и C++, ментор 100+ разработчиков.
             Разбираю код и проекты вместе со студентами, помогаю готовиться к
@@ -124,11 +123,8 @@ const MentoringSection = () => {
 
                 <ContactMessenger
                   message={pkg.telegramMessage}
-                  className={`block text-center py-4 rounded-2xl font-display text-xs font-bold uppercase tracking-[0.15em] transition-all duration-300 ${
-                    pkg.popular
-                      ? "gradient-primary text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-95"
-                      : "border border-primary/20 text-primary hover:bg-primary/5 active:scale-95"
-                  }`}
+                  variant="unstyled"
+                  className={mentoringButtonStyles(pkg.popular)}
                 >
                   {pkg.buttonText}
                 </ContactMessenger>

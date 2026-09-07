@@ -1,3 +1,5 @@
+import { SectionTitle } from "@/components/ui/section-title";
+import { SectionBadge } from "@/components/ui/section-badge";
 import { motion } from "framer-motion";
 import { ArrowUpRight, ShieldCheck } from "lucide-react";
 import { ContactMessenger } from "@/components/ContactMessenger";
@@ -14,15 +16,12 @@ const FinalTrustSection = () => (
         className="mx-auto flex max-w-4xl flex-col items-start gap-8 md:flex-row md:items-center md:justify-between"
       >
         <div className="max-w-2xl">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5">
-            <ShieldCheck className="h-4 w-4 text-primary" />
-            <span className="font-display text-[10px] uppercase tracking-[0.2em] text-primary">
-              Честный подбор формата
-            </span>
-          </div>
-          <h2 className="font-display text-3xl font-bold md:text-5xl">
+          <SectionBadge className="mb-5" icon={<ShieldCheck className="h-4 w-4 text-primary" />}>
+            Честный подбор формата
+          </SectionBadge>
+          <SectionTitle>
             Не уверены, какой формат выбрать?
-          </h2>
+          </SectionTitle>
           <p className="mt-5 text-lg leading-8 text-muted-foreground">
             Опишите свой проект в удобном мессенджере. Я помогу определить, какой формат
             консультации действительно нужен. Если окажется, что я не смогу
@@ -32,7 +31,8 @@ const FinalTrustSection = () => (
 
         <ContactMessenger
           message="Привет! Хочу описать проект и понять, какой формат консультации подойдет."
-          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full gradient-primary px-8 py-4 font-display text-sm font-semibold uppercase tracking-wider text-primary-foreground box-glow transition-transform hover:scale-105"
+          size="lg"
+          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full box-glow"
         >
           Помогите выбрать
           <ArrowUpRight className="h-4 w-4" />

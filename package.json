@@ -9,7 +9,9 @@
     "build:dev": "vite build --mode development && npm run build:ssr && npm run prerender",
     "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist-ssr",
     "prerender": "node scripts/prerender.mjs",
-    "lint": "eslint .",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json",
+    "check": "npm run typecheck && npm run lint && npm test",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest"

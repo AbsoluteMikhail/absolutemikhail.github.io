@@ -23,7 +23,8 @@ import starNomadCover from "@/assets/projects/star-nomad/cover.jpg";
 import starNomad2 from "@/assets/projects/star-nomad/2.jpg";
 import starNomad3 from "@/assets/projects/star-nomad/3.jpg";
 
-import dixotomiaCover from "@/assets/projects/dixotomia/cover.png";
+import dixotomiaCover from "@/assets/projects/dixotomia/cover-1280.webp";
+import dixotomiaCoverSmall from "@/assets/projects/dixotomia/cover-640.webp";
 import dixotomia1 from "@/assets/projects/dixotomia/1.jpg";
 import dixotomia2 from "@/assets/projects/dixotomia/2.jpg";
 import dixotomia3 from "@/assets/projects/dixotomia/3.jpg";
@@ -38,6 +39,7 @@ export interface Project {
   genre: string;
   year: string;
   cover: string;
+  coverSrcSet?: string;
   shortDesc: string;
   fullDesc: string;
   tech: string[];
@@ -83,6 +85,7 @@ export const projects: Project[] = [
     genre: "VR Action Shooter",
     year: "2026",
     cover: dixotomiaCover,
+    coverSrcSet: `${dixotomiaCoverSmall} 640w, ${dixotomiaCover} 1280w`,
     shortDesc:
       "Иммерсивный VR-шутер, где футуристичное оружие встречается с вампирскими способностями в мрачной сай-фай антиутопии.",
     fullDesc:

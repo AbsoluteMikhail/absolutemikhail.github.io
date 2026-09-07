@@ -1,15 +1,19 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { CheckCircle2 } from "lucide-react";
 import heroPhoto from "@/assets/hero-photo.jpg";
 import uaiBadge from "@/assets/uai-badge-2026.png";
 import InstructorBadgeCard from "@/components/InstructorBadgeCard";
+import { buttonStyles } from "@/components/ui/button";
 import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
 
 const HeroSection = () => {
   const trustCardRef = useRef<HTMLAnchorElement>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
+    if (reduceMotion) return;
+    const trustCard = trustCardRef.current;
     let frameId: number | null = null;
 
     const updateTrustCard = () => {
@@ -32,8 +36,11 @@ const HeroSection = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
       if (frameId !== null) window.cancelAnimationFrame(frameId);
+      trustCard?.style.removeProperty("opacity");
+      trustCard?.style.removeProperty("transform");
+      trustCard?.style.removeProperty("pointer-events");
     };
-  }, []);
+  }, [reduceMotion]);
 
   return (
     <section 
@@ -141,7 +148,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.7 }}
-            className="mb-4 font-display text-[1.75rem] font-black leading-[1.05] tracking-tight min-[360px]:text-[2rem] sm:text-5xl md:mb-6 md:text-7xl md:leading-tight"
+            className="mb-4 font-display text-[clamp(1.5rem,7.6vw,2rem)] font-black leading-[1.05] tracking-tight sm:text-5xl md:mb-6 md:text-[clamp(3rem,5vw,4.5rem)] md:leading-tight"
             style={{ textShadow: '0 0 40px rgba(0,0,0,0.5)' }}
           >
             <span className="gradient-text whitespace-nowrap">UNREAL-ПРОЕКТЫ</span>
@@ -194,13 +201,13 @@ const HeroSection = () => {
           >
             <a
               href="#production"
-              className="px-8 py-3 rounded-lg font-display text-sm tracking-wider uppercase gradient-primary text-primary-foreground font-semibold box-glow hover:scale-105 transition-transform"
+              className={buttonStyles({ className: "box-glow" })}
             >
               Мой опыт
             </a>
             <a
               href="#mentoring"
-              className="px-8 py-3 rounded-lg font-display text-sm tracking-wider uppercase border border-border text-foreground hover:border-primary/50 hover:text-primary transition-colors"
+              className={buttonStyles({ variant: "outline" })}
             >
               Обсудить проект
             </a>

@@ -1,80 +1,63 @@
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useId, type ReactNode } from "react";
+import { motion } from "framer-motion";
 import { X } from "lucide-react";
+import Modal from "@/components/ui/modal";
+import { Button } from "@/components/ui/button";
+import { IconButton } from "@/components/ui/icon-button";
 
 interface LegalModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  content: React.ReactNode;
+  content: ReactNode;
 }
 
 const LegalModal = ({ isOpen, onClose, title, content }: LegalModalProps) => {
-  React.useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-      document.body.classList.add("modal-open");
-    } else {
-      document.body.style.overflow = "unset";
-      document.body.classList.remove("modal-open");
-    }
-
-    return () => {
-      document.body.style.overflow = "unset";
-      document.body.classList.remove("modal-open");
-    };
-  }, [isOpen]);
+  const titleId = useId();
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
-          onClick={onClose}
-        >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            className="relative max-w-2xl w-full bg-card border border-border rounded-2xl overflow-hidden flex flex-col max-h-[80vh] shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
+    <Modal isOpen={isOpen} onClose={onClose} labelledBy={titleId}>
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className="relative max-w-2xl w-full bg-card border border-border rounded-2xl overflow-hidden flex flex-col max-h-[80svh] shadow-2xl"
+      >
+        {/* Header */}
+        <div className="p-5 sm:p-6 border-b border-border flex shrink-0 items-center justify-between gap-3 bg-secondary/30">
+          <h2 id={titleId} className="min-w-0 break-words text-base sm:text-xl font-display font-bold uppercase tracking-wider text-primary">
+            {title}
+          </h2>
+          <IconButton
+            type="button"
+            aria-label="Закрыть документ"
+            onClick={onClose}
+            className="shrink-0"
           >
-            {/* Header */}
-            <div className="p-6 border-b border-border flex items-center justify-between bg-secondary/30">
-              <h3 className="text-xl font-display font-bold uppercase tracking-wider text-primary">
-                {title}
-              </h3>
-              <button
-                onClick={onClose}
-                className="w-8 h-8 rounded-full bg-secondary/80 flex items-center justify-center text-foreground hover:bg-primary/20 hover:text-primary transition-colors"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
+            <X className="w-4 h-4" />
+          </IconButton>
+        </div>
 
-            {/* Content */}
-            <div className="p-8 overflow-y-auto leading-relaxed text-muted-foreground">
-              <div className="space-y-6">
-                {content}
-              </div>
-            </div>
+        {/* Content */}
+        <div className="p-5 sm:p-8 overflow-y-auto leading-relaxed text-muted-foreground">
+          <div className="space-y-6">
+            {content}
+          </div>
+        </div>
 
-            {/* Footer */}
-            <div className="p-6 border-t border-border bg-secondary/30 flex justify-end">
-              <button
-                onClick={onClose}
-                className="px-6 py-2 rounded-lg bg-secondary text-sm font-display tracking-wider uppercase text-foreground hover:bg-primary/20 transition-colors"
-              >
-                Закрыть
-              </button>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        {/* Footer */}
+        <div className="p-5 sm:p-6 shrink-0 border-t border-border bg-secondary/30 flex justify-end">
+          <Button
+            type="button"
+            variant="subtle"
+            size="none"
+            onClick={onClose}
+            className="px-6 py-2 text-sm"
+          >
+            Закрыть
+          </Button>
+        </div>
+      </motion.div>
+    </Modal>
   );
 };
 

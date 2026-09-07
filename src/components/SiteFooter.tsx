@@ -78,7 +78,7 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
               <h4 className="mb-6 font-display text-xs font-bold uppercase tracking-widest text-foreground">Контакты</h4>
               <ul className="space-y-4">
                 <li>
-                  <ContactMessenger className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-primary">
+                  <ContactMessenger variant="text" size="none" className="flex items-center gap-3 text-sm">
                     <Mail className="h-4 w-4 text-primary" />
                     Написать мне
                   </ContactMessenger>

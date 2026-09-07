@@ -1,6 +1,8 @@
-import { useEffect, useId, useState, type ReactNode, type Ref } from "react";
-import { createPortal } from "react-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { useId, useState, type ReactNode, type Ref, type RefObject } from "react";
+import { motion } from "framer-motion";
+import Modal from "@/components/ui/modal";
+import { Button, type ButtonStyleProps } from "@/components/ui/button";
+import { IconButton } from "@/components/ui/icon-button";
 import { Check, Mail, X } from "lucide-react";
 import {
   DiscordIcon,
@@ -13,12 +15,12 @@ import {
   encodedContactLinks,
 } from "@/constants/contactLinks";
 
-interface ContactMessengerProps {
-  className?: string;
+interface ContactMessengerProps extends ButtonStyleProps {
   children?: ReactNode;
   message?: string;
   onOpen?: () => void;
   buttonRef?: Ref<HTMLButtonElement>;
+  returnFocusRef?: RefObject<HTMLElement>;
 }
 
 const messengerOptions = [
@@ -36,33 +38,48 @@ const messengerOptions = [
   },
 ] as const;
 
+interface MessengerOptionProps {
+  icon: ReactNode;
+  title: string;
+  description: ReactNode;
+  onClick: () => void;
+  textClassName?: string;
+}
+
+const MessengerOption = ({ icon, title, description, onClick, textClassName }: MessengerOptionProps) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className="group flex w-full items-center gap-4 rounded-2xl border border-border bg-background/50 p-4 text-left transition-all hover:border-primary/50 hover:bg-primary/5"
+  >
+    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secondary text-primary transition-colors group-hover:bg-primary/10">
+      {icon}
+    </span>
+    <span className={textClassName}>
+      <span className="block font-display text-sm font-semibold uppercase tracking-wider text-foreground">
+        {title}
+      </span>
+      <span className="mt-1 block text-xs text-muted-foreground">
+        {description}
+      </span>
+    </span>
+  </button>
+);
+
 export const ContactMessenger = ({
   className,
   children,
   message,
   onOpen,
   buttonRef,
+  returnFocusRef,
+  variant,
+  size,
+  effect,
 }: ContactMessengerProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [discordCopied, setDiscordCopied] = useState(false);
   const titleId = useId();
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const previousOverflow = document.body.style.overflow;
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsOpen(false);
-    };
-
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen]);
 
   const openMessenger = (messenger: "max" | "telegram") => {
     const baseUrl = decodeContactLink(encodedContactLinks[messenger]);
@@ -94,125 +111,87 @@ export const ContactMessenger = ({
   };
 
   const modal = (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-background/85 p-4 backdrop-blur-md"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) setIsOpen(false);
-          }}
+    <Modal
+      isOpen={isOpen}
+      onClose={() => setIsOpen(false)}
+      labelledBy={titleId}
+      returnFocusRef={returnFocusRef}
+      className="backdrop:bg-background/85 backdrop:backdrop-blur-md"
+    >
+      <motion.div
+        className="relative max-h-[calc(100svh-2rem)] w-full max-w-sm overflow-y-auto rounded-3xl border border-border bg-card p-6 shadow-2xl shadow-black/40"
+        initial={{ opacity: 0, y: 18, scale: 0.96 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.2 }}
+      >
+        <IconButton
+          type="button"
+          variant="quiet"
+          onClick={() => setIsOpen(false)}
+          className="absolute right-4 top-4"
+          aria-label="Закрыть окно связи"
         >
-          <motion.div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={titleId}
-            className="relative max-h-[calc(100svh-2rem)] w-full max-w-sm overflow-y-auto rounded-3xl border border-border bg-card p-6 shadow-2xl shadow-black/40"
-            initial={{ opacity: 0, y: 18, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 12, scale: 0.97 }}
-            transition={{ duration: 0.2 }}
-          >
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
-              aria-label="Закрыть окно связи"
-            >
-              <X className="h-5 w-5" />
-            </button>
+          <X className="h-5 w-5" />
+        </IconButton>
 
-            <div className="pr-10">
-              <h2 id={titleId} className="font-display text-2xl font-bold">
-                Где вам удобнее?
-              </h2>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                Выберите удобный способ связи — отвечу лично.
-              </p>
-            </div>
+        <div className="pr-10">
+          <h2 id={titleId} className="font-display text-2xl font-bold">
+            Где вам удобнее?
+          </h2>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            Выберите удобный способ связи — отвечу лично.
+          </p>
+        </div>
 
-            <div className="mt-6 space-y-3">
-              {messengerOptions.map((option) => (
-                <button
-                  key={option.id}
-                  type="button"
-                  onClick={() => openMessenger(option.id)}
-                  className="group flex w-full items-center gap-4 rounded-2xl border border-border bg-background/50 p-4 text-left transition-all hover:border-primary/50 hover:bg-primary/5"
-                >
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secondary text-primary transition-colors group-hover:bg-primary/10">
-                    <option.icon className="h-6 w-6" />
-                  </span>
-                  <span>
-                    <span className="block font-display text-sm font-semibold uppercase tracking-wider text-foreground">
-                      {option.label}
-                    </span>
-                    <span className="mt-1 block text-xs text-muted-foreground">
-                      {option.description}
-                    </span>
-                  </span>
-                </button>
-              ))}
+        <div className="mt-6 space-y-3">
+          {messengerOptions.map((option) => (
+            <MessengerOption
+              key={option.id}
+              onClick={() => openMessenger(option.id)}
+              icon={<option.icon className="h-6 w-6" />}
+              title={option.label}
+              description={option.description}
+            />
+          ))}
 
-              <button
-                type="button"
-                onClick={openDiscord}
-                className="group flex w-full items-center gap-4 rounded-2xl border border-border bg-background/50 p-4 text-left transition-all hover:border-primary/50 hover:bg-primary/5"
-              >
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secondary text-primary transition-colors group-hover:bg-primary/10">
-                  <DiscordIcon className="h-6 w-6" />
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block font-display text-sm font-semibold uppercase tracking-wider text-foreground">
-                    Написать в Discord
-                  </span>
-                  <span className="mt-1 block text-xs text-muted-foreground">
-                    {discordCopied ? (
-                      <span className="inline-flex items-center gap-1 text-emerald-400">
-                        <Check className="h-3 w-3" /> Ник скопирован
-                      </span>
-                    ) : (
-                      <>Профиль откроется после нажатия</>
-                    )}
-                  </span>
-                </span>
-              </button>
+          <MessengerOption
+            onClick={openDiscord}
+            icon={<DiscordIcon className="h-6 w-6" />}
+            title="Написать в Discord"
+            textClassName="min-w-0 flex-1"
+            description={discordCopied ? (
+              <span className="inline-flex items-center gap-1 text-emerald-400">
+                <Check className="h-3 w-3" /> Ник скопирован
+              </span>
+            ) : (
+              <>Профиль откроется после нажатия</>
+            )}
+          />
 
-              <button
-                type="button"
-                onClick={openEmail}
-                className="group flex w-full items-center gap-4 rounded-2xl border border-border bg-background/50 p-4 text-left transition-all hover:border-primary/50 hover:bg-primary/5"
-              >
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secondary text-primary transition-colors group-hover:bg-primary/10">
-                  <Mail className="h-6 w-6" />
-                </span>
-                <span>
-                  <span className="block font-display text-sm font-semibold uppercase tracking-wider text-foreground">
-                    Написать по почте
-                  </span>
-                  <span className="mt-1 block text-xs text-muted-foreground">
-                    Открыть почтовое приложение
-                  </span>
-                </span>
-              </button>
-            </div>
+          <MessengerOption
+            onClick={openEmail}
+            icon={<Mail className="h-6 w-6" />}
+            title="Написать по почте"
+            description="Открыть почтовое приложение"
+          />
+        </div>
 
-            <p className="mt-5 text-center text-[11px] leading-5 text-muted-foreground/70">
-              Ссылки открываются только после вашего выбора — это снижает
-              количество автоматического спама.
-            </p>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        <p className="mt-5 text-center text-[11px] leading-5 text-muted-foreground/70">
+          Ссылки открываются только после вашего выбора — это снижает
+          количество автоматического спама.
+        </p>
+      </motion.div>
+    </Modal>
   );
 
   return (
     <>
-      <button
+      <Button
         ref={buttonRef}
         type="button"
+        variant={variant}
+        size={size}
+        effect={effect}
         onClick={() => {
           onOpen?.();
           setDiscordCopied(false);
@@ -221,8 +200,8 @@ export const ContactMessenger = ({
         className={className}
       >
         {children || "Связаться"}
-      </button>
-      {typeof document !== "undefined" && createPortal(modal, document.body)}
+      </Button>
+      {modal}
     </>
   );
 };

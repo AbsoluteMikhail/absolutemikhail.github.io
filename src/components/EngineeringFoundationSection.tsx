@@ -1,3 +1,4 @@
+import { SectionTitle } from "@/components/ui/section-title";
 import { motion } from "framer-motion";
 import { Building2, Cpu, ServerCog } from "lucide-react";
 import { engineeringFoundation } from "@/content/experience";
@@ -11,10 +12,10 @@ const EngineeringFoundationSection = () => (
         <p className="mb-3 font-display text-[10px] uppercase tracking-[0.24em] text-primary">
           До коммерческого геймдева
         </p>
-        <h2 className="font-display text-3xl font-bold md:text-5xl">
+        <SectionTitle>
           <span className="gradient-text uppercase">До разработки игр</span>
           <span className="mt-2 block text-foreground">откуда взялся инженерный подход</span>
-        </h2>
+        </SectionTitle>
         <p className="mx-auto mt-6 max-w-3xl text-base leading-7 text-muted-foreground md:text-lg">
           Путь в IT начался в 2011 году: инфраструктура, эксплуатация, автоматизация и руководство командой.
           Это не геймдев, но именно там я научился отвечать за работающие системы,

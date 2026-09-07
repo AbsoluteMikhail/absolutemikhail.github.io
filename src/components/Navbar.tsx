@@ -1,14 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useId } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { ContactMessenger } from "@/components/ContactMessenger";
 import Logo from "@/components/Logo";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const contactTriggerRef = useRef<HTMLButtonElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const menuId = useId();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
@@ -26,9 +29,16 @@ const Navbar = () => {
     if (!isOpen) return;
 
     const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setIsOpen(false);
+      menuButtonRef.current?.focus();
+    };
     document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
       document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen]);
 
@@ -81,16 +91,22 @@ const Navbar = () => {
 
           <ContactMessenger
             buttonRef={contactTriggerRef}
-            className="hidden sm:block px-5 py-2 rounded-lg text-xs font-display tracking-wider uppercase gradient-primary text-primary-foreground font-semibold hover:scale-105 transition-transform whitespace-nowrap"
+            returnFocusRef={menuButtonRef}
+            size="sm"
+            className="hidden sm:block whitespace-nowrap"
           >
             Связаться
           </ContactMessenger>
 
           {/* Mobile Menu Button */}
           <button
+            ref={menuButtonRef}
+            type="button"
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 text-foreground hover:text-primary transition-colors z-50"
             aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
+            aria-expanded={isOpen}
+            aria-controls={menuId}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -101,6 +117,7 @@ const Navbar = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id={menuId}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -129,16 +146,18 @@ const Navbar = () => {
                   </Link>
                 )
               ))}
-              <button
+              <Button
                 type="button"
+                size="menu"
+                effect="none"
                 onClick={() => {
                   setIsOpen(false);
                   contactTriggerRef.current?.click();
                 }}
-                className="mt-2 px-5 py-4 rounded-lg text-center text-sm font-display tracking-wider uppercase gradient-primary text-primary-foreground font-semibold"
+                className="mt-2 text-center"
               >
                 Связаться
-              </button>
+              </Button>
             </div>
           </motion.div>
         )}

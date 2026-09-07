@@ -1,3 +1,4 @@
+import { SectionTitle } from "@/components/ui/section-title";
 import { motion } from "framer-motion";
 import {
   ArrowUpRight,
@@ -23,10 +24,10 @@ const ItchProjectsSection = () => (
           <Trophy className="h-3.5 w-3.5" />
           Избранные джемы и эксперименты
         </div>
-        <h2 id="itch-projects-title" className="font-display text-3xl font-bold md:text-5xl">
+        <SectionTitle id="itch-projects-title">
           Быстро проверяю идеи —
           <span className="gradient-text"> довожу до игры</span>
-        </h2>
+        </SectionTitle>
         <p className="mt-5 max-w-xl leading-relaxed text-muted-foreground">
           Небольшие законченные проекты, созданные в жёстких временных рамках.
           Здесь — практика системного дизайна, прототипирования и командной разработки.
