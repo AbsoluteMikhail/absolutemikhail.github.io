@@ -189,7 +189,7 @@ const OGSnippet = () => {
 
         {/* Compact credential card: mirrors the trust block from the main hero. */}
         <a
-          href="https://absolutemikhail.github.io/#proof"
+          href="https://gamepunk.ru/#proof"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Unreal Authorized Instructor — открыть подтверждённый опыт"
@@ -232,7 +232,7 @@ const OGSnippet = () => {
         <Logo className="absolute right-10 top-10 z-20 rounded-xl border border-white/10 bg-background/35 px-4 py-2 text-3xl font-bold tracking-tighter shadow-xl shadow-black/25 backdrop-blur-md" />
 
         <a
-          href="https://absolutemikhail.github.io/"
+          href="https://gamepunk.ru/"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Открыть портфолио Absolute Mikhail"
@@ -245,7 +245,7 @@ const OGSnippet = () => {
           <div className="mb-2 h-px w-full bg-gradient-to-r from-primary/50 to-transparent" />
 
           <p className="font-display text-sm font-bold leading-none tracking-[0.092em] text-foreground/90 antialiased transition-colors group-hover:text-primary">
-            absolutemikhail.github.io
+            gamepunk.ru
           </p>
         </a>
 

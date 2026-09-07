@@ -1,4 +1,4 @@
-export const siteUrl = "https://absolutemikhail.github.io";
+export const siteUrl = "https://gamepunk.ru";
 
 export const routeMetadata = [
   {

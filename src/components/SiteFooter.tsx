@@ -114,7 +114,7 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
                 © 2026 Absolute Mikhail. Разработка игр и менторинг.
               </p>
               <p className="font-display text-xs font-bold leading-none tracking-wider text-foreground/60 antialiased">
-                absolutemikhail.github.io
+                gamepunk.ru
               </p>
             </div>
             <div className="flex gap-8">

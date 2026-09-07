@@ -2,7 +2,7 @@
 
 **Effective date:** August 5, 2026
 **Last updated:** August 5, 2026
-**Permanent address of the current version:** [absolutemikhail.github.io/malena/privacy](https://absolutemikhail.github.io/malena/privacy)
+**Permanent address of the current version:** [gamepunk.ru/malena/privacy](https://gamepunk.ru/malena/privacy)
 
 This Policy explains in plain language what data the Telegram bot “Malena” (the **“Bot”**) receives, why it is needed, how long it may be retained, and how users can manage it.
 
@@ -16,7 +16,7 @@ The Bot is created and maintained by self-employed developer **Mikhail Igorevich
 
 For privacy questions, contact the Developer through the protected contact section at the end of this page.
 
-Developer’s website: [absolutemikhail.github.io](https://absolutemikhail.github.io/).
+Developer’s website: [gamepunk.ru](https://gamepunk.ru/).
 
 The Bot is an independent service and is not owned by Telegram, Google, or the owners of GigaChat. Use of Telegram is also governed by the [Telegram Privacy Policy](https://telegram.org/privacy).
 
@@ -205,7 +205,7 @@ To the extent permitted by applicable law, the Developer is not liable for unlaw
 
 ## 14. Changes to this Policy
 
-The Developer may update this Policy when the Bot’s features, providers, or legal requirements change. The current version is always published at [absolutemikhail.github.io/malena/privacy](https://absolutemikhail.github.io/malena/privacy) and takes effect when published unless it states another date.
+The Developer may update this Policy when the Bot’s features, providers, or legal requirements change. The current version is always published at [gamepunk.ru/malena/privacy](https://gamepunk.ru/malena/privacy) and takes effect when published unless it states another date.
 
 The last-updated date appears at the top. For material changes, the Developer will also attempt to notify users through the Bot or a related channel.
 
@@ -213,4 +213,4 @@ The last-updated date appears at the top. For material changes, the Developer wi
 
 **Developer:** Mikhail Igorevich Efremov (professional name: Absolute Mikhail)
 **Telegram and email:** available after selecting “Show contacts” below.
-**Website:** [absolutemikhail.github.io](https://absolutemikhail.github.io/)
+**Website:** [gamepunk.ru](https://gamepunk.ru/)

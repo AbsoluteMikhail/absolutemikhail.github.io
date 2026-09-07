@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://absolutemikhail.github.io/sitemap.xml
+Sitemap: https://gamepunk.ru/sitemap.xml
