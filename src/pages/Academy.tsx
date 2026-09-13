@@ -359,6 +359,7 @@ const TopicPage = ({ topic }: { topic: AcademyTopic }) => {
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-primary">Направление</p>
           <h1 className="mb-5 font-display text-4xl font-bold leading-tight md:text-6xl">{topic.title}</h1>
           <p className="text-lg leading-8 text-muted-foreground">{topic.description}</p>
+          {topic.introduction && <p className="mt-5 border-l-2 border-primary pl-5 leading-7 text-muted-foreground">{topic.introduction}</p>}
         </section>
 
         <section aria-labelledby="topic-materials">
@@ -424,8 +425,8 @@ const CoursePage = ({ course, content }: { course: AcademyCourse; content: Acade
                         to={`/academy/${course.slug}/${lesson.slug}`}
                       >
                         <div className="mb-3 flex items-center gap-2 text-xs uppercase tracking-widest text-primary">
-                          <PlayCircle className="h-4 w-4" />
-                          Видео {lesson.meta.video}
+                          {lesson.meta.video ? <PlayCircle className="h-4 w-4" /> : <FileText className="h-4 w-4" />}
+                          {lesson.meta.video ? `Видео ${lesson.meta.video}` : `Урок ${lesson.order}`}
                         </div>
                         <h3 className="mb-2 font-display text-xl font-bold transition-colors group-hover:text-primary">
                           {lesson.meta.title}
@@ -505,8 +506,8 @@ const LessonPage = ({ course, lesson, content }: { course: AcademyCourse; lesson
         <div className="mb-8 rounded-lg border border-border bg-card/30 p-5">
           <div className="mb-4 flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-xs text-primary">
-              <PlayCircle className="h-3.5 w-3.5" />
-              Видео {lesson.meta.video}
+              {lesson.meta.video ? <PlayCircle className="h-3.5 w-3.5" /> : <FileText className="h-3.5 w-3.5" />}
+              {lesson.meta.video ? `Видео ${lesson.meta.video}` : `Урок ${lesson.order}`}
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/50 px-2.5 py-1 text-xs text-muted-foreground">
               <Layers className="h-3.5 w-3.5" />

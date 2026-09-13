@@ -12,6 +12,32 @@ const renderMarkdown = (content: string) =>
   );
 
 describe("Academy Markdown extensions", () => {
+  it("keeps links clickable inside emphasis", () => {
+    renderMarkdown("**[harness](https://code.claude.com/docs/en/glossary)**");
+    expect(screen.getByRole("link", { name: "harness" })).toHaveAttribute("href", "https://code.claude.com/docs/en/glossary");
+  });
+  it("opens downloadable HTML examples as documents, not client-side routes", () => {
+    renderMarkdown("[Пример](/academy/ai-intro/examples/index.html)\n\n[Урок](/academy/ai-intro/01-first-steps)");
+    expect(screen.getByRole("link", { name: "Пример" })).toHaveAttribute("target", "_blank");
+    expect(screen.getByRole("link", { name: "Урок" })).not.toHaveAttribute("target");
+  });
+
+  it("keeps long prompts in a native disclosure", () => {
+    renderMarkdown(":::details Полный запрос\n> Нарисуй мастерскую.\n:::");
+    const summary = screen.getByText("Полный запрос");
+    expect(summary.closest("details")).not.toHaveAttribute("open");
+    expect(screen.getByText("Нарисуй мастерскую.")).toBeInTheDocument();
+  });
+
+  it("renders a gallery with accessible image enlargement", async () => {
+    renderMarkdown(":::gallery Образы\n![Портрет](/academy/ai-intro/portrait.webp)\n![Рисунок](/academy/ai-intro/art.webp)\n:::");
+    expect(screen.getByRole("group", { name: "Образы" })).toBeInTheDocument();
+    expect(screen.getAllByRole("img")).toHaveLength(2);
+    fireEvent.click(screen.getByRole("button", { name: "Рисунок — увеличить" }));
+    expect(screen.getByRole("dialog", { name: "Рисунок" })).toBeInTheDocument();
+    fireEvent.keyDown(window, { key: "Escape" });
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+  });
   it("keeps headings from code examples out of the table of contents", () => {
     const content = "```md\n## Практика\n```\n\n## Практика\n\n## Практика";
     renderMarkdown(content);

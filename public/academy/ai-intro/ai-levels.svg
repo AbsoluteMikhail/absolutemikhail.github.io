@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="960" viewBox="0 0 720 960" role="img" aria-labelledby="title desc">
+  <title id="title">Шесть способов работать с ИИ</title>
+  <desc id="desc">Условный айсберг: спросить, получить материал, встроить в работу, настроить процесс, встроить в свою программу, создать агента. Порядок изучения свободный.</desc>
+  <rect width="720" height="960" rx="24" fill="#141720"/>
+  <g font-family="Arial, sans-serif" fill="#f4f1eb">
+    <text x="40" y="62" font-size="32" font-weight="700">От вопроса до своего агента</text>
+    <text x="40" y="102" font-size="23" fill="#b9bfcc">Условная карта, не обязательная лестница</text>
+    <path d="M155 155 L205 330 L95 330 Z" fill="#aadce9"/>
+    <path d="M95 344 L205 344 L268 735 L164 827 L45 735 Z" fill="#477784"/>
+    <path d="M155 155 L155 827 L45 735 L95 344 Z" fill="#78b4c3" opacity=".5"/>
+    <path d="M32 339 Q72 326 112 339 T192 339 T272 339" fill="none" stroke="#ffad66" stroke-width="4"/>
+    <g font-size="29" font-weight="700">
+      <text x="300" y="205">1. Спросить</text>
+      <text x="300" y="320">2. Получить материал</text>
+      <text x="300" y="435">3. Встроить в работу</text>
+      <text x="300" y="550">4. Настроить процесс</text>
+      <text x="300" y="665">5. Своя программа</text>
+      <text x="300" y="780">6. Свой агент</text>
+    </g>
+    <g font-size="24" fill="#b9bfcc">
+      <text x="300" y="241">Вопрос и уточнение</text>
+      <text x="300" y="356">Текст или изображение</text>
+      <text x="300" y="471">Помощник в проекте</text>
+      <text x="300" y="586">Правила, скиллы, n8n</text>
+      <text x="300" y="701">Модель внутри бота</text>
+      <text x="300" y="816">Выбор действий и проверка</text>
+    </g>
+    <text x="40" y="905" font-size="24" fill="#ffad66">Выбирай по задаче. Можно остановиться на любом.</text>
+  </g>
+</svg>

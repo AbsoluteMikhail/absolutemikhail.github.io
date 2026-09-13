@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta name="robots" content="noindex">
+  <!-- Author educational code: 0BSD; see /academy-code-license.txt. -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Михаил Ефремов — моя первая страница</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #13151b;
+      --surface: #1c2029;
+      --text: #f4f1ea;
+      --muted: #b5b9c4;
+      --line: #424754;
+      --accent: #ffad66;
+      --button-text: #24170c;
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f7f3ed;
+      --surface: #ffffff;
+      --text: #252832;
+      --muted: #565b67;
+      --line: #b7b1a8;
+      --accent: #a64506;
+      --button-text: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.65 system-ui, sans-serif; }
+    a { color: inherit; text-underline-offset: .22em; }
+    button { font: inherit; cursor: pointer; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+    .page { width: min(1060px, calc(100% - 48px)); margin-inline: auto; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 30px; border-bottom: 1px solid var(--line); }
+    .brand { font-size: 16px; font-weight: 800; letter-spacing: .06em; }
+    .brand span { color: var(--accent); }
+    .theme-toggle { border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--text); padding: 9px 17px; }
+    main { padding-block: 72px 60px; }
+    .intro { display: grid; grid-template-columns: 1.4fr 1fr; gap: 64px; align-items: start; }
+    .eyebrow { color: var(--accent); text-transform: uppercase; font-size: 12px; font-weight: 800; letter-spacing: .14em; margin: 0 0 20px; }
+    h1 { font-size: clamp(40px, 5.2vw, 68px); line-height: 1.06; letter-spacing: -.045em; margin: 0 0 25px; }
+    .handle { display: block; color: var(--muted); font-size: 19px; font-weight: 500; letter-spacing: 0; margin-top: 18px; }
+    .description { max-width: 520px; margin: 0; color: var(--muted); }
+    .interests { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 28px 0 0; }
+    .interests li { border: 1px solid var(--line); border-radius: 999px; padding: 5px 13px; font-size: 13px; }
+    .note { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--accent); padding: 28px; border-radius: 3px 3px 18px 18px; }
+    .note h2 { font-size: 22px; margin: 0 0 12px; line-height: 1.3; }
+    .note p { margin: 0; color: var(--muted); }
+    .links-section { margin-top: 64px; }
+    .links-section h2 { font-size: 16px; margin: 0 0 18px; }
+    .links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .links a { display: flex; align-items: center; justify-content: space-between; gap: 16px; border: 1px solid var(--line); padding: 20px; border-radius: 12px; text-decoration: none; font-weight: 700; }
+    .links a:hover { border-color: var(--accent); }
+    .links a:first-child { background: var(--accent); color: var(--button-text); border-color: var(--accent); }
+    .arrow { font-size: 22px; }
+    footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; padding-block: 24px 32px; }
+    @media (max-width: 700px) {
+      .page { width: calc(100% - 36px); }
+      header { padding-block: 20px; flex-wrap: wrap; }
+      main { padding-block: 42px; }
+      .intro { grid-template-columns: 1fr; gap: 32px; }
+      .links-section { margin-top: 36px; }
+      .links { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <a class="brand" href="#about">ABSOLUTE <span>MIKHAIL</span></a>
+      <button class="theme-toggle" type="button" aria-pressed="false">Светлая тема</button>
+    </header>
+    <main id="about">
+      <section class="intro" aria-labelledby="name">
+        <div>
+          <p class="eyebrow">Знакомство в одной странице</p>
+          <h1 id="name">Михаил<br>Ефремов<span class="handle">Absolute Mikhail</span></h1>
+          <p class="description">Занимаюсь разработкой игр и менторингом по Unreal Engine. Экспериментирую с нейросетями: собрал ботов для Telegram и Twitch и свой сайт-портфолио.</p>
+          <ul class="interests" aria-label="Мои интересы">
+            <li>Unreal Engine</li><li>Разработка игр</li><li>Нейросети</li>
+          </ul>
+        </div>
+        <aside class="note" aria-labelledby="malena-heading">
+          <p class="eyebrow">Один из моих проектов</p>
+          <h2 id="malena-heading">Знакомьтесь, Малена</h2>
+          <p>Мой чат-бот умеет рисовать. Среди её работ — мой рисованный образ и иллюстрации с самой Маленой.</p>
+        </aside>
+      </section>
+      <nav class="links-section" aria-labelledby="links-heading">
+        <h2 id="links-heading">Посмотреть мои проекты</h2>
+        <div class="links">
+          <a href="https://gamepunk.ru" target="_blank" rel="noopener noreferrer">Портфолио <span class="arrow" aria-hidden="true">↗</span></a>
+          <a href="https://www.twitch.tv/absolutemikhail" target="_blank" rel="noopener noreferrer">Twitch <span class="arrow" aria-hidden="true">↗</span></a>
+          <a href="https://t.me/MalenaOnline_bot" target="_blank" rel="noopener noreferrer">Малена в Telegram <span class="arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </nav>
+    </main>
+    <footer>Учебный одностраничник · Один HTML-файл, который можно открыть в браузере.</footer>
+  </div>
+  <script>
+    const themeButton = document.querySelector('.theme-toggle');
+    themeButton.addEventListener('click', () => {
+      const useLight = document.documentElement.dataset.theme !== 'light';
+      document.documentElement.dataset.theme = useLight ? 'light' : 'dark';
+      themeButton.textContent = useLight ? 'Тёмная тема' : 'Светлая тема';
+      themeButton.setAttribute('aria-pressed', String(useLight));
+    });
+  </script>
+</body>
+</html>

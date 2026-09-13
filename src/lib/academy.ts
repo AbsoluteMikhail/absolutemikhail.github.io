@@ -2,6 +2,7 @@ export type AcademyDocType = "course" | "lesson";
 
 export type AcademyTopic = {
   description: string;
+  introduction?: string;
   emptyState: string;
   slug: string;
   title: string;
@@ -51,6 +52,7 @@ export const academyTopics: AcademyTopic[] = [
     slug: "ai",
     title: "Нейросети",
     description: "Модели, AI-инструменты и собственные практические проекты.",
+    introduction: "Раздел активно заполняется — заходи почаще =) Здесь я делюсь задачами, которые решаю сам: от первого мема и сайта до чат-ботов, агентов и работы с Unreal Engine. Начни с бесплатного мини-курса, а за новыми практиками возвращайся сюда.",
     emptyState: "Здесь появятся сравнения нейросетей, практические гайды и проекты с AI.",
   },
   {

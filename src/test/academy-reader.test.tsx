@@ -21,6 +21,13 @@ beforeEach(() => {
 afterEach(() => vi.restoreAllMocks());
 
 describe("asynchronous Academy reader", () => {
+  it("labels text lessons without pretending they have a video", async () => {
+    content.load.mockResolvedValue({ body: "Практика первого урока", headings: [] });
+    render(<MemoryRouter initialEntries={["/academy/ai-intro/01-first-steps"]}><Academy /></MemoryRouter>);
+    expect(await screen.findByText("Практика первого урока")).toBeInTheDocument();
+    expect(screen.getByText("Урок 1")).toBeInTheDocument();
+    expect(screen.queryByText(/^Видео/)).not.toBeInTheDocument();
+  });
   it("never replaces the current lesson with an older download that finishes late", async () => {
     let finishFirst!: (value: AcademyContent) => void;
     content.load.mockImplementation((path) => path.endsWith("01-ue-cpp-environment.md")

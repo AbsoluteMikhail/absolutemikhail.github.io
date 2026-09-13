@@ -220,7 +220,7 @@ const renderInline = (text: string) => {
     const token = match[0];
 
     if (token.startsWith("**")) {
-      nodes.push(<strong key={`${match.index}-strong`}>{token.slice(2, -2)}</strong>);
+      nodes.push(<strong key={`${match.index}-strong`}>{renderInline(token.slice(2, -2))}</strong>);
     } else if (token.startsWith("`")) {
       nodes.push(<code key={`${match.index}-code`}>{token.slice(1, -1)}</code>);
     } else if (token.startsWith("[")) {
@@ -229,9 +229,10 @@ const renderInline = (text: string) => {
       if (linkMatch) {
         const [, label, href] = linkMatch;
         const isExternal = /^https?:\/\//.test(href);
+        const isLocalFile = /^\/(?!\/)[^?#]+\.[a-z0-9]+(?:[?#].*)?$/i.test(href);
 
         nodes.push(
-          isExternal ? (
+          isExternal || isLocalFile ? (
             <a key={`${match.index}-link`} href={href} rel="noreferrer" target="_blank">
               {label}
             </a>
@@ -243,7 +244,7 @@ const renderInline = (text: string) => {
         );
       }
     } else if (token.startsWith("*")) {
-      nodes.push(<em key={`${match.index}-em`}>{token.slice(1, -1)}</em>);
+      nodes.push(<em key={`${match.index}-em`}>{renderInline(token.slice(1, -1))}</em>);
     }
 
     lastIndex = match.index + token.length;
@@ -363,6 +364,22 @@ export const MarkdownContent = ({ className = "", content }: MarkdownContentProp
         }
 
         if (block.type === "callout") {
+          if (block.intent === "details") {
+            return <AcademyDisclosure key={index} label={block.title || "Подробнее"}>
+              <MarkdownContent content={block.body.join("\n")} />
+            </AcademyDisclosure>;
+          }
+
+          if (block.intent === "gallery") {
+            const images = block.body.map((line) => line.trim().match(/^!\[(.*?)\]\((.+?)\)$/)).filter((match) => match !== null);
+            return <div aria-label={block.title || "Галерея"} className={`academy-gallery my-8 grid items-start gap-4 sm:grid-cols-2 ${images.length > 2 ? "lg:grid-cols-3" : ""}`} key={index} role="group">
+              {images.map((match, imageIndex) => <figure className="!my-0 min-w-0" key={`${match[2]}-${imageIndex}`}>
+                <AcademyImageLightbox alt={match[1]} imageClassName="aspect-[3/4] w-full object-contain" src={match[2]} />
+                <figcaption>{match[1]}</figcaption>
+              </figure>)}
+            </div>;
+          }
+
           if (block.intent === "blueprintue") {
             const [url, fallbackImage, fallbackAlt] = block.body.map((line) => line.trim()).filter(Boolean);
             return (

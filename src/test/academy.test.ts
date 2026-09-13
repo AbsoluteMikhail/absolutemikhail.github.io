@@ -58,8 +58,16 @@ describe("academy content structure", () => {
   });
 
   it("keeps empty topics available for future materials", () => {
-    expect(getAcademyTopic("ai")?.title).toBe("Нейросети");
-    expect(getAcademyCoursesByTopic("ai")).toEqual([]);
+    expect(getAcademyTopic("tools")?.title).toBe("Инструменты и IT");
+    expect(getAcademyCoursesByTopic("tools")).toEqual([]);
+  });
+
+  it("publishes the AI mini-course as three ordered text lessons", () => {
+    const course = getAcademyCourse("ai-intro")!;
+    expect(getAcademyCoursesByTopic("ai")).toContain(course);
+    expect(course.format).toBe("Мини-курс");
+    expect(course.lessons.map((lesson) => lesson.order)).toEqual([1, 2, 3]);
+    expect(course.lessons.every((lesson) => !lesson.meta.video && !lesson.meta.youtube)).toBe(true);
   });
 
   it("publishes Data-Driven as a covered mini-course with one video lesson", () => {
