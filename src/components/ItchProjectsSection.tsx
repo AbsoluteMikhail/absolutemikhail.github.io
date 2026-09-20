@@ -71,7 +71,7 @@ const ItchProjectsSection = () => (
             <span className="absolute left-4 top-4 rounded bg-background/85 px-3 py-1 text-[10px] font-display uppercase tracking-widest text-primary backdrop-blur-md">
               {project.genre}
             </span>
-            <span className="absolute bottom-4 left-4 text-xs font-display tracking-widest text-white/70">
+            <span className="absolute bottom-4 left-4 text-xs font-display tracking-widest text-white/70 [html.light_&]:text-foreground">
               {project.year}
             </span>
           </div>

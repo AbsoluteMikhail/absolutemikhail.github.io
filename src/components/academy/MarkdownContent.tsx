@@ -259,17 +259,17 @@ const renderInline = (text: string) => {
 
 const calloutStyles: Record<string, { icon: React.ElementType; title: string; className: string }> = {
   note: {
-    className: "border-primary/30 bg-primary/10 text-primary",
+    className: "academy-callout--note",
     icon: Info,
     title: "Заметка",
   },
   tip: {
-    className: "border-emerald-500/30 bg-emerald-500/10 text-emerald-300",
+    className: "academy-callout--tip",
     icon: Lightbulb,
     title: "Совет",
   },
   warning: {
-    className: "border-amber-500/30 bg-amber-500/10 text-amber-300",
+    className: "academy-callout--warning",
     icon: AlertTriangle,
     title: "Важно",
   },

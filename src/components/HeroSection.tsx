@@ -109,7 +109,7 @@ const HeroSection = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/0 to-background/0" />
           
           {/* Subtle Glow like in OG Snippet */}
-          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px] mix-blend-screen" />
+          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px] mix-blend-screen [html.light_&]:mix-blend-normal" />
 
         </motion.div>
       </div>
@@ -146,8 +146,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.7 }}
-            className="mb-6 font-display text-[clamp(1.5rem,7.6vw,2rem)] font-black leading-[1.15] tracking-tight sm:text-5xl md:mb-8 md:text-[clamp(2.4rem,4.9vw,4.7rem)]"
-            style={{ textShadow: '0 0 40px rgba(0,0,0,0.5)' }}
+            className="hero-heading-shadow mb-6 font-display text-[clamp(1.5rem,7.6vw,2rem)] font-black leading-[1.15] tracking-tight sm:text-5xl md:mb-8 md:text-[clamp(2.4rem,4.9vw,4.7rem)]"
           >
             <span className="gradient-text">ИГРЫ, КОД</span>
             <br />

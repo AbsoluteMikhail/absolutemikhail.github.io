@@ -48,18 +48,18 @@ const PrivacyControls = () => {
   return (
     <>
       {ready && choice === null && !excluded && !settingsOpen && (
-        <aside aria-label="Выбор аналитики" className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-xl rounded-xl border border-border bg-card p-5 shadow-2xl sm:inset-x-6 sm:bottom-6 sm:p-6">
+        <aside aria-label="Выбор аналитики" className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-xl rounded-xl border border-border bg-popover p-5 text-popover-foreground shadow-2xl sm:inset-x-6 sm:bottom-6 sm:p-6">
           <p className="font-semibold text-foreground">Поможете сделать сайт удобнее?</p>
           <p className="mb-4 mt-2 text-sm leading-6 text-muted-foreground">
             С вашего разрешения Google Analytics и Яндекс Метрика собирают статистику посещений и используют cookies.
             Без аналитики сайт тоже работает. Выбор можно изменить в настройках внизу страницы.
-            {" "}<a className="text-foreground underline underline-offset-4" href="/privacy">Подробнее о данных</a>.
+            {" "}<a className="text-primary underline underline-offset-4 hover:text-accent" href="/privacy">Подробнее о данных</a>.
           </p>
           {buttons}
         </aside>
       )}
       {storageNotice && (
-        <p role="status" className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-xl rounded-lg border border-border bg-card p-4 text-sm">
+          <p role="status" className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-xl rounded-lg border border-border bg-popover p-4 text-sm text-popover-foreground">
           Браузер не сохранил выбор. При следующем открытии сайта мы спросим снова.
           <button type="button" className="ml-3 min-h-11 underline" onClick={() => setStorageNotice(false)}>Понятно</button>
         </p>
@@ -70,7 +70,7 @@ const PrivacyControls = () => {
           <p>Разрешение включает Google Analytics и Яндекс Метрику для статистики посещений. Реклама и Вебвизор выключены.</p>
           <p>Отказ остановит дальнейший сбор данных и перезагрузит страницу, если аналитика уже работала. Уже собранные сервисами данные автоматически не удаляются.</p>
           {buttons}
-          <p className="text-sm">Выбор хранится в этом браузере 180 дней. <a className="underline underline-offset-4" href="/privacy">Политика конфиденциальности</a></p>
+          <p className="text-sm">Выбор хранится в этом браузере 180 дней. <a className="text-primary underline underline-offset-4 hover:text-accent" href="/privacy">Политика конфиденциальности</a></p>
         </div>
       } />
     </>

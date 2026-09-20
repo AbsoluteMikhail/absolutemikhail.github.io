@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { ContactMessenger } from "@/components/ContactMessenger";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -89,6 +90,8 @@ const Navbar = () => {
               )
             ))}
           </div>
+
+          <ThemeToggle />
 
           <ContactMessenger
             buttonRef={contactTriggerRef}

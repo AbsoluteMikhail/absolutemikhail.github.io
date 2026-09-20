@@ -5,23 +5,23 @@ export const legalContent = {
     title: "Политика конфиденциальности",
     content: (
       <>
-        <p>Я Михаил Ефремов (Absolute Mikhail), автор сайта gamepunk.ru. Здесь размещены моё портфолио, история, учебные материалы и информация о менторинге. Эта политика относится к сайту; у бота Malena есть <a className="underline underline-offset-4" href="/malena/privacy">отдельная политика</a>.</p>
+        <p>Я Михаил Ефремов (Absolute Mikhail), автор сайта gamepunk.ru. Здесь размещены моё портфолио, история, учебные материалы и информация о менторинге. Эта политика относится к сайту; у бота Malena есть <a className="text-primary underline underline-offset-4 hover:text-accent" href="/malena/privacy">отдельная политика</a>.</p>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-foreground">1. Какие данные используются</h2>
           <p>На сайте нет регистрации, личного кабинета и форм отправки сообщений. Я не веду отдельную базу посетителей. Если вы пишете мне по почте или в мессенджере, я вижу те сведения, которые вы сообщаете: имя или псевдоним, контакт, текст и вложения. Они нужны для ответа и обсуждения вашей задачи.</p>
-          <p className="mt-3">При открытии сайта хостинг GitHub Pages получает технические сведения, необходимые для доставки страниц и безопасности сервиса, в том числе IP-адрес. Его обработка описана в <a className="underline underline-offset-4" href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">политике GitHub</a>.</p>
+          <p className="mt-3">При открытии сайта хостинг GitHub Pages получает технические сведения, необходимые для доставки страниц и безопасности сервиса, в том числе IP-адрес. Его обработка описана в <a className="text-primary underline underline-offset-4 hover:text-accent" href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">политике GitHub</a>.</p>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-foreground">2. Аналитика — по вашему выбору</h2>
           <p>Google Analytics и Яндекс Метрика загружаются только после нажатия «Разрешить аналитику». До этого или при выборе «Без аналитики» сайт не загружает их счётчики. На страницах политик и пользовательского соглашения аналитика отключена.</p>
           <p className="mt-3">Статистика помогает понять посещаемость и улучшить страницы. Сервисы могут обрабатывать адреса просмотренных страниц, источник перехода, сведения о браузере и устройстве, примерное местоположение и идентификаторы cookies. При соединении с сервисом ему также доступен IP-адрес; дальнейшая обработка зависит от сервиса.</p>
           <p className="mt-3">Вебвизор, карта кликов, отслеживание ссылок и точный показатель отказов Метрики выключены. Рекламные сигналы Google и персонализация рекламы также выключены. Тексты вашей переписки не отправляются сайтом в аналитику.</p>
-          <p className="mt-3">Поставщики аналитики: Google и ООО «ЯНДЕКС». Подробнее — в <a className="underline underline-offset-4" href="https://policies.google.com/privacy?hl=ru" target="_blank" rel="noopener noreferrer">политике Google</a> и <a className="underline underline-offset-4" href="https://yandex.ru/legal/confidential/ru/" target="_blank" rel="noopener noreferrer">политике Яндекса</a>. У меня есть доступ к отчётам этих сервисов.</p>
+          <p className="mt-3">Поставщики аналитики: Google и ООО «ЯНДЕКС». Подробнее — в <a className="text-primary underline underline-offset-4 hover:text-accent" href="https://policies.google.com/privacy?hl=ru" target="_blank" rel="noopener noreferrer">политике Google</a> и <a className="text-primary underline underline-offset-4 hover:text-accent" href="https://yandex.ru/legal/confidential/ru/" target="_blank" rel="noopener noreferrer">политике Яндекса</a>. У меня есть доступ к отчётам этих сервисов.</p>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-foreground">3. Выбор и его изменение</h2>
           <p>Разрешение или отказ, дата выбора и версия настроек сохраняются в локальном хранилище вашего браузера на 180 дней. Эта запись нужна, чтобы не спрашивать при каждом переходе, и не отправляется в отдельную базу сайта. Если браузер запрещает сохранение, выбор действует до перезагрузки страницы.</p>
-          <p className="mt-3">В любой момент можно <button type="button" className="underline underline-offset-4 text-foreground" onClick={openPrivacySettings}>изменить настройки аналитики</button>. Отказ останавливает дальнейший сбор, удаляет доступные сайту аналитические cookies и перезагружает страницу, если счётчики уже работали. Он не удаляет автоматически данные, ранее полученные Google или Яндексом. Cookies других доменов можно удалить в настройках браузера.</p>
+          <p className="mt-3">В любой момент можно <button type="button" className="text-primary underline underline-offset-4 hover:text-accent" onClick={openPrivacySettings}>изменить настройки аналитики</button>. Отказ останавливает дальнейший сбор, удаляет доступные сайту аналитические cookies и перезагружает страницу, если счётчики уже работали. Он не удаляет автоматически данные, ранее полученные Google или Яндексом. Cookies других доменов можно удалить в настройках браузера.</p>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-foreground">4. Переписка и сроки хранения</h2>
@@ -48,7 +48,7 @@ export const legalContent = {
         </section>
         <section id="educational-code" className="scroll-mt-6">
           <h2 className="mb-3 text-lg font-semibold text-foreground">2. Учебный код — используйте свободно</h2>
-          <p>Мои авторские учебные примеры кода и Blueprint-графы, опубликованные в Академии, доступны по <a className="underline underline-offset-4 text-foreground" href="/academy-code-license.txt">лицензии 0BSD</a>. Вы можете бесплатно использовать, копировать, изменять и распространять их для любых целей, в том числе в коммерческих и закрытых проектах, без отдельного разрешения и без обязательного указания автора.</p>
+          <p>Мои авторские учебные примеры кода и Blueprint-графы, опубликованные в Академии, доступны по <a className="text-primary underline underline-offset-4 hover:text-accent" href="/academy-code-license.txt">лицензии 0BSD</a>. Вы можете бесплатно использовать, копировать, изменять и распространять их для любых целей, в том числе в коммерческих и закрытых проектах, без отдельного разрешения и без обязательного указания автора.</p>
           <p className="mt-3">Если захотите упомянуть меня или поставить ссылку на материал — буду рад. Это благодарность по желанию, а не условие использования.</p>
           <p className="mt-3">Разрешение относится к моим учебным примерам. Для стороннего кода, библиотек и компонентов действуют лицензии их правообладателей. Оно не распространяется автоматически на игры целиком, тексты курсов, видео, музыку, изображения и другие материалы.</p>
         </section>

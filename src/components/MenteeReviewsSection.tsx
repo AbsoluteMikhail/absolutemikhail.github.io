@@ -18,7 +18,7 @@ const MenteeReviewsSection = () => (
         <SectionTitle>
           Что говорят после занятий
         </SectionTitle>
-        <p className="mt-5 text-lg leading-8 text-foreground/70">
+        <p className="mt-5 text-lg leading-8 text-foreground/70 [html.light_&]:text-muted-foreground">
           Большинство учеников приходят с собственными проектами или готовятся к работе в индустрии.
         </p>
       </motion.div>

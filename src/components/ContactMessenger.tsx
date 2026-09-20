@@ -119,7 +119,7 @@ export const ContactMessenger = ({
       className="backdrop:bg-background/85 backdrop:backdrop-blur-md"
     >
       <motion.div
-        className="relative max-h-[calc(100svh-2rem)] w-full max-w-sm overflow-y-auto rounded-xl border border-border bg-card p-6 shadow-2xl shadow-black/40"
+        className="relative max-h-[calc(100svh-2rem)] w-full max-w-sm overflow-y-auto rounded-xl border border-border bg-card p-6 shadow-2xl shadow-black/40 [html.light_&]:shadow-foreground/20"
         initial={{ opacity: 0, y: 18, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.2 }}
@@ -160,7 +160,7 @@ export const ContactMessenger = ({
             title="Написать в Discord"
             textClassName="min-w-0 flex-1"
             description={discordCopied ? (
-              <span className="inline-flex items-center gap-1 text-emerald-400">
+              <span className="inline-flex items-center gap-1 text-emerald-400 [html.light_&]:text-emerald-800">
                 <Check className="h-3 w-3" /> Ник скопирован
               </span>
             ) : (

@@ -8,6 +8,37 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        var KEY = "gamepunk-theme-v1";
+        var MAX_AGE = 180 * 24 * 60 * 60 * 1000;
+        var path = location.pathname.replace(/\/+$/, "").toLowerCase() || "/";
+        if (path === "/snippet") return;
+        var stored = null;
+        try {
+          var raw = localStorage.getItem(KEY);
+          if (raw) {
+            var rec = JSON.parse(raw);
+            if (rec && rec.version === 1 && (rec.choice === "light" || rec.choice === "dark")
+              && typeof rec.savedAt === "number" && isFinite(rec.savedAt)
+              && rec.savedAt <= Date.now() && Date.now() - rec.savedAt < MAX_AGE) {
+              stored = rec.choice;
+            }
+          }
+        } catch (error) { /* Keep the prerendered dark theme. */ }
+        var theme = stored;
+        if (!theme) {
+          try {
+            theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+          } catch (error) {
+            theme = "dark";
+          }
+        }
+        if (theme === "light") document.documentElement.classList.add("light");
+        else document.documentElement.classList.remove("light");
+        document.documentElement.style.colorScheme = theme;
+      }());
+    </script>
     <script type="text/javascript">
       (function(l) {
         if (l.hostname.slice(0, 4) === 'www.') {

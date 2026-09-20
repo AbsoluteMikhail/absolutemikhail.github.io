@@ -51,7 +51,7 @@ const ProtectedContacts = ({ language }: { language: Language }) => {
   return (
     <section
       aria-labelledby="protected-contacts-title"
-      className="mt-10 overflow-hidden rounded-2xl border border-primary/25 bg-card/70 p-5 shadow-[0_0_50px_hsl(var(--primary)/0.08)] sm:p-7"
+      className="mt-10 overflow-hidden rounded-2xl border border-primary/25 bg-card p-5 shadow-md sm:p-7"
       data-nosnippet
     >
       <div className="flex items-start gap-4">
@@ -66,7 +66,7 @@ const ProtectedContacts = ({ language }: { language: Language }) => {
 
           {!contacts ? (
             <button
-              className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-xl border border-primary/35 bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-[0_0_24px_hsl(var(--primary)/0.2)] transition hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-xl border border-primary/35 bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground transition hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               onClick={() => setRevealed(true)}
               type="button"
             >
@@ -151,7 +151,7 @@ const MalenaPrivacy = () => {
                 aria-pressed={language === option}
                 className={`min-h-9 rounded-lg px-3 text-xs font-bold uppercase tracking-[0.14em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                   language === option
-                    ? "bg-primary text-primary-foreground shadow-[0_0_18px_hsl(var(--primary)/0.24)]"
+                    ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:bg-secondary hover:text-foreground"
                 }`}
                 key={option}
@@ -166,13 +166,13 @@ const MalenaPrivacy = () => {
       </header>
 
       <div className="relative mx-auto max-w-4xl px-4 pt-10 sm:px-6 sm:pt-14">
-        <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-emerald-300">
+        <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-primary">
           <ShieldCheck aria-hidden="true" className="h-4 w-4" />
           {isRussian ? "Конфиденциальность Malena" : "Malena privacy"}
         </div>
 
         <article
-          className="rounded-2xl border border-border/80 bg-card/55 p-5 shadow-2xl shadow-black/20 sm:p-8 md:p-10"
+          className="rounded-2xl border border-border bg-card p-5 shadow-md sm:p-8 md:p-10"
           data-nosnippet
           lang={language}
         >

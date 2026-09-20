@@ -20,7 +20,7 @@ const LegalModal = ({ isOpen, onClose, title, content }: LegalModalProps) => {
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="relative max-w-2xl w-full bg-card border border-border rounded-2xl overflow-hidden flex flex-col max-h-[80svh] shadow-2xl"
+        className="relative flex max-h-[80svh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-card text-foreground shadow-2xl [html.light_&]:bg-popover [html.light_&]:text-popover-foreground"
       >
         {/* Header */}
         <div className="p-5 sm:p-6 border-b border-border flex shrink-0 items-center justify-between gap-3 bg-secondary/30">

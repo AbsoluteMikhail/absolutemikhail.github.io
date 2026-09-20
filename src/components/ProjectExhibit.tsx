@@ -42,7 +42,7 @@ export default function ProjectExhibit({ project, onSelect, featured = false }: 
       <div className="min-w-0">
         <div className="mb-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-muted-foreground">
           <span className="font-display tracking-wider">{project.year}</span>
-          <span className={cn("inline-flex items-center gap-2", project.stats === "Заморожен" && "text-sky-300")}>
+          <span className={cn("inline-flex items-center gap-2", project.stats === "Заморожен" && "text-sky-300 [html.light_&]:text-sky-800")}>
             <ProjectStatusIcon status={project.stats} className="h-3.5 w-3.5" />{project.stats}
           </span>
         </div>

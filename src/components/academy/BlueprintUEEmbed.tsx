@@ -36,7 +36,7 @@ export const BlueprintUEEmbed = ({ fallbackAlt, fallbackImage, title, url }: Blu
 
   if (!urls) {
     return (
-      <aside className="academy-callout border-amber-500/30 bg-amber-500/10 text-amber-300">
+      <aside className="academy-callout academy-callout--warning">
         Не удалось встроить BlueprintUE: проверьте публичную ссылку.
       </aside>
     );

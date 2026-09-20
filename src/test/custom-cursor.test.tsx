@@ -1,6 +1,9 @@
+import { readFileSync } from "node:fs";
 import { fireEvent, render, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import CustomCursor from "@/components/CustomCursor";
+import Logo from "@/components/Logo";
 
 afterEach(() => vi.restoreAllMocks());
 
@@ -51,5 +54,22 @@ describe("custom cursor in dialogs", () => {
     render(<CustomCursor />);
     expect(document.querySelector(".custom-cursor-layer")).toBeNull();
     expect(document.documentElement).not.toHaveClass("custom-cursor-enabled");
+  });
+});
+
+describe("light theme cursor and logo styles", () => {
+  const css = readFileSync("src/index.css", "utf8");
+
+  it("keeps the custom cursor as a primary dot without neon bloom in light", () => {
+    expect(css).toMatch(/html\.light \.custom-cursor-dot \{[^}]*box-shadow:\s*none/s);
+    expect(css).toMatch(/html\.light \.custom-cursor-ring \{[^}]*box-shadow:\s*none/s);
+    expect(css).toMatch(/html\.light \.custom-cursor-ring\.is-interactive \{[^}]*box-shadow:\s*none/s);
+  });
+
+  it("uses a soft logo hover shadow in light instead of a neon bloom", () => {
+    render(<MemoryRouter><Logo /></MemoryRouter>);
+    expect(document.querySelector("a.site-logo")).toBeInTheDocument();
+    expect(css).toContain("html.light .site-logo:hover");
+    expect(css).not.toMatch(/html\.light \.site-logo:hover \{[^}]*0 0 10px hsl\(var\(--primary\)\)/s);
   });
 });

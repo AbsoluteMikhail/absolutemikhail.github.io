@@ -5,6 +5,7 @@ import ScrollToHashElement from "./components/ScrollToHashElement";
 import RouteMetadata from "./components/RouteMetadata";
 import CustomCursor from "./components/CustomCursor";
 import PrivacyControls from "@/components/PrivacyControls";
+import { ThemeSync } from "@/lib/theme";
 
 const Index = lazy(() => import("./pages/Index"));
 const Projects = lazy(() => import("./pages/Projects"));
@@ -66,6 +67,7 @@ export const AppContent = ({ InitialPage, initialRoute }: AppContentProps = {}) 
     <MotionConfig reducedMotion="user">
       <ScrollToHashElement />
       <RouteMetadata />
+      <ThemeSync />
       <Suspense fallback={<PageFallback />}>{routes}</Suspense>
       <PrivacyControls />
     </MotionConfig>

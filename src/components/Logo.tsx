@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 interface LogoProps {
   className?: string;
@@ -36,7 +37,7 @@ const Logo = ({ className, onClick }: LogoProps) => {
     <Link
       to="/"
       onClick={handleClick}
-      className={`${className} transition-all duration-300 hover:drop-shadow-[0_0_10px_hsl(var(--primary))]`}
+      className={cn("site-logo", className)}
     >
       <span className="text-primary">&lt;</span>DEV<span className="text-primary">/&gt;</span>
     </Link>

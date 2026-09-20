@@ -46,6 +46,15 @@ describe("Academy Markdown extensions", () => {
     headings.forEach((heading) => expect(document.getElementById(heading.id)).toBeInTheDocument());
   });
 
+  it("keeps tip and warning callouts on theme tokens instead of pale emerald or amber text", () => {
+    renderMarkdown(":::tip Совет\nПроверь контраст.\n:::\n\n:::warning Важно\nНе читай бледный текст.\n:::");
+
+    expect(screen.getByText("Совет").closest(".academy-callout")).toHaveClass("academy-callout--tip");
+    expect(screen.getByText("Важно").closest(".academy-callout")).toHaveClass("academy-callout--warning");
+    expect(screen.getByText("Совет").closest(".academy-callout")).not.toHaveClass("text-emerald-300");
+    expect(screen.getByText("Важно").closest(".academy-callout")).not.toHaveClass("text-amber-300");
+  });
+
   it("renders a stray callout delimiter without getting stuck", () => {
     renderMarkdown("::: \n\nТекст после разделителя");
     expect(screen.getByText("Текст после разделителя")).toBeInTheDocument();

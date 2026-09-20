@@ -23,7 +23,7 @@ const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardPro
       target={target}
       aria-label="Unreal Authorized Instructor — открыть официальный credential"
       className={cn(
-        "group block rounded-xl border-t border-white/25 bg-background/85 p-5 shadow-2xl shadow-black/30 backdrop-blur-xl transition-colors hover:bg-background/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60",
+        "group block rounded-xl border-t border-white/25 bg-background/85 p-5 shadow-2xl shadow-black/30 backdrop-blur-xl transition-colors hover:bg-background/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 [html.light_&]:border-border [html.light_&]:shadow-foreground/15",
         className,
       )}
       {...props}
@@ -46,7 +46,7 @@ const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardPro
           </span>
         </span>
       </span>
-      <span className="mt-4 grid grid-cols-2 gap-2 border-t border-white/10 pt-4">
+      <span className="mt-4 grid grid-cols-2 gap-2 border-t border-white/10 pt-4 [html.light_&]:border-border">
         <span className="py-1">
           <strong className="block font-display text-lg text-foreground">11 лет</strong>
           <span className="text-[10px] text-muted-foreground">в экосистеме UE</span>

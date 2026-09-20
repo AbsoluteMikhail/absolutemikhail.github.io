@@ -44,8 +44,8 @@ export const YouTubeEmbed = ({ title = "YouTube video", url }: YouTubeEmbedProps
   }
 
   return (
-    <figure className="overflow-hidden rounded-lg border border-border bg-card/40">
-      <div className="aspect-video w-full bg-black">
+    <figure className="academy-youtube">
+      <div className="academy-youtube__frame">
         <iframe
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen

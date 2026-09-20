@@ -1,6 +1,9 @@
 import { createRoot } from "react-dom/client";
 import App, { type InitialRoute } from "./App.tsx";
+import { applyDocumentTheme, getThemePreference, resolveAppliedTheme } from "@/lib/theme";
 import "./index.css";
+
+applyDocumentTheme(resolveAppliedTheme(getThemePreference(), window.location.pathname));
 
 const rootElement = document.getElementById("root")!;
 

@@ -94,10 +94,10 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
                 <h4 className="mb-6 font-display text-xs font-bold uppercase tracking-widest text-foreground">Статус</h4>
                 <div className="mb-4 flex items-center gap-2">
                   <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 [html.light_&]:bg-emerald-700" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500 [html.light_&]:bg-emerald-700" />
                   </span>
-                  <span className="text-xs font-medium text-emerald-500">Доступен для новых проектов</span>
+                  <span className="text-xs font-medium text-emerald-500 [html.light_&]:text-emerald-800">Доступен для новых проектов</span>
                 </div>
                 <p className="text-xs leading-relaxed text-muted-foreground">
                   Открыт к предложениям по разработке игр и менторству. Напишите мне, чтобы обсудить ваш проект.

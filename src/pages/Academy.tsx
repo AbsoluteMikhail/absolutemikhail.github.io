@@ -39,13 +39,14 @@ import { academyContent, type AcademyContent } from "@/lib/academyContent";
 import { getAcademyRoute } from "@/lib/academyRoutes";
 import { slugify } from "@/lib/academyMarkdown";
 import LegalLinks from "@/components/LegalLinks";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const AcademyShell = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-screen bg-background pt-16 text-foreground">
     <header className="fixed left-0 top-0 z-40 w-full border-b border-border bg-background/90 backdrop-blur-xl">
       <div className="container mx-auto flex h-16 items-center justify-between gap-6 px-6">
         <Link
-          className="flex items-center gap-3 transition-all duration-300 hover:drop-shadow-[0_0_10px_hsl(var(--primary))]"
+          className="academy-brand-link"
           to="/academy"
         >
           <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-primary/30 bg-primary/10 text-primary">
@@ -71,6 +72,8 @@ const AcademyShell = ({ children }: { children: React.ReactNode }) => (
               </Link>
             ))}
           </nav>
+
+          <ThemeToggle />
 
           <Link
             className="inline-flex min-h-11 shrink-0 items-center gap-1 whitespace-nowrap text-xs text-muted-foreground transition-colors hover:text-primary sm:gap-2 sm:text-sm"
@@ -119,7 +122,7 @@ const CourseMeta = ({ course }: { course: AcademyCourse }) => (
       </p>
     </div>
     <div className="rounded-lg border border-border bg-card/40 p-4">
-      <Compass className="mb-3 h-5 w-5 text-emerald-400" />
+      <Compass className="academy-status-icon mb-3 h-5 w-5" />
       <p className="text-lg font-display font-bold">{course.status || "В работе"}</p>
       <p className="text-xs uppercase tracking-widest text-muted-foreground">статус</p>
     </div>
@@ -212,7 +215,7 @@ const TopicCard = ({ topic }: { topic: AcademyTopic }) => {
 
   return (
     <Link
-      className="group flex min-h-56 flex-col rounded-lg border border-border bg-card/45 p-5 transition-all hover:-translate-y-1 hover:border-primary/45 hover:bg-card/70 hover:shadow-2xl hover:shadow-primary/10"
+      className="academy-topic-card group flex min-h-56 flex-col rounded-lg border border-border bg-card/45 p-5"
       to={`/academy/topics/${topic.slug}`}
     >
       <div className="mb-8 flex h-11 w-11 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
@@ -555,7 +558,7 @@ const LessonPage = ({ course, lesson, content }: { course: AcademyCourse; lesson
   </AcademyShell>
 );
 
-const AlertIcon = () => <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_18px_hsl(var(--primary))]" />;
+const AlertIcon = () => <span className="academy-alert-dot" />;
 
 const AcademyNotFound = () => (
   <AcademyShell>

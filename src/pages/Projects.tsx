@@ -67,7 +67,7 @@ const Projects = () => {
           {frozenProjects.length > 0 && (
             <section className="mt-20 border-t border-border pt-12 md:mt-28" aria-labelledby="frozen-projects-title">
               <div className="mb-12 max-w-3xl">
-                <div className="exhibition-label text-sky-300">
+                <div className="exhibition-label text-sky-300 [html.light_&]:text-sky-800">
                   Архив разработки
                 </div>
                 <SectionTitle id="frozen-projects-title">
