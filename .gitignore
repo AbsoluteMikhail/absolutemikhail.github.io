@@ -41,3 +41,6 @@ AbsoluteAcademySource
 
 # Absolute Academy: heavy/private local source materials
 AbsoluteAcademySource/**/_local/
+
+# Local YouTube artwork and source files
+/YouTube/
