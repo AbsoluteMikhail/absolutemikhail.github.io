@@ -6,6 +6,7 @@ description: Server RPC, Client RPC, Multicast, RepNotify и разница ме
 block: Блок 5 - Multiplayer Minimum
 video: 18
 order: 18
+status: Анонс
 pain: RunOnServer ничего не делает
 mainIdea: Не все должно реплицироваться одинаково.
 ---

@@ -6,6 +6,7 @@ description: Event-driven gameplay, multicast delegates и развязка си
 block: Блок 3 - Gameplay Programmer Thinking
 video: 10
 order: 10
+status: Анонс
 pain: Все системы знают друг о друге
 mainIdea: Production gameplay architecture - event-driven.
 ---

@@ -22,7 +22,9 @@ import {
 import {
   recentAcademyCourses,
   academyTopics,
+  countCourseLessons,
   getAcademyCoursesByTopic,
+  getLessonAvailabilityLabel,
   groupLessonsByBlock,
   sortAcademyCoursesByUpdated,
   type AcademyCourse,
@@ -105,29 +107,45 @@ const formatLessonCount = (count: number) => {
   return `${count} уроков`;
 };
 
-const CourseMeta = ({ course }: { course: AcademyCourse }) => (
-  <div className="grid gap-3 sm:grid-cols-3">
-    <div className="rounded-lg border border-border bg-card/40 p-4">
-      <BookOpen className="mb-3 h-5 w-5 text-primary" />
-      <p className="text-2xl font-display font-bold">{course.lessons.length || 1}</p>
-      <p className="text-xs uppercase tracking-widest text-muted-foreground">
-        {course.lessons.length ? formatLessonCount(course.lessons.length).replace(/^\d+\s/, "") : "материал"}
-      </p>
+const CourseMeta = ({ course }: { course: AcademyCourse }) => {
+  const { planned, available } = countCourseLessons(course);
+  const showSplitCounts = planned > 0 && available !== planned;
+
+  return (
+    <div className="grid gap-3 sm:grid-cols-3">
+      <div className="rounded-lg border border-border bg-card/40 p-4">
+        <BookOpen className="mb-3 h-5 w-5 text-primary" />
+        {showSplitCounts ? (
+          <>
+            <p className="text-2xl font-display font-bold">{available} / {planned}</p>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground">
+              доступно / в каталоге
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="text-2xl font-display font-bold">{planned || 1}</p>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground">
+              {planned ? formatLessonCount(planned).replace(/^\d+\s/, "") : "материал"}
+            </p>
+          </>
+        )}
+      </div>
+      <div className="rounded-lg border border-border bg-card/40 p-4">
+        <Boxes className="mb-3 h-5 w-5 text-accent" />
+        <p className="text-lg font-display font-bold">{course.project || course.format}</p>
+        <p className="text-xs uppercase tracking-widest text-muted-foreground">
+          {course.project ? "сквозной проект" : "формат"}
+        </p>
+      </div>
+      <div className="rounded-lg border border-border bg-card/40 p-4">
+        <Compass className="academy-status-icon mb-3 h-5 w-5" />
+        <p className="text-lg font-display font-bold">{course.status || "В работе"}</p>
+        <p className="text-xs uppercase tracking-widest text-muted-foreground">статус курса</p>
+      </div>
     </div>
-    <div className="rounded-lg border border-border bg-card/40 p-4">
-      <Boxes className="mb-3 h-5 w-5 text-accent" />
-      <p className="text-lg font-display font-bold">{course.project || course.format}</p>
-      <p className="text-xs uppercase tracking-widest text-muted-foreground">
-        {course.project ? "сквозной проект" : "формат"}
-      </p>
-    </div>
-    <div className="rounded-lg border border-border bg-card/40 p-4">
-      <Compass className="academy-status-icon mb-3 h-5 w-5" />
-      <p className="text-lg font-display font-bold">{course.status || "В работе"}</p>
-      <p className="text-xs uppercase tracking-widest text-muted-foreground">статус</p>
-    </div>
-  </div>
-);
+  );
+};
 
 const LessonLinks = ({ course, activeLessonSlug }: { course: AcademyCourse; activeLessonSlug?: string }) => (
   <nav aria-label="Уроки курса" className="space-y-6">
@@ -149,7 +167,10 @@ const LessonLinks = ({ course, activeLessonSlug }: { course: AcademyCourse; acti
               to={`/academy/${course.slug}/${lesson.slug}`}
             >
               <span className="mr-2 text-xs opacity-60">{lesson.meta.video}</span>
-              {lesson.meta.title}
+              <span className="block">{lesson.meta.title}</span>
+              <span className="mt-1 block text-[11px] opacity-70">
+                {getLessonAvailabilityLabel(course, lesson)}
+              </span>
             </Link>
           ))}
         </div>
@@ -269,7 +290,14 @@ const CourseCard = ({ course }: { course: AcademyCourse }) => (
       <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground">
         <span className="inline-flex items-center gap-1.5">
           <BookOpen className="h-3.5 w-3.5" />
-          {course.lessons.length ? formatLessonCount(course.lessons.length) : "материалы"}
+          {(() => {
+            const { planned, available } = countCourseLessons(course);
+            if (!planned) return "материалы";
+            if (available !== planned) {
+              return `${available} доступно · ${formatLessonCount(planned)} в каталоге`;
+            }
+            return formatLessonCount(planned);
+          })()}
         </span>
         {course.status ? (
           <span className="inline-flex items-center gap-1.5">
@@ -295,7 +323,7 @@ const AcademyHome = () => (
         <div>
           <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-primary">База знаний</p>
           <h1 className="mb-6 font-display text-4xl font-bold leading-tight md:text-6xl">
-            Absolute Mikhail Academy
+            Absolute Academy
           </h1>
           <p className="max-w-2xl text-lg leading-8 text-muted-foreground">
             <span className="block">Практические материалы о разработке, Unreal Engine, C++,</span>
@@ -427,9 +455,10 @@ const CoursePage = ({ course, content }: { course: AcademyCourse; content: Acade
                         key={lesson.slug}
                         to={`/academy/${course.slug}/${lesson.slug}`}
                       >
-                        <div className="mb-3 flex items-center gap-2 text-xs uppercase tracking-widest text-primary">
-                          {lesson.meta.video ? <PlayCircle className="h-4 w-4" /> : <FileText className="h-4 w-4" />}
-                          {lesson.meta.video ? `Видео ${lesson.meta.video}` : `Урок ${lesson.order}`}
+                        <div className="mb-3 flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest text-primary">
+                          {lesson.meta.youtube ? <PlayCircle className="h-4 w-4" /> : <FileText className="h-4 w-4" />}
+                          Урок {lesson.order}
+                          <span className="text-muted-foreground">· {getLessonAvailabilityLabel(course, lesson)}</span>
                         </div>
                         <h3 className="mb-2 font-display text-xl font-bold transition-colors group-hover:text-primary">
                           {lesson.meta.title}
@@ -509,13 +538,23 @@ const LessonPage = ({ course, lesson, content }: { course: AcademyCourse; lesson
         <div className="mb-8 rounded-lg border border-border bg-card/30 p-5">
           <div className="mb-4 flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-xs text-primary">
-              {lesson.meta.video ? <PlayCircle className="h-3.5 w-3.5" /> : <FileText className="h-3.5 w-3.5" />}
-              {lesson.meta.video ? `Видео ${lesson.meta.video}` : `Урок ${lesson.order}`}
+              {lesson.meta.youtube ? <PlayCircle className="h-3.5 w-3.5" /> : <FileText className="h-3.5 w-3.5" />}
+              {getLessonAvailabilityLabel(course, lesson)}
             </span>
+            {lesson.meta.youtube ? (
+              <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/50 px-2.5 py-1 text-xs text-muted-foreground">
+                С видео
+              </span>
+            ) : null}
             <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/50 px-2.5 py-1 text-xs text-muted-foreground">
               <Layers className="h-3.5 w-3.5" />
               {lesson.meta.block}
             </span>
+            {course.status ? (
+              <span className="inline-flex items-center gap-1.5 rounded-md bg-secondary/50 px-2.5 py-1 text-xs text-muted-foreground">
+                Курс: {course.status}
+              </span>
+            ) : null}
           </div>
           <h1 id={slugify(lesson.meta.title)} className="mb-4 scroll-mt-24 font-display text-4xl font-bold leading-tight md:text-5xl">{lesson.meta.title}</h1>
           <p className="text-lg leading-8 text-muted-foreground">{lesson.meta.description}</p>

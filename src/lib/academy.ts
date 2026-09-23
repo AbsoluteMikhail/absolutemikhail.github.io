@@ -1,5 +1,8 @@
 export type AcademyDocType = "course" | "lesson";
 
+/** Готовность конкретного урока; статус курса хранится отдельно в course.status. */
+export type AcademyLessonStatus = "Урок" | "Программа занятия" | "Анонс";
+
 export type AcademyTopic = {
   description: string;
   introduction?: string;
@@ -167,6 +170,31 @@ export const getAcademyTopic = (topicSlug: string) =>
 
 export const getAcademyCoursesByTopic = (topicSlug: string) =>
   academyCourses.filter((course) => course.topics.includes(topicSlug));
+
+export const getLessonStatus = (lesson: AcademyLesson): AcademyLessonStatus | undefined => {
+  const status = lesson.meta.status?.trim();
+  if (status === "Урок" || status === "Программа занятия" || status === "Анонс") {
+    return status;
+  }
+  return undefined;
+};
+
+/** Готовность урока не наследуется от курса: публикация программы не означает готовность всех занятий. */
+export const isLessonReady = (_course: AcademyCourse, lesson: AcademyLesson) => getLessonStatus(lesson) === "Урок";
+
+export const countCourseLessons = (course: AcademyCourse) => ({
+  planned: course.lessons.length,
+  available: course.lessons.filter((lesson) => isLessonReady(course, lesson)).length,
+});
+
+export const getLessonAvailabilityLabel = (course: AcademyCourse, lesson: AcademyLesson) => {
+  const status = getLessonStatus(lesson);
+  if (status) return status;
+  if (course.status === "Опубликован") return "Материал";
+  if (course.status === "Тестируется") return "Материал тестового курса";
+  if (course.status === "Пополняется") return "Материал подборки";
+  return course.status || "Материал";
+};
 
 export const groupLessonsByBlock = (lessons: AcademyLesson[]) =>
   lessons.reduce<Array<{ title: string; lessons: AcademyLesson[] }>>((groups, lesson) => {

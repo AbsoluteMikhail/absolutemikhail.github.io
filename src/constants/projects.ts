@@ -33,6 +33,16 @@ import dixotomia4 from "@/assets/projects/dixotomia/4.jpg";
 import moonshineMayhemCover from "@/assets/projects/moonshine-mayhem/cover.jpg";
 import knittedInflatableCover from "@/assets/projects/knitted-inflatable/cover.jpg";
 
+export interface ProjectCaseStudy {
+  context: string;
+  role: string;
+  challenge: string;
+  constraints: string;
+  solution: string;
+  outcome: string;
+  evidence?: string[];
+}
+
 export interface Project {
   id: number;
   title: string;
@@ -44,6 +54,11 @@ export interface Project {
   fullDesc: string;
   tech: string[];
   stats: string;
+  /** Авторская роль в проекте; не заполнять без подтверждённых фактов. */
+  role?: string;
+  /** Редакторская подборка на главной. */
+  featured?: boolean;
+  caseStudy?: ProjectCaseStudy;
   storeUrl?: string;
   storeLinks?: Array<{
     label: string;
@@ -66,6 +81,8 @@ export const projects: Project[] = [
       "Недалекое будущее. Виртуальные дуэли стали легальным способом заработка и развлечения. В роли молодого дуэлянта вам предстоит сражаться в разных сеттингах — от Дикого Запада до киберпанка. \n\nКлючевые фишки:\n— 30-секундные динамичные поединки;\n— Сопровождение харизматичной ИИ-спутницы Малены;\n— Система отстрела конечностей и прокачка способностей;\n— Элементы Roguelike: риск обнуления прогресса в турнирном режиме;\n— Динамическая смена погоды и времени суток, влияющая на геймплей.",
     tech: ["Unreal Engine 5", "Niagara VFX", "Advanced IK System"],
     stats: "В разработке",
+    role: "Автор · Senior Gameplay Programmer",
+    featured: true,
     storeLinks: [
       {
         label: "Steam",
@@ -92,6 +109,8 @@ export const projects: Project[] = [
       "Иммерсивный VR экшен-шутер с футуристичным оружием и вампирскими способностями. В роли бойца специального назначения вам предстоит уничтожить вампирский культ и его лидеров, раскрыть тёмные секреты далёкой планеты и решить, удастся ли герою остаться прежним.\n\nКомбинируйте огнестрельное оружие и сверхъестественные силы, развивайте оба боевых направления и сражайтесь с культистами, андроидами, наёмниками и могущественными боссами.",
     tech: ["Unreal Engine", "OpenXR", "VR"],
     stats: "В релизе",
+    role: "Разработка ИИ ботов",
+    featured: true,
     storeLinks: [
       {
         label: "Steam",
@@ -117,6 +136,8 @@ export const projects: Project[] = [
       "Герой просыпается в светлом, но пугающем лесу. Единственное спасение — ржавый кибер-холодильник, который служит базой. Если не вернуться к нему до темноты, лес поглотит вас. \n\nОсобенности игры:\n— Атмосферная Low-Poly графика в духе эпохи PlayStation 1;\n— Кибернизированные герои русских народных сказок;\n— Глубокое взаимодействие с грибами и вариативность прохождения;\n— Нарративное окружение и музыка, отсылающая к классике S.T.A.L.K.E.R. и Doom;\n— Две концовки, раскрывающие истинный смысл происходящего.",
     tech: ["Unreal Engine 5", "Blender", "PSX Shader Stack"],
     stats: "В релизе",
+    role: "Автор",
+    featured: true,
     storeUrl: "https://vkplay.ru/play/game/gribnik-the-forest-of-fools-44079",
     videoUrl: "https://rutube.ru/play/embed/1dbe0a668db24c94fdbead56fb2a6dac/",
     screenshots: [gribnik1, gribnik2, gribnik3, gribnik4, gribnik5],
@@ -133,6 +154,8 @@ export const projects: Project[] = [
       "Ящеры вторглись на Русь! Лишь Колобок, выпрыгнувший из печки, готов принять вызов. Катитесь, отскакивайте и крушите врагов в этом динамичном переосмыслении классического арканоида. \n\nВас ждет:\n— 21 уникальный уровень в разных локациях;\n— 3 уровня сложности: от новичка до мастера;\n— Бесконечный режим для самых стойких защитников;\n— 18 оригинальных музыкальных треков;\n— Легионы ящеров с уникальным поведением;\n— Море юмора и достижений.",
     tech: ["Unreal Engine 5", "Niagara VFX", "Original OST"],
     stats: "В релизе",
+    role: "Автор",
+    featured: true,
     storeUrl: "https://vkplay.ru/play/game/kolobok-protiv-jascherov-arkanoid-40059",
     videoUrl: "https://rutube.ru/play/embed/8523cff58d38eb1de92fedfc21ccbfab/",
     screenshots: [kolobok1, kolobok2, kolobok3, kolobok4, kolobok5],
@@ -185,3 +208,5 @@ export const projects: Project[] = [
     screenshots: [],
   },
 ];
+
+export const featuredProjects = () => projects.filter((project) => project.featured);

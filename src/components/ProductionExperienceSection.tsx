@@ -21,9 +21,8 @@ const ProductionExperienceSection = () => (
           </SectionTitle>
         </div>
         <p className="max-w-xl text-base leading-7 text-muted-foreground lg:pb-1 lg:text-lg">
-          Здесь — команды, в которых я работал, и мой вклад в общие проекты:
-          сетевой геймплей, большие интерактивные пространства, оптимизация
-          и инструменты для съёмок в Unreal Engine.
+          От игровых механик и сетевых систем до виртуальных съёмок.
+          Здесь — команды, в которых я работал, и задачи, за которые отвечал.
         </p>
       </div>
       <div className="border-t border-border">

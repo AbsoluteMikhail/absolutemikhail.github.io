@@ -8,6 +8,8 @@ export interface MentoringPackage {
   preparation: string;
   result: string;
   description: string;
+  /** Короткий пример подходящей задачи без гарантии исправления. */
+  exampleTask: string;
   features: string[];
   buttonText: string;
   telegramMessage: string;
@@ -24,6 +26,8 @@ export const mentoringPackages: MentoringPackage[] = [
     result: "После встречи: список следующих шагов",
     description:
       "Точечно разберём ваш вопрос по Unreal Engine, C++, Blueprint или разработке игры.",
+    exampleTask:
+      "«Как подготовиться к собеседованию на gameplay-программиста?»",
     features: [
       "Найдём причину конкретной технической проблемы.",
       "Обсудим карьеру, портфолио или подготовку к собеседованию.",
@@ -42,6 +46,8 @@ export const mentoringPackages: MentoringPackage[] = [
     result: "После встречи: запись, конспект и план работ",
     description:
       "Вы приходите со своим проектом и получаете понятный план дальнейших действий.",
+    exampleTask:
+      "«Blueprint персонажа разросся. Что стоит вынести в компоненты?»",
     features: [
       "Разберём код, Blueprint-графы и структуру проекта.",
       "Найдём архитектурные ошибки, узкие места и лишнюю сложность.",
@@ -60,6 +66,8 @@ export const mentoringPackages: MentoringPackage[] = [
     result: "После встречи: запись, схема решения и карта рисков",
     description:
       "Спроектируем сложную систему и проверим ключевые технические решения до реализации.",
+    exampleTask:
+      "«Как устроить инвентарь с репликацией для co-op?»",
     features: [
       "GAS, подсистемы, сетевая игра, плагины и Mass Framework.",
       "Проектирование игровых систем для рабочего проекта.",

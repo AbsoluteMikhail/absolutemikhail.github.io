@@ -17,7 +17,7 @@ export default function ProjectExhibit({ project, onSelect, featured = false }: 
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.12 }}
       transition={{ duration: 0.45 }}
-      className={cn("group relative flex min-w-0 flex-col gap-5", featured && "md:col-span-2 lg:grid lg:grid-cols-[1.65fr_1fr] lg:items-center lg:gap-10")}
+      className={cn("group relative flex min-w-0 flex-col gap-5", featured && "lg:col-span-3 lg:grid lg:grid-cols-[1.65fr_1fr] lg:items-center lg:gap-10")}
     >
       <button
         type="button"
@@ -31,7 +31,7 @@ export default function ProjectExhibit({ project, onSelect, featured = false }: 
         <img
           src={project.cover}
           srcSet={project.coverSrcSet}
-          sizes={featured ? "(min-width: 1024px) 65vw, 100vw" : "(min-width: 768px) 50vw, 100vw"}
+          sizes={featured ? "(min-width: 1024px) 60vw, (min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 50vw, 100vw"}
           alt={`Обложка проекта ${project.title} в жанре ${project.genre}`}
           loading="lazy"
           decoding="async"
@@ -47,11 +47,9 @@ export default function ProjectExhibit({ project, onSelect, featured = false }: 
           </span>
         </div>
         <h3 className={cn("font-display text-2xl font-bold leading-tight tracking-tight transition-colors group-hover:text-primary", featured && "lg:text-4xl")}>{project.title}</h3>
+        {project.role && <p className="mt-3 text-xs font-medium leading-5 text-primary">{project.role}</p>}
         <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">{project.shortDesc}</p>
-        <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
-          {project.tech.map((tech) => <span key={tech} className="border-l border-primary/50 pl-2 text-[11px] text-muted-foreground">{tech}</span>)}
-        </div>
-        <span className="exhibition-link mt-3" aria-hidden="true">Подробнее<ArrowUpRight className="h-4 w-4" /></span>
+        <span className="exhibition-link mt-4" aria-hidden="true">Подробнее<ArrowUpRight className="h-4 w-4" /></span>
       </div>
     </motion.article>
   );

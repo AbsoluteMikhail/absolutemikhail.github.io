@@ -6,6 +6,7 @@ description: Actor lifecycle, BeginPlay, CreateDefaultSubobject, NewObject и ed
 block: Блок 1 - Ментальный сдвиг
 video: 3
 order: 3
+status: Анонс
 pain: Почему в Editor все ломается?
 mainIdea: Constructor создает объект. BeginPlay запускает игру.
 ---

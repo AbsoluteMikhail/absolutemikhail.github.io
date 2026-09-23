@@ -14,19 +14,15 @@ const icons: Record<ProofIcon, typeof Trophy> = {
 const ProofSection = () => (
   <section id="proof" aria-labelledby="proof-title" className="scroll-mt-20 border-y border-border/60 bg-card/40 py-10 md:py-14">
     <div className="container mx-auto px-6">
-      <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+      <div className="mb-6">
         <div>
           <p className="exhibition-label">
-            Если мы ещё не знакомы
+            Опыт и достижения
           </p>
           <SectionTitle id="proof-title" size="compact">
-            Несколько ориентиров
+            За играми — годы практики
           </SectionTitle>
         </div>
-        <p className="max-w-xl text-sm leading-6 text-muted-foreground">
-          Разработка, хакатоны и преподавание — разные стороны того, чем я занимаюсь.
-          Отсюда можно перейти к работам, занятиям или истории победы.
-        </p>
       </div>
 
       <div className="grid gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -69,23 +65,6 @@ const ProofSection = () => (
         })}
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        transition={{ duration: 0.45 }}
-        viewport={{ once: true }}
-        whileInView={{ opacity: 1, y: 0 }}
-        className="mt-3 grid gap-3 border-t border-primary/30 pt-6 md:grid-cols-[minmax(0,0.7fr)_minmax(0,2fr)] md:items-center md:gap-8"
-      >
-        <p className="font-display text-sm font-bold uppercase tracking-wider text-foreground">
-          Победы и награды
-        </p>
-        <p className="text-sm leading-6 text-muted-foreground">
-          Gamebox Hack — победитель · Unreal Engine Dev Contest — выбор tinyBuild ·
-          «Синеус» — 1-е место и главный приз
-          <br />
-          G.R.I.B.N.I.K. — награда «Лучший геймдизайн».
-        </p>
-      </motion.div>
     </div>
   </section>
 );

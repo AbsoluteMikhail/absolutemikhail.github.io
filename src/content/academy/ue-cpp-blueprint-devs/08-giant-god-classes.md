@@ -6,6 +6,7 @@ description: Почему Character.cpp превращается в неподд
 block: Блок 3 - Gameplay Programmer Thinking
 video: 8
 order: 8
+status: Анонс
 pain: Character.cpp уже невозможно поддерживать
 mainIdea: Gameplay systems должны расширяться без переписывания Character.
 ---

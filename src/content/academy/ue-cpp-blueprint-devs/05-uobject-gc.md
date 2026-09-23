@@ -6,6 +6,7 @@ description: UObject, GC, UPROPERTY, ownership и почему pointer внез�
 block: Блок 2 - Object Model и GC
 video: 5
 order: 5
+status: Анонс
 pain: Все стало nullptr спустя 30 секунд
 mainIdea: Если не понимать ownership - проект начнет ломаться случайным образом.
 ---

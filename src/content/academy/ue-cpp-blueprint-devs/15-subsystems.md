@@ -6,6 +6,7 @@ description: GameInstanceSubsystem, WorldSubsystem и архитектура г�
 block: Блок 4 - UE Engineering
 video: 15
 order: 15
+status: Анонс
 pain: GameInstance превратился в мусорку
 mainIdea: Global systems тоже должны иметь архитектуру.
 ---

@@ -6,6 +6,7 @@ description: Authority, ownership, replication basics и первое replicated
 block: Блок 5 - Multiplayer Minimum
 video: 17
 order: 17
+status: Анонс
 pain: Multiplayer ломает весь проект
 mainIdea: В multiplayer сервер - источник истины.
 ---

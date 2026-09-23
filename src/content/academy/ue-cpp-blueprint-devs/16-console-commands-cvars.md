@@ -6,6 +6,7 @@ description: Runtime tuning, debug toggles и изменение gameplay без
 block: Блок 4 - UE Engineering
 video: 16
 order: 16
+status: Анонс
 pain: Любое изменение требует перекомпиляции
 mainIdea: Gameplay programmer должен уметь менять игру на лету.
 ---

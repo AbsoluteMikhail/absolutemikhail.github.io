@@ -8,7 +8,7 @@ tags: Unreal Engine
 topics: unreal-engine
 status: Пополняется
 order: 3
-updated: 2026-09-02
+updated: 2026-09-23
 ---
 
 Здесь будут собираться отдельные полезные материалы по Unreal Engine: короткие разборы, практические видео, заметки по рабочим процессам и ссылки на вещи, к которым удобно возвращаться.
@@ -24,3 +24,5 @@ https://youtu.be/DTJO8LTG8iw
 :::youtube ВСЁ о ЛОКАЛИЗАЦИИ игр в UNREAL ENGINE
 https://youtu.be/5JrAG08bQGQ
 :::
+
+Текстовая версия разбора: [локализация в Unreal Engine — текст, субтитры, озвучка и текстуры](/academy/ue-localization).

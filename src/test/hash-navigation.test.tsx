@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { lazy, Suspense, type ComponentType } from "react";
-import { Link, MemoryRouter, Route, Routes } from "react-router-dom";
+import { Link, MemoryRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import ScrollToHashElement from "@/components/ScrollToHashElement";
 
@@ -14,6 +14,30 @@ beforeEach(() => {
 afterEach(() => vi.restoreAllMocks());
 
 describe("hash navigation", () => {
+  it("starts a new page at the top when returning from a lesson without an anchor", () => {
+    const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
+    render(<MemoryRouter initialEntries={["/academy/lesson"]}>
+      <ScrollToHashElement />
+      <Link to="/">На сайт</Link>
+    </MemoryRouter>);
+    expect(scrollTo).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("link", { name: "На сайт" }));
+    expect(scrollTo).toHaveBeenCalledWith({ top: 0, left: 0, behavior: "instant" });
+  });
+
+  it("leaves Back navigation without an anchor to the browser", () => {
+    const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
+    const Back = () => {
+      const navigate = useNavigate();
+      return <button onClick={() => navigate(-1)}>Назад</button>;
+    };
+    render(<MemoryRouter initialEntries={["/", "/academy"]} initialIndex={1}>
+      <ScrollToHashElement /><Back />
+    </MemoryRouter>);
+    fireEvent.click(screen.getByRole("button", { name: "Назад" }));
+    expect(scrollTo).not.toHaveBeenCalled();
+  });
+
   it("waits for a lazy destination to commit before scrolling", async () => {
     let resolvePage!: (module: { default: ComponentType }) => void;
     const Projects = lazy(() => new Promise<{ default: ComponentType }>((resolve) => { resolvePage = resolve; }));

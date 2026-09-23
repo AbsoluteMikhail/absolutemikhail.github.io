@@ -21,11 +21,20 @@ beforeEach(() => {
 afterEach(() => vi.restoreAllMocks());
 
 describe("asynchronous Academy reader", () => {
+  it("does not advertise a video from a planned video number alone", async () => {
+    content.load.mockResolvedValue({ body: "Программа занятия", headings: [] });
+    render(<MemoryRouter initialEntries={[firstPath]}><Academy /></MemoryRouter>);
+    expect(await screen.findByText("Программа занятия")).toBeInTheDocument();
+    expect(screen.queryByText(/^Видео|^С видео$/)).not.toBeInTheDocument();
+    expect(screen.getAllByText("Анонс").length).toBeGreaterThan(0);
+  });
   it("labels text lessons without pretending they have a video", async () => {
     content.load.mockResolvedValue({ body: "Практика первого урока", headings: [] });
     render(<MemoryRouter initialEntries={["/academy/ai-intro/01-first-steps"]}><Academy /></MemoryRouter>);
     expect(await screen.findByText("Практика первого урока")).toBeInTheDocument();
-    expect(screen.getByText("Урок 1")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "Знакомимся с нейросетями" })).toBeInTheDocument();
+    const availabilityBadges = screen.getAllByText("Урок");
+    expect(availabilityBadges.length).toBeGreaterThan(0);
     expect(screen.queryByText(/^Видео/)).not.toBeInTheDocument();
   });
   it("never replaces the current lesson with an older download that finishes late", async () => {

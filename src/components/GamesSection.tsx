@@ -8,17 +8,16 @@ import {
   ChevronRight,
   Gamepad2,
   GraduationCap,
-  Trophy,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { projects } from "@/constants/projects";
+import { featuredProjects, type Project } from "@/constants/projects";
 import { mentoredProjects } from "@/constants/mentoredProjects";
 import ProjectDetailModal from "@/components/ProjectDetailModal";
-import type { Project } from "@/constants/projects";
 import ProjectExhibit from "@/components/ProjectExhibit";
 
 const GamesSection = () => {
   const [selectedGame, setSelectedGame] = useState<Project | null>(null);
+  const homepageProjects = featuredProjects();
 
   const handleOpenModal = (game: Project) => {
     setSelectedGame(game);
@@ -29,7 +28,7 @@ const GamesSection = () => {
   };
 
   return (
-    <section id="games" className="exhibition-section relative bg-gradient-to-b from-background via-primary/[0.035] to-background">
+    <section id="games" className="exhibition-section relative scroll-mt-20 bg-gradient-to-b from-background via-primary/[0.035] to-background">
       <div className="container mx-auto px-6">
         <div className="mb-12 max-w-4xl md:mb-16">
           <SectionBadge
@@ -38,7 +37,7 @@ const GamesSection = () => {
             viewport={{ once: true }}
             size="md"
           >
-            Собственные игры и работа в командах
+            Избранные проекты
           </SectionBadge>
           <SectionTitle
             initial={{ opacity: 0, y: 20 }}
@@ -58,13 +57,12 @@ const GamesSection = () => {
             className="max-w-2xl text-lg leading-relaxed text-muted-foreground"
           >
             Дуэли, вампиры в VR, грибник с дробовиком и Колобок против ящеров.
-            Здесь — собственные игры и проекты, над которыми я работал в команде.
-            Откройте обложку, чтобы посмотреть видео, скриншоты и подробности.
+            Мои игры и работа в командах — с видео, скриншотами и подробностями.
           </motion.p>
         </div>
 
-        <div className="grid gap-x-8 gap-y-10 md:grid-cols-2 lg:gap-x-12 lg:gap-y-14">
-          {projects.filter((game) => game.stats !== "Заморожен").map((game, i) => (
+        <div className="grid gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-y-14">
+          {homepageProjects.map((game, i) => (
             <ProjectExhibit key={game.id} project={game} featured={i === 0} onSelect={handleOpenModal} />
           ))}
         </div>
@@ -100,9 +98,6 @@ const GamesSection = () => {
               <div className="mt-6 flex flex-wrap gap-2">
                 <span className="border-l border-border pl-3 pr-1 py-1 text-xs text-muted-foreground">
                   От джемов до релизов
-                </span>
-                <span className="inline-flex items-center gap-1.5 border-l border-border pl-3 pr-1 py-1 text-xs text-muted-foreground">
-                  <Trophy className="h-3.5 w-3.5 text-primary" /> 6-е место
                 </span>
                 <span className="border-l border-border pl-3 pr-1 py-1 text-xs text-muted-foreground">
                   Steam · VK Play · itch.io
@@ -153,12 +148,6 @@ const GamesSection = () => {
           viewport={{ once: true }}
           className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
-          <a
-            href="#timeline"
-            className={buttonStyles({ variant: "outline", size: "lg", className: "inline-flex items-center justify-center" })}
-          >
-            Моя история
-          </a>
           <Link
             to="/projects"
             className={buttonStyles({ variant: "primary", size: "lg", className: "group inline-flex items-center gap-2" })}
@@ -166,6 +155,12 @@ const GamesSection = () => {
             Все проекты
             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
+          <a
+            href="#timeline"
+            className={buttonStyles({ variant: "outline", size: "lg", className: "inline-flex items-center justify-center" })}
+          >
+            Моя история
+          </a>
         </motion.div>
       </div>
 

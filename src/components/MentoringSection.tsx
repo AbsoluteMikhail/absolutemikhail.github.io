@@ -14,7 +14,7 @@ const packageIcons: Record<MentoringIcon, typeof MessageCircle> = {
 
 const MentoringSection = () => {
   return (
-    <section id="mentoring" className="exhibition-section relative overflow-hidden bg-background">
+    <section id="mentoring" className="exhibition-section relative scroll-mt-20 overflow-hidden bg-background">
       {/* Background glow decoration */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/5 blur-[120px]" />
@@ -36,10 +36,9 @@ const MentoringSection = () => {
             <span className="mt-2 block text-foreground">с чем работаю сам</span>
           </SectionTitle>
           <p className="text-muted-foreground text-base md:text-lg max-w-3xl leading-7">
-            Пишу курсы по Unreal Engine и C++, занимаюсь со студентами
-            и помогаю командам с их играми. За это время работал как ментор
-            со 100+ разработчиками. Если хотите разобрать свой код, продумать систему
-            или подготовиться к собеседованию — ниже форматы встреч.
+            Помогаю с Unreal Engine, C++ и собственными играми.
+            Работал как ментор со 100+ разработчиками — от первых шагов
+            до сложных систем. Можно прийти с одним вопросом или со своим проектом.
           </p>
         </motion.div>
 
@@ -65,14 +64,8 @@ const MentoringSection = () => {
                   </div>
                 )}
 
-                <div className="mb-6">
-                  <div
-                    className={`h-8 w-8 flex items-center justify-center mb-6 ${
-                      pkg.popular
-                        ? "text-primary"
-                        : "text-primary"
-                    }`}
-                  >
+                <div className="mb-6 lg:min-h-[180px]">
+                  <div className="mb-6 h-8 w-8 flex items-center justify-center text-primary">
                     <Icon className="w-7 h-7" />
                   </div>
                   <h3 className="text-xl xl:text-2xl font-display font-bold text-foreground mb-3">
@@ -83,32 +76,18 @@ const MentoringSection = () => {
                   </p>
                 </div>
 
-                <div className="mb-7 border-b border-border/50 pb-7">
+                <div className="mb-6 border-b border-border/50 pb-6">
                   <div className="flex flex-wrap items-baseline gap-2">
                     <span className="text-3xl font-display font-bold text-foreground">
                       {pkg.price}
                     </span>
                     <span className="text-sm font-medium text-muted-foreground">
-                      за сессию
+                      / {pkg.duration}
                     </span>
                   </div>
-                  <dl className="mt-5 space-y-3 text-sm">
-                    <div>
-                      <dt className="font-semibold text-foreground">Длительность</dt>
-                      <dd className="mt-1 text-muted-foreground">{pkg.duration}</dd>
-                    </div>
-                    <div>
-                      <dt className="font-semibold text-foreground">Подготовка</dt>
-                      <dd className="mt-1 text-muted-foreground">{pkg.preparation}</dd>
-                    </div>
-                    <div>
-                      <dt className="font-semibold text-foreground">Результат</dt>
-                      <dd className="mt-1 text-muted-foreground">{pkg.result}</dd>
-                    </div>
-                  </dl>
                 </div>
 
-                <ul className="space-y-3 mb-8 flex-1">
+                <ul aria-label="Что разберём" className="space-y-3 mb-6">
                   {pkg.features.map((feature) => (
                     <li
                       key={feature}
@@ -121,6 +100,16 @@ const MentoringSection = () => {
                     </li>
                   ))}
                 </ul>
+
+                <p className="mb-6 border-l-2 border-primary/40 pl-4 text-sm leading-6 text-foreground/90">
+                  <span className="mb-1 block text-xs text-muted-foreground">Например</span>
+                  {pkg.exampleTask}
+                </p>
+
+                <div className="mt-auto space-y-3 border-t border-border/50 pt-5 pb-6 text-sm leading-6 text-muted-foreground">
+                  <p>{pkg.preparation}</p>
+                  <p className="text-foreground/90">{pkg.result}</p>
+                </div>
 
                 <ContactMessenger
                   message={pkg.telegramMessage}
@@ -142,15 +131,16 @@ const MentoringSection = () => {
           className="mt-8 border-t border-border pt-6"
         >
           <p className="text-muted-foreground text-sm font-medium">
-            Если не уверены, какой формат выбрать - помогу определиться и не
+            Если не уверены, какой формат выбрать — помогу определиться и не
             переплачивать.
           </p>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground/80">
             <span className="block">
-              Большинство вопросов решаются за одну встречу.
+              За час разбираем выбранную задачу. Такая встреча не заменяет полный аудит проекта.
             </span>
-            <span className="block">
-              Если потребуется больше времени - заранее обсудим план работы.
+            <span className="mt-2 block">
+              Большинство точечных вопросов решаются за одну сессию.
+              Если потребуется больше времени — заранее обсудим план.
             </span>
           </p>
         </motion.div>

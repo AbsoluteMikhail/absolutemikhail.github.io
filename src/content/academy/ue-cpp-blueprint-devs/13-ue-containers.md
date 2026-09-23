@@ -6,6 +6,7 @@ description: TArray, TMap, TSet, UObject references и контейнеры ка
 block: Блок 4 - UE Engineering
 video: 13
 order: 13
+status: Анонс
 pain: Зачем Epic сделали свои контейнеры?
 mainIdea: Контейнеры - часть gameplay performance.
 ---

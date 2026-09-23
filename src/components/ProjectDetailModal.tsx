@@ -188,6 +188,12 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
             {project.title}
           </h2>
 
+          {project.role ? (
+            <p className="text-sm font-medium text-foreground/90 md:text-base">
+              {project.role}
+            </p>
+          ) : null}
+
           <div className="text-muted-foreground leading-7 text-base md:text-lg md:leading-8">
             {project.fullDesc.split("\n").map((line, idx) => {
               const trimmed = line.trim();
@@ -214,6 +220,37 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
               );
             })}
           </div>
+
+          {project.caseStudy ? (
+            <section className="space-y-5 border-t border-border pt-6" aria-label="Инженерный кейс">
+              <h3 className="font-display text-lg font-bold text-foreground md:text-xl">
+                Инженерный кейс
+              </h3>
+              {([
+                ["Контекст", project.caseStudy.context],
+                ["Личная роль", project.caseStudy.role],
+                ["Задача", project.caseStudy.challenge],
+                ["Ограничения", project.caseStudy.constraints],
+                ["Решение", project.caseStudy.solution],
+                ["Результат", project.caseStudy.outcome],
+              ] as const).map(([label, text]) => (
+                <div key={label}>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">{label}</p>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground md:text-base md:leading-7">{text}</p>
+                </div>
+              ))}
+              {project.caseStudy.evidence?.length ? (
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">Подтверждения</p>
+                  <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+                    {project.caseStudy.evidence.map((item) => (
+                      <li key={item} className="border-l border-border pl-3">{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </section>
+          ) : null}
 
           <div className="flex flex-wrap gap-2 pt-4">
             {project.tech.map((t) => (

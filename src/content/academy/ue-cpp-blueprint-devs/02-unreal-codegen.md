@@ -6,6 +6,7 @@ description: UHT, reflection, GENERATED_BODY и generated.h без магиче�
 block: Блок 1 - Ментальный сдвиг
 video: 2
 order: 2
+status: Анонс
 pain: Что вообще делают GENERATED_BODY и макросы?
 mainIdea: Сначала Unreal строит reflection system. Потом gameplay.
 ---

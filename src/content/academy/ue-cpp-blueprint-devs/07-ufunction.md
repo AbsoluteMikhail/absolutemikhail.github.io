@@ -6,6 +6,7 @@ description: Как делать C++ функции, которые нормал
 block: Блок 2 - Object Model и GC
 video: 7
 order: 7
+status: Анонс
 pain: Почему функция не появляется или работает странно?
 mainIdea: Blueprint и C++ - это одна система, а не два разных мира.
 ---

@@ -1,5 +1,4 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { useEffect, useRef } from "react";
 import { CheckCircle2 } from "lucide-react";
 import heroPhoto from "@/assets/hero-photo.jpg";
 import uaiBadge from "@/assets/uai-badge-2026.png";
@@ -8,44 +7,12 @@ import { buttonStyles } from "@/components/ui/button";
 import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
 
 const HeroSection = () => {
-  const trustCardRef = useRef<HTMLAnchorElement>(null);
   const reduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (reduceMotion) return;
-    const trustCard = trustCardRef.current;
-    let frameId: number | null = null;
-
-    const updateTrustCard = () => {
-      frameId = null;
-      const card = trustCardRef.current;
-      if (!card) return;
-
-      const progress = Math.min(window.scrollY / 360, 1);
-      card.style.opacity = String(1 - progress);
-      card.style.transform = `translate3d(0, ${progress * 32}px, 0) scale(${1 - progress * 0.04})`;
-      card.style.pointerEvents = progress > 0.95 ? "none" : "auto";
-    };
-
-    const handleScroll = () => {
-      if (frameId === null) frameId = window.requestAnimationFrame(updateTrustCard);
-    };
-
-    updateTrustCard();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (frameId !== null) window.cancelAnimationFrame(frameId);
-      trustCard?.style.removeProperty("opacity");
-      trustCard?.style.removeProperty("transform");
-      trustCard?.style.removeProperty("pointer-events");
-    };
-  }, [reduceMotion]);
 
   return (
     <section 
       id="about" 
-      className="relative flex min-h-svh flex-col overflow-hidden bg-background pt-[72px] md:min-h-[850px] md:flex-row md:items-center md:pt-0 lg:min-h-[max(850px,100svh)]"
+      className="relative flex flex-col overflow-hidden bg-background pt-[72px] md:min-h-[760px] md:flex-row md:items-center md:pt-0 lg:min-h-[min(900px,100svh)]"
       style={{
         backgroundImage: `
           radial-gradient(ellipse at 0% 70%, hsl(var(--primary) / 0.14), transparent 55%),
@@ -54,7 +21,7 @@ const HeroSection = () => {
       }}
     >
       {/* Mobile: photo on top */}
-      <div className="relative h-[42svh] min-h-[280px] max-h-[400px] w-full md:hidden">
+      <div className="relative h-[28svh] min-h-[200px] max-h-[260px] w-full md:hidden">
         <motion.div
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -116,29 +83,32 @@ const HeroSection = () => {
 
       {/* Desktop credential card: the supplied badge stays replaceable as one asset. */}
       <InstructorBadgeCard
-        ref={trustCardRef}
-        className="absolute bottom-12 right-8 z-20 hidden w-[390px] will-change-[transform,opacity] lg:block xl:right-12"
+        className="absolute bottom-10 right-8 z-20 hidden w-[340px] lg:block xl:right-12"
       />
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 pb-12 pt-2 md:pb-24 md:pt-32">
+      <div className="relative z-10 container mx-auto px-6 pb-10 pt-2 md:pb-24 md:pt-32">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-2xl md:max-w-[62%] lg:max-w-[60%]"
+          className="max-w-2xl md:max-w-[58%] lg:max-w-[60%]"
         >
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="mb-7 border-l-2 border-primary pl-4"
+            className="mb-5 border-l-2 border-primary pl-4 md:mb-7"
           >
             <span className="mb-2 block font-display text-sm font-semibold uppercase tracking-[0.18em] text-foreground sm:text-base">
-              Михаил Ефремов · Absolute Mikhail
+              <span className="block md:inline">Михаил Ефремов</span>
+              <span className="hidden md:inline"> · </span>
+              <span className="mt-1 block md:mt-0 md:inline">Absolute Mikhail</span>
             </span>
             <span className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-primary sm:text-xs">
-              Senior Gameplay Programmer · GamePunk Studio
+              <span className="block md:inline">Senior Gameplay Programmer</span>
+              <span className="hidden md:inline"> · </span>
+              <span className="mt-1 block md:mt-0 md:inline">GamePunk Studio</span>
             </span>
           </motion.div>
 
@@ -146,36 +116,61 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.7 }}
-            className="hero-heading-shadow mb-6 font-display text-[clamp(1.5rem,7.6vw,2rem)] font-black leading-[1.15] tracking-tight sm:text-5xl md:mb-8 md:text-[clamp(2.4rem,4.9vw,4.7rem)]"
+            className="hero-heading-shadow mb-5 font-display text-[clamp(1.6rem,7.2vw,3rem)] font-black leading-[1.12] tracking-tight md:mb-7 md:text-[clamp(2rem,4vw,3.8rem)]"
           >
-            <span className="gradient-text">ИГРЫ, КОД</span>
-            <br />
-            <span className="text-foreground">И МОЯ ИСТОРИЯ</span>
+            <span className="block gradient-text">ДЕЛАЮ ИГРЫ</span>
+            <span className="block text-foreground">ДЕЛЮСЬ ОПЫТОМ</span>
           </motion.h1>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.7 }}
-            className="mb-6 max-w-lg md:mb-8"
+            className="mb-4 max-w-lg md:mb-8"
           >
             <p className="text-base leading-relaxed text-foreground sm:text-lg md:text-xl">
-              Делаю игры и делюсь опытом. Здесь — мои проекты, эксперименты и путь
-              от первых прототипов до релизов.
+              Разрабатываю игры на Unreal Engine. Помогаю с C++, Blueprint
+              и архитектурой — в статьях и на личных занятиях.
             </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.72, duration: 0.7 }}
+            className="mb-4 grid grid-cols-2 items-center gap-3 sm:flex sm:flex-wrap md:mb-6"
+          >
+            <a
+              href="#games"
+              className={buttonStyles({ className: "box-glow px-3 text-[10px] sm:px-5 sm:text-xs", size: "sm" })}
+            >
+              Смотреть игры
+            </a>
+            <a
+              href="#academy"
+              className={buttonStyles({ variant: "outline", size: "sm", className: "px-3 text-[10px] sm:px-5 sm:text-xs" })}
+            >
+              Изучать Unreal
+            </a>
+            <a
+              href="#mentoring"
+              className={buttonStyles({ variant: "text", size: "none", className: "col-span-2 inline-flex min-h-11 items-center px-3 text-sm" })}
+            >
+              Обсудить задачу →
+            </a>
           </motion.div>
 
           <motion.a
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.72, duration: 0.6 }}
+            transition={{ delay: 0.82, duration: 0.6 }}
             href="https://credential.unrealengine.com/b0a726a2-6749-4f13-a1c9-8ebfcc3d6034"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Unreal Authorized Instructor — открыть официальный credential"
-            className="mb-6 flex max-w-xl items-center gap-3 border-y border-border py-3 lg:hidden"
+            className="mb-4 flex max-w-xl items-center gap-3 border-y border-border py-2.5 lg:hidden"
           >
-            <span className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-white via-zinc-300 to-zinc-500 p-0.5">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-white via-zinc-300 to-zinc-500 p-0.5">
               <img src={uaiBadge} alt="Unreal Authorized Instructor 2026" className="h-full w-full object-contain" />
             </span>
             <span>
@@ -186,40 +181,16 @@ const HeroSection = () => {
             </span>
           </motion.a>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.82, duration: 0.7 }}
-            className="mb-6 flex flex-wrap gap-3"
-          >
-            <a
-              href="#games"
-              className={buttonStyles({ className: "box-glow", size: "sm" })}
-            >
-              Смотреть игры
-            </a>
-            <a
-              href="#timeline"
-              className={buttonStyles({ variant: "outline", size: "sm" })}
-            >
-              Моя история
-            </a>
-            <a
-              href="#mentoring"
-              className={buttonStyles({ variant: "text", size: "none", className: "inline-flex min-h-11 items-center px-3 text-sm" })}
-            >
-              За менторингом →
-            </a>
-          </motion.div>
-
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.92, duration: 0.6 }}
-            className="mb-7 flex items-center gap-2 text-sm text-muted-foreground"
+            className="mb-5 flex flex-col gap-2 text-sm text-muted-foreground sm:gap-1.5 md:mb-7"
           >
-            <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
-            20 игровых проектов · победы на Gamebox Hack и «Синеус» · выбор tinyBuild
+            <span className="inline-flex items-start gap-2">
+              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+              С 2015 года в Unreal Engine · 20 игровых проектов
+            </span>
           </motion.p>
 
           <motion.div
@@ -258,7 +229,7 @@ const HeroSection = () => {
         className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 lg:block"
       >
         <motion.div
-          animate={{ y: [0, 10, 0] }}
+          animate={reduceMotion ? undefined : { y: [0, 10, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
           className="w-6 h-10 rounded-full border-2 border-muted-foreground/40 flex justify-center pt-2"
         >

@@ -44,11 +44,11 @@ const Navbar = () => {
   }, [isOpen]);
 
   const navLinks = [
-    { label: "Работа", href: "#production" },
     { label: "Игры", href: "#games" },
-    { label: "История", href: "#timeline" },
     { label: "Академия", href: "/academy" },
     { label: "Менторинг", href: "#mentoring" },
+    { label: "Работа", href: "#production" },
+    { label: "История", href: "#timeline" },
   ];
 
   return (

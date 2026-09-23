@@ -6,6 +6,7 @@ description: Как отделить данные от логики, чтобы 
 block: Блок 3 - Gameplay Programmer Thinking
 video: 11
 order: 11
+status: Анонс
 pain: Любой баланс требует перекомпиляции
 mainIdea: Данные отдельно. Логика отдельно.
 ---

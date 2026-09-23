@@ -6,6 +6,7 @@ description: Почему polling ломает производительнос�
 block: Блок 1 - Ментальный сдвиг
 video: 4
 order: 4
+status: Анонс
 pain: FPS внезапно начинает умирать
 mainIdea: Production gameplay code почти никогда не живет в Tick.
 ---

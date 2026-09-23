@@ -6,6 +6,7 @@ description: Финальный разбор проблем BP-проектов 
 block: Блок 6 - Debugging и Production Reality
 video: 20
 order: 20
+status: Анонс
 pain: Проект вроде работает, но поддерживать его невозможно
 mainIdea: Production C++ - это не сложный код. Это системы, которые не разваливаются через месяц.
 ---

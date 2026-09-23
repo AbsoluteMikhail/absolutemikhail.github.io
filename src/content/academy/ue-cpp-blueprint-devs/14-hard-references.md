@@ -6,6 +6,7 @@ description: Hard refs, soft refs, async loading и почему dependency chai
 block: Блок 4 - UE Engineering
 video: 14
 order: 14
+status: Анонс
 pain: Проект грузит пол контента в память
 mainIdea: Hard references убивают scalability.
 ---

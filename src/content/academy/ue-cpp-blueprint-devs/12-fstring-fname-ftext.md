@@ -6,6 +6,7 @@ description: Почему Unreal использует разные строко�
 block: Блок 4 - UE Engineering
 video: 12
 order: 12
+status: Анонс
 pain: Почему Unreal не использует std::string
 mainIdea: Не все строки одинаковы.
 ---

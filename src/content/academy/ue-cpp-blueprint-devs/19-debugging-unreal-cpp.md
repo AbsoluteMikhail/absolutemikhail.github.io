@@ -6,6 +6,7 @@ description: Breakpoints, watches, callstack, UE_LOG и расследовани
 block: Блок 6 - Debugging и Production Reality
 video: 19
 order: 19
+status: Анонс
 pain: Я не понимаю как искать баги
 mainIdea: Production programmer не угадывает проблемы - он их измеряет.
 ---

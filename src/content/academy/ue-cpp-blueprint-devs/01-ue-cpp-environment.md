@@ -6,6 +6,7 @@ description: Как собрать рабочий C++ workflow в Unreal и пе
 block: Блок 1 - Ментальный сдвиг
 video: 1
 order: 1
+status: Анонс
 pain: UE C++ выглядит нестабильным и страшным
 mainIdea: Unreal C++ - это workflow, а не просто язык.
 ---

@@ -6,6 +6,7 @@ description: Какие specifier реально нужны gameplay programmer'
 block: Блок 2 - Object Model и GC
 video: 6
 order: 6
+status: Анонс
 pain: Какие specifier реально нужны?
 mainIdea: Gameplay programmer делает удобный editor API.
 ---

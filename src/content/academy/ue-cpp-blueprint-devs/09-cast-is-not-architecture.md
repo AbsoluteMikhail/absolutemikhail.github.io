@@ -6,6 +6,7 @@ description: Как перестать строить проект на цепо
 block: Блок 3 - Gameplay Programmer Thinking
 video: 9
 order: 9
+status: Анонс
 pain: Весь проект - цепочка Cast'ов
 mainIdea: Cast - временное решение. Interfaces - scalable solution.
 ---
