@@ -1,3 +1,5 @@
+export const telegramCommunityUrl = "https://t.me/Absolute_Unreal";
+
 export const encodedContactLinks = {
   telegram: "aHR0cHM6Ly90Lm1lL0Fic29sdXRlTWlraGFpbA==",
   max: "aHR0cHM6Ly9tYXgucnUvdS9mOUxIb2REMGNPSVUweExZVjdTbjdXSmN0TDBHMWY0TEdnLVFDV29RTWE0SGhTbVFUV28zdmw3UWQxaw==",

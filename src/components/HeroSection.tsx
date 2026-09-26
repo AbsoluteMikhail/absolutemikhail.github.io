@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
+import { telegramCommunityUrl } from "@/constants/contactLinks";
 import heroPhoto from "@/assets/hero-photo.jpg";
 import uaiBadge from "@/assets/uai-badge-monochrome.png";
 import InstructorBadgeCard from "@/components/InstructorBadgeCard";
@@ -204,7 +205,7 @@ const HeroSection = () => {
               { icon: TwitchIcon, href: "https://www.twitch.tv/absolutemikhail", label: "Twitch" },
               { icon: DiscordIcon, href: "https://discord.gg/NkwZ8pqyS6", label: "Discord-сообщество" },
               { icon: SteamIcon, href: "https://store.steampowered.com/developer/GamePunk-Studio", label: "Steam" },
-              { icon: TelegramIcon, href: "https://t.me/AbsoluteUnderground", label: "Telegram" },
+              { icon: TelegramIcon, href: telegramCommunityUrl, label: "Telegram" },
             ].map((social) => (
               <a
                 key={social.label}

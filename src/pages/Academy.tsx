@@ -45,10 +45,12 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { getCourseProgress, useAcademyProgress } from "@/lib/academyProgress";
 import { ProgressLabel, SavedReadingProgress } from "@/components/academy/SavedReadingProgress";
 
-const AcademyShell = ({ children }: { children: React.ReactNode }) => (
+const readingLayoutClassName = "mx-auto grid max-w-[1240px] gap-6 px-6 py-8 lg:grid-cols-[320px_minmax(0,760px)] lg:gap-12 lg:py-10 xl:grid-cols-[384px_minmax(0,760px)]";
+
+const AcademyShell = ({ children, reading = false }: { children: React.ReactNode; reading?: boolean }) => (
   <div className="min-h-screen bg-background pt-16 text-foreground">
     <header className="fixed left-0 top-0 z-40 w-full border-b border-border bg-background/90 backdrop-blur-xl">
-      <div className="container mx-auto flex h-16 items-center justify-between gap-6 px-6">
+      <div className={cn("mx-auto flex h-16 items-center justify-between gap-6 px-6", reading ? "max-w-[1240px]" : "container")}>
         <Link
           className="academy-brand-link"
           to="/academy"
@@ -375,8 +377,8 @@ const TopicPage = ({ topic }: { topic: AcademyTopic }) => {
 };
 
 const CoursePage = ({ course, content }: { course: AcademyCourse; content: AcademyContent }) => (
-  <AcademyShell>
-    <main className="mx-auto grid max-w-[1200px] gap-6 px-6 py-8 lg:grid-cols-[280px_minmax(0,760px)] lg:gap-12 lg:py-10">
+  <AcademyShell reading>
+    <main className={readingLayoutClassName}>
       <AcademyNavigation course={course} headings={content.headings} />
 
       <article data-academy-reading className="min-w-0">
@@ -479,8 +481,8 @@ const LessonPager = ({
 };
 
 const LessonPage = ({ course, lesson, content }: { course: AcademyCourse; lesson: AcademyLesson; content: AcademyContent }) => (
-  <AcademyShell>
-    <main className="mx-auto grid max-w-[1200px] gap-6 px-6 py-8 lg:grid-cols-[280px_minmax(0,760px)] lg:gap-12 lg:py-10">
+  <AcademyShell reading>
+    <main className={readingLayoutClassName}>
       <AcademyNavigation activeLessonSlug={lesson.slug} course={course} headings={content.headings} />
 
       <article data-academy-reading className="min-w-0">

@@ -435,7 +435,11 @@ export const TableOfContents = ({ headings, activeHeading }: { headings: Academy
   if (!visibleHeadings.length) return null;
   return <nav aria-label="На странице" className="my-3 ml-5 space-y-0.5 border-l border-primary/25">
     {visibleHeadings.map((heading) => (
-      <a aria-current={activeHeading === heading.id ? "location" : undefined} className={cn("-ml-px block border-l-2 py-2 pr-2 text-xs leading-5 transition-colors hover:text-primary", heading.depth === 3 ? "pl-6" : "pl-3", activeHeading === heading.id ? "border-accent bg-accent/5 text-foreground" : "border-transparent text-muted-foreground")} href={`#${heading.id}`} key={heading.id}>
+      <a aria-current={activeHeading === heading.id ? "location" : undefined} className={cn(
+        "block border-l-2 py-2 pl-4 pr-2 leading-5 transition-colors hover:text-primary",
+        heading.depth === 3 ? "ml-6 border-border/70 text-xs text-muted-foreground" : "-ml-px border-transparent text-[13px] font-semibold text-foreground/85",
+        activeHeading === heading.id && "border-accent bg-accent/5 text-foreground",
+      )} href={`#${heading.id}`} key={heading.id}>
         {heading.text}
       </a>
     ))}

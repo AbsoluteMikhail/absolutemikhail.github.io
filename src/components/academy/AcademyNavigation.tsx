@@ -66,7 +66,7 @@ const CourseNavigation = ({ course, activeLessonSlug, headings, activeHeading }:
               {block.title}
               <ChevronDown aria-hidden="true" className="h-4 w-4 shrink-0 transition-transform group-open/module:rotate-180 motion-reduce:transition-none" />
             </summary>
-            {lessons}
+            <div className="ml-3 border-l border-border/70 pl-3">{lessons}</div>
           </details>
         })}
       </nav>

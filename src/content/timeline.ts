@@ -1,3 +1,5 @@
+import { telegramCommunityUrl } from "@/constants/contactLinks";
+
 export type TimelineIcon = "award" | "rocket" | "trophy" | "star";
 
 export interface TimelineLink {
@@ -37,7 +39,7 @@ export const milestones: Milestone[] = [
       },
       {
         label: "Резидентство в Сколково",
-        href: "https://t.me/AbsoluteUnderground/482",
+        href: `${telegramCommunityUrl}/482`,
       },
     ],
   },

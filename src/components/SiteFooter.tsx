@@ -1,4 +1,5 @@
 import { ArrowUpRight, Mail, MapPin } from "lucide-react";
+import { telegramCommunityUrl } from "@/constants/contactLinks";
 import { ContactMessenger } from "@/components/ContactMessenger";
 import LegalLinks from "@/components/LegalLinks";
 import Logo from "@/components/Logo";
@@ -35,7 +36,7 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
                   { icon: TwitchIcon, href: "https://www.twitch.tv/absolutemikhail", label: "Twitch" },
                   { icon: DiscordIcon, href: "https://discord.gg/NkwZ8pqyS6", label: "Discord-сообщество" },
                   { icon: SteamIcon, href: "https://store.steampowered.com/developer/GamePunk-Studio", label: "Steam" },
-                  { icon: TelegramIcon, href: "https://t.me/AbsoluteUnderground", label: "Telegram" },
+                  { icon: TelegramIcon, href: telegramCommunityUrl, label: "Telegram" },
                 ].map((social) => (
                   <a
                     key={social.label}
