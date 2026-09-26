@@ -5,6 +5,7 @@ import { SectionBadge } from "@/components/ui/section-badge";
 import { SectionTitle } from "@/components/ui/section-title";
 import { academyIntro } from "@/content/academyIntro";
 import { resolveAcademyHighlights } from "@/content/academyHighlights";
+import { SavedReadingProgress } from "@/components/academy/SavedReadingProgress";
 
 const materials = resolveAcademyHighlights();
 
@@ -42,6 +43,7 @@ const AcademySection = () => (
             </h3>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">{material.description}</p>
             <p className="mt-4 text-xs leading-5 text-foreground/80">{material.audience}</p>
+            <SavedReadingProgress path={material.href} />
             <span aria-hidden="true" className="exhibition-link mt-auto pt-5">Читать материал<ArrowRight className="h-4 w-4" /></span>
           </article>
         ))}

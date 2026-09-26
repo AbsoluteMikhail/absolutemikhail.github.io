@@ -5,6 +5,7 @@ import { slugify, type AcademyHeading } from "@/lib/academyMarkdown";
 import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
 import { AcademyFlowDiagram } from "@/components/academy/AcademyFlowDiagram";
 import { BlueprintUEEmbed } from "@/components/academy/BlueprintUEEmbed";
+import { cn } from "@/lib/utils";
 import { AcademyDisclosure } from "@/components/academy/AcademyDisclosure";
 import { AcademyImageLightbox } from "@/components/academy/AcademyImageLightbox";
 
@@ -429,19 +430,14 @@ export const MarkdownContent = ({ className = "", content }: MarkdownContentProp
   );
 };
 
-export const TableOfContents = ({ headings, mobile = false }: { headings: AcademyHeading[]; mobile?: boolean }) => {
+export const TableOfContents = ({ headings, activeHeading }: { headings: AcademyHeading[]; activeHeading?: string }) => {
   const visibleHeadings = headings.filter((heading) => heading.depth > 1 && heading.depth <= 3);
   if (!visibleHeadings.length) return null;
-  const links = <nav aria-label="На странице" className="space-y-2 border-l border-border">
+  return <nav aria-label="На странице" className="my-3 ml-5 space-y-0.5 border-l border-primary/25">
     {visibleHeadings.map((heading) => (
-      <a className={`block py-2 pr-2 text-sm text-muted-foreground transition-colors hover:text-primary ${heading.depth === 3 ? "pl-7" : "pl-4"}`} href={`#${heading.id}`} key={heading.id}>
+      <a aria-current={activeHeading === heading.id ? "location" : undefined} className={cn("-ml-px block border-l-2 py-2 pr-2 text-xs leading-5 transition-colors hover:text-primary", heading.depth === 3 ? "pl-6" : "pl-3", activeHeading === heading.id ? "border-accent bg-accent/5 text-foreground" : "border-transparent text-muted-foreground")} href={`#${heading.id}`} key={heading.id}>
         {heading.text}
       </a>
     ))}
   </nav>;
-  if (mobile) return <div className="mb-6 xl:hidden"><AcademyDisclosure label="На странице">{links}</AcademyDisclosure></div>;
-  return <aside className="sticky top-24 hidden max-h-[calc(100vh-8rem)] self-start overflow-y-auto xl:block">
-    <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.24em] text-muted-foreground">На странице</p>
-    {links}
-  </aside>;
 };

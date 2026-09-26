@@ -4,7 +4,7 @@ import { ChevronDown } from "lucide-react";
 // Native details keeps navigation usable in prerendered HTML without JavaScript.
 export const AcademyDisclosure = ({ label, children }: { label: string; children: ReactNode }) => (
   <details
-    className="group rounded-lg border border-border bg-card/35"
+    className="group/navigation rounded-lg border border-border bg-card/35"
     onClick={(event) => {
       if (event.target instanceof Element && event.target.closest("a")) event.currentTarget.open = false;
     }}
@@ -16,7 +16,7 @@ export const AcademyDisclosure = ({ label, children }: { label: string; children
   >
     <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold [&::-webkit-details-marker]:hidden">
       {label}
-      <ChevronDown aria-hidden="true" className="h-4 w-4 shrink-0 text-primary transition-transform group-open:rotate-180" />
+      <ChevronDown aria-hidden="true" className="h-4 w-4 shrink-0 text-primary transition-transform group-open/navigation:rotate-180 motion-reduce:transition-none" />
     </summary>
     <div className="max-h-[60svh] overflow-y-auto border-t border-border p-4">{children}</div>
   </details>

@@ -48,9 +48,9 @@ const HeroSection = () => {
         />
       </div>
 
-      {/* Keep the small source portrait within 2× its native size and the content container. */}
+      {/* Size the portrait from the hero height, keeping it anchored to the bottom and content container. */}
       <div 
-        className="pointer-events-none absolute right-[max(0px,calc((100%-1400px)/2))] top-[76px] hidden aspect-[292/363] max-h-[calc(100%-76px)] w-[52%] max-w-[584px] md:block"
+        className="pointer-events-none absolute bottom-0 right-[max(0px,calc((100%-1400px)/2))] hidden aspect-[292/363] h-[calc(100%-76px)] w-auto max-w-[52%] md:block"
         style={{
           maskImage: 'linear-gradient(to right, transparent 0%, black 35%, black 85%, transparent 100%)',
           WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 35%, black 85%, transparent 100%)'

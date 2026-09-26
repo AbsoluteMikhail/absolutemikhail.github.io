@@ -31,17 +31,19 @@ import {
   type AcademyLesson,
   type AcademyTopic,
 } from "@/lib/academy";
-import { MarkdownContent, TableOfContents } from "@/components/academy/MarkdownContent";
+import { MarkdownContent } from "@/components/academy/MarkdownContent";
 import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
 import InstructorBadgeCard from "@/components/InstructorBadgeCard";
 import { cn } from "@/lib/utils";
-import { AcademyDisclosure } from "@/components/academy/AcademyDisclosure";
+import { AcademyNavigation } from "@/components/academy/AcademyNavigation";
 import { Button } from "@/components/ui/button";
 import { academyContent, type AcademyContent } from "@/lib/academyContent";
 import { getAcademyRoute } from "@/lib/academyRoutes";
 import { slugify } from "@/lib/academyMarkdown";
 import LegalLinks from "@/components/LegalLinks";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { getCourseProgress, useAcademyProgress } from "@/lib/academyProgress";
+import { ProgressLabel, SavedReadingProgress } from "@/components/academy/SavedReadingProgress";
 
 const AcademyShell = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-screen bg-background pt-16 text-foreground">
@@ -147,58 +149,6 @@ const CourseMeta = ({ course }: { course: AcademyCourse }) => {
   );
 };
 
-const LessonLinks = ({ course, activeLessonSlug }: { course: AcademyCourse; activeLessonSlug?: string }) => (
-  <nav aria-label="Уроки курса" className="space-y-6">
-    {groupLessonsByBlock(course.lessons).map((block) => (
-      <div key={block.title}>
-        <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-muted-foreground">
-          {block.title}
-        </p>
-        <div className="space-y-1">
-          {block.lessons.map((lesson) => (
-            <Link
-              className={`block rounded-md border px-3 py-2 text-sm transition-colors ${
-                activeLessonSlug === lesson.slug
-                  ? "border-primary/40 bg-primary/10 text-primary"
-                  : "border-transparent text-muted-foreground hover:border-border hover:bg-secondary/30 hover:text-foreground"
-              }`}
-              aria-current={activeLessonSlug === lesson.slug ? "page" : undefined}
-              key={lesson.slug}
-              to={`/academy/${course.slug}/${lesson.slug}`}
-            >
-              <span className="mr-2 text-xs opacity-60">{lesson.meta.video}</span>
-              <span className="block">{lesson.meta.title}</span>
-              <span className="mt-1 block text-[11px] opacity-70">
-                {getLessonAvailabilityLabel(course, lesson)}
-              </span>
-            </Link>
-          ))}
-        </div>
-      </div>
-    ))}
-  </nav>
-);
-
-const LessonSidebar = ({ activeLessonSlug, course }: { activeLessonSlug?: string; course: AcademyCourse }) => (
-  <aside className="min-w-0 lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:self-start lg:overflow-y-auto lg:pr-2">
-    <Link className="mb-4 inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-primary" to="/academy">
-      <ArrowLeft className="h-4 w-4" /> Все материалы
-    </Link>
-    <div className="mb-4 rounded-lg border border-border bg-card/35 p-4">
-      <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.24em] text-primary">{course.format}</p>
-      <Link className="font-display text-lg font-bold hover:text-primary" to={`/academy/${course.slug}`}>{course.title}</Link>
-    </div>
-    {course.lessons.length > 0 && <>
-      <div className="lg:hidden">
-        <AcademyDisclosure label={`Уроки курса · ${course.lessons.length}`}>
-          <LessonLinks course={course} activeLessonSlug={activeLessonSlug} />
-        </AcademyDisclosure>
-      </div>
-      <div className="hidden pt-2 lg:block"><LessonLinks course={course} activeLessonSlug={activeLessonSlug} /></div>
-    </>}
-  </aside>
-);
-
 const TopicIcon = ({ slug, className = "h-5 w-5" }: { slug: string; className?: string }) => {
   if (slug === "cpp") return <Braces className={className} />;
   if (slug === "unreal-engine") return <Gamepad2 className={className} />;
@@ -260,13 +210,15 @@ const updatedDateFormatter = new Intl.DateTimeFormat("ru-RU", {
   timeZone: "UTC",
 });
 
-const CourseCard = ({ course }: { course: AcademyCourse }) => (
+const CourseCard = ({ course }: { course: AcademyCourse }) => {
+  const progress = getCourseProgress(course, useAcademyProgress());
+  return (
   <Link
     className={cn(
       "group grid items-start gap-5 rounded-lg border border-border bg-card/35 p-5 transition-colors hover:border-primary/45 hover:bg-card/60 md:gap-8 md:p-6",
       course.cover && "md:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)]",
     )}
-    to={`/academy/${course.slug}`}
+    to={progress.href}
   >
     <AcademyCover alt={course.coverAlt} className="aspect-video rounded-md" src={course.cover} />
 
@@ -312,9 +264,14 @@ const CourseCard = ({ course }: { course: AcademyCourse }) => (
           </span>
         ))}
       </div>
+      {progress.started && <>
+        <ProgressLabel percent={progress.percent} />
+        {progress.percent < 100 && <span className="mt-3 inline-flex items-center gap-2 text-sm text-accent">Продолжить чтение <ArrowRight aria-hidden="true" className="h-4 w-4" /></span>}
+      </>}
     </div>
   </Link>
-);
+  );
+};
 
 const AcademyHome = () => (
   <AcademyShell>
@@ -419,11 +376,10 @@ const TopicPage = ({ topic }: { topic: AcademyTopic }) => {
 
 const CoursePage = ({ course, content }: { course: AcademyCourse; content: AcademyContent }) => (
   <AcademyShell>
-    <main className="container mx-auto grid gap-10 px-6 py-8 lg:grid-cols-[280px_minmax(0,1fr)] lg:py-10 xl:grid-cols-[280px_minmax(0,760px)_220px]">
-      <LessonSidebar course={course} />
+    <main className="mx-auto grid max-w-[1200px] gap-6 px-6 py-8 lg:grid-cols-[280px_minmax(0,760px)] lg:gap-12 lg:py-10">
+      <AcademyNavigation course={course} headings={content.headings} />
 
-      <article className="min-w-0">
-        <TableOfContents headings={content.headings} mobile />
+      <article data-academy-reading className="min-w-0">
         <AcademyCover
           alt={course.coverAlt}
           className="mb-6 aspect-video rounded-lg border border-border"
@@ -464,6 +420,7 @@ const CoursePage = ({ course, content }: { course: AcademyCourse; content: Acade
                           {lesson.meta.title}
                         </h3>
                         <p className="text-sm leading-6 text-muted-foreground">{lesson.meta.description}</p>
+                        <SavedReadingProgress path={`/academy/${course.slug}/${lesson.slug}`} />
                       </Link>
                     ))}
                   </div>
@@ -473,8 +430,6 @@ const CoursePage = ({ course, content }: { course: AcademyCourse; content: Acade
           </section>
         ) : null}
       </article>
-
-      <TableOfContents headings={content.headings} />
     </main>
   </AcademyShell>
 );
@@ -525,11 +480,10 @@ const LessonPager = ({
 
 const LessonPage = ({ course, lesson, content }: { course: AcademyCourse; lesson: AcademyLesson; content: AcademyContent }) => (
   <AcademyShell>
-    <main className="container mx-auto grid gap-10 px-6 py-8 lg:grid-cols-[280px_minmax(0,1fr)] lg:py-10 xl:grid-cols-[280px_minmax(0,760px)_220px]">
-      <LessonSidebar activeLessonSlug={lesson.slug} course={course} />
+    <main className="mx-auto grid max-w-[1200px] gap-6 px-6 py-8 lg:grid-cols-[280px_minmax(0,760px)] lg:gap-12 lg:py-10">
+      <AcademyNavigation activeLessonSlug={lesson.slug} course={course} headings={content.headings} />
 
-      <article className="min-w-0">
-        <TableOfContents headings={content.headings} mobile />
+      <article data-academy-reading className="min-w-0">
         <AcademyCover
           alt={lesson.coverAlt}
           className="mb-6 aspect-video rounded-lg border border-border"
@@ -591,8 +545,6 @@ const LessonPage = ({ course, lesson, content }: { course: AcademyCourse; lesson
         <MarkdownContent content={content.body} />
         <LessonPager course={course} lesson={lesson} />
       </article>
-
-      <TableOfContents headings={content.headings} />
     </main>
   </AcademyShell>
 );

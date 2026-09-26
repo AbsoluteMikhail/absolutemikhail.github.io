@@ -14,7 +14,7 @@ const Legal = () => {
           <ArrowLeft className="h-4 w-4" aria-hidden="true" /> На сайт
         </a>
         <h1 className="mb-4 break-words font-display text-2xl font-bold leading-tight sm:text-4xl">{document.title}</h1>
-        <p className="mb-8 text-sm text-muted-foreground">Редакция от <time dateTime="2026-09-07">7 сентября 2026 года</time></p>
+        <p className="mb-8 text-sm text-muted-foreground">Редакция от {document === legalContent.privacy ? <time dateTime="2026-09-26">26 сентября 2026 года</time> : <time dateTime="2026-09-07">7 сентября 2026 года</time>}</p>
         <article className="space-y-7 text-base leading-7 text-muted-foreground">{document.content}</article>
         <section className="mt-10 border-t border-border pt-7" aria-labelledby="legal-contact-title">
           <h2 className="mb-3 text-lg font-semibold" id="legal-contact-title">Вопросы и обращения</h2>

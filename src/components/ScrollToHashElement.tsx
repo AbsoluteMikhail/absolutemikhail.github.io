@@ -21,6 +21,16 @@ const ScrollToHashElement = () => {
     }
 
     let frame = 0;
+    let resizeObserver: ResizeObserver | undefined;
+    let correctionFrame = 0;
+    const stopFollowing = () => {
+      resizeObserver?.disconnect();
+      window.cancelAnimationFrame(correctionFrame);
+      window.removeEventListener("wheel", stopFollowing);
+      window.removeEventListener("touchstart", stopFollowing);
+      window.removeEventListener("pointerdown", stopFollowing);
+      window.removeEventListener("keydown", stopFollowing);
+    };
     const scrollToTarget = () => {
       frame = 0;
       const element = document.getElementById(id);
@@ -30,6 +40,20 @@ const ScrollToHashElement = () => {
         behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
         block: "start",
       });
+      // Lazy article images can change the layout after a saved-section jump.
+      // Keep that section in place until the reader takes over navigation.
+      const article = element.closest("[data-academy-reading]");
+      if (article && typeof ResizeObserver !== "undefined") {
+        resizeObserver = new ResizeObserver(() => {
+          window.cancelAnimationFrame(correctionFrame);
+          correctionFrame = window.requestAnimationFrame(() => element.scrollIntoView({ behavior: "instant", block: "start" }));
+        });
+        resizeObserver.observe(article);
+        window.addEventListener("wheel", stopFollowing, { passive: true });
+        window.addEventListener("touchstart", stopFollowing, { passive: true });
+        window.addEventListener("pointerdown", stopFollowing, { passive: true });
+        window.addEventListener("keydown", stopFollowing);
+      }
     };
     const scheduleScroll = () => {
       if (!frame) frame = window.requestAnimationFrame(scrollToTarget);
@@ -43,6 +67,7 @@ const ScrollToHashElement = () => {
     return () => {
       observer.disconnect();
       window.cancelAnimationFrame(frame);
+      stopFollowing();
     };
   }, [hash, key, navigationType]);
 

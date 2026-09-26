@@ -11,9 +11,31 @@ beforeEach(() => {
   Object.defineProperty(Element.prototype, "scrollIntoView", { configurable: true, value: scrollIntoView });
 });
 
-afterEach(() => vi.restoreAllMocks());
+afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
 describe("hash navigation", () => {
+  it("keeps an Academy section in view after images resize and yields to reader input", async () => {
+    let resize: (() => void) | undefined;
+    const disconnect = vi.fn();
+    vi.stubGlobal("ResizeObserver", class {
+      constructor(callback: () => void) { resize = callback; }
+      observe() {}
+      disconnect = disconnect;
+    });
+    render(<MemoryRouter initialEntries={["/academy/demo#practice"]}>
+      <ScrollToHashElement /><article data-academy-reading><h2 id="practice">Практика</h2></article>
+    </MemoryRouter>);
+    await waitFor(() => expect(scrollIntoView).toHaveBeenCalledTimes(1));
+    act(() => resize?.());
+    await waitFor(() => expect(scrollIntoView).toHaveBeenCalledWith({ behavior: "instant", block: "start" }));
+    act(() => resize?.());
+    fireEvent.wheel(window);
+    const calls = scrollIntoView.mock.calls.length;
+    await act(() => new Promise<void>((resolve) => requestAnimationFrame(() => resolve())));
+    expect(disconnect).toHaveBeenCalled();
+    expect(scrollIntoView).toHaveBeenCalledTimes(calls);
+  });
+
   it("starts a new page at the top when returning from a lesson without an anchor", () => {
     const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
     render(<MemoryRouter initialEntries={["/academy/lesson"]}>
