@@ -45,12 +45,13 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { getCourseProgress, useAcademyProgress } from "@/lib/academyProgress";
 import { ProgressLabel, SavedReadingProgress } from "@/components/academy/SavedReadingProgress";
 
-const readingLayoutClassName = "mx-auto grid max-w-[1240px] gap-6 px-6 py-8 lg:grid-cols-[320px_minmax(0,760px)] lg:gap-12 lg:py-10 xl:grid-cols-[384px_minmax(0,760px)]";
+const academyContainerClassName = "mx-auto w-full max-w-[1240px] px-6";
+const readingLayoutClassName = cn(academyContainerClassName, "grid gap-6 py-8 lg:grid-cols-[320px_minmax(0,760px)] lg:gap-12 lg:py-10 xl:grid-cols-[384px_minmax(0,760px)]");
 
-const AcademyShell = ({ children, reading = false }: { children: React.ReactNode; reading?: boolean }) => (
+const AcademyShell = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-screen bg-background pt-16 text-foreground">
     <header className="fixed left-0 top-0 z-40 w-full border-b border-border bg-background/90 backdrop-blur-xl">
-      <div className={cn("mx-auto flex h-16 items-center justify-between gap-6 px-6", reading ? "max-w-[1240px]" : "container")}>
+      <div className={cn(academyContainerClassName, "flex h-16 items-center justify-between gap-6")}>
         <Link
           className="academy-brand-link"
           to="/academy"
@@ -277,7 +278,7 @@ const CourseCard = ({ course }: { course: AcademyCourse }) => {
 
 const AcademyHome = () => (
   <AcademyShell>
-    <main className="container mx-auto px-6 py-10 lg:py-14">
+    <main className={cn(academyContainerClassName, "py-10 lg:py-14")}>
       <section className="mb-12 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_460px]">
         <div>
           <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-primary">База знаний</p>
@@ -333,7 +334,7 @@ const TopicPage = ({ topic }: { topic: AcademyTopic }) => {
 
   return (
     <AcademyShell>
-      <main className="container mx-auto px-6 py-10 lg:py-14">
+      <main className={cn(academyContainerClassName, "py-10 lg:py-14")}>
         <Link
           className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
           to="/academy"
@@ -377,7 +378,7 @@ const TopicPage = ({ topic }: { topic: AcademyTopic }) => {
 };
 
 const CoursePage = ({ course, content }: { course: AcademyCourse; content: AcademyContent }) => (
-  <AcademyShell reading>
+  <AcademyShell>
     <main className={readingLayoutClassName}>
       <AcademyNavigation course={course} headings={content.headings} />
 
@@ -481,7 +482,7 @@ const LessonPager = ({
 };
 
 const LessonPage = ({ course, lesson, content }: { course: AcademyCourse; lesson: AcademyLesson; content: AcademyContent }) => (
-  <AcademyShell reading>
+  <AcademyShell>
     <main className={readingLayoutClassName}>
       <AcademyNavigation activeLessonSlug={lesson.slug} course={course} headings={content.headings} />
 
@@ -555,7 +556,7 @@ const AlertIcon = () => <span className="academy-alert-dot" />;
 
 const AcademyNotFound = () => (
   <AcademyShell>
-    <main className="container mx-auto flex min-h-[70vh] items-center px-6 py-16">
+    <main className={cn(academyContainerClassName, "flex min-h-[70vh] items-center py-16")}>
       <div>
         <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-primary">Academy 404</p>
         <h1 className="mb-4 font-display text-4xl font-bold">Материал не найден</h1>
@@ -588,7 +589,7 @@ const AcademyDocumentPage = ({ course, lesson }: { course: AcademyCourse; lesson
 
   if (content) return lesson ? <LessonPage course={course} lesson={lesson} content={content} /> : <CoursePage course={course} content={content} />;
   return <AcademyShell>
-    <main className="container mx-auto px-6 py-12">
+    <main className={cn(academyContainerClassName, "py-12")}>
       <h1 className="mb-6 font-display text-2xl font-bold">{document.meta.title}</h1>
       {failed ? <div role="alert">
         <p className="mb-5 text-muted-foreground">Не удалось загрузить материал. Попробуйте ещё раз.</p>
