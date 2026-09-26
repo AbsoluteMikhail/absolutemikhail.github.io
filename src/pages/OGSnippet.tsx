@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { Award } from "lucide-react";
 import heroPhoto from "@/assets/hero-photo.jpg";
-import uaiBadge from "@/assets/uai-badge-2026.png";
+import uaiBadge from "@/assets/uai-badge-monochrome.png";
 import { DiscordIcon, MaxIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
 import Logo from "@/components/Logo";
 import { decodeContactLink, encodedContactLinks } from "@/constants/contactLinks";
@@ -187,7 +187,7 @@ const OGSnippet = () => {
           className="group absolute bottom-10 right-10 z-20 w-[390px] rounded-2xl border border-white/15 bg-background/70 p-3.5 shadow-2xl shadow-black/50 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-background/85 hover:shadow-primary/10 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
         >
           <span className="flex items-center gap-4">
-            <span className="flex h-[92px] w-[92px] shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-white via-zinc-300 to-zinc-500 p-1 shadow-inner shadow-white/50">
+            <span className="flex h-[92px] w-28 shrink-0 items-center justify-center">
               <img
                 src={uaiBadge}
                 alt="Unreal Authorized Instructor 2026"
@@ -207,12 +207,12 @@ const OGSnippet = () => {
               </strong>
               <span className="mt-2 grid grid-cols-2 gap-2 border-t border-white/10 pt-2">
                 <span>
-                  <strong className="font-display text-base text-foreground">11 лет</strong>
-                  <span className="ml-1.5 text-[9px] text-muted-foreground">в UE</span>
+                  <strong className="block font-display text-base text-foreground">11 лет</strong>
+                  <span className="mt-1 block whitespace-nowrap text-[9px] text-muted-foreground">в экосистеме UE</span>
                 </span>
                 <span>
-                  <strong className="font-display text-base text-foreground">6+ лет</strong>
-                  <span className="ml-1.5 text-[9px] text-muted-foreground">в коммерции</span>
+                  <strong className="block font-display text-base text-foreground">6+ лет</strong>
+                  <span className="mt-1 block whitespace-nowrap text-[9px] text-muted-foreground">в коммерции</span>
                 </span>
               </span>
             </span>

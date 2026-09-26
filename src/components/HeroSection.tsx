@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import heroPhoto from "@/assets/hero-photo.jpg";
-import uaiBadge from "@/assets/uai-badge-2026.png";
+import uaiBadge from "@/assets/uai-badge-monochrome.png";
 import InstructorBadgeCard from "@/components/InstructorBadgeCard";
 import { buttonStyles } from "@/components/ui/button";
 import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
@@ -83,7 +83,7 @@ const HeroSection = () => {
 
       {/* Desktop credential card: the supplied badge stays replaceable as one asset. */}
       <InstructorBadgeCard
-        className="absolute bottom-10 right-8 z-20 hidden w-[340px] lg:block xl:right-[max(48px,calc((100%-1400px)/2+48px))]"
+        className="absolute bottom-10 right-8 z-20 hidden w-[578px] max-w-[calc(50%-48px)] lg:block xl:right-[max(48px,calc((100%-1400px)/2+48px))]"
       />
 
       {/* Content */}
@@ -170,7 +170,7 @@ const HeroSection = () => {
             aria-label="Unreal Authorized Instructor — открыть официальный credential"
             className="mb-4 flex max-w-xl items-center gap-3 border-y border-border py-2.5 lg:hidden"
           >
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-white via-zinc-300 to-zinc-500 p-0.5">
+            <span className="flex h-16 w-20 shrink-0 items-center justify-center">
               <img src={uaiBadge} alt="Unreal Authorized Instructor 2026" className="h-full w-full object-contain" />
             </span>
             <span>

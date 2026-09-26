@@ -1,6 +1,6 @@
 import { forwardRef, type AnchorHTMLAttributes } from "react";
 import { Award, ExternalLink } from "lucide-react";
-import uaiBadge from "@/assets/uai-badge-2026.png";
+import uaiBadge from "@/assets/uai-badge-monochrome.png";
 import { cn } from "@/lib/utils";
 
 type InstructorBadgeCardProps = AnchorHTMLAttributes<HTMLAnchorElement>;
@@ -29,7 +29,7 @@ const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardPro
       {...props}
     >
       <span className="flex items-center gap-4">
-        <span className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-white via-zinc-300 to-zinc-500 p-1 shadow-inner shadow-white/50">
+        <span className="flex h-20 w-24 shrink-0 items-center justify-center">
           <img src={uaiBadge} alt="Unreal Authorized Instructor 2026" className="h-full w-full object-contain" />
         </span>
         <span className="min-w-0">
@@ -40,11 +40,10 @@ const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardPro
           <strong className="block font-display text-sm uppercase leading-5 tracking-[0.08em] text-foreground">
             Unreal Authorized Instructor
           </strong>
-          <span className="mt-2 block text-xs leading-5 text-muted-foreground">
-            <span className="block">Преподаю то, с чем сам работаю:</span>
-            <span className="block">код, архитектуру и путь до релиза</span>
-          </span>
         </span>
+      </span>
+      <span className="mt-3 block text-xs leading-5 text-muted-foreground">
+        Преподаю то, с чем сам работаю: код, архитектуру и путь до релиза.
       </span>
       <span className="mt-4 grid grid-cols-2 gap-2 border-t border-white/10 pt-4 [html.light_&]:border-border">
         <span className="py-1">
