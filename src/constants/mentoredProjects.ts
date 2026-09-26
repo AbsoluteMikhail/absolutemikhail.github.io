@@ -5,6 +5,7 @@ import anyWorldCover from "@/assets/projects/mentored/any-world.png";
 import relsuCover from "@/assets/projects/mentored/relsu.jpg";
 
 export interface MentoredProject {
+  slug: string;
   title: string;
   genre: string;
   status: string;
@@ -16,6 +17,7 @@ export interface MentoredProject {
 
 export const mentoredProjects: MentoredProject[] = [
   {
+    slug: "relsu",
     title: "RELSU",
     genre: "Co-op Action Roguelite",
     status: "В релизе",
@@ -26,6 +28,7 @@ export const mentoredProjects: MentoredProject[] = [
     url: "https://store.steampowered.com/app/3783850/RELSU/?curator_clanid=45056388",
   },
   {
+    slug: "guest-of-antiquity",
     title: "Гость древности",
     genre: "Puzzle-platformer",
     status: "В релизе",
@@ -36,6 +39,7 @@ export const mentoredProjects: MentoredProject[] = [
     url: "https://andrey-surnachev.itch.io/guest-of-antiquity",
   },
   {
+    slug: "phantasma",
     title: "Phantasma",
     genre: "Horror / Puzzle-platformer",
     status: "В релизе",
@@ -46,6 +50,7 @@ export const mentoredProjects: MentoredProject[] = [
     url: "https://dralexfire.itch.io/phantasma",
   },
   {
+    slug: "potato-ded",
     title: "Potato Ded",
     genre: "Action / Arcade",
     status: "Играбельный прототип",
@@ -56,6 +61,7 @@ export const mentoredProjects: MentoredProject[] = [
     url: "https://elpadlos.itch.io/potato-ded",
   },
   {
+    slug: "any-world",
     title: "Any World",
     genre: "Open-world 3D Platformer",
     status: "В разработке",

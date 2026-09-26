@@ -139,6 +139,19 @@ const validateHtml = (html, pathname) => {
   if (html.includes("\u0000") || html.includes("\ufffd")) {
     throw new Error(`${pathname}: corrupted Unicode in prerendered HTML`);
   }
+  if (pathname === "/snippet" || pathname.startsWith("/projects/")) {
+    const { document } = new JSDOM(html).window;
+    if (document.querySelectorAll("h1").length !== 1 || !document.querySelector("main")) {
+      throw new Error(`${pathname}: public project and profile pages must be prerendered`);
+    }
+  }
+  if (pathname === "/") {
+    const { document } = new JSDOM(html).window;
+    const disclosures = [...document.querySelectorAll("#faq details")];
+    if (!disclosures.length || disclosures.some((item) => !item.querySelector("summary") || !item.querySelector("p")?.textContent.trim())) {
+      throw new Error("Homepage FAQ answers must be readable without JavaScript");
+    }
+  }
   if (pathname === "/privacy" || pathname === "/terms") {
     const { document } = new JSDOM(html).window;
     if (document.querySelectorAll("h1").length !== 1 || !document.querySelector("article section")) {

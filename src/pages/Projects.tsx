@@ -3,10 +3,9 @@ import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { projects } from "@/constants/projects";
-import ProjectDetailModal from "@/components/ProjectDetailModal";
-import type { Project } from "@/constants/projects";
+import { projectPath } from "@/lib/projectPages";
 import ProjectExhibit from "@/components/ProjectExhibit";
 import SiteFooter from "@/components/SiteFooter";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -16,7 +15,6 @@ import ReviewsSection from "@/components/ReviewsSection";
 
 const Projects = () => {
   const { hash } = useLocation();
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const activeProjects = projects.filter((project) => project.stats !== "Заморожен");
   const frozenProjects = projects.filter((project) => project.stats === "Заморожен");
 
@@ -28,7 +26,7 @@ const Projects = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <main className="pb-16 pt-28 md:pt-36">
+      <main id="main-content" tabIndex={-1} className="pb-16 pt-28 md:pt-36">
         <div className="container mx-auto px-6">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
@@ -60,7 +58,7 @@ const Projects = () => {
 
           <div className="grid grid-cols-1 gap-x-10 gap-y-12 md:grid-cols-2">
             {activeProjects.map((project) => (
-              <ProjectExhibit key={project.id} project={project} onSelect={setSelectedProject} />
+              <ProjectExhibit key={project.id} project={project} href={projectPath(project.slug)} />
             ))}
           </div>
 
@@ -81,7 +79,7 @@ const Projects = () => {
 
               <div className="grid grid-cols-1 gap-x-10 gap-y-12 md:grid-cols-2">
                 {frozenProjects.map((project) => (
-                  <ProjectExhibit key={project.id} project={project} onSelect={setSelectedProject} />
+                  <ProjectExhibit key={project.id} project={project} href={projectPath(project.slug)} />
                 ))}
               </div>
             </section>
@@ -95,12 +93,6 @@ const Projects = () => {
       <ReviewsSection />
       <SiteFooter projectsPage />
       <ScrollToTop />
-
-      <ProjectDetailModal
-        project={selectedProject}
-        isOpen={selectedProject !== null}
-        onClose={() => setSelectedProject(null)}
-      />
 
       {/* Footer Decoration */}
       <div className="fixed bottom-0 left-0 w-full h-64 bg-gradient-to-t from-primary/5 to-transparent pointer-events-none -z-10" />

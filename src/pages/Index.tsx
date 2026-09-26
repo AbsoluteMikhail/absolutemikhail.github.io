@@ -18,6 +18,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
+      <main id="main-content" tabIndex={-1} className="outline-none">
       <HeroSection />
       <GamesSection />
       <ReviewsSection />
@@ -31,6 +32,7 @@ const Index = () => {
       <FAQSection />
       <FinalTrustSection />
 
+      </main>
       <SiteFooter />
       <ScrollToTop />
     </div>

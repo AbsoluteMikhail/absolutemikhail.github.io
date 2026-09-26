@@ -5,6 +5,7 @@ import forTheKingCover from "@/assets/projects/jams/for-the-king.jpg";
 import handleWithCareCover from "@/assets/projects/jams/handle-with-care.png";
 
 export interface ItchProject {
+  slug: string;
   title: string;
   genre: string;
   year: string;
@@ -18,6 +19,7 @@ export interface ItchProject {
 
 export const itchProjects: ItchProject[] = [
   {
+    slug: "gerasim-protiv-besov",
     title: "ГЕРАСИМ против БЕСОВ",
     genre: "Survival / Adventure",
     year: "2024",
@@ -30,6 +32,7 @@ export const itchProjects: ItchProject[] = [
     url: "https://mikhaile.itch.io/gerasimvsbesi",
   },
   {
+    slug: "for-the-king",
     title: "ЗА КОРОЛЯ",
     genre: "Strategy / Management",
     year: "2022",
@@ -42,6 +45,7 @@ export const itchProjects: ItchProject[] = [
     url: "https://mikhaile.itch.io/fortheking",
   },
   {
+    slug: "revenge-of-the-cat",
     title: "Revenge of the Cat",
     genre: "3D Adventure",
     year: "2021",
@@ -54,6 +58,7 @@ export const itchProjects: ItchProject[] = [
     url: "https://mikhaile.itch.io/revenge-of-the-cat",
   },
   {
+    slug: "weekend-jam-1",
     title: "Weekend Jam #1",
     genre: "FPS / Survival",
     year: "2021",
@@ -66,6 +71,7 @@ export const itchProjects: ItchProject[] = [
     url: "https://mikhaile.itch.io/weekend-jam-1",
   },
   {
+    slug: "handle-with-care",
     title: "Handle With Care",
     genre: "Physics / Simulation",
     year: "2021",

@@ -5,8 +5,8 @@ export interface ExperienceCase {
   summary: string;
   details: string[];
   result: string;
-  metric: string;
-  metricLabel: string;
+  highlight: string;
+  highlightLabel: string;
   featured?: boolean;
   icon: "gameplay" | "world" | "film";
 }
@@ -25,8 +25,8 @@ export const productionExperience: ExperienceCase[] = [
     ],
     result:
       "Проект вырос из победного хакатон-прототипа в публичный продукт, получил резидентство игрового кластера «Сколково» и вышел в финал «Игропрома».",
-    metric: "+40%",
-    metricLabel: "к скорости прототипирования механик",
+    highlight: "Steam API",
+    highlightLabel: "профиль, сохранения и лидерборды в публичной сборке",
     featured: true,
     icon: "gameplay",
   },
@@ -42,9 +42,9 @@ export const productionExperience: ExperienceCase[] = [
       "Оптимизация physics assets и тяжёлых Tick-функций.",
     ],
     result:
-      "Ускорил кадр за счёт системной оптимизации и сделал настройку баланса независимой от пересборки проекта.",
-    metric: "−20%",
-    metricLabel: "frame time после оптимизации",
+      "Сделал настройку баланса независимой от пересборки проекта. Переработал тяжёлые Tick-функции и физические ассеты, чтобы снизить нагрузку игровых систем.",
+    highlight: "Data Assets",
+    highlightLabel: "настройка экономики и крафта без пересборки",
     icon: "world",
   },
   {
@@ -59,9 +59,9 @@ export const productionExperience: ExperienceCase[] = [
       "Работа с многоэкранными real-time конфигурациями.",
     ],
     result:
-      "Участвовал в VP/VFX-производстве фильма «Воздух», получившего премию «Золотой орёл» за визуальные эффекты.",
-    metric: "60 FPS",
-    metricLabel: "без просадок в production-сценах",
+      "В команде XOVP работал над виртуальным производством фильма «Воздух». Награду за визуальные эффекты получили студии XOVP и «Аламбик».",
+    highlight: "«Воздух»",
+    highlightLabel: "«Золотой орёл» за визуальные эффекты",
     icon: "film",
   },
 ];
@@ -98,6 +98,6 @@ export const engineeringFoundation: EngineeringStage[] = [
     description:
       "Руководил командой из трёх инженеров и автоматизировал обработку и валидацию данных на Python.",
     evidence:
-      "−30% ручных операций; четыре года подряд — лучший инженер компании.",
+      "Четыре года подряд — лучший инженер компании.",
   },
 ];

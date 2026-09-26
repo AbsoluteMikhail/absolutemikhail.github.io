@@ -52,6 +52,8 @@ const Navbar = () => {
   ];
 
   return (
+    <>
+    <a href="#main-content" className="skip-link">Перейти к содержимому</a>
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -156,6 +158,9 @@ const Navbar = () => {
                 effect="none"
                 onClick={() => {
                   setIsOpen(false);
+                  // The menu item leaves after its exit animation. Keep a stable
+                  // focus origin for the dialog instead of that disappearing item.
+                  menuButtonRef.current?.focus();
                   contactTriggerRef.current?.click();
                 }}
                 className="mt-2 text-center"
@@ -167,6 +172,7 @@ const Navbar = () => {
         )}
       </AnimatePresence>
     </motion.nav>
+    </>
   );
 };
 

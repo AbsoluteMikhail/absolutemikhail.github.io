@@ -1,3 +1,4 @@
+import { projectPages, projectPath } from "@/lib/projectPages";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import { AppContent } from "./App";
@@ -16,6 +17,8 @@ const academyTopicPaths = academyTopics.map((topic) => `/academy/topics/${topic.
 export const prerenderPaths = [
   "/",
   "/projects",
+  "/snippet",
+  ...projectPages.map((project) => projectPath(project.slug)),
   "/academy",
   "/malena/privacy",
   "/privacy",
@@ -29,6 +32,15 @@ const loadInitialPage = async (url: string) => {
     const module = await import("@/pages/Legal");
     return { InitialPage: module.default, initialRoute: "legal" as InitialRoute };
   }
+  if (url.replace(/\/+$/, "") === "/snippet") {
+    const module = await import("@/pages/OGSnippet");
+    return { InitialPage: module.default, initialRoute: "snippet" as InitialRoute };
+  }
+  if (url.startsWith("/projects/") && url !== "/projects/") {
+    const module = await import("@/pages/Project");
+    return { InitialPage: module.default, initialRoute: "project" as InitialRoute };
+  }
+
   if (url === "/") {
     const module = await import("./pages/Index");
     return { InitialPage: module.default, initialRoute: "home" as InitialRoute };

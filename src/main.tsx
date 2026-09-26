@@ -15,6 +15,15 @@ const loadInitialPage = async () => {
     return { InitialPage: module.default, initialRoute: "legal" as InitialRoute };
   }
 
+  if (pathname.replace(/\/+$/, "") === "/snippet") {
+    const module = await import("@/pages/OGSnippet");
+    return { InitialPage: module.default, initialRoute: "snippet" as InitialRoute };
+  }
+  if (pathname.startsWith("/projects/") && pathname !== "/projects/") {
+    const module = await import("@/pages/Project");
+    return { InitialPage: module.default, initialRoute: "project" as InitialRoute };
+  }
+
   if (pathname === "/") {
     const module = await import("./pages/Index");
     return { InitialPage: module.default, initialRoute: "home" as InitialRoute };

@@ -8,6 +8,7 @@ import PrivacyControls from "@/components/PrivacyControls";
 import { ThemeSync } from "@/lib/theme";
 
 const Index = lazy(() => import("./pages/Index"));
+const Project = lazy(() => import("@/pages/Project"));
 const Projects = lazy(() => import("./pages/Projects"));
 const Music = lazy(() => import("./pages/Music"));
 const Twitch = lazy(() => import("./pages/Twitch"));
@@ -23,7 +24,7 @@ const PageFallback = () => (
   </div>
 );
 
-export type InitialRoute = "academy" | "home" | "malenaPrivacy" | "projects" | "legal";
+export type InitialRoute = "academy" | "home" | "malenaPrivacy" | "projects" | "project" | "snippet" | "legal";
 
 type AppContentProps = {
   InitialPage?: ComponentType;
@@ -45,9 +46,10 @@ export const AppContent = ({ InitialPage, initialRoute }: AppContentProps = {}) 
           path="/projects"
           element={getRouteElement("projects", initialRoute, InitialPage, Projects)}
         />
+        <Route path="/projects/:slug" element={getRouteElement("project", initialRoute, InitialPage, Project)} />
         <Route path="/music" element={<Music />} />
         <Route path="/twitch" element={<Twitch />} />
-        <Route path="/snippet" element={<OGSnippet />} />
+        <Route path="/snippet" element={getRouteElement("snippet", initialRoute, InitialPage, OGSnippet)} />
         <Route path="/privacy" element={getRouteElement("legal", initialRoute, InitialPage, Legal)} />
         <Route path="/terms" element={getRouteElement("legal", initialRoute, InitialPage, Legal)} />
         <Route

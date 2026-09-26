@@ -1,16 +1,16 @@
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import type { Project } from "@/constants/projects";
 import ProjectStatusIcon from "@/components/ProjectStatusIcon";
 import { cn } from "@/lib/utils";
 
-interface ProjectExhibitProps {
+type ProjectExhibitProps = {
   project: Project;
-  onSelect: (project: Project) => void;
   featured?: boolean;
-}
+} & ({ onSelect: (project: Project) => void; href?: never } | { href: string; onSelect?: never });
 
-export default function ProjectExhibit({ project, onSelect, featured = false }: ProjectExhibitProps) {
+export default function ProjectExhibit({ project, onSelect, href, featured = false }: ProjectExhibitProps) {
   return (
     <motion.article
       initial={{ opacity: 0, y: 24 }}
@@ -19,19 +19,23 @@ export default function ProjectExhibit({ project, onSelect, featured = false }: 
       transition={{ duration: 0.45 }}
       className={cn("group relative flex min-w-0 flex-col gap-5", featured && "lg:col-span-3 lg:grid lg:grid-cols-[1.65fr_1fr] lg:items-center lg:gap-10")}
     >
-      <button
+      {href ? <Link to={href} aria-label={`Подробнее о проекте ${project.title}`} className="absolute inset-0 z-20 rounded-xl focus-visible:ring-2 focus-visible:ring-primary" /> : <button
         type="button"
-        onClick={() => onSelect(project)}
+        onClick={() => onSelect?.(project)}
         aria-label={`Подробнее о проекте ${project.title}`}
         className="absolute inset-0 z-20 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
       >
         <span className="sr-only">Подробнее о проекте {project.title}</span>
-      </button>
+      </button>}
       <div className="relative overflow-hidden rounded-xl bg-card">
         <img
           src={project.cover}
           srcSet={project.coverSrcSet}
-          sizes={featured ? "(min-width: 1024px) 60vw, (min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 50vw, 100vw"}
+          sizes={featured
+            ? "(min-width: 1024px) 60vw, (min-width: 768px) 50vw, 100vw"
+            : href
+              ? "(min-width: 768px) 50vw, 100vw"
+              : "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"}
           alt={`Обложка проекта ${project.title} в жанре ${project.genre}`}
           loading="lazy"
           decoding="async"

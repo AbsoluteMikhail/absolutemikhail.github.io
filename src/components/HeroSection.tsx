@@ -48,12 +48,12 @@ const HeroSection = () => {
         />
       </div>
 
-      {/* Desktop: photo on the right */}
+      {/* Keep the small source portrait within 2× its native size and the content container. */}
       <div 
-        className="hidden md:block absolute top-[76px] right-0 bottom-0 w-[52%] pointer-events-none"
+        className="pointer-events-none absolute right-[max(0px,calc((100%-1400px)/2))] top-[76px] hidden aspect-[292/363] max-h-[calc(100%-76px)] w-[52%] max-w-[584px] md:block"
         style={{
-          maskImage: 'linear-gradient(to right, transparent 0%, black 40%)',
-          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 40%)'
+          maskImage: 'linear-gradient(to right, transparent 0%, black 35%, black 85%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 35%, black 85%, transparent 100%)'
         }}
       >
         <motion.div 
@@ -83,7 +83,7 @@ const HeroSection = () => {
 
       {/* Desktop credential card: the supplied badge stays replaceable as one asset. */}
       <InstructorBadgeCard
-        className="absolute bottom-10 right-8 z-20 hidden w-[340px] lg:block xl:right-12"
+        className="absolute bottom-10 right-8 z-20 hidden w-[340px] lg:block xl:right-[max(48px,calc((100%-1400px)/2+48px))]"
       />
 
       {/* Content */}

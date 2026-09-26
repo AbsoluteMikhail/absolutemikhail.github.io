@@ -1,12 +1,7 @@
 import { SectionTitle } from "@/components/ui/section-title";
 import { SectionBadge } from "@/components/ui/section-badge";
 import { motion } from "framer-motion";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { ChevronDown } from "lucide-react";
 import { faqItems } from "@/content/faq";
 
 const FAQSection = () => (
@@ -32,22 +27,17 @@ const FAQSection = () => (
         viewport={{ once: true }}
         className="min-w-0 border-t border-border"
       >
-        <Accordion type="single" collapsible className="w-full">
+        <div className="w-full">
           {faqItems.map((item) => (
-            <AccordionItem
-              key={item.question}
-              value={item.question}
-              className="border-border/70"
-            >
-              <AccordionTrigger className="py-6 text-left font-body text-base font-semibold leading-6 text-foreground hover:text-primary hover:no-underline">
+            <details key={item.question} className="group border-b border-border/70">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-6 text-left text-base font-semibold leading-6 hover:text-primary [&::-webkit-details-marker]:hidden">
                 {item.question}
-              </AccordionTrigger>
-              <AccordionContent className="pb-5 text-base leading-7 text-muted-foreground">
-                {item.answer}
-              </AccordionContent>
-            </AccordionItem>
+                <ChevronDown aria-hidden="true" className="h-4 w-4 shrink-0 transition-transform group-open:rotate-180 motion-reduce:transition-none" />
+              </summary>
+              <p className="pb-5 text-base leading-7 text-muted-foreground">{item.answer}</p>
+            </details>
           ))}
-        </Accordion>
+        </div>
       </motion.div>
 
       <motion.p

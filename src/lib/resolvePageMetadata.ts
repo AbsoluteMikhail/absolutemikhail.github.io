@@ -8,5 +8,14 @@ export const resolvePageMetadata = async (pathname: string) => {
     const { getAcademyMetadata } = await import("@/lib/academyRoutes");
     return getAcademyMetadata(path);
   }
+  if (path.startsWith("/projects/")) {
+    const { findProjectPage } = await import("@/lib/projectPages");
+    const project = findProjectPage(path.slice("/projects/".length));
+    return project ? {
+      title: `${project.title} — ${project.category} | Absolute Mikhail`,
+      description: project.description,
+      robots: "index, follow",
+    } : notFoundMetadata;
+  }
   return findRouteMetadata(path) ?? notFoundMetadata;
 };

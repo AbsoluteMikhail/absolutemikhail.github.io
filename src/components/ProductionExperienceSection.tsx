@@ -57,8 +57,8 @@ const ProductionExperienceSection = () => (
                 </ul>
               </div>
               <div className="border-l-2 border-primary/60 pl-5 lg:pl-6">
-                <strong className="gradient-text font-display text-4xl font-bold">{item.metric}</strong>
-                <p className="mt-2 text-[10px] uppercase leading-5 tracking-[0.12em] text-foreground">{item.metricLabel}</p>
+                <strong className="gradient-text block break-words font-display text-2xl font-bold leading-snug">{item.highlight}</strong>
+                <p className="mt-2 text-[10px] uppercase leading-5 tracking-[0.12em] text-foreground">{item.highlightLabel}</p>
                 <p className="mt-4 text-sm leading-6 text-muted-foreground">{item.result}</p>
               </div>
             </motion.article>

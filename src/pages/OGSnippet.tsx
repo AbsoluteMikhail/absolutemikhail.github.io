@@ -14,17 +14,7 @@ const OGSnippet = () => {
       document.documentElement.classList.add('snippet-capture');
     }
 
-    const handleResize = () => {
-      const scaleW = window.innerWidth / 1200;
-      const scaleH = window.innerHeight / 630;
-      const scale = Math.min(scaleW, scaleH);
-      document.documentElement.style.setProperty('--snippet-scale', scale.toString());
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
     return () => {
-      window.removeEventListener('resize', handleResize);
-      document.documentElement.style.removeProperty('--snippet-scale');
       document.documentElement.classList.remove('snippet-capture');
     };
   }, []);
@@ -34,7 +24,8 @@ const OGSnippet = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-0 overflow-hidden">
+    <main className="min-h-screen bg-black flex items-center justify-center p-0 overflow-hidden">
+      <div className="snippet-frame">
       {/* 
         Container with fixed 1200x630 aspect ratio, 
         but scales to fit the screen while maintaining proportions.
@@ -45,7 +36,7 @@ const OGSnippet = () => {
           style={{
             width: '1200px',
             height: '630px',
-            transform: 'scale(var(--snippet-scale, 1))',
+
 
             // ВИШЕНКА №1: Внутренняя фаска (стеклянный край)
             // Мы добавляем 1px белого цвета с очень низкой прозрачностью.
@@ -253,7 +244,8 @@ const OGSnippet = () => {
         <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent blur-3xl" />
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[120px]" />
       </div>
-    </div>
+      </div>
+    </main>
   );
 };
 
