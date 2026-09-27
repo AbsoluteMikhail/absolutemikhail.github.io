@@ -1,11 +1,13 @@
-import { createRoot } from "react-dom/client";
 import App, { type InitialRoute } from "./App.tsx";
 import { applyDocumentTheme, getThemePreference, resolveAppliedTheme } from "@/lib/theme";
+import { installAssetRecovery } from "@/lib/assetRecovery";
+import { bootstrapApplication } from "@/lib/bootstrapApplication";
 import "./index.css";
 
 applyDocumentTheme(resolveAppliedTheme(getThemePreference(), window.location.pathname));
 
 const rootElement = document.getElementById("root")!;
+installAssetRecovery();
 
 const loadInitialPage = async () => {
   const pathname = window.location.pathname;
@@ -46,14 +48,4 @@ const loadInitialPage = async () => {
   return {};
 };
 
-const bootstrap = async () => {
-  const app = <App {...await loadInitialPage()} />;
-
-  // The generated HTML stays visible while the current route chunk loads.
-  // React then takes over in one commit, avoiding hydration conflicts from
-  // browser-only effects while keeping the full page available without JS.
-  rootElement.replaceChildren();
-  createRoot(rootElement).render(app);
-};
-
-void bootstrap();
+void bootstrapApplication(rootElement, async () => <App {...await loadInitialPage()} />);

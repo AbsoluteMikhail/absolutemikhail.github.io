@@ -6,6 +6,7 @@ import RouteMetadata from "./components/RouteMetadata";
 import CustomCursor from "./components/CustomCursor";
 import PrivacyControls from "@/components/PrivacyControls";
 import { ThemeSync } from "@/lib/theme";
+import { AppErrorBoundary } from "@/components/AppErrorBoundary";
 
 const Index = lazy(() => import("./pages/Index"));
 const Project = lazy(() => import("@/pages/Project"));
@@ -19,7 +20,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const Legal = lazy(() => import("@/pages/Legal"));
 
 const PageFallback = () => (
-  <div className="flex min-h-screen items-center justify-center bg-background text-sm text-muted-foreground">
+  <div role="status" className="flex min-h-screen items-center justify-center bg-background text-sm text-muted-foreground">
     Загрузка…
   </div>
 );
@@ -77,12 +78,12 @@ export const AppContent = ({ InitialPage, initialRoute }: AppContentProps = {}) 
 };
 
 const App = (props: AppContentProps) => (
-  <>
+  <AppErrorBoundary>
     <CustomCursor />
     <BrowserRouter>
       <AppContent {...props} />
     </BrowserRouter>
-  </>
+  </AppErrorBoundary>
 );
 
 export default App;
