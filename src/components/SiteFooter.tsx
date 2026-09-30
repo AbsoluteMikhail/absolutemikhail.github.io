@@ -60,6 +60,7 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
                   { label: "Менторинг", href: `${homePrefix}#mentoring` },
                   { label: "Отзывы учеников", href: `${homePrefix}#mentee-reviews` },
                   { label: "Проекты", href: `${homePrefix}#games` },
+                  { label: "Боты и плагины", href: `${homePrefix}#workshop` },
                   { label: "Моя история", href: `${homePrefix}#timeline` },
                   { label: "Работа в командах", href: `${homePrefix}#production` },
                   { label: "Все проекты", href: "/projects" },

@@ -5,6 +5,7 @@ import ProductionExperienceSection from "@/components/ProductionExperienceSectio
 import EngineeringFoundationSection from "@/components/EngineeringFoundationSection";
 import TimelineSection from "@/components/TimelineSection";
 import GamesSection from "@/components/GamesSection";
+import WorkshopSection from "@/components/WorkshopSection";
 import AcademySection from "@/components/AcademySection";
 import MentoringSection from "@/components/MentoringSection";
 import FAQSection from "@/components/FAQSection";
@@ -22,6 +23,7 @@ const Index = () => {
       <HeroSection />
       <GamesSection />
       <ReviewsSection />
+      <WorkshopSection />
       <AcademySection />
       <MentoringSection />
       <MenteeReviewsSection />
