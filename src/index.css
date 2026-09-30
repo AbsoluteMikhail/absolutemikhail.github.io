@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+@import "./fonts.css";
 
 @tailwind base;
 @tailwind components;
@@ -100,6 +100,12 @@
     @apply bg-background text-foreground font-body antialiased;
     scroll-behavior: smooth;
     overflow-x: hidden;
+  }
+
+  /* The choice is known before paint. Keep the prerendered banner out of view
+     for returning visitors without moving anything else on the page. */
+  html.analytics-decided .analytics-banner {
+    display: none;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -302,6 +308,11 @@
 
   .academy-prose :not(pre) > code {
     @apply rounded-md border border-border bg-secondary/70 px-1.5 py-0.5 text-sm text-accent;
+  }
+
+  /* Light-theme accent on the code chip was 4.41:1. Two points of lightness clears 4.5:1. */
+  html.light .academy-prose :not(pre) > code {
+    color: hsl(24 88% 36%);
   }
 
   .academy-prose figure {

@@ -1,6 +1,7 @@
 import type React from "react";
 import { Link } from "react-router-dom";
 import { AlertTriangle, Info, Lightbulb } from "lucide-react";
+import { trailingPath } from "@/constants/routeMetadata.js";
 import { slugify, type AcademyHeading } from "@/lib/academyMarkdown";
 import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
 import { AcademyFlowDiagram } from "@/components/academy/AcademyFlowDiagram";
@@ -238,7 +239,7 @@ const renderInline = (text: string) => {
               {label}
             </a>
           ) : (
-            <Link key={`${match.index}-link`} to={href}>
+            <Link key={`${match.index}-link`} to={trailingPath(href)}>
               {label}
             </Link>
           ),

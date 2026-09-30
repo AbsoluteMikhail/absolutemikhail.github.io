@@ -27,7 +27,7 @@ describe("compact Academy navigation", () => {
     const activeLinks = doc.querySelectorAll('a[aria-current="page"]');
     expect(activeLinks.length).toBe(2);
     activeLinks.forEach((link) => {
-      expect(link.getAttribute("href")).toBe(`/academy/${course.slug}/${active.slug}`);
+      expect(link.getAttribute("href")).toBe(`/academy/${course.slug}/${active.slug}/`);
       expect(link.closest("li")?.querySelector('a[href="#practice"]')).not.toBeNull();
       expect(link.closest("details")?.hasAttribute("open")).toBe(true);
     });

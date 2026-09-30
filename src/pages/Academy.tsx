@@ -40,6 +40,7 @@ import { Button } from "@/components/ui/button";
 import { academyContent, type AcademyContent } from "@/lib/academyContent";
 import { getAcademyRoute } from "@/lib/academyRoutes";
 import { slugify } from "@/lib/academyMarkdown";
+import { trailingPath } from "@/constants/routeMetadata.js";
 import { publicImageSize } from "@/lib/publicImageMeta";
 import LegalLinks from "@/components/LegalLinks";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -55,7 +56,7 @@ const AcademyShell = ({ children }: { children: React.ReactNode }) => (
       <div className={cn(academyContainerClassName, "flex h-16 items-center justify-between gap-6")}>
         <Link
           className="academy-brand-link"
-          to="/academy"
+          to="/academy/"
         >
           <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-primary/30 bg-primary/10 text-primary">
             <GraduationCap className="h-5 w-5" />
@@ -74,7 +75,7 @@ const AcademyShell = ({ children }: { children: React.ReactNode }) => (
               <Link
                 className="text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:text-primary"
                 key={topic.slug}
-                to={`/academy/topics/${topic.slug}`}
+                to={trailingPath(`/academy/topics/${topic.slug}`)}
               >
                 {topic.title}
               </Link>
@@ -98,7 +99,7 @@ const AcademyShell = ({ children }: { children: React.ReactNode }) => (
     <footer className="border-t border-border px-6 py-6">
       <p className="mb-3 text-center text-sm leading-6 text-muted-foreground">
         Мой учебный код можно свободно использовать в своих проектах. Упоминание автора — по желанию.
-        {" "}<a className="underline underline-offset-4" href="/terms#educational-code">Условия и лицензия 0BSD</a>
+        {" "}<a className="underline underline-offset-4" href="/terms/#educational-code">Условия и лицензия 0BSD</a>
       </p>
       <LegalLinks />
     </footer>
@@ -169,8 +170,19 @@ const formatMaterialCount = (count: number) => {
   return `${count} материалов`;
 };
 
-const AcademyCover = ({ alt, className = "", src }: { alt?: string; className?: string; src?: string }) => {
+const AcademyCover = ({
+  alt,
+  className = "",
+  sizes = "(min-width: 1024px) 760px, calc(100vw - 3rem)",
+  src,
+}: {
+  alt?: string;
+  className?: string;
+  sizes?: string;
+  src?: string;
+}) => {
   if (!src) return null;
+  const image = publicImageSize(src);
 
   return (
     <div className={`overflow-hidden bg-secondary/30 ${className}`}>
@@ -179,8 +191,9 @@ const AcademyCover = ({ alt, className = "", src }: { alt?: string; className?: 
         className="h-full w-full object-cover"
         decoding="async"
         loading="lazy"
+        sizes={"srcSet" in image ? sizes : undefined}
         src={src}
-        {...publicImageSize(src)}
+        {...image}
       />
     </div>
   );
@@ -192,7 +205,7 @@ const TopicCard = ({ topic }: { topic: AcademyTopic }) => {
   return (
     <Link
       className="academy-topic-card group flex min-h-56 flex-col rounded-lg border border-border bg-card/45 p-5"
-      to={`/academy/topics/${topic.slug}`}
+      to={trailingPath(`/academy/topics/${topic.slug}`)}
     >
       <div className="mb-8 flex h-11 w-11 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
         <TopicIcon slug={topic.slug} />
@@ -223,9 +236,9 @@ const CourseCard = ({ course }: { course: AcademyCourse }) => {
       "group grid items-start gap-5 rounded-lg border border-border bg-card/35 p-5 transition-colors hover:border-primary/45 hover:bg-card/60 md:gap-8 md:p-6",
       course.cover && "md:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)]",
     )}
-    to={progress.href}
+    to={trailingPath(progress.href)}
   >
-    <AcademyCover alt={course.coverAlt} className="aspect-video rounded-md" src={course.cover} />
+    <AcademyCover alt={course.coverAlt} className="aspect-video rounded-md" sizes="(min-width: 1280px) 300px, (min-width: 768px) 240px, calc(100vw - 3rem)" src={course.cover} />
 
     <div className="min-w-0">
       <div className="mb-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">
@@ -339,7 +352,7 @@ const TopicPage = ({ topic }: { topic: AcademyTopic }) => {
       <main className={cn(academyContainerClassName, "py-10 lg:py-14")}>
         <Link
           className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
-          to="/academy"
+          to="/academy/"
         >
           <ArrowLeft className="h-4 w-4" />
           Все направления
@@ -414,7 +427,7 @@ const CoursePage = ({ course, content }: { course: AcademyCourse; content: Acade
                       <Link
                         className="group rounded-lg border border-border bg-card/35 p-4 transition-colors hover:border-primary/45 hover:bg-card/60"
                         key={lesson.slug}
-                        to={`/academy/${course.slug}/${lesson.slug}`}
+                        to={trailingPath(`/academy/${course.slug}/${lesson.slug}`)}
                       >
                         <div className="mb-3 flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest text-primary">
                           {lesson.meta.youtube ? <PlayCircle className="h-4 w-4" /> : <FileText className="h-4 w-4" />}
@@ -455,7 +468,7 @@ const LessonPager = ({
       {previousLesson ? (
         <Link
           className="rounded-lg border border-border bg-card/35 p-4 transition-colors hover:border-primary/45 hover:bg-card/60"
-          to={`/academy/${course.slug}/${previousLesson.slug}`}
+          to={trailingPath(`/academy/${course.slug}/${previousLesson.slug}`)}
         >
           <span className="mb-2 flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
             <ArrowLeft className="h-4 w-4" />
@@ -470,7 +483,7 @@ const LessonPager = ({
       {nextLesson ? (
         <Link
           className="rounded-lg border border-border bg-card/35 p-4 text-right transition-colors hover:border-primary/45 hover:bg-card/60"
-          to={`/academy/${course.slug}/${nextLesson.slug}`}
+          to={trailingPath(`/academy/${course.slug}/${nextLesson.slug}`)}
         >
           <span className="mb-2 flex items-center justify-end gap-2 text-xs uppercase tracking-widest text-muted-foreground">
             Следующий урок
@@ -565,7 +578,7 @@ const AcademyNotFound = () => (
         <p className="mb-8 max-w-xl text-muted-foreground">
           Такого курса или урока пока нет. Проверь адрес или вернись на главную Academy.
         </p>
-        <Link className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-bold text-primary-foreground" to="/academy">
+        <Link className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-bold text-primary-foreground" to="/academy/">
           <ArrowLeft className="h-4 w-4" />
           В Academy
         </Link>

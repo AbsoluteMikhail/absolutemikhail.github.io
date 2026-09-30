@@ -8,9 +8,16 @@ import { cn } from "@/lib/utils";
 type ProjectExhibitProps = {
   project: Project;
   featured?: boolean;
+  priority?: boolean;
 } & ({ onSelect: (project: Project) => void; href?: never } | { href: string; onSelect?: never });
 
-export default function ProjectExhibit({ project, onSelect, href, featured = false }: ProjectExhibitProps) {
+const coverSizes = {
+  featured: "(min-width: 1024px) calc((min(100vw, 1280px) - 3rem) * 0.623), calc(100vw - 3rem)",
+  archive: "(min-width: 768px) calc((min(100vw, 1280px) - 3rem - 2.5rem) / 2), calc(100vw - 3rem)",
+  home: "(min-width: 1024px) calc((min(100vw, 1280px) - 3rem - 4rem) / 3), (min-width: 768px) calc((min(100vw, 1280px) - 3rem - 2rem) / 2), calc(100vw - 3rem)",
+};
+
+export default function ProjectExhibit({ project, onSelect, href, featured = false, priority = false }: ProjectExhibitProps) {
   return (
     <motion.article
       initial={{ opacity: 0, y: 24 }}
@@ -31,15 +38,12 @@ export default function ProjectExhibit({ project, onSelect, href, featured = fal
         <img
           src={project.cover}
           srcSet={project.coverSrcSet}
-          sizes={featured
-            ? "(min-width: 1024px) 60vw, (min-width: 768px) 50vw, 100vw"
-            : href
-              ? "(min-width: 768px) 50vw, 100vw"
-              : "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"}
+          sizes={featured ? coverSizes.featured : href ? coverSizes.archive : coverSizes.home}
           alt={`Обложка проекта ${project.title} в жанре ${project.genre}`}
           width={project.coverWidth}
           height={project.coverHeight}
-          loading="lazy"
+          loading={priority ? "eager" : "lazy"}
+          {...(priority ? { fetchpriority: "high" } : {})}
           decoding="async"
           className="aspect-video w-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-[1.025]"
         />
@@ -52,7 +56,7 @@ export default function ProjectExhibit({ project, onSelect, href, featured = fal
             <ProjectStatusIcon status={project.stats} className="h-3.5 w-3.5" />{project.stats}
           </span>
         </div>
-        <h3 className={cn("font-display text-2xl font-bold leading-tight tracking-tight transition-colors group-hover:text-primary", featured && "lg:text-4xl")}>{project.title}</h3>
+        <h2 className={cn("font-display text-2xl font-bold leading-tight tracking-tight transition-colors group-hover:text-primary", featured && "lg:text-4xl")}>{project.title}</h2>
         {project.role && <p className="mt-3 text-xs font-medium leading-5 text-primary">{project.role}</p>}
         <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">{project.shortDesc}</p>
         <span className="exhibition-link mt-4" aria-hidden="true">Подробнее<ArrowUpRight className="h-4 w-4" /></span>

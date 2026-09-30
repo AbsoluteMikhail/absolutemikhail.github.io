@@ -6,6 +6,8 @@ import { SectionTitle } from "@/components/ui/section-title";
 import { academyIntro } from "@/content/academyIntro";
 import { resolveAcademyHighlights } from "@/content/academyHighlights";
 import { SavedReadingProgress } from "@/components/academy/SavedReadingProgress";
+import { publicImageSize } from "@/lib/publicImageMeta";
+import { trailingPath } from "@/constants/routeMetadata.js";
 
 const materials = resolveAcademyHighlights();
 
@@ -22,7 +24,7 @@ const AcademySection = () => (
             {academyIntro.description}
           </p>
         </div>
-        <Link to={academyIntro.href} className={buttonStyles({ variant: "outline", size: "sm", className: "self-start shrink-0 lg:self-end" })}>
+        <Link to={trailingPath(academyIntro.href)} className={buttonStyles({ variant: "outline", size: "sm", className: "self-start shrink-0 lg:self-end" })}>
           {academyIntro.linkLabel}<ArrowRight aria-hidden="true" className="h-4 w-4" />
         </Link>
       </div>
@@ -32,12 +34,14 @@ const AcademySection = () => (
             {material.cover && (
               <div className="mb-5 overflow-hidden rounded-lg bg-card">
                 <img src={material.cover} alt={material.coverAlt || material.title} loading="lazy" decoding="async"
+                  sizes="(min-width: 768px) calc((min(100vw, 1280px) - 4.5rem) / 3), calc(100vw - 3rem)"
+                  {...publicImageSize(material.cover)}
                   className="aspect-video w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.025]" />
               </div>
             )}
             <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-primary">{material.format}</p>
             <h3 className="mt-3 font-display text-xl font-bold leading-snug text-foreground">
-              <Link className="transition-colors after:absolute after:inset-0 after:rounded-lg hover:text-primary focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-accent focus-visible:after:ring-offset-4 focus-visible:after:ring-offset-background" to={material.href}>
+              <Link className="transition-colors after:absolute after:inset-0 after:rounded-lg hover:text-primary focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-accent focus-visible:after:ring-offset-4 focus-visible:after:ring-offset-background" to={trailingPath(material.href)}>
                 {material.title}
               </Link>
             </h3>

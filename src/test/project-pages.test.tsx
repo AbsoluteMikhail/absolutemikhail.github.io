@@ -30,7 +30,7 @@ describe("individual project pages", () => {
       <Route path="/projects/:slug" element={<Project />} />
     </Routes></MemoryRouter>);
     for (const project of projectPages) {
-      expect(document.querySelector(`a[href="${projectPath(project.slug)}"]`)).not.toBeNull();
+      expect(document.querySelector(`a[href="${projectPath(project.slug)}/"]`)).not.toBeNull();
     }
     fireEvent.click(screen.getByRole("link", { name: "Подробнее о проекте DUELANT" }));
     expect(screen.getByRole("heading", { level: 1, name: "DUELANT" })).toBeInTheDocument();

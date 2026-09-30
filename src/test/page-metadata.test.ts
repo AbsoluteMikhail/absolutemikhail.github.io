@@ -1,12 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { canonicalUrl, renderSitemap } from "@/constants/routeMetadata.js";
+import { canonicalUrl, renderSitemap, trailingPath } from "@/constants/routeMetadata.js";
 import { resolvePageMetadata } from "@/lib/resolvePageMetadata";
 
 describe("page metadata", () => {
-  it("builds canonical URLs without a trailing slash", () => {
+  it("builds canonical URLs with the trailing slash GitHub Pages serves", () => {
     expect(canonicalUrl("/")).toBe("https://gamepunk.ru/");
-    expect(canonicalUrl("/projects/duelant/")).toBe("https://gamepunk.ru/projects/duelant");
-    expect(canonicalUrl("/academy/ai-intro")).toBe("https://gamepunk.ru/academy/ai-intro");
+    expect(canonicalUrl("/projects/duelant/")).toBe("https://gamepunk.ru/projects/duelant/");
+    expect(canonicalUrl("/academy/ai-intro")).toBe("https://gamepunk.ru/academy/ai-intro/");
+    expect(trailingPath("/projects#jams")).toBe("/projects/#jams");
+    expect(trailingPath("/academy-code-license.txt")).toBe("/academy-code-license.txt");
+    expect(trailingPath("#mentoring")).toBe("#mentoring");
   });
 
   it("describes the portfolio home as a person and keeps the shared social image", async () => {
@@ -43,7 +46,7 @@ describe("page metadata", () => {
     const course = await resolvePageMetadata("/academy/data-driven-speed-modifiers");
     const lesson = await resolvePageMetadata("/academy/data-driven-speed-modifiers/01-data-assets-spasli-boloto");
     const freshLesson = await resolvePageMetadata("/academy/ai-intro/01-first-steps");
-    expect(course.image).toBe("/academy/data-driven-speed-modifiers/cover.jpg");
+    expect(course.image).toBe("/academy/data-driven-speed-modifiers/cover.webp");
     expect(course.updated).toBe("2026-09-02");
     expect(course.structuredData).toMatchObject({ "@type": "Course", name: "Data Assets спасли моё болото" });
     expect(lesson.structuredData).toMatchObject({ "@type": "Article" });
@@ -59,7 +62,7 @@ describe("page metadata", () => {
       { pathname: "/", updated: undefined },
       { pathname: "/projects/duelant", updated: "not-a-date" },
     ]);
-    expect(xml).toContain("<loc>https://gamepunk.ru/academy/ai-intro</loc>\n    <lastmod>2026-09-21</lastmod>");
+    expect(xml).toContain("<loc>https://gamepunk.ru/academy/ai-intro/</loc>\n    <lastmod>2026-09-21</lastmod>");
     expect(xml).toContain("<loc>https://gamepunk.ru/</loc>\n  </url>");
     expect(xml).not.toContain("<loc>https://gamepunk.ru/</loc>\n    <lastmod>");
     expect(xml).not.toContain("not-a-date");

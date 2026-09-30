@@ -21,7 +21,6 @@ const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardPro
       href={href}
       rel={rel}
       target={target}
-      aria-label="Unreal Authorized Instructor — открыть официальный credential"
       className={cn(
         "group block rounded-xl border-t border-white/25 bg-background/85 p-5 shadow-2xl shadow-black/30 backdrop-blur-xl transition-colors hover:bg-background/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 [html.light_&]:border-border [html.light_&]:shadow-foreground/15",
         className,

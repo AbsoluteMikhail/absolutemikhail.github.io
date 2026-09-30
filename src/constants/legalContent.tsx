@@ -5,7 +5,7 @@ export const legalContent = {
     title: "Политика конфиденциальности",
     content: (
       <>
-        <p>Я Михаил Ефремов (Absolute Mikhail), автор сайта gamepunk.ru. Здесь размещены моё портфолио, история, учебные материалы и информация о менторинге. Эта политика относится к сайту; у бота Malena есть <a className="text-primary underline underline-offset-4 hover:text-accent" href="/malena/privacy">отдельная политика</a>.</p>
+        <p>Я Михаил Ефремов (Absolute Mikhail), автор сайта gamepunk.ru. Здесь размещены моё портфолио, история, учебные материалы и информация о менторинге. Эта политика относится к сайту; у бота Malena есть <a className="text-primary underline underline-offset-4 hover:text-accent" href="/malena/privacy/">отдельная политика</a>.</p>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-foreground">1. Какие данные используются</h2>
           <p>На сайте нет регистрации, личного кабинета и форм отправки сообщений. Я не веду отдельную базу посетителей. Если вы пишете мне по почте или в мессенджере, я вижу те сведения, которые вы сообщаете: имя или псевдоним, контакт, текст и вложения. Они нужны для ответа и обсуждения вашей задачи.</p>

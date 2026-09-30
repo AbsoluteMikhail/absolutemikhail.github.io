@@ -66,9 +66,9 @@ describe("homepage product hierarchy", () => {
 
     expect(academyHighlights).toHaveLength(3);
     for (const material of resolveAcademyHighlights()) {
-      expect(screen.getByRole("link", { name: material.title })).toHaveAttribute("href", material.href);
+      expect(screen.getByRole("link", { name: material.title })).toHaveAttribute("href", `${material.href}/`);
     }
-    expect(screen.getByRole("link", { name: "Открыть Академию" })).toHaveAttribute("href", "/academy");
+    expect(screen.getByRole("link", { name: "Открыть Академию" })).toHaveAttribute("href", "/academy/");
   });
 
   it("keeps mentoring contact actions and clarifies format boundaries", () => {

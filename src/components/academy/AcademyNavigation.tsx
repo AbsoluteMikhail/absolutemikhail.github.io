@@ -6,6 +6,7 @@ import { groupLessonsByBlock, getLessonAvailabilityLabel, type AcademyCourse } f
 import type { AcademyHeading } from "@/lib/academyMarkdown";
 import { cn } from "@/lib/utils";
 import { useReadingProgress } from "@/components/academy/useReadingProgress";
+import { trailingPath } from "@/constants/routeMetadata.js";
 import { resumeReadingHref, useAcademyProgress } from "@/lib/academyProgress";
 
 type AcademyNavigationProps = {
@@ -22,7 +23,7 @@ const CourseNavigation = ({ course, activeLessonSlug, headings, activeHeading }:
     <Link
       aria-current={!activeLessonSlug ? "page" : undefined}
       className={cn("mb-2 block rounded-md px-3 py-2 text-sm font-semibold transition-colors hover:text-primary", !activeLessonSlug && "bg-primary/10 text-primary")}
-      to={`/academy/${course.slug}`}
+      to={trailingPath(`/academy/${course.slug}`)}
     >
       {course.lessons.length ? "О курсе" : course.title}
     </Link>
@@ -42,7 +43,7 @@ const CourseNavigation = ({ course, activeLessonSlug, headings, activeHeading }:
                         "flex gap-3 rounded-md px-3 py-2.5 text-sm transition-colors",
                         active ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-secondary/30 hover:text-foreground",
                       )}
-                      to={`/academy/${course.slug}/${lesson.slug}`}
+                      to={trailingPath(`/academy/${course.slug}/${lesson.slug}`)}
                     >
                       <span aria-hidden="true" className="pt-0.5 text-xs tabular-nums opacity-60">{String(lesson.order).padStart(2, "0")}</span>
                       <span className="min-w-0">
@@ -98,11 +99,11 @@ export const AcademyNavigation = (props: AcademyNavigationProps) => {
   const reading = useReadingProgress(path, props.headings);
   const saved = useAcademyProgress()[path];
   const resume = saved && saved.percent > reading.percent + 3 && saved.heading && props.headings.some((heading) => heading.id === saved.heading)
-    ? <a href={resumeReadingHref(path, { ...saved, percent: Math.min(saved.percent, 99) })} className="mb-4 block px-3 py-2 text-xs leading-5 text-accent underline underline-offset-4">Продолжить с сохранённого раздела · {saved.percent}%</a>
+    ? <a href={trailingPath(resumeReadingHref(path, { ...saved, percent: Math.min(saved.percent, 99) }))} className="mb-4 block px-3 py-2 text-xs leading-5 text-accent underline underline-offset-4">Продолжить с сохранённого раздела · {saved.percent}%</a>
     : null;
   return (
   <aside aria-label="Навигация по материалу" className="min-w-0 lg:sticky lg:top-24 lg:flex lg:max-h-[calc(100svh-8rem)] lg:flex-col lg:self-start lg:border-r lg:border-border lg:pr-5">
-    <Link className="mb-3 inline-flex min-h-11 shrink-0 items-center gap-2 text-sm text-muted-foreground hover:text-primary" to="/academy">
+    <Link className="mb-3 inline-flex min-h-11 shrink-0 items-center gap-2 text-sm text-muted-foreground hover:text-primary" to="/academy/">
       <ArrowLeft aria-hidden="true" className="h-4 w-4" /> Все материалы
     </Link>
     <div className="lg:hidden">
@@ -115,7 +116,7 @@ export const AcademyNavigation = (props: AcademyNavigationProps) => {
     <div className="hidden lg:flex lg:min-h-0 lg:flex-col">
       <div className="shrink-0">
         <p className="mb-2 px-3 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">{props.course.format}</p>
-        {props.course.lessons.length > 0 && <Link className="mb-5 block px-3 font-display text-base font-bold leading-6 hover:text-primary" to={`/academy/${props.course.slug}`}>{props.course.title}</Link>}
+        {props.course.lessons.length > 0 && <Link className="mb-5 block px-3 font-display text-base font-bold leading-6 hover:text-primary" to={trailingPath(`/academy/${props.course.slug}`)}>{props.course.title}</Link>}
         <ReadingProgress percent={reading.percent} />
         {resume}
       </div>

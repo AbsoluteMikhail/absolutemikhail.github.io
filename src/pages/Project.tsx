@@ -9,6 +9,7 @@ import { SectionTitle } from "@/components/ui/section-title";
 import { Button, buttonStyles } from "@/components/ui/button";
 import { IconButton } from "@/components/ui/icon-button";
 import Modal from "@/components/ui/modal";
+import { trailingPath } from "@/constants/routeMetadata.js";
 import { findProjectPage, projectPages, projectPath, type ProjectPage } from "@/lib/projectPages";
 import NotFound from "@/pages/NotFound";
 
@@ -22,7 +23,7 @@ const ProjectArticle = ({ project }: { project: ProjectPage }) => {
       <Navbar />
       <main id="main-content" tabIndex={-1} className="pb-20 pt-28 outline-none md:pt-36">
         <article className="container mx-auto px-6">
-          <Link to="/projects" className="mb-10 inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-primary">
+          <Link to="/projects/" className="mb-10 inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-primary">
             <ArrowLeft className="h-4 w-4" /> Все проекты
           </Link>
           <header className="mb-10 grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-end">
@@ -39,7 +40,7 @@ const ProjectArticle = ({ project }: { project: ProjectPage }) => {
             </div>
           </header>
           <figure className="overflow-hidden rounded-xl bg-card">
-            <img src={project.cover} srcSet={project.coverSrcSet} sizes="(min-width: 1400px) 1352px, 100vw" width={project.coverWidth} height={project.coverHeight} alt={`Обложка игры ${project.title}`} loading="eager" {...{ fetchpriority: "high" }} decoding="async" className="aspect-video w-full object-contain" />
+            <img src={project.cover} srcSet={project.coverSrcSet} sizes="(min-width: 768px) min(1352px, 100vw), calc(100vw - 3rem)" width={project.coverWidth} height={project.coverHeight} alt={`Обложка игры ${project.title}`} loading="eager" {...{ fetchpriority: "high" }} decoding="async" className="aspect-video w-full object-contain" />
           </figure>
           {project.development?.length ? (
             <section className="border-b border-border py-12 md:py-16" aria-labelledby="project-development-title">
@@ -74,7 +75,7 @@ const ProjectArticle = ({ project }: { project: ProjectPage }) => {
             <SectionTitle id="project-video-title" size="compact" className="mb-8">В движении</SectionTitle>
             <div className="relative aspect-video overflow-hidden rounded-xl bg-card">
               {playing ? <iframe src={project.videoUrl} title={`Видео проекта ${project.title}`} className="h-full w-full border-0" allow="autoplay; fullscreen" allowFullScreen /> : <button type="button" onClick={() => setPlaying(true)} aria-label={`Воспроизвести видео проекта ${project.title}`} className="group relative h-full w-full">
-                <img src={project.cover} srcSet={project.coverSrcSet} sizes="(min-width: 1400px) 1352px, 100vw" width={project.coverWidth} height={project.coverHeight} loading="lazy" alt="" className="h-full w-full object-contain brightness-50" />
+                <img src={project.cover} srcSet={project.coverSrcSet} sizes="(min-width: 768px) min(1352px, 100vw), calc(100vw - 3rem)" width={project.coverWidth} height={project.coverHeight} loading="lazy" alt="" className="h-full w-full object-contain brightness-50" />
                 <span className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-white"><span className="rounded-full bg-primary p-5 text-primary-foreground"><Play className="h-8 w-8" /></span><span className="text-sm font-semibold">Смотреть видео</span></span>
               </button>}
             </div>
@@ -84,8 +85,8 @@ const ProjectArticle = ({ project }: { project: ProjectPage }) => {
             <div className="grid gap-4 md:grid-cols-2">{project.screenshots.map((shot, index) => <a key={shot.src} href={shot.src} onClick={(event) => { if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); setFrame(index); }} aria-label={`Увеличить кадр ${index + 1}`} className="overflow-hidden rounded-lg bg-card"><img src={shot.src} srcSet={shot.srcSet} sizes="(min-width: 768px) 700px, 100vw" width={shot.width} height={shot.height} alt={`Скриншот ${project.title}, кадр ${index + 1}`} loading="lazy" decoding="async" className="aspect-video w-full object-contain transition-transform motion-safe:hover:scale-[1.02]" /></a>)}</div>
           </section>}
           <nav aria-label="Другие проекты" className="mt-8 flex flex-col justify-between gap-6 border-t border-border pt-8 sm:flex-row">
-            <Link to="/projects" className="inline-flex min-h-11 items-center gap-2 text-muted-foreground hover:text-primary"><ArrowLeft className="h-4 w-4" /> Весь архив</Link>
-            <Link to={projectPath(next.slug)} className="inline-flex min-h-11 items-center gap-3 font-semibold hover:text-primary">{next.title}<ArrowRight className="h-4 w-4 shrink-0" /></Link>
+            <Link to="/projects/" className="inline-flex min-h-11 items-center gap-2 text-muted-foreground hover:text-primary"><ArrowLeft className="h-4 w-4" /> Весь архив</Link>
+            <Link to={trailingPath(projectPath(next.slug))} className="inline-flex min-h-11 items-center gap-3 font-semibold hover:text-primary">{next.title}<ArrowRight className="h-4 w-4 shrink-0" /></Link>
           </nav>
         </article>
       </main>

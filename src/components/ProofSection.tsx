@@ -2,6 +2,7 @@ import { SectionTitle } from "@/components/ui/section-title";
 import { motion } from "framer-motion";
 import { ArrowUpRight, BriefcaseBusiness, Gamepad2, GraduationCap, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
+import { trailingPath } from "@/constants/routeMetadata.js";
 import { proofItems, type ProofIcon } from "@/content/proof";
 
 const icons: Record<ProofIcon, typeof Trophy> = {
@@ -56,7 +57,7 @@ const ProofSection = () => (
                   {content}
                 </a>
               ) : (
-                <Link className="group block h-full border-t border-border py-6 transition-colors hover:border-primary" to={item.href}>
+                <Link className="group block h-full border-t border-border py-6 transition-colors hover:border-primary" to={trailingPath(item.href)}>
                   {content}
                 </Link>
               )}

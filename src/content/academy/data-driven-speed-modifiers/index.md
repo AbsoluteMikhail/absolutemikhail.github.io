@@ -9,7 +9,7 @@ topics: unreal-engine
 status: Опубликован
 order: 2
 updated: 2026-09-02
-cover: /academy/data-driven-speed-modifiers/cover.jpg
+cover: /academy/data-driven-speed-modifiers/cover.webp
 coverAlt: Михаил в болоте рядом с рабочим столом и заголовком Data Assets спасли моё болото
 ---
 

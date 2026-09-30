@@ -11,15 +11,11 @@ import {
 const PrivacyControls = () => {
   const { pathname } = useLocation();
   const choice = useAnalyticsChoice();
-  const [ready, setReady] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [storageNotice, setStorageNotice] = useState(false);
   const excluded = isAnalyticsExcluded(pathname);
 
-  useEffect(() => {
-    setReady(true);
-    return subscribePrivacySettings(() => setSettingsOpen(true));
-  }, []);
+  useEffect(() => subscribePrivacySettings(() => setSettingsOpen(true)), []);
 
   useEffect(() => {
     if (choice === "accepted" && !excluded) startAnalytics();
@@ -47,13 +43,13 @@ const PrivacyControls = () => {
 
   return (
     <>
-      {ready && choice === null && !excluded && !settingsOpen && (
-        <aside aria-label="Выбор аналитики" className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-xl rounded-xl border border-border bg-popover p-5 text-popover-foreground shadow-2xl sm:inset-x-6 sm:bottom-6 sm:p-6">
+      {choice === null && !excluded && !settingsOpen && (
+        <aside aria-label="Выбор аналитики" className="analytics-banner fixed inset-x-3 bottom-3 z-50 mx-auto max-w-xl rounded-xl border border-border bg-popover p-5 text-popover-foreground shadow-2xl sm:inset-x-6 sm:bottom-6 sm:p-6">
           <p className="font-semibold text-foreground">Поможете сделать сайт удобнее?</p>
           <p className="mb-4 mt-2 text-sm leading-6 text-muted-foreground">
             С вашего разрешения Google Analytics и Яндекс Метрика собирают статистику посещений и используют cookies.
             Без аналитики сайт тоже работает. Выбор можно изменить в настройках внизу страницы.
-            {" "}<a className="text-primary underline underline-offset-4 hover:text-accent" href="/privacy">Подробнее о данных</a>.
+            {" "}<a className="text-primary underline underline-offset-4 hover:text-accent" href="/privacy/">Подробнее о данных</a>.
           </p>
           {buttons}
         </aside>
@@ -70,7 +66,7 @@ const PrivacyControls = () => {
           <p>Разрешение включает Google Analytics и Яндекс Метрику для статистики посещений. Реклама и Вебвизор выключены.</p>
           <p>Отказ остановит дальнейший сбор данных и перезагрузит страницу, если аналитика уже работала. Уже собранные сервисами данные автоматически не удаляются.</p>
           {buttons}
-          <p className="text-sm">Выбор хранится в этом браузере 180 дней. <a className="text-primary underline underline-offset-4 hover:text-accent" href="/privacy">Политика конфиденциальности</a></p>
+          <p className="text-sm">Выбор хранится в этом браузере 180 дней. <a className="text-primary underline underline-offset-4 hover:text-accent" href="/privacy/">Политика конфиденциальности</a></p>
         </div>
       } />
     </>
