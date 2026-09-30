@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { telegramCommunityUrl } from "@/constants/contactLinks";
-import heroPhoto from "@/assets/hero-photo.jpg";
+import heroPhoto from "@/assets/hero-photo.webp";
 import uaiBadge from "@/assets/uai-badge-monochrome.png";
 import InstructorBadgeCard from "@/components/InstructorBadgeCard";
 import { buttonStyles } from "@/components/ui/button";
@@ -32,6 +32,8 @@ const HeroSection = () => {
           <img
             src={heroPhoto}
             alt="Михаил Ефремов, Senior Gameplay Programmer и Unreal Authorized Instructor"
+            width={292}
+            height={363}
             loading="eager"
             {...{ fetchpriority: "high" }}
             decoding="async"
@@ -66,6 +68,8 @@ const HeroSection = () => {
           <img
             src={heroPhoto}
             alt="Михаил Ефремов, Senior Gameplay Programmer и Unreal Authorized Instructor"
+            width={292}
+            height={363}
             loading="eager"
             {...{ fetchpriority: "high" }}
             decoding="async"

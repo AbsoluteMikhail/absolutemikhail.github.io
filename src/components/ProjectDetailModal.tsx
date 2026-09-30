@@ -32,7 +32,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
 
   const getSlides = (p: Project) => [
     { type: "video", url: p.videoUrl },
-    ...p.screenshots.map((s) => ({ type: "image", url: s })),
+    ...p.screenshots.map((shot) => ({ type: "image" as const, url: shot.src, srcSet: shot.srcSet, width: shot.width, height: shot.height })),
   ];
 
   const slides = getSlides(project);
@@ -105,6 +105,8 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
                         srcSet={project.coverSrcSet}
                         sizes="(min-width: 896px) 896px, 100vw"
                         alt={`Видео-превью проекта ${project.title}`}
+                        width={project.coverWidth}
+                        height={project.coverHeight}
                         loading="lazy"
                         decoding="async"
                         className="w-full h-full object-cover brightness-50 group-hover/play:brightness-75 transition-all"
@@ -120,6 +122,10 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
               ) : (
                 <img
                   src={slides[currentSlide].url}
+                  srcSet={"srcSet" in slides[currentSlide] ? slides[currentSlide].srcSet : undefined}
+                  sizes="(min-width: 896px) 896px, 100vw"
+                  width={"width" in slides[currentSlide] ? slides[currentSlide].width : undefined}
+                  height={"height" in slides[currentSlide] ? slides[currentSlide].height : undefined}
                   alt={`Скриншот проекта ${project.title}, кадр ${currentSlide}`}
                   loading="lazy"
                   decoding="async"

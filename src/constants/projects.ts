@@ -1,40 +1,65 @@
 import gribnikCover from "@/assets/projects/gribnik/cover-1280.webp";
 import gribnikCoverSmall from "@/assets/projects/gribnik/cover-640.webp";
 import gribnik1 from "@/assets/projects/gribnik/1.jpg";
+import gribnik1Small from "@/assets/projects/gribnik/1-1280.webp";
 import gribnik2 from "@/assets/projects/gribnik/2.jpg";
+import gribnik2Small from "@/assets/projects/gribnik/2-1280.webp";
 import gribnik3 from "@/assets/projects/gribnik/3.jpg";
+import gribnik3Small from "@/assets/projects/gribnik/3-1280.webp";
 import gribnik4 from "@/assets/projects/gribnik/4.jpg";
+import gribnik4Small from "@/assets/projects/gribnik/4-1280.webp";
 import gribnik5 from "@/assets/projects/gribnik/5.jpg";
+import gribnik5Small from "@/assets/projects/gribnik/5-1280.webp";
 
 import duelantCover from "@/assets/projects/duelant/cover-1280.webp";
 import duelantCoverSmall from "@/assets/projects/duelant/cover-640.webp";
-import duelant1 from "@/assets/projects/duelant/1.jpg";
-import duelant2 from "@/assets/projects/duelant/2.jpg";
-import duelant3 from "@/assets/projects/duelant/3.jpg";
-import duelant4 from "@/assets/projects/duelant/4.jpg";
+import duelant1 from "@/assets/projects/duelant/1.webp";
+import duelant1Small from "@/assets/projects/duelant/1-1280.webp";
+import duelant2 from "@/assets/projects/duelant/2.webp";
+import duelant2Small from "@/assets/projects/duelant/2-1280.webp";
+import duelant3 from "@/assets/projects/duelant/3.webp";
+import duelant3Small from "@/assets/projects/duelant/3-1280.webp";
+import duelant4 from "@/assets/projects/duelant/4.webp";
+import duelant4Small from "@/assets/projects/duelant/4-1280.webp";
 import duelant5 from "@/assets/projects/duelant/5.jpg";
+import duelant5Small from "@/assets/projects/duelant/5-1280.webp";
 
 import kolobokCover from "@/assets/projects/kolobok/cover-1280.webp";
 import kolobokCoverSmall from "@/assets/projects/kolobok/cover-640.webp";
 import kolobok1 from "@/assets/projects/kolobok/1.jpg";
+import kolobok1Small from "@/assets/projects/kolobok/1-1280.webp";
 import kolobok2 from "@/assets/projects/kolobok/2.jpg";
+import kolobok2Small from "@/assets/projects/kolobok/2-1280.webp";
 import kolobok3 from "@/assets/projects/kolobok/3.jpg";
+import kolobok3Small from "@/assets/projects/kolobok/3-1280.webp";
 import kolobok4 from "@/assets/projects/kolobok/4.jpg";
+import kolobok4Small from "@/assets/projects/kolobok/4-1280.webp";
 import kolobok5 from "@/assets/projects/kolobok/5.jpg";
+import kolobok5Small from "@/assets/projects/kolobok/5-1280.webp";
 
 import starNomadCover from "@/assets/projects/star-nomad/cover.jpg";
+import starNomadCoverMedium from "@/assets/projects/star-nomad/cover-1280.webp";
+import starNomadCoverSmall from "@/assets/projects/star-nomad/cover-640.webp";
 import starNomad2 from "@/assets/projects/star-nomad/2.jpg";
+import starNomad2Small from "@/assets/projects/star-nomad/2-1280.webp";
 import starNomad3 from "@/assets/projects/star-nomad/3.jpg";
+import starNomad3Small from "@/assets/projects/star-nomad/3-1280.webp";
 
 import dixotomiaCover from "@/assets/projects/dixotomia/cover-1280.webp";
 import dixotomiaCoverSmall from "@/assets/projects/dixotomia/cover-640.webp";
-import dixotomia1 from "@/assets/projects/dixotomia/1.jpg";
+import dixotomia1 from "@/assets/projects/dixotomia/1.webp";
+import dixotomia1Small from "@/assets/projects/dixotomia/1-1280.webp";
 import dixotomia2 from "@/assets/projects/dixotomia/2.jpg";
-import dixotomia3 from "@/assets/projects/dixotomia/3.jpg";
-import dixotomia4 from "@/assets/projects/dixotomia/4.jpg";
+import dixotomia2Small from "@/assets/projects/dixotomia/2-1280.webp";
+import dixotomia3 from "@/assets/projects/dixotomia/3.webp";
+import dixotomia3Small from "@/assets/projects/dixotomia/3-1280.webp";
+import dixotomia4 from "@/assets/projects/dixotomia/4.webp";
+import dixotomia4Small from "@/assets/projects/dixotomia/4-1280.webp";
 
 import moonshineMayhemCover from "@/assets/projects/moonshine-mayhem/cover.jpg";
+import moonshineMayhemCoverSmall from "@/assets/projects/moonshine-mayhem/cover-640.webp";
 import knittedInflatableCover from "@/assets/projects/knitted-inflatable/cover.jpg";
+import knittedInflatableCoverSmall from "@/assets/projects/knitted-inflatable/cover-640.webp";
 
 export interface ProjectCaseStudy {
   context: string;
@@ -71,8 +96,24 @@ export interface Project {
     url: string;
   }>;
   videoUrl: string;
-  screenshots: string[];
+  coverWidth: number;
+  coverHeight: number;
+  screenshots: ProjectScreenshot[];
 }
+
+export interface ProjectScreenshot {
+  src: string;
+  width: number;
+  height: number;
+  srcSet: string;
+}
+
+const frame = (src: string, small: string): ProjectScreenshot => ({
+  src,
+  width: 1920,
+  height: 1080,
+  srcSet: `${small} 1280w, ${src} 1920w`,
+});
 
 export const projects: Project[] = [
   {
@@ -83,6 +124,8 @@ export const projects: Project[] = [
     year: "2027",
     cover: duelantCover,
     coverSrcSet: `${duelantCoverSmall} 640w, ${duelantCover} 1280w`,
+    coverWidth: 1280,
+    coverHeight: 720,
     shortDesc:
       "Адреналиновые дуэли в разных эпохах под присмотром ИИ-помощницы Малены. Кровь, деньги и 30 секунд, чтобы доказать, кто здесь лучший стрелок.",
     fullDesc:
@@ -106,7 +149,7 @@ export const projects: Project[] = [
       },
     ],
     videoUrl: "https://rutube.ru/play/embed/d3e024f488a0e97cb7cf69a4629156a0/",
-    screenshots: [duelant1, duelant2, duelant3, duelant4, duelant5],
+    screenshots: [frame(duelant1, duelant1Small), frame(duelant2, duelant2Small), frame(duelant3, duelant3Small), frame(duelant4, duelant4Small), frame(duelant5, duelant5Small)],
   },
   {
     id: 5,
@@ -116,6 +159,8 @@ export const projects: Project[] = [
     year: "2026",
     cover: dixotomiaCover,
     coverSrcSet: `${dixotomiaCoverSmall} 640w, ${dixotomiaCover} 1280w`,
+    coverWidth: 1280,
+    coverHeight: 720,
     shortDesc:
       "Иммерсивный VR-шутер, где футуристичное оружие встречается с вампирскими способностями в мрачной сай-фай антиутопии.",
     fullDesc:
@@ -135,7 +180,7 @@ export const projects: Project[] = [
       },
     ],
     videoUrl: "https://rutube.ru/play/embed/fde007fe6c3dfdcd4dfab21cc3562209/",
-    screenshots: [dixotomia1, dixotomia2, dixotomia3, dixotomia4],
+    screenshots: [frame(dixotomia1, dixotomia1Small), frame(dixotomia2, dixotomia2Small), frame(dixotomia3, dixotomia3Small), frame(dixotomia4, dixotomia4Small)],
   },
   {
     id: 1,
@@ -145,6 +190,8 @@ export const projects: Project[] = [
     year: "2025",
     cover: gribnikCover,
     coverSrcSet: `${gribnikCoverSmall} 640w, ${gribnikCover} 1280w`,
+    coverWidth: 1280,
+    coverHeight: 720,
     shortDesc:
       "Уникальная смесь симулятора грибника с дробовиком и хоррора в стиле PSX. Выживайте в странном лесу, где ваш единственный друг — старый кибер-холодильник.",
     fullDesc:
@@ -161,7 +208,7 @@ export const projects: Project[] = [
     featured: true,
     storeUrl: "https://vkplay.ru/play/game/gribnik-the-forest-of-fools-44079",
     videoUrl: "https://rutube.ru/play/embed/1dbe0a668db24c94fdbead56fb2a6dac/",
-    screenshots: [gribnik1, gribnik2, gribnik3, gribnik4, gribnik5],
+    screenshots: [frame(gribnik1, gribnik1Small), frame(gribnik2, gribnik2Small), frame(gribnik3, gribnik3Small), frame(gribnik4, gribnik4Small), frame(gribnik5, gribnik5Small)],
   },
   {
     id: 3,
@@ -171,6 +218,8 @@ export const projects: Project[] = [
     year: "2024",
     cover: kolobokCover,
     coverSrcSet: `${kolobokCoverSmall} 640w, ${kolobokCover} 1280w`,
+    coverWidth: 1280,
+    coverHeight: 720,
     shortDesc:
       "Безумный арканоид о защите Руси-матушки. Помогите харизматичному комку теста отбить атаку легионов ящеров и спасти родной дом.",
     fullDesc:
@@ -185,7 +234,7 @@ export const projects: Project[] = [
     featured: true,
     storeUrl: "https://vkplay.ru/play/game/kolobok-protiv-jascherov-arkanoid-40059",
     videoUrl: "https://rutube.ru/play/embed/8523cff58d38eb1de92fedfc21ccbfab/",
-    screenshots: [kolobok1, kolobok2, kolobok3, kolobok4, kolobok5],
+    screenshots: [frame(kolobok1, kolobok1Small), frame(kolobok2, kolobok2Small), frame(kolobok3, kolobok3Small), frame(kolobok4, kolobok4Small), frame(kolobok5, kolobok5Small)],
   },
   {
     id: 4,
@@ -194,6 +243,9 @@ export const projects: Project[] = [
     genre: "Top-down Action",
     year: "2022",
     cover: starNomadCover,
+    coverSrcSet: `${starNomadCoverSmall} 640w, ${starNomadCoverMedium} 1280w, ${starNomadCover} 1920w`,
+    coverWidth: 1920,
+    coverHeight: 1080,
     shortDesc:
       "Приключенческий экшен по мотивам башкирского эпоса «Урал-батыр»: меч, лук и ледяная магия в путешествии по удивительному миру.",
     fullDesc:
@@ -202,7 +254,7 @@ export const projects: Project[] = [
     stats: "В релизе",
     storeUrl: "https://vkplay.ru/play/game/zvezdnyj-kochevnik-34552",
     videoUrl: "https://rutube.ru/play/embed/9b06ff817cf4c60ac87d6d45572b83da/",
-    screenshots: [starNomadCover, starNomad2, starNomad3],
+    screenshots: [frame(starNomadCover, starNomadCoverMedium), frame(starNomad2, starNomad2Small), frame(starNomad3, starNomad3Small)],
     role: "Руководство командой · Менторинг · Весь код",
     development: [
       { title: "Игра за месяц", text: "Сделали игру за месяц. Я руководил командой, помогал участникам как ментор и отвечал за весь код." },
@@ -218,6 +270,9 @@ export const projects: Project[] = [
     genre: "Multiplayer FPS",
     year: "2023",
     cover: moonshineMayhemCover,
+    coverSrcSet: `${moonshineMayhemCoverSmall} 640w, ${moonshineMayhemCover} 1280w`,
+    coverWidth: 1280,
+    coverHeight: 720,
     shortDesc:
       "Юмористический мультиплеерный шутер с отстрелом конечностей: братья-реднеки спасают родную свинью от нашествия инопланетян.",
     fullDesc:
@@ -239,6 +294,9 @@ export const projects: Project[] = [
     genre: "Physics Adventure",
     year: "2021",
     cover: knittedInflatableCover,
+    coverSrcSet: `${knittedInflatableCoverSmall} 640w, ${knittedInflatableCover} 1280w`,
+    coverWidth: 1280,
+    coverHeight: 720,
     shortDesc:
       "Красочное приключение от первого лица о противостоянии Вязаного и Надувного миров — с физическими головоломками и без жестокости.",
     fullDesc:

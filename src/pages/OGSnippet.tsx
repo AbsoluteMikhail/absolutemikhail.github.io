@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { Award } from "lucide-react";
-import heroPhoto from "@/assets/hero-photo.jpg";
+import heroPhoto from "@/assets/hero-photo.webp";
 import uaiBadge from "@/assets/uai-badge-monochrome.png";
 import { DiscordIcon, MaxIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
 import Logo from "@/components/Logo";

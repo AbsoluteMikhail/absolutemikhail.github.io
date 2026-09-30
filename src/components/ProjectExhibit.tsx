@@ -37,6 +37,8 @@ export default function ProjectExhibit({ project, onSelect, href, featured = fal
               ? "(min-width: 768px) 50vw, 100vw"
               : "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"}
           alt={`Обложка проекта ${project.title} в жанре ${project.genre}`}
+          width={project.coverWidth}
+          height={project.coverHeight}
           loading="lazy"
           decoding="async"
           className="aspect-video w-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-[1.025]"

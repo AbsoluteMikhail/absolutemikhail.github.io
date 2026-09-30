@@ -33,7 +33,7 @@ coverAlt: Михаил в болоте рядом с рабочим столом
 
 Соберём систему, в которой итог принадлежит одному месту, а объекты мира только сообщают: «такой эффект начался» или «такой эффект закончился».
 
-![Тестовая сцена: персонаж, болота и источник ядовитых снарядов](/academy/data-driven-speed-modifiers/final-result-overview.jpg)
+![Тестовая сцена: персонаж, болота и источник ядовитых снарядов](/academy/data-driven-speed-modifiers/final-result-overview.webp)
 
 ## Сначала посмотрим на ожидаемый результат
 
@@ -75,7 +75,7 @@ Character Movement: итоговая Max Walk Speed
 
 В Content Browser нажимаем **Add → Blueprint → Enumeration**. Этот asset хранит ограниченный набор именованных вариантов и не даёт случайно записать в настройку что-то кроме предусмотренных значений.
 
-![Меню создания Blueprint Enumeration и Structure](/academy/data-driven-speed-modifiers/create-blueprint-types-menu.png)
+![Меню создания Blueprint Enumeration и Structure](/academy/data-driven-speed-modifiers/create-blueprint-types-menu.webp)
 
 Создаём перечисление `E_ModifierType` — способ участия эффекта в расчёте. Открываем новый asset, добавляем два значения и переименовываем их:
 
@@ -92,9 +92,9 @@ Character Movement: итоговая Max Walk Speed
 | `Stack` | Каждое применение участвует в расчёте | несколько бонусов скорости |
 | `Refresh` | Повторное применение обновляет время | яд от одного врага |
 
-![Enum E_ModifierType с вариантами Additive и Multiplicative](/academy/data-driven-speed-modifiers/modifier-type-enum.jpg)
+![Enum E_ModifierType с вариантами Additive и Multiplicative](/academy/data-driven-speed-modifiers/modifier-type-enum.webp)
 
-![Enum E_StackPolicy с вариантами Unique, Stack и Refresh](/academy/data-driven-speed-modifiers/stack-policy-enum.jpg)
+![Enum E_StackPolicy с вариантами Unique, Stack и Refresh](/academy/data-driven-speed-modifiers/stack-policy-enum.webp)
 
 Это не косметические настройки. Если не определить повторное применение заранее, правило незаметно расползётся по `BeginOverlap`, projectile и персонажу.
 
@@ -102,7 +102,7 @@ Character Movement: итоговая Max Walk Speed
 
 Создаём **Blueprint Class**, раскрываем список всех классов, находим родителя `PrimaryDataAsset` и называем новый класс `PDA_SpeedModifier`.
 
-![Выбор PrimaryDataAsset как родительского класса Blueprint](/academy/data-driven-speed-modifiers/create-primary-data-asset.png)
+![Выбор PrimaryDataAsset как родительского класса Blueprint](/academy/data-driven-speed-modifiers/create-primary-data-asset.webp)
 
 | Поле | Назначение |
 |---|---|
@@ -112,13 +112,13 @@ Character Movement: итоговая Max Walk Speed
 | `Duration` | Время действия; `-1` в этой системе означает «без таймера» |
 | `StackPolicy` | `Unique`, `Stack` или `Refresh` |
 
-![PDA_SpeedModifier: пять полей описания эффекта и Duration со значением по умолчанию -1](/academy/data-driven-speed-modifiers/pda-speed-modifier-fields.jpg)
+![PDA_SpeedModifier: пять полей описания эффекта и Duration со значением по умолчанию -1](/academy/data-driven-speed-modifiers/pda-speed-modifier-fields.webp)
 
 Теперь создаём экземпляры нашего шаблона: **Add → Miscellaneous → Data Asset**, затем выбираем класс `PDA_SpeedModifier`.
 
-![Создание Data Asset через меню Miscellaneous](/academy/data-driven-speed-modifiers/create-data-asset-menu.png)
+![Создание Data Asset через меню Miscellaneous](/academy/data-driven-speed-modifiers/create-data-asset-menu.webp)
 
-![Выбор PDA_SpeedModifier для нового Data Asset](/academy/data-driven-speed-modifiers/select-speed-modifier-data-asset.png)
+![Выбор PDA_SpeedModifier для нового Data Asset](/academy/data-driven-speed-modifiers/select-speed-modifier-data-asset.webp)
 
 Таким способом создаём три демонстрационных ассета:
 
@@ -150,7 +150,7 @@ Character Movement: итоговая Max Walk Speed
 | `SourceActor` | Конкретного владельца применения |
 | `TimeRemaining` | Оставшееся время |
 
-![Структура F_ActiveModifier: данные эффекта, источник и оставшееся время](/academy/data-driven-speed-modifiers/active-modifier-struct.jpg)
+![Структура F_ActiveModifier: данные эффекта, источник и оставшееся время](/academy/data-driven-speed-modifiers/active-modifier-struct.webp)
 
 `Data Asset` описывает неизменяемые правила. Активная запись хранит состояние конкретного применения.
 
@@ -180,7 +180,7 @@ Character Movement: итоговая Max Walk Speed
 
 :::blueprintue EventGraph компонента BPC_SpeedManagerComponent
 https://blueprintue.com/render/yzc8wvn8/
-/academy/data-driven-speed-modifiers/component-event-graph.jpg
+/academy/data-driven-speed-modifiers/component-event-graph.webp
 EventGraph компонента: BeginPlay и вызов ModifierTick из Event Tick
 :::
 
@@ -196,7 +196,7 @@ ModifierData + SourceActor
 
 :::blueprintue FindModifierIndex
 https://blueprintue.com/render/zrxh6i0t/
-/academy/data-driven-speed-modifiers/find-modifier-index.jpg
+/academy/data-driven-speed-modifiers/find-modifier-index.webp
 Функция FindModifierIndex
 :::
 
@@ -221,7 +221,7 @@ AdditiveSum = 0
 
 Создаём локальную переменную `UsedModifierIds` типа `Name`, открываем меню контейнера справа от типа и выбираем **Set** вместо одиночного значения или массива.
 
-![Выбор контейнера Set для локальной переменной UsedModifierIds](/academy/data-driven-speed-modifiers/create-used-modifier-ids-set.png)
+![Выбор контейнера Set для локальной переменной UsedModifierIds](/academy/data-driven-speed-modifiers/create-used-modifier-ids-set.webp)
 
 Все применения по-прежнему остаются в массиве со своими источниками, но в расчёте болото участвует один раз.
 
@@ -240,7 +240,7 @@ AdditiveSum = 0
 
 :::blueprintue RecalculateSpeed
 https://blueprintue.com/render/hztfjdxy/
-/academy/data-driven-speed-modifiers/recalculate-speed.jpg
+/academy/data-driven-speed-modifiers/recalculate-speed.webp
 Функция RecalculateSpeed
 :::
 
@@ -252,7 +252,7 @@ https://blueprintue.com/render/hztfjdxy/
 
 :::blueprintue ApplySpeed
 https://blueprintue.com/render/upk4tva1/
-/academy/data-driven-speed-modifiers/apply-speed.jpg
+/academy/data-driven-speed-modifiers/apply-speed.webp
 Функция ApplySpeed
 :::
 
@@ -268,7 +268,7 @@ https://blueprintue.com/render/upk4tva1/
 
 :::blueprintue AddModifier
 https://blueprintue.com/render/dyqp9tye/
-/academy/data-driven-speed-modifiers/add-modifier.jpg
+/academy/data-driven-speed-modifiers/add-modifier.webp
 Функция AddModifier
 :::
 
@@ -280,7 +280,7 @@ https://blueprintue.com/render/dyqp9tye/
 
 :::blueprintue RemoveModifier
 https://blueprintue.com/render/dbm-dgoz/
-/academy/data-driven-speed-modifiers/remove-modifier.jpg
+/academy/data-driven-speed-modifiers/remove-modifier.webp
 Функция RemoveModifier
 :::
 
@@ -292,11 +292,11 @@ https://blueprintue.com/render/dbm-dgoz/
 
 Для демонстрации подойдёт `Tick Interval = 0.1`. Погрешность окончания эффекта — до одного интервала. В production-варианте можно включать Timer только при наличии временных эффектов.
 
-![Настройка Tick Interval компонента на 0.1 секунды](/academy/data-driven-speed-modifiers/component-tick-interval.png)
+![Настройка Tick Interval компонента на 0.1 секунды](/academy/data-driven-speed-modifiers/component-tick-interval.webp)
 
 :::blueprintue ModifierTick: время жизни эффектов и безопасное удаление
 https://blueprintue.com/render/-k6qvr5y/
-/academy/data-driven-speed-modifiers/modifier-tick.jpg
+/academy/data-driven-speed-modifiers/modifier-tick.webp
 ModifierTick: обратный проход, обновление времени и один пересчёт после удаления
 :::
 
@@ -321,7 +321,7 @@ ModifierTick: обратный проход, обновление времени
 
 :::blueprintue BP_Swamp: применение и снятие эффекта
 https://blueprintue.com/render/twk3uix1/
-/academy/data-driven-speed-modifiers/swamp-overlap.jpg
+/academy/data-driven-speed-modifiers/swamp-overlap.webp
 BP_Swamp: применение и снятие эффекта
 :::
 
@@ -335,7 +335,7 @@ Projectile находит компонент и передаёт `DA_Poison`. В
 
 :::blueprintue BP_PoisonProjectail: применение временного яда
 https://blueprintue.com/render/1yweiiji/
-/academy/data-driven-speed-modifiers/poison-projectile-owner.jpg
+/academy/data-driven-speed-modifiers/poison-projectile-owner.webp
 Ядовитый projectile передаёт свой Owner как SourceActor модификатора
 :::
 
@@ -343,7 +343,7 @@ https://blueprintue.com/render/1yweiiji/
 
 :::blueprintue BP_Spawner: создание projectile и назначение Owner
 https://blueprintue.com/render/we8pj4_7/
-/academy/data-driven-speed-modifiers/bp-spawner.jpg
+/academy/data-driven-speed-modifiers/bp-spawner.webp
 BP_Spawner явно назначает себя владельцем созданного projectile
 :::
 
@@ -370,13 +370,13 @@ BP_Spawner явно назначает себя владельцем созда�
 
 ### Кадры проверки
 
-![Базовое состояние: скорость 600](/academy/data-driven-speed-modifiers/result-base-600.jpg)
+![Базовое состояние: скорость 600](/academy/data-driven-speed-modifiers/result-base-600.webp)
 
-![Одно болото: скорость 300](/academy/data-driven-speed-modifiers/result-swamp-300.jpg)
+![Одно болото: скорость 300](/academy/data-driven-speed-modifiers/result-swamp-300.webp)
 
-![Два пересекающихся болота: скорость остаётся 300](/academy/data-driven-speed-modifiers/result-two-swamps-300.jpg)
+![Два пересекающихся болота: скорость остаётся 300](/academy/data-driven-speed-modifiers/result-two-swamps-300.webp)
 
-![Яд и болото одновременно: скорость 280](/academy/data-driven-speed-modifiers/result-poison-swamp-280.jpg)
+![Яд и болото одновременно: скорость 280](/academy/data-driven-speed-modifiers/result-poison-swamp-280.webp)
 
 ## Самостоятельная практика: DA_Frozen
 
