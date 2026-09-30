@@ -21,6 +21,10 @@ export const workshop = {
     description: "Мой Telegram-бот. Любит рисовать себя — так что у неё здесь своя галерея.",
     url: "https://t.me/MalenaOnline_bot",
     linkLabel: "Поговорить с Маленой",
+    article: {
+      url: "https://dtf.ru/indie/5240371-iskusstvennyy-intellekt-malenastrom",
+      linkLabel: "Малена о себе на DTF",
+    },
     portrait: malenaGarden,
     portraitSrcSet: `${malenaGardenSmall} 640w, ${malenaGarden} 896w`,
     portraitAlt: "Малена в зелёном платье среди ночных руин и цветов",

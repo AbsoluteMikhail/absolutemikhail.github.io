@@ -54,9 +54,14 @@ const WorkshopSection = () => {
               <a href={malena.url} target="_blank" rel="noopener noreferrer" className={buttonStyles({ size: "sm", className: "mt-6 max-w-full text-center" })}>
                 {malena.linkLabel}<ArrowUpRight aria-hidden="true" className="h-4 w-4 shrink-0" />
               </a>
-              <Button variant="text" size="none" aria-haspopup="dialog" onClick={() => setIsGalleryOpen(true)} className="mt-3 flex min-h-11 items-center gap-2 text-sm">
-                <Images aria-hidden="true" className="h-4 w-4" />Посмотреть галерею
-              </Button>
+              <div className="mt-3 flex flex-wrap items-center gap-x-6">
+                <Button variant="text" size="none" aria-haspopup="dialog" onClick={() => setIsGalleryOpen(true)} className="flex min-h-11 items-center gap-2 text-sm">
+                  <Images aria-hidden="true" className="h-4 w-4" />Посмотреть галерею
+                </Button>
+                <a href={malena.article.url} target="_blank" rel="noopener noreferrer" className={buttonStyles({ variant: "text", size: "none", className: "inline-flex min-h-11 items-center gap-2 text-sm" })}>
+                  {malena.article.linkLabel}<ArrowUpRight aria-hidden="true" className="h-4 w-4 shrink-0" />
+                </a>
+              </div>
             </div>
           </article>
 
