@@ -76,9 +76,47 @@ export const notFoundMetadata = {
   robots: "noindex, nofollow",
 };
 
+export const defaultSocialImage = {
+  url: `${siteUrl}/snippet.jpg`,
+  alt: "Absolute Mikhail: портфолио игр и менторинг по Unreal Engine 5",
+  width: 1200,
+  height: 630,
+};
+
 export const normalizePathname = (pathname) => {
   if (pathname === "/") return pathname;
   return pathname.replace(/\/+$/, "") || "/";
+};
+
+export const canonicalUrl = (pathname) => {
+  const path = normalizePathname(pathname);
+  return `${siteUrl}${path === "/" ? "/" : path}`;
+};
+
+export const absoluteUrl = (value) => {
+  if (!value) return defaultSocialImage.url;
+  if (/^https?:\/\//i.test(value)) return value;
+  return `${siteUrl}${value.startsWith("/") ? value : `/${value}`}`;
+};
+
+const escapeXml = (value) =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+
+export const renderSitemap = (entries) => {
+  const urls = entries
+    .map(({ pathname, updated }) => {
+      const lastmod = typeof updated === "string" && /^\d{4}-\d{2}-\d{2}$/.test(updated)
+        ? `\n    <lastmod>${updated}</lastmod>`
+        : "";
+      return `  <url>\n    <loc>${escapeXml(canonicalUrl(pathname))}</loc>${lastmod}\n  </url>`;
+    })
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 };
 
 export const findRouteMetadata = (pathname) => {

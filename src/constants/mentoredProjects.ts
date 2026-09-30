@@ -1,7 +1,7 @@
-import guestOfAntiquityCover from "@/assets/projects/mentored/guest-of-antiquity.png";
+import guestOfAntiquityCover from "@/assets/projects/mentored/guest-of-antiquity.webp";
 import phantasmaCover from "@/assets/projects/mentored/phantasma.gif";
-import potatoDedCover from "@/assets/projects/mentored/potato-ded.png";
-import anyWorldCover from "@/assets/projects/mentored/any-world.png";
+import potatoDedCover from "@/assets/projects/mentored/potato-ded.webp";
+import anyWorldCover from "@/assets/projects/mentored/any-world.webp";
 import relsuCover from "@/assets/projects/mentored/relsu.jpg";
 
 export interface MentoredProject {

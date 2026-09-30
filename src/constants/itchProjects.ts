@@ -1,8 +1,8 @@
-import gerasimCover from "@/assets/projects/jams/gerasim.png";
-import revengeOfTheCatCover from "@/assets/projects/jams/revenge-of-the-cat.png";
+import gerasimCover from "@/assets/projects/jams/gerasim.webp";
+import revengeOfTheCatCover from "@/assets/projects/jams/revenge-of-the-cat.webp";
 import weekendJamCover from "@/assets/projects/jams/weekend-jam.jpg";
 import forTheKingCover from "@/assets/projects/jams/for-the-king.jpg";
-import handleWithCareCover from "@/assets/projects/jams/handle-with-care.png";
+import handleWithCareCover from "@/assets/projects/jams/handle-with-care.webp";
 
 export interface ItchProject {
   slug: string;

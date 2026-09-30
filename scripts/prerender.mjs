@@ -1,10 +1,14 @@
+import { access } from "node:fs/promises";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { JSDOM } from "jsdom";
 import {
+  absoluteUrl,
+  canonicalUrl,
+  defaultSocialImage,
+  renderSitemap,
   routeMetadata,
-  siteUrl,
 } from "../src/constants/routeMetadata.js";
 
 const distDirectory = resolve("dist");
@@ -34,15 +38,6 @@ const isIndexable = (metadata) =>
     .split(",")
     .map((directive) => directive.trim())
     .includes("noindex");
-
-const renderSitemap = (paths) => {
-  const urls = paths
-    .map((pathname) => `${siteUrl}${pathname === "/" ? "/" : pathname}`)
-    .map((url) => `  <url>\n    <loc>${escapeAttribute(url)}</loc>\n  </url>`)
-    .join("\n");
-
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
-};
 
 const replaceOrInsertHeadTag = (html, matcher, tag) => {
   if (matcher.test(html)) return html.replace(matcher, tag);
@@ -85,24 +80,41 @@ const revealPrerenderedContent = (markup) =>
     return visibleStyles.length > 0 ? ` style="${visibleStyles.join(";")}"` : "";
   });
 
+const removeHeadTag = (html, matcher) => html.replace(matcher, "");
+
 const renderRouteHtml = (pathname, metadata, renderedMarkup = "") => {
-  const canonicalUrl = `${siteUrl}${pathname === "/" ? "/" : pathname}`;
+  const pageUrl = canonicalUrl(pathname);
   const title = escapeAttribute(metadata.title);
   const description = escapeAttribute(metadata.description);
   const robots = escapeAttribute(metadata.robots);
+  const image = escapeAttribute(metadata.image ? absoluteUrl(metadata.image) : defaultSocialImage.url);
+  const imageAlt = escapeAttribute(metadata.image ? metadata.imageAlt || defaultSocialImage.alt : defaultSocialImage.alt);
+  const imageWidth = metadata.image ? metadata.imageWidth : defaultSocialImage.width;
+  const imageHeight = metadata.image ? metadata.imageHeight : defaultSocialImage.height;
+  const ogType = metadata.ogType === "article" ? "article" : "website";
 
   const tags = [
     [/<title>[\s\S]*?<\/title>/i, `<title>${title}</title>`],
     [/<meta\b[^>]*\bname=["']description["'][^>]*>/i, `<meta name="description" content="${description}" />`],
     [/<meta\b[^>]*\bname=["']robots["'][^>]*>/i, `<meta name="robots" content="${robots}" />`],
-    [/<link\b[^>]*\brel=["']canonical["'][^>]*>/i, `<link rel="canonical" href="${canonicalUrl}" />`],
+    [/<link\b[^>]*\brel=["']canonical["'][^>]*>/i, `<link rel="canonical" href="${pageUrl}" />`],
     [/<meta\b[^>]*\bproperty=["']og:title["'][^>]*>/i, `<meta property="og:title" content="${title}" />`],
     [/<meta\b[^>]*\bproperty=["']og:description["'][^>]*>/i, `<meta property="og:description" content="${description}" />`],
-    [/<meta\b[^>]*\bproperty=["']og:url["'][^>]*>/i, `<meta property="og:url" content="${canonicalUrl}" />`],
-    [/<meta\b[^>]*\bproperty=["']og:type["'][^>]*>/i, '<meta property="og:type" content="website" />'],
+    [/<meta\b[^>]*\bproperty=["']og:url["'][^>]*>/i, `<meta property="og:url" content="${pageUrl}" />`],
+    [/<meta\b[^>]*\bproperty=["']og:type["'][^>]*>/i, `<meta property="og:type" content="${ogType}" />`],
+    [/<meta\b[^>]*\bproperty=["']og:image["'][^>]*>/i, `<meta property="og:image" content="${image}" />`],
+    [/<meta\b[^>]*\bproperty=["']og:image:alt["'][^>]*>/i, `<meta property="og:image:alt" content="${imageAlt}" />`],
     [/<meta\b[^>]*\bname=["']twitter:title["'][^>]*>/i, `<meta name="twitter:title" content="${title}" />`],
     [/<meta\b[^>]*\bname=["']twitter:description["'][^>]*>/i, `<meta name="twitter:description" content="${description}" />`],
+    [/<meta\b[^>]*\bname=["']twitter:image["'][^>]*>/i, `<meta name="twitter:image" content="${image}" />`],
+    [/<meta\b[^>]*\bname=["']twitter:image:alt["'][^>]*>/i, `<meta name="twitter:image:alt" content="${imageAlt}" />`],
   ];
+  if (imageWidth && imageHeight) {
+    tags.push(
+      [/<meta\b[^>]*\bproperty=["']og:image:width["'][^>]*>/i, `<meta property="og:image:width" content="${imageWidth}" />`],
+      [/<meta\b[^>]*\bproperty=["']og:image:height["'][^>]*>/i, `<meta property="og:image:height" content="${imageHeight}" />`],
+    );
+  }
 
   const documentTemplate = ["/privacy", "/terms", "/malena/privacy"].includes(pathname)
     ? template.replace(/\s*<!-- Local command queue only:[\s\S]*?<\/script>/i, "")
@@ -114,10 +126,19 @@ const renderRouteHtml = (pathname, metadata, renderedMarkup = "") => {
         .replace(/\s*<meta\b[^>]*\bname=["']twitter:site["'][^>]*>/i, "")
     : documentTemplate;
 
-  const html = tags.reduce(
+  let html = tags.reduce(
     (html, [matcher, tag]) => replaceOrInsertHeadTag(html, matcher, tag),
     routeTemplate,
   );
+  if (!imageWidth || !imageHeight) {
+    html = removeHeadTag(html, /\s*<meta\b[^>]*\bproperty=["']og:image:width["'][^>]*>/i);
+    html = removeHeadTag(html, /\s*<meta\b[^>]*\bproperty=["']og:image:height["'][^>]*>/i);
+  }
+  if (metadata.structuredData) {
+    const json = JSON.stringify(metadata.structuredData).replaceAll("<", "\\u003c");
+    const script = `<script type="application/ld+json" id="structured-data">${json}</script>`;
+    html = html.replace("</head>", `    ${script}\n  </head>`);
+  }
 
   const visibleMarkup = revealPrerenderedContent(renderedMarkup);
 
@@ -190,13 +211,33 @@ for (const pathname of outputPaths) {
   await writeFile(outputPath, html, "utf8");
 }
 
-const sitemapPaths = [...outputPaths].filter((pathname) => {
+const sitemapEntries = [...outputPaths].flatMap((pathname) => {
   const metadata = resolvedMetadata.get(pathname);
-  return isIndexable(metadata);
+  if (!isIndexable(metadata)) return [];
+  return [{ pathname, updated: metadata.updated }];
 });
 const sitemapPath = resolve(distDirectory, "sitemap.xml");
-await writeFile(sitemapPath, renderSitemap(sitemapPaths), "utf8");
+await writeFile(sitemapPath, renderSitemap(sitemapEntries), "utf8");
+
+for (const [pathname, metadata] of resolvedMetadata) {
+  const imagePath = metadata.image ? metadata.image : "/snippet.jpg";
+  if (!imagePath.startsWith("/") || imagePath.startsWith("//")) continue;
+  const filePath = resolve(distDirectory, imagePath.slice(1).split("?")[0]);
+  try {
+    await access(filePath);
+  } catch {
+    throw new Error(`${pathname}: social image is missing from the build: ${imagePath}`);
+  }
+  const htmlPath = pathname === "/"
+    ? resolve(distDirectory, "index.html")
+    : resolve(distDirectory, pathname.slice(1), "index.html");
+  const html = await readFile(htmlPath, "utf8");
+  const canonical = html.match(/<link\b[^>]*\brel=["']canonical["'][^>]*>/i)?.[0] ?? "";
+  if (!canonical.includes(`href="${canonicalUrl(pathname)}"`)) {
+    throw new Error(`${pathname}: canonical must be ${canonicalUrl(pathname)}`);
+  }
+}
 
 console.log(
-  `Generated ${outputPaths.size} route HTML files (${renderedPaths.size} with rendered content) and a sitemap with ${sitemapPaths.length} URLs in ${distDirectory}`,
+  `Generated ${outputPaths.size} route HTML files (${renderedPaths.size} with rendered content) and a sitemap with ${sitemapEntries.length} URLs in ${distDirectory}`,
 );
