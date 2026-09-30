@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -13,6 +14,7 @@ const target = window as TestWindow;
 const loaders = () => document.querySelectorAll('script[data-site-analytics="true"]');
 
 beforeEach(() => {
+  document.documentElement.classList.remove("analytics-decided");
   stopAnalytics();
   localStorage.clear();
   // Also clear the in-memory fallback via the public cross-tab notification.
@@ -37,9 +39,40 @@ afterEach(() => {
   const view = render(<MemoryRouter><PrivacyControls /></MemoryRouter>);
   act(() => window.dispatchEvent(new StorageEvent("storage", { key: PRIVACY_KEY })));
   view.unmount();
+  document.documentElement.classList.remove("analytics-decided");
 });
 
 describe("analytics choice", () => {
+  it.each(["expiry", "storage removal"])("shows the banner after %s despite the HTML bootstrap class", (reason) => {
+    const now = Date.now();
+    vi.spyOn(Date, "now").mockReturnValue(now);
+    localStorage.setItem(PRIVACY_KEY, JSON.stringify({ version: 1, choice: "rejected", savedAt: now - PRIVACY_MAX_AGE + 1000 }));
+    // The HTML bootstrap hides the prerendered banner for a returning visitor.
+    document.documentElement.classList.add("analytics-decided");
+    const style = document.createElement("style");
+    // JSDOM cannot parse Tailwind's layer wrapper; apply the actual visibility rule.
+    const css = readFileSync("src/index.css", "utf8");
+    style.textContent = css.match(/html\.analytics-decided\s+\.analytics-banner\s*\{[^}]*\}/)?.[0] ?? "";
+    document.head.appendChild(style);
+    try {
+      render(<MemoryRouter><PrivacyControls /></MemoryRouter>);
+      expect(screen.queryByRole("complementary", { name: "Выбор аналитики" })).not.toBeInTheDocument();
+      act(() => {
+        if (reason === "expiry") {
+          vi.mocked(Date.now).mockReturnValue(now + 1001);
+          window.dispatchEvent(new Event("focus"));
+        } else {
+          localStorage.removeItem(PRIVACY_KEY);
+          window.dispatchEvent(new StorageEvent("storage", { key: PRIVACY_KEY }));
+        }
+      });
+      expect(screen.getByRole("complementary", { name: "Выбор аналитики" })).toBeVisible();
+      expect(loaders()).toHaveLength(0);
+    } finally {
+      style.remove();
+    }
+  });
+
   it("keeps counters absent until explicit approval, including after refusal and refresh", () => {
     const view = render(<MemoryRouter><PrivacyControls /></MemoryRouter>);
     expect(screen.getByRole("complementary", { name: "Выбор аналитики" })).toBeInTheDocument();

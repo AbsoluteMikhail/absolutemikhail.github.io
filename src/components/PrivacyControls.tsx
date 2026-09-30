@@ -18,6 +18,11 @@ const PrivacyControls = () => {
   useEffect(() => subscribePrivacySettings(() => setSettingsOpen(true)), []);
 
   useEffect(() => {
+    // Keep the HTML bootstrap's visibility hint in sync after expiry or cross-tab changes.
+    document.documentElement.classList.toggle("analytics-decided", choice !== null);
+  }, [choice]);
+
+  useEffect(() => {
     if (choice === "accepted" && !excluded) startAnalytics();
     else if (stopAnalytics(choice !== "accepted")) window.location.reload();
   }, [choice, excluded]);
