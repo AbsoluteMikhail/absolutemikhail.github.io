@@ -13,7 +13,10 @@ type ProjectExhibitProps = {
 
 const coverSizes = {
   featured: "(min-width: 1024px) calc((min(100vw, 1280px) - 3rem) * 0.623), calc(100vw - 3rem)",
-  archive: "(min-width: 768px) calc((min(100vw, 1280px) - 3rem - 2.5rem) / 2), calc(100vw - 3rem)",
+  // Two columns from 768px. Container is full-bleed until 1400px; px-6 is 3rem and the gap is 2.5rem.
+  // At 1440px the card is 656px, so 1x and 2x (~1312px) both skip the 640w file.
+  // Under 768px the slot stays below 640px at Lighthouse DPR 1.75.
+  archive: "(min-width: 1400px) calc((1400px - 3rem - 2.5rem) / 2), (min-width: 768px) calc((100vw - 3rem - 2.5rem) / 2), calc(100vw - 3rem)",
   home: "(min-width: 1024px) calc((min(100vw, 1280px) - 3rem - 4rem) / 3), (min-width: 768px) calc((min(100vw, 1280px) - 3rem - 2rem) / 2), calc(100vw - 3rem)",
 };
 
