@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Maximize2, X } from "lucide-react";
+import { publicImageSize } from "@/lib/publicImageMeta";
 
 type AcademyImageLightboxProps = {
   alt: string;
@@ -57,7 +58,7 @@ export const AcademyImageLightbox = ({
         ref={triggerRef}
         type="button"
       >
-        <img alt={alt} className={imageClassName} decoding="async" loading="lazy" src={src} />
+        <img alt={alt} className={imageClassName} decoding="async" loading="lazy" src={src} {...publicImageSize(src)} />
         <span aria-hidden="true" className="academy-image-link__hint">
           <Maximize2 className="h-4 w-4" />
           Увеличить

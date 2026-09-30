@@ -40,6 +40,7 @@ import { Button } from "@/components/ui/button";
 import { academyContent, type AcademyContent } from "@/lib/academyContent";
 import { getAcademyRoute } from "@/lib/academyRoutes";
 import { slugify } from "@/lib/academyMarkdown";
+import { publicImageSize } from "@/lib/publicImageMeta";
 import LegalLinks from "@/components/LegalLinks";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { getCourseProgress, useAcademyProgress } from "@/lib/academyProgress";
@@ -179,6 +180,7 @@ const AcademyCover = ({ alt, className = "", src }: { alt?: string; className?: 
         decoding="async"
         loading="lazy"
         src={src}
+        {...publicImageSize(src)}
       />
     </div>
   );

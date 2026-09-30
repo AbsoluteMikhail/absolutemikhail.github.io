@@ -39,7 +39,7 @@ const ProjectArticle = ({ project }: { project: ProjectPage }) => {
             </div>
           </header>
           <figure className="overflow-hidden rounded-xl bg-card">
-            <img src={project.cover} srcSet={project.coverSrcSet} sizes="(min-width: 1400px) 1352px, 100vw" alt={`Обложка игры ${project.title}`} loading="eager" {...{ fetchpriority: "high" }} decoding="async" className="aspect-video w-full object-contain" />
+            <img src={project.cover} srcSet={project.coverSrcSet} sizes="(min-width: 1400px) 1352px, 100vw" width={project.coverWidth} height={project.coverHeight} alt={`Обложка игры ${project.title}`} loading="eager" {...{ fetchpriority: "high" }} decoding="async" className="aspect-video w-full object-contain" />
           </figure>
           {project.development?.length ? (
             <section className="border-b border-border py-12 md:py-16" aria-labelledby="project-development-title">
@@ -74,14 +74,14 @@ const ProjectArticle = ({ project }: { project: ProjectPage }) => {
             <SectionTitle id="project-video-title" size="compact" className="mb-8">В движении</SectionTitle>
             <div className="relative aspect-video overflow-hidden rounded-xl bg-card">
               {playing ? <iframe src={project.videoUrl} title={`Видео проекта ${project.title}`} className="h-full w-full border-0" allow="autoplay; fullscreen" allowFullScreen /> : <button type="button" onClick={() => setPlaying(true)} aria-label={`Воспроизвести видео проекта ${project.title}`} className="group relative h-full w-full">
-                <img src={project.cover} srcSet={project.coverSrcSet} sizes="(min-width: 1400px) 1352px, 100vw" loading="lazy" alt="" className="h-full w-full object-contain brightness-50" />
+                <img src={project.cover} srcSet={project.coverSrcSet} sizes="(min-width: 1400px) 1352px, 100vw" width={project.coverWidth} height={project.coverHeight} loading="lazy" alt="" className="h-full w-full object-contain brightness-50" />
                 <span className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-white"><span className="rounded-full bg-primary p-5 text-primary-foreground"><Play className="h-8 w-8" /></span><span className="text-sm font-semibold">Смотреть видео</span></span>
               </button>}
             </div>
           </section>}
           {project.screenshots.length > 0 && <section className="border-t border-border py-12" aria-labelledby="project-gallery-title">
             <SectionTitle id="project-gallery-title" size="compact" className="mb-8">Кадры из игры</SectionTitle>
-            <div className="grid gap-4 md:grid-cols-2">{project.screenshots.map((src, index) => <a key={src} href={src} onClick={(event) => { if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); setFrame(index); }} aria-label={`Увеличить кадр ${index + 1}`} className="overflow-hidden rounded-lg bg-card"><img src={src} alt={`Скриншот ${project.title}, кадр ${index + 1}`} loading="lazy" decoding="async" className="aspect-video w-full object-contain transition-transform motion-safe:hover:scale-[1.02]" /></a>)}</div>
+            <div className="grid gap-4 md:grid-cols-2">{project.screenshots.map((shot, index) => <a key={shot.src} href={shot.src} onClick={(event) => { if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); setFrame(index); }} aria-label={`Увеличить кадр ${index + 1}`} className="overflow-hidden rounded-lg bg-card"><img src={shot.src} srcSet={shot.srcSet} sizes="(min-width: 768px) 700px, 100vw" width={shot.width} height={shot.height} alt={`Скриншот ${project.title}, кадр ${index + 1}`} loading="lazy" decoding="async" className="aspect-video w-full object-contain transition-transform motion-safe:hover:scale-[1.02]" /></a>)}</div>
           </section>}
           <nav aria-label="Другие проекты" className="mt-8 flex flex-col justify-between gap-6 border-t border-border pt-8 sm:flex-row">
             <Link to="/projects" className="inline-flex min-h-11 items-center gap-2 text-muted-foreground hover:text-primary"><ArrowLeft className="h-4 w-4" /> Весь архив</Link>
@@ -93,7 +93,7 @@ const ProjectArticle = ({ project }: { project: ProjectPage }) => {
       <Modal isOpen={frame !== null} onClose={() => setFrame(null)} labelledBy="project-frame-title">
         <div className="w-full max-w-6xl rounded-xl border border-border bg-card p-4">
           <div className="mb-4 flex items-center justify-between gap-4"><h2 id="project-frame-title" className="text-sm">{project.title} · Кадр {(frame ?? 0) + 1} / {project.screenshots.length}</h2><IconButton aria-label="Закрыть изображение" onClick={() => setFrame(null)}><X className="h-5 w-5" /></IconButton></div>
-          {frame !== null && <img src={project.screenshots[frame]} alt={`Скриншот ${project.title}, кадр ${frame + 1}`} className="max-h-[65svh] w-full object-contain" />}
+          {frame !== null && <img src={project.screenshots[frame].src} width={project.screenshots[frame].width} height={project.screenshots[frame].height} alt={`Скриншот ${project.title}, кадр ${frame + 1}`} className="max-h-[65svh] w-full object-contain" />}
           <div className="mt-4 flex justify-between gap-3"><Button variant="outline" size="sm" onClick={() => setFrame(((frame ?? 0) - 1 + project.screenshots.length) % project.screenshots.length)}>Назад</Button><Button variant="outline" size="sm" onClick={() => setFrame(((frame ?? 0) + 1) % project.screenshots.length)}>Далее</Button></div>
         </div>
       </Modal>
