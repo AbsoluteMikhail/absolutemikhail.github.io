@@ -3,6 +3,7 @@ import { telegramCommunityUrl } from "@/constants/contactLinks";
 import { ContactMessenger } from "@/components/ContactMessenger";
 import LegalLinks from "@/components/LegalLinks";
 import Logo from "@/components/Logo";
+import { trailingPath } from "@/constants/routeMetadata.js";
 import {
   DiscordIcon,
   SteamIcon,
@@ -53,7 +54,7 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
             </div>
 
             <div>
-              <h4 className="mb-6 font-display text-xs font-bold uppercase tracking-widest text-foreground">Навигация</h4>
+              <p className="mb-6 font-display text-xs font-bold uppercase tracking-widest text-foreground">Навигация</p>
               <ul className="space-y-4">
                 {[
                   { label: "Академия", href: "/academy" },
@@ -66,7 +67,7 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
                   { label: "Все проекты", href: "/projects" },
                 ].map((link) => (
                   <li key={link.label}>
-                    <a href={link.href} className="group flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary">
+                    <a href={trailingPath(link.href)} className="group flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary">
                       {link.label}
                       <ArrowUpRight className="h-3 w-3 -translate-y-0.5 opacity-0 transition-all group-hover:opacity-100" />
                     </a>
@@ -76,7 +77,7 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
             </div>
 
             <div>
-              <h4 className="mb-6 font-display text-xs font-bold uppercase tracking-widest text-foreground">Контакты</h4>
+              <p className="mb-6 font-display text-xs font-bold uppercase tracking-widest text-foreground">Контакты</p>
               <ul className="space-y-4">
                 <li>
                   <ContactMessenger variant="text" size="none" className="flex items-center gap-3 text-sm">
@@ -93,7 +94,7 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
 
             <div className="group relative">
               <div className="relative">
-                <h4 className="mb-6 font-display text-xs font-bold uppercase tracking-widest text-foreground">Статус</h4>
+                <p className="mb-6 font-display text-xs font-bold uppercase tracking-widest text-foreground">Статус</p>
                 <div className="mb-4 flex items-center gap-2">
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 [html.light_&]:bg-emerald-700" />

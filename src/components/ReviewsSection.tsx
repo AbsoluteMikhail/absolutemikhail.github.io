@@ -18,7 +18,7 @@ const ReviewCard = ({ review, decorative = false }: { review: GameReview; decora
 
   return (
     <div className="review-card flex-shrink-0 w-[min(350px,85vw)] p-6 rounded-lg bg-card/50 border-t border-primary/40">
-    <div className="flex gap-1 mb-3" aria-label={`Оценка ${review.rating} из 5`}>
+    <div className="flex gap-1 mb-3" role="img" aria-label={`Оценка ${review.rating} из 5`}>
       {Array.from({ length: 5 }).map((_, i) => {
         const fill = Math.max(0, Math.min(1, review.rating - i));
         return (

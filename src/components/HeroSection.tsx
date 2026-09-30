@@ -172,7 +172,6 @@ const HeroSection = () => {
             href="https://credential.unrealengine.com/b0a726a2-6749-4f13-a1c9-8ebfcc3d6034"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Unreal Authorized Instructor — открыть официальный credential"
             className="mb-4 flex max-w-xl items-center gap-3 border-y border-border py-2.5 lg:hidden"
           >
             <span className="flex h-16 w-20 shrink-0 items-center justify-center">

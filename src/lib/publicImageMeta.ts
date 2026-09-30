@@ -1,4 +1,4 @@
-export const publicImageMeta: Record<string, { width: number; height: number }> = {
+export const publicImageMeta: Record<string, { width: number; height: number; srcSet?: string }> = {
   "/academy/ai-intro/malena-button-meme.webp": { width: 1024, height: 1536 },
   "/academy/ai-intro/malena-dragon-queen.webp": { width: 864, height: 1821 },
   "/academy/ai-intro/malena-original-meme.webp": { width: 1024, height: 1024 },
@@ -13,7 +13,11 @@ export const publicImageMeta: Record<string, { width: number; height: number }> 
   "/academy/ai-intro/page-final-light-390.webp": { width: 390, height: 1210 },
   "/academy/ai-intro/portfolio-home-author.webp": { width: 1400, height: 681 },
   "/academy/ai-intro/windows-file-extensions.webp": { width: 1400, height: 792 },
-  "/academy/ai-intro/workshop-before.webp": { width: 1400, height: 933 },
+  "/academy/ai-intro/workshop-before.webp": {
+    width: 1400,
+    height: 933,
+    srcSet: "/academy/ai-intro/workshop-before-640.webp 640w, /academy/ai-intro/workshop-before.webp 1400w",
+  },
   "/academy/ai-intro/workshop-dawn.webp": { width: 1400, height: 933 },
   "/academy/data-driven-speed-modifiers/active-modifier-struct.webp": { width: 1800, height: 956 },
   "/academy/data-driven-speed-modifiers/add-modifier.webp": { width: 1800, height: 956 },
@@ -21,7 +25,11 @@ export const publicImageMeta: Record<string, { width: number; height: number }> 
   "/academy/data-driven-speed-modifiers/bp-spawner.webp": { width: 1800, height: 956 },
   "/academy/data-driven-speed-modifiers/component-event-graph.webp": { width: 1800, height: 956 },
   "/academy/data-driven-speed-modifiers/component-tick-interval.webp": { width: 905, height: 450 },
-  "/academy/data-driven-speed-modifiers/cover.jpg": { width: 1280, height: 720 },
+  "/academy/data-driven-speed-modifiers/cover.webp": {
+    width: 1280,
+    height: 720,
+    srcSet: "/academy/data-driven-speed-modifiers/cover-640.webp 640w, /academy/data-driven-speed-modifiers/cover.webp 1280w",
+  },
   "/academy/data-driven-speed-modifiers/create-blueprint-types-menu.webp": { width: 1200, height: 703 },
   "/academy/data-driven-speed-modifiers/create-data-asset-menu.webp": { width: 908, height: 595 },
   "/academy/data-driven-speed-modifiers/create-primary-data-asset.webp": { width: 620, height: 534 },
@@ -58,11 +66,20 @@ export const publicImageMeta: Record<string, { width: number; height: number }> 
   "/academy/ue-localization/10-create-localized-texture.webp": { width: 1920, height: 1080 },
   "/academy/ue-localization/11-final-gather-translate-compile.webp": { width: 1920, height: 1080 },
   "/academy/ue-localization/11-localizations-to-package.webp": { width: 1920, height: 1080 },
-  "/academy/ue-localization/cover.webp": { width: 1280, height: 720 },
+  "/academy/ue-localization/cover.webp": {
+    width: 1280,
+    height: 720,
+    srcSet: "/academy/ue-localization/cover-640.webp 640w, /academy/ue-localization/cover.webp 1280w",
+  },
 };
 
 export const publicImageSize = (src?: string) => {
   if (!src) return {};
   const size = publicImageMeta[src];
-  return size ? { width: size.width, height: size.height } : {};
+  if (!size) return {};
+  return {
+    width: size.width,
+    height: size.height,
+    ...(size.srcSet ? { srcSet: size.srcSet } : {}),
+  };
 };

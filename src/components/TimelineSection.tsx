@@ -3,6 +3,7 @@ import { ArrowUpRight, Trophy, Star, Rocket, Award, Moon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SectionTitle } from "@/components/ui/section-title";
 import { SectionBadge } from "@/components/ui/section-badge";
+import { trailingPath } from "@/constants/routeMetadata.js";
 import { milestones, type TimelineIcon } from "@/content/timeline";
 
 const timelineIcons: Record<TimelineIcon, typeof Trophy> = { award: Award, rocket: Rocket, trophy: Trophy, star: Star };
@@ -50,7 +51,7 @@ const TimelineSection = () => (
                         {link.label}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
                       </a>
                     ) : (
-                      <Link className="exhibition-link" key={link.href} to={link.href}>
+                      <Link className="exhibition-link" key={link.href} to={trailingPath(link.href)}>
                         {link.label}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
                       </Link>
                     ))}

@@ -101,6 +101,7 @@ const renderRouteHtml = (pathname, metadata, renderedMarkup = "") => {
     [/<meta\b[^>]*\bproperty=["']og:title["'][^>]*>/i, `<meta property="og:title" content="${title}" />`],
     [/<meta\b[^>]*\bproperty=["']og:description["'][^>]*>/i, `<meta property="og:description" content="${description}" />`],
     [/<meta\b[^>]*\bproperty=["']og:url["'][^>]*>/i, `<meta property="og:url" content="${pageUrl}" />`],
+    [/<meta\b[^>]*\bproperty=["']og:site_name["'][^>]*>/i, `<meta property="og:site_name" content="Absolute Mikhail" />`],
     [/<meta\b[^>]*\bproperty=["']og:type["'][^>]*>/i, `<meta property="og:type" content="${ogType}" />`],
     [/<meta\b[^>]*\bproperty=["']og:image["'][^>]*>/i, `<meta property="og:image" content="${image}" />`],
     [/<meta\b[^>]*\bproperty=["']og:image:alt["'][^>]*>/i, `<meta property="og:image:alt" content="${imageAlt}" />`],

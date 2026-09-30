@@ -74,7 +74,7 @@ describe("academy content structure", () => {
     const course = getAcademyCourse("data-driven-speed-modifiers");
 
     expect(course?.format).toBe("Мини-курс");
-    expect(course?.cover).toBe("/academy/data-driven-speed-modifiers/cover.jpg");
+    expect(course?.cover).toBe("/academy/data-driven-speed-modifiers/cover.webp");
     expect(course?.lessons).toHaveLength(1);
     expect(course?.lessons[0].meta.youtube).toBe("https://youtu.be/Q8SXNGHKD8s");
     expect(course?.lessons[0].meta.videoIntro).toContain("Лень читать");

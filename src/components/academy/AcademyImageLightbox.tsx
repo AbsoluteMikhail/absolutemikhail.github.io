@@ -58,7 +58,7 @@ export const AcademyImageLightbox = ({
         ref={triggerRef}
         type="button"
       >
-        <img alt={alt} className={imageClassName} decoding="async" loading="lazy" src={src} {...publicImageSize(src)} />
+        <img alt={alt} className={imageClassName} decoding="async" loading="lazy" sizes="(min-width: 1024px) 760px, calc(100vw - 3rem)" src={src} {...publicImageSize(src)} />
         <span aria-hidden="true" className="academy-image-link__hint">
           <Maximize2 className="h-4 w-4" />
           Увеличить

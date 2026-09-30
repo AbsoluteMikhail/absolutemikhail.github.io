@@ -183,7 +183,6 @@ const OGSnippet = () => {
           href="https://gamepunk.ru/#proof"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Unreal Authorized Instructor — открыть подтверждённый опыт"
           className="group absolute bottom-10 right-10 z-20 w-[390px] rounded-2xl border border-white/15 bg-background/70 p-3.5 shadow-2xl shadow-black/50 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-background/85 hover:shadow-primary/10 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
         >
           <span className="flex items-center gap-4">

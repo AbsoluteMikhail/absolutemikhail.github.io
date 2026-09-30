@@ -6,6 +6,7 @@ import { ContactMessenger } from "@/components/ContactMessenger";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { trailingPath } from "@/constants/routeMetadata.js";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -84,7 +85,7 @@ const Navbar = () => {
               ) : (
                 <Link
                   key={link.label}
-                  to={link.href.startsWith("#") ? `/${link.href}` : link.href}
+                  to={trailingPath(link.href.startsWith("#") ? `/${link.href}` : link.href)}
                   className="text-xs font-display tracking-wider uppercase text-foreground/80 hover:text-primary transition-colors"
                 >
                   {link.label}
@@ -144,7 +145,7 @@ const Navbar = () => {
                 ) : (
                   <Link
                     key={link.label}
-                    to={link.href.startsWith("#") ? `/${link.href}` : link.href}
+                    to={trailingPath(link.href.startsWith("#") ? `/${link.href}` : link.href)}
                     onClick={() => setIsOpen(false)}
                     className="text-xl font-display tracking-wider uppercase text-foreground hover:text-primary transition-colors border-b border-border py-4"
                   >

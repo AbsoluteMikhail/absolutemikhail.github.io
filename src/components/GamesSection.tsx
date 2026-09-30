@@ -74,7 +74,7 @@ const GamesSection = () => {
           className="mt-14 grid gap-8 border-y border-border py-8 lg:grid-cols-2 lg:gap-16"
         >
           <Link
-            to="/projects#jams"
+            to="/projects/#jams"
             className="group relative py-2"
           >
             <div className="relative">
@@ -107,7 +107,7 @@ const GamesSection = () => {
           </Link>
 
           <Link
-            to="/projects#mentored"
+            to="/projects/#mentored"
             className="group relative py-2"
           >
             <div className="relative">
@@ -149,7 +149,7 @@ const GamesSection = () => {
           className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <Link
-            to="/projects"
+            to="/projects/"
             className={buttonStyles({ variant: "primary", size: "lg", className: "group inline-flex items-center gap-2" })}
           >
             Все проекты

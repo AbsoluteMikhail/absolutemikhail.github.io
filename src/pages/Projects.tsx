@@ -5,6 +5,7 @@ import { ChevronLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { useEffect } from "react";
 import { projects } from "@/constants/projects";
+import { trailingPath } from "@/constants/routeMetadata.js";
 import { projectPath } from "@/lib/projectPages";
 import ProjectExhibit from "@/components/ProjectExhibit";
 import SiteFooter from "@/components/SiteFooter";
@@ -57,8 +58,8 @@ const Projects = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-x-10 gap-y-12 md:grid-cols-2">
-            {activeProjects.map((project) => (
-              <ProjectExhibit key={project.id} project={project} href={projectPath(project.slug)} />
+            {activeProjects.map((project, index) => (
+              <ProjectExhibit key={project.id} project={project} href={trailingPath(projectPath(project.slug))} priority={index === 0} />
             ))}
           </div>
 
@@ -79,7 +80,7 @@ const Projects = () => {
 
               <div className="grid grid-cols-1 gap-x-10 gap-y-12 md:grid-cols-2">
                 {frozenProjects.map((project) => (
-                  <ProjectExhibit key={project.id} project={project} href={projectPath(project.slug)} />
+                  <ProjectExhibit key={project.id} project={project} href={trailingPath(projectPath(project.slug))} />
                 ))}
               </div>
             </section>

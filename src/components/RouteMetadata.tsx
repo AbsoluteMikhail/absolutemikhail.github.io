@@ -47,6 +47,7 @@ const RouteMetadata = () => {
       upsertMeta('meta[property="og:title"]', "property", "og:title", metadata.title);
       upsertMeta('meta[property="og:description"]', "property", "og:description", metadata.description);
       upsertMeta('meta[property="og:url"]', "property", "og:url", canonicalUrl(normalizedPathname));
+      upsertMeta('meta[property="og:site_name"]', "property", "og:site_name", "Absolute Mikhail");
       upsertMeta('meta[property="og:type"]', "property", "og:type", metadata.ogType ?? "website");
       upsertMeta('meta[property="og:image"]', "property", "og:image", image);
       upsertMeta('meta[property="og:image:alt"]', "property", "og:image:alt", imageAlt);

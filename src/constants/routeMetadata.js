@@ -90,7 +90,28 @@ export const normalizePathname = (pathname) => {
 
 export const canonicalUrl = (pathname) => {
   const path = normalizePathname(pathname);
-  return `${siteUrl}${path === "/" ? "/" : path}`;
+  return `${siteUrl}${path === "/" ? "/" : `${path}/`}`;
+};
+
+// GitHub Pages answers the directory URL (trailing slash) with 200 and redirects the slash-less form.
+export const trailingPath = (value) => {
+  if (typeof value !== "string" || value.length === 0) return value;
+  if (value.startsWith("#") || /^(https?:)?\/\//i.test(value) || value.startsWith("mailto:")) return value;
+
+  const hashIndex = value.indexOf("#");
+  const beforeHash = hashIndex >= 0 ? value.slice(0, hashIndex) : value;
+  const hash = hashIndex >= 0 ? value.slice(hashIndex) : "";
+  const queryIndex = beforeHash.indexOf("?");
+  const path = queryIndex >= 0 ? beforeHash.slice(0, queryIndex) : beforeHash;
+  const query = queryIndex >= 0 ? beforeHash.slice(queryIndex) : "";
+  if (!path.startsWith("/")) return value;
+
+  const segment = path.split("/").filter(Boolean).pop() || "";
+  if (segment.includes(".")) return value;
+
+  const normalized = path === "/" ? "/" : path.replace(/\/+$/, "") || "/";
+  if (normalized === "/") return `/${query}${hash}`;
+  return `${normalized}/${query}${hash}`;
 };
 
 export const absoluteUrl = (value) => {
