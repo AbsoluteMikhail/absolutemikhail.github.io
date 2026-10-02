@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { isBugUnderCursor } from "@/components/pixel-bugs/bugCursor";
 
 const FINE_POINTER_QUERY = "(hover: hover) and (pointer: fine)";
 const INTERACTIVE_SELECTOR =
@@ -143,7 +144,10 @@ const CustomCursor = () => {
       reticle.classList.toggle("is-hidden", useNativeCursor);
       if (useNativeCursor) reticle.classList.remove("is-visible");
 
-      const caption = useNativeCursor ? "" : resolveCursorLabel(target);
+      let caption = "";
+      if (!useNativeCursor) {
+        caption = !interactive && isBugUnderCursor(x, y) ? "BUG" : resolveCursorLabel(target);
+      }
       if (label.textContent !== caption) label.textContent = caption;
       label.classList.toggle("is-on", caption !== "");
       reticle.classList.toggle("is-focused", !useNativeCursor && (interactive || caption !== ""));

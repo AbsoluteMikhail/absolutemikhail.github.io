@@ -872,6 +872,78 @@ html.snippet-capture .custom-cursor {
   color: hsl(var(--background));
 }
 .skip-link:focus { transform: none; }
+
+/* Decorative homepage bugs. The layer never takes part in layout. */
+.pixel-bug-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pixel-bug-layer canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.pixel-bug-xp {
+  --xp-x: 0px;
+  --xp-y: 0px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  color: hsl(var(--accent));
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  pointer-events: none;
+  text-shadow:
+    1px 0 0 hsl(var(--background)),
+    -1px 0 0 hsl(var(--background)),
+    0 1px 0 hsl(var(--background)),
+    0 -1px 0 hsl(var(--background));
+  transform: translate3d(var(--xp-x), var(--xp-y), 0) translate(-50%, -130%);
+  animation: pixel-bug-xp 720ms ease-out forwards;
+}
+
+.pixel-bug-score {
+  position: absolute;
+  right: 2rem;
+  bottom: 6.25rem;
+  z-index: 2;
+  padding: 0.45rem 0.7rem 0.4rem;
+  border: 1px solid hsl(var(--primary) / 0.35);
+  border-radius: 0.85rem;
+  background: hsl(var(--background) / 0.88);
+  color: hsl(var(--accent));
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  pointer-events: none;
+}
+
+@keyframes pixel-bug-xp {
+  to {
+    opacity: 0;
+    transform: translate3d(var(--xp-x), calc(var(--xp-y) - 42px), 0) translate(-50%, -130%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-bug-xp {
+    animation: none;
+    opacity: 0;
+  }
+}
 summary:focus-visible { outline: 2px solid hsl(var(--accent)); outline-offset: 4px; }
 #main-content { scroll-margin-top: 6rem; }
 

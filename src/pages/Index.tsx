@@ -14,6 +14,7 @@ import FinalTrustSection from "@/components/FinalTrustSection";
 import ReviewsSection from "@/components/ReviewsSection";
 import ScrollToTop from "@/components/ScrollToTop";
 import SiteFooter from "@/components/SiteFooter";
+import PixelBugGate from "@/components/pixel-bugs/PixelBugGate";
 
 const Index = () => {
   return (
@@ -37,6 +38,7 @@ const Index = () => {
       </main>
       <SiteFooter />
       <ScrollToTop />
+      <PixelBugGate />
     </div>
   );
 };
