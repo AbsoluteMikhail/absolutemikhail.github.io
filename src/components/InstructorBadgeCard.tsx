@@ -22,27 +22,29 @@ const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardPro
       rel={rel}
       target={target}
       className={cn(
-        "group block rounded-xl border-t border-white/25 bg-background/85 p-5 shadow-2xl shadow-black/30 backdrop-blur-xl transition-colors hover:bg-background/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 [html.light_&]:border-border [html.light_&]:shadow-foreground/15",
+        "group block rounded-xl border-t border-white/25 bg-background/85 p-5 shadow-2xl shadow-black/30 backdrop-blur-xl transition-colors hover:bg-background/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 [container-type:inline-size] [html.light_&]:border-border [html.light_&]:shadow-foreground/15",
         className,
       )}
       {...props}
     >
-      <span className="flex items-center gap-4">
-        <span className="flex h-20 w-24 shrink-0 items-center justify-center">
+      <span className="grid grid-cols-[6rem_minmax(0,1fr)] items-center gap-x-4">
+        <span className="col-start-1 row-start-1 flex h-20 w-24 shrink-0 items-center justify-center">
           <img src={uaiBadge} alt="Unreal Authorized Instructor 2026" className="h-full w-full object-contain" />
         </span>
-        <span className="min-w-0">
-          <span className="mb-2 flex items-center gap-1.5 text-primary">
-            <Award className="h-4 w-4" />
-            <span className="font-display text-[9px] font-bold uppercase tracking-[0.2em]">Статус 2026</span>
+        <span className="col-start-2 row-start-1 min-w-0 credential-narrow:contents">
+          <span className="block min-w-0 credential-narrow:col-start-2 credential-narrow:row-start-1">
+            <span className="mb-2 flex items-center gap-1.5 text-primary">
+              <Award className="h-4 w-4" />
+              <span className="font-display text-[9px] font-bold uppercase tracking-[0.2em]">Статус 2026</span>
+            </span>
+            <strong className="block font-display text-sm uppercase leading-5 tracking-[0.08em] text-foreground">
+              Unreal Authorized Instructor
+            </strong>
           </span>
-          <strong className="block font-display text-sm uppercase leading-5 tracking-[0.08em] text-foreground">
-            Unreal Authorized Instructor
-          </strong>
+          <span className="mt-3 block text-xs leading-5 text-muted-foreground credential-narrow:col-span-2 credential-narrow:col-start-1 credential-narrow:row-start-2">
+            Преподаю то, с чем сам работаю: код, архитектуру и путь до релиза.
+          </span>
         </span>
-      </span>
-      <span className="mt-3 block text-xs leading-5 text-muted-foreground">
-        Преподаю то, с чем сам работаю: код, архитектуру и путь до релиза.
       </span>
       <span className="mt-4 grid grid-cols-2 gap-2 border-t border-white/10 pt-4 [html.light_&]:border-border">
         <span className="py-1">

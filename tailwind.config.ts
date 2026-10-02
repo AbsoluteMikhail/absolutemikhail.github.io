@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
@@ -102,5 +103,12 @@ export default {
       },
     },
   },
-  plugins: [tailwindcssAnimate],
+  plugins: [
+    tailwindcssAnimate,
+    // Content box of the credential card. Below this width the description
+    // no longer fits on one line beside the fixed badge, so it stays under the header.
+    plugin(({ addVariant }) => {
+      addVariant("credential-narrow", "@container (max-width: 523px)");
+    }),
+  ],
 } satisfies Config;
