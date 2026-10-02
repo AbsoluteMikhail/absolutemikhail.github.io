@@ -37,7 +37,7 @@ const MalenaGallery = ({ onClose }: MalenaGalleryProps) => {
           </IconButton>
         </div>
 
-        <div className="min-h-0 bg-background" data-cursor="view">
+        <div className="min-h-0 bg-background">
           <img
             key={currentPortrait.src}
             src={currentPortrait.src}

@@ -45,6 +45,19 @@ describe("Malena gallery", () => {
     expect(document.body.style.overflow).toBe("");
   });
 
+  it("marks the portrait and thumbnails for VIEW, but not the enlarged portrait", () => {
+    render(<WorkshopSection />);
+    expect(screen.getByRole("button", { name: "Открыть галерею Малены" })).toHaveAttribute("data-cursor", "view");
+    expect(screen.getByRole("button", { name: "Посмотреть галерею" })).not.toHaveAttribute("data-cursor");
+
+    fireEvent.click(screen.getByRole("button", { name: "Открыть галерею Малены" }));
+    const gallery = within(screen.getByRole("dialog", { name: "Как Малена видит себя" }));
+    expect(gallery.getByRole("img").closest("[data-cursor='view']")).toBeNull();
+    workshop.malena.portraits.forEach((portrait, index) => {
+      expect(gallery.getByRole("button", { name: `Открыть портрет ${index + 1}: ${portrait.title}` })).toHaveAttribute("data-cursor", "view");
+    });
+  });
+
   it("resets on reopening and supports native Escape cancellation and backdrop dismissal", () => {
     render(<WorkshopSection />);
     const trigger = screen.getByRole("button", { name: "Посмотреть галерею" });
