@@ -14,7 +14,7 @@ const CURSOR_LABELS: Record<string, string> = {
   play: "PLAY",
   read: "READ",
   view: "VIEW",
-  external: "↗",
+  external: "OPEN",
 };
 
 const SPARK_COUNT = 6;
@@ -39,7 +39,7 @@ const resolveCursorLabel = (target: Element | null) => {
   const token = marked?.getAttribute("data-cursor")?.trim().toLowerCase() ?? "";
   if (token in CURSOR_LABELS) return CURSOR_LABELS[token];
   const anchor = target.closest("a[href]");
-  return anchor && isExternalAnchor(anchor) ? "↗" : "";
+  return anchor && isExternalAnchor(anchor) ? CURSOR_LABELS.external : "";
 };
 
 const CustomCursor = () => {

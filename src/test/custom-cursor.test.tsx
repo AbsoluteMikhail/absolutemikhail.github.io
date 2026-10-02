@@ -101,10 +101,10 @@ describe("crosshair labels and click", () => {
     expect(label).toHaveTextContent("VIEW");
 
     fireEvent.pointerOver(document.querySelector("a[target='_blank']:not([data-cursor])")!);
-    expect(label).toHaveTextContent("↗");
+    expect(label).toHaveTextContent("OPEN");
 
     fireEvent.pointerOver(document.querySelector("a[href='https://itch.io/game']")!);
-    expect(label).toHaveTextContent("↗");
+    expect(label).toHaveTextContent("OPEN");
 
     fireEvent.pointerOver(document.querySelector("a[data-cursor='play'][target='_blank']")!);
     expect(label).toHaveTextContent("PLAY");
