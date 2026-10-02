@@ -52,6 +52,7 @@ export const AcademyImageLightbox = ({
   return (
     <>
       <button
+        data-cursor="view"
         aria-label={`${alt || "Изображение"} — увеличить`}
         className={`academy-image-link ${className}`}
         onClick={() => setOpen(true)}
