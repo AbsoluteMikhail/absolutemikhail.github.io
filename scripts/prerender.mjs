@@ -82,6 +82,26 @@ const revealPrerenderedContent = (markup) =>
 
 const removeHeadTag = (html, matcher) => html.replace(matcher, "");
 
+// The hero portrait is the mobile LCP image. Ask for it before the font
+// preloads and keep those fonts from competing at the same priority. Metric
+// fallbacks in fonts.css cover the gap; other routes keep the original hints.
+const prioritizeHomepageLcp = (html) => {
+  const heroSrc = html.match(/<img\b[^>]*\bsrc="([^"]*\/hero-photo-[^"]+)"/i)?.[1];
+  if (!heroSrc) throw new Error("Homepage hero image was not prerendered");
+  const preload = `<link rel="preload" as="image" href="${heroSrc}" fetchpriority="high" />`;
+  const withFonts = html.replace(
+    /(<link rel="preload" href="\/fonts\/[^"]+" as="font" type="font\/woff2" crossorigin)( \/>)/g,
+    '$1 fetchpriority="low"$2',
+  );
+  const viewport = '<meta name="viewport" content="width=device-width, initial-scale=1.0" />';
+  if (!withFonts.includes(viewport)) throw new Error("Homepage viewport meta is missing");
+  const prioritized = withFonts.replace(viewport, `${viewport}\n    ${preload}`);
+  if (!prioritized.includes(`href="${heroSrc}"`)) {
+    throw new Error("Homepage hero preload was not inserted");
+  }
+  return prioritized;
+};
+
 const renderRouteHtml = (pathname, metadata, renderedMarkup = "") => {
   const pageUrl = canonicalUrl(pathname);
   const title = escapeAttribute(metadata.title);
@@ -205,7 +225,9 @@ for (const pathname of outputPaths) {
     ? distDirectory
     : resolve(distDirectory, pathname.slice(1));
   const outputPath = resolve(outputDirectory, "index.html");
-  const html = renderRouteHtml(pathname, metadata, renderedMarkup);
+  const html = pathname === "/"
+    ? prioritizeHomepageLcp(renderRouteHtml(pathname, metadata, renderedMarkup))
+    : renderRouteHtml(pathname, metadata, renderedMarkup);
   validateHtml(html, pathname);
 
   await mkdir(outputDirectory, { recursive: true });

@@ -1,6 +1,11 @@
 import { forwardRef, type AnchorHTMLAttributes } from "react";
 import { Award, ExternalLink } from "lucide-react";
-import uaiBadge from "@/assets/uai-badge-monochrome.png";
+import {
+  instructorBadgeHeight,
+  instructorBadgeSrc,
+  instructorBadgeSrcSet,
+  instructorBadgeWidth,
+} from "@/constants/instructorBadge";
 import { cn } from "@/lib/utils";
 
 type InstructorBadgeCardProps = AnchorHTMLAttributes<HTMLAnchorElement>;
@@ -29,7 +34,17 @@ const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardPro
     >
       <span className="grid grid-cols-[6rem_minmax(0,1fr)] items-center gap-x-4">
         <span className="col-start-1 row-start-1 flex h-20 w-24 shrink-0 items-center justify-center">
-          <img src={uaiBadge} alt="Unreal Authorized Instructor 2026" className="h-full w-full object-contain" />
+          <img
+            src={instructorBadgeSrc}
+            srcSet={instructorBadgeSrcSet}
+            sizes="96px"
+            width={instructorBadgeWidth}
+            height={instructorBadgeHeight}
+            alt="Unreal Authorized Instructor 2026"
+            decoding="async"
+            {...{ fetchpriority: "low" }}
+            className="h-full w-full object-contain"
+          />
         </span>
         <span className="col-start-2 row-start-1 min-w-0 credential-narrow:contents">
           <span className="block min-w-0 credential-narrow:col-start-2 credential-narrow:row-start-1">

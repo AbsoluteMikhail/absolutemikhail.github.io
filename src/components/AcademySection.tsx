@@ -33,7 +33,7 @@ const AcademySection = () => (
           <article key={material.href} className="group relative flex min-w-0 flex-col">
             {material.cover && (
               <div className="mb-5 overflow-hidden rounded-lg bg-card">
-                <img src={material.cover} alt={material.coverAlt || material.title} loading="lazy" decoding="async"
+                <img src={material.cover} alt={material.coverAlt || material.title} loading="lazy" decoding="async" {...{ fetchpriority: "low" }}
                   sizes="(min-width: 768px) calc((min(100vw, 1280px) - 4.5rem) / 3), calc(100vw - 3rem)"
                   {...publicImageSize(material.cover)}
                   className="aspect-video w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.025]" />
