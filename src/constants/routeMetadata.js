@@ -93,6 +93,23 @@ export const canonicalUrl = (pathname) => {
   return `${siteUrl}${path === "/" ? "/" : `${path}/`}`;
 };
 
+// Keep the page's schema and its navigation trail in the same JSON-LD payload
+// for both client navigation and prerendered HTML.
+export const getPageStructuredData = (metadata) => {
+  if (!metadata.breadcrumbs?.length) return metadata.structuredData;
+  const breadcrumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: metadata.breadcrumbs.map(({ name, pathname }, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name,
+      item: canonicalUrl(pathname),
+    })),
+  };
+  return metadata.structuredData ? [metadata.structuredData, breadcrumbs] : breadcrumbs;
+};
+
 // GitHub Pages answers the directory URL (trailing slash) with 200 and redirects the slash-less form.
 export const trailingPath = (value) => {
   if (typeof value !== "string" || value.length === 0) return value;

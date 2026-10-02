@@ -7,6 +7,7 @@ import {
   absoluteUrl,
   canonicalUrl,
   defaultSocialImage,
+  getPageStructuredData,
   renderSitemap,
   routeMetadata,
 } from "../src/constants/routeMetadata.js";
@@ -155,8 +156,9 @@ const renderRouteHtml = (pathname, metadata, renderedMarkup = "") => {
     html = removeHeadTag(html, /\s*<meta\b[^>]*\bproperty=["']og:image:width["'][^>]*>/i);
     html = removeHeadTag(html, /\s*<meta\b[^>]*\bproperty=["']og:image:height["'][^>]*>/i);
   }
-  if (metadata.structuredData) {
-    const json = JSON.stringify(metadata.structuredData).replaceAll("<", "\\u003c");
+  const structuredData = getPageStructuredData(metadata);
+  if (structuredData) {
+    const json = JSON.stringify(structuredData).replaceAll("<", "\\u003c");
     const script = `<script type="application/ld+json" id="structured-data">${json}</script>`;
     html = html.replace("</head>", `    ${script}\n  </head>`);
   }
