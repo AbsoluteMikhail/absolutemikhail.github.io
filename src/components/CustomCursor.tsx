@@ -34,13 +34,25 @@ const isExternalAnchor = (anchor: Element) => {
   }
 };
 
+const DEFAULT_INTERACTIVE_LABEL = "CLICK";
+
+const isActivationDisabled = (element: Element) =>
+  element.matches(":disabled")
+  || Boolean(element.closest("[aria-disabled='true']"))
+  || (element.matches("button, input, select, textarea") && Boolean(element.closest("fieldset:disabled")));
+
 const resolveCursorLabel = (target: Element | null) => {
   if (!target) return "";
   const marked = target.closest("[data-cursor]");
   const token = marked?.getAttribute("data-cursor")?.trim().toLowerCase() ?? "";
   if (token in CURSOR_LABELS) return CURSOR_LABELS[token];
+
+  const interactive = target.closest(INTERACTIVE_SELECTOR);
+  if (interactive && isActivationDisabled(interactive)) return "";
+
   const anchor = target.closest("a[href]");
-  return anchor && isExternalAnchor(anchor) ? CURSOR_LABELS.external : "";
+  if (anchor && isExternalAnchor(anchor)) return CURSOR_LABELS.external;
+  return interactive ? DEFAULT_INTERACTIVE_LABEL : "";
 };
 
 const CustomCursor = () => {

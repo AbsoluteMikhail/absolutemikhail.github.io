@@ -114,7 +114,7 @@ describe("crosshair labels and click", () => {
     expect(label).toHaveTextContent("PLAY");
 
     fireEvent.pointerOver(document.querySelector("a[href='/projects']")!);
-    expect(label?.textContent).toBe("");
+    expect(label).toHaveTextContent("CLICK");
     expect(reticle).toHaveClass("is-focused");
 
     fireEvent.pointerOver(document.querySelector("input")!);
@@ -125,6 +125,67 @@ describe("crosshair labels and click", () => {
     expect(reticle).toHaveClass("is-hidden");
     fireEvent.pointerDown(document.querySelector("textarea")!);
     expect(document.querySelector(".cursor-spark")).toBeNull();
+  });
+
+  it("uses CLICK for unnamed controls and leaves disabled controls blank", () => {
+    mockPointer(true, false);
+    render(
+      <>
+        <CustomCursor />
+        <a href="/academy"><span>Академия</span></a>
+        <a href="#games">Игры</a>
+        <a href="mailto:me@example.com">Почта</a>
+        <button type="button">Связаться</button>
+        <button type="button" disabled>Нельзя</button>
+        <button type="button" aria-disabled="true">Выключено</button>
+        <a href="/privacy/" aria-disabled="true">Политика</a>
+        <summary>Вопрос</summary>
+        <div role="button">Переключатель</div>
+        <div data-cursor="interactive">Зона</div>
+        <select aria-label="Список"><option>Один</option></select>
+        <input type="checkbox" aria-label="Флаг" />
+        <input type="checkbox" aria-label="Выключенный флаг" disabled />
+        <fieldset disabled><button type="button">Внутри</button></fieldset>
+        <p>Текст</p>
+      </>,
+    );
+
+    const label = document.querySelector(".reticle-label");
+    const reticle = document.querySelector(".custom-cursor-reticle");
+    const clickable = [
+      "a[href='/academy'] span",
+      "a[href='#games']",
+      "a[href^='mailto:']",
+      "button:not([disabled]):not([aria-disabled])",
+      "summary",
+      "[role='button']",
+      "[data-cursor='interactive']",
+      "select",
+      "input[type='checkbox']:not([disabled])",
+    ];
+
+    for (const selector of clickable) {
+      fireEvent.pointerOver(document.querySelector(selector)!);
+      expect([selector, label?.textContent]).toEqual([selector, "CLICK"]);
+      expect(reticle).toHaveClass("is-focused");
+    }
+
+    for (const selector of [
+      "button[disabled]",
+      "button[aria-disabled='true']",
+      "a[aria-disabled='true']",
+      "input[type='checkbox'][disabled]",
+      "fieldset[disabled] button",
+    ]) {
+      fireEvent.pointerOver(document.querySelector(selector)!);
+      expect([selector, label?.textContent ?? null]).toEqual([selector, ""]);
+      expect(label).not.toHaveClass("is-on");
+      expect(reticle).not.toHaveClass("is-hidden");
+    }
+
+    fireEvent.pointerOver(document.querySelector("p")!);
+    expect(label).toHaveTextContent("");
+    expect(reticle).not.toHaveClass("is-focused");
   });
 
   it("yields to the system cursor over an embedded player and keeps the crosshair over video", async () => {
@@ -185,6 +246,7 @@ describe("crosshair labels and click", () => {
       <>
         <CustomCursor />
         <p>Абзац</p>
+        <button type="button">Меню</button>
         <a href="/projects/duelant" data-cursor="play">Проект</a>
         <iframe title="Плеер" />
       </>,
@@ -193,6 +255,9 @@ describe("crosshair labels and click", () => {
     document.querySelector("p")!.dispatchEvent(new MouseEvent("pointermove", { clientX: 12, clientY: 24, bubbles: true }));
     expect(document.querySelector(".reticle-label")).toHaveTextContent("BUG");
     expect(document.querySelector(".custom-cursor-reticle")).toHaveClass("is-focused");
+
+    fireEvent.pointerOver(document.querySelector("button")!, { clientX: 12, clientY: 24 });
+    expect(document.querySelector(".reticle-label")).toHaveTextContent("CLICK");
 
     fireEvent.pointerOver(document.querySelector("a[data-cursor='play']")!, { clientX: 12, clientY: 24 });
     expect(document.querySelector(".reticle-label")).toHaveTextContent("PLAY");
