@@ -3,10 +3,14 @@ import { act, fireEvent, render, waitFor } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { setBugCursorProbe } from "@/components/pixel-bugs/bugCursor";
 import CustomCursor from "@/components/CustomCursor";
 import Logo from "@/components/Logo";
 
-afterEach(() => vi.restoreAllMocks());
+afterEach(() => {
+  setBugCursorProbe(null);
+  vi.restoreAllMocks();
+});
 
 function mockPointer(fine: boolean, reducedMotion: boolean) {
   const matchMedia = window.matchMedia;
@@ -172,6 +176,30 @@ describe("crosshair labels and click", () => {
     expect(label).toHaveTextContent("PLAY");
     expect(reticle).not.toHaveClass("is-hidden");
     expect(document.documentElement.style.cursor).toBe("none");
+  });
+
+  it("labels a bug under the crosshair and still prefers PLAY on a control", () => {
+    mockPointer(true, false);
+    setBugCursorProbe((x, y) => x === 12 && y === 24);
+    render(
+      <>
+        <CustomCursor />
+        <p>Абзац</p>
+        <a href="/projects/duelant" data-cursor="play">Проект</a>
+        <iframe title="Плеер" />
+      </>,
+    );
+
+    document.querySelector("p")!.dispatchEvent(new MouseEvent("pointermove", { clientX: 12, clientY: 24, bubbles: true }));
+    expect(document.querySelector(".reticle-label")).toHaveTextContent("BUG");
+    expect(document.querySelector(".custom-cursor-reticle")).toHaveClass("is-focused");
+
+    fireEvent.pointerOver(document.querySelector("a[data-cursor='play']")!, { clientX: 12, clientY: 24 });
+    expect(document.querySelector(".reticle-label")).toHaveTextContent("PLAY");
+
+    fireEvent.pointerOver(document.querySelector("iframe")!);
+    expect(document.querySelector(".custom-cursor-reticle")).toHaveClass("is-hidden");
+    expect(document.querySelector(".reticle-label")).not.toHaveClass("is-on");
   });
 
   it("spawns a short pixel burst and clears it", async () => {
