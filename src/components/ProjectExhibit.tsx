@@ -46,7 +46,7 @@ export default function ProjectExhibit({ project, onSelect, href, featured = fal
           width={project.coverWidth}
           height={project.coverHeight}
           loading={priority ? "eager" : "lazy"}
-          {...(priority ? { fetchpriority: "high" } : {})}
+          {...(priority ? { fetchpriority: "high" } : { fetchpriority: "low" })}
           decoding="async"
           className="aspect-video w-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-[1.025]"
         />

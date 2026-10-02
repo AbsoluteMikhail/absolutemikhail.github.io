@@ -2,7 +2,12 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { Award } from "lucide-react";
 import heroPhoto from "@/assets/hero-photo.webp";
-import uaiBadge from "@/assets/uai-badge-monochrome.png";
+import {
+  instructorBadgeHeight,
+  instructorBadgeSrc,
+  instructorBadgeSrcSet,
+  instructorBadgeWidth,
+} from "@/constants/instructorBadge";
 import { DiscordIcon, MaxIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
 import Logo from "@/components/Logo";
 import { decodeContactLink, encodedContactLinks } from "@/constants/contactLinks";
@@ -188,8 +193,13 @@ const OGSnippet = () => {
           <span className="flex items-center gap-4">
             <span className="flex h-[92px] w-28 shrink-0 items-center justify-center">
               <img
-                src={uaiBadge}
+                src={instructorBadgeSrc}
+                srcSet={instructorBadgeSrcSet}
+                sizes="112px"
+                width={instructorBadgeWidth}
+                height={instructorBadgeHeight}
                 alt="Unreal Authorized Instructor 2026"
+                decoding="async"
                 className="h-full w-full object-contain"
               />
             </span>

@@ -39,6 +39,7 @@ const WorkshopSection = () => {
                   alt={malena.portraitAlt}
                   loading="lazy"
                   decoding="async"
+                  {...{ fetchpriority: "low" }}
                   className="aspect-square w-full object-cover object-top lg:aspect-[4/3]"
                 />
                 <span className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/75 px-3 py-2 text-xs text-white group-hover:bg-black group-focus-visible:ring-2 group-focus-visible:ring-primary">

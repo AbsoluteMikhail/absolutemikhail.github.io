@@ -1,14 +1,30 @@
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { telegramCommunityUrl } from "@/constants/contactLinks";
 import heroPhoto from "@/assets/hero-photo.webp";
-import uaiBadge from "@/assets/uai-badge-monochrome.png";
+import {
+  instructorBadgeHeight,
+  instructorBadgeSrc,
+  instructorBadgeSrcSet,
+  instructorBadgeWidth,
+} from "@/constants/instructorBadge";
 import InstructorBadgeCard from "@/components/InstructorBadgeCard";
 import { buttonStyles } from "@/components/ui/button";
 import { DiscordIcon, SteamIcon, TelegramIcon, YoutubeIcon, TwitchIcon } from "@/components/SocialIcons";
 
 const HeroSection = () => {
   const reduceMotion = useReducedMotion();
+  // The hint is hidden below lg. Skip the infinite animation until the desktop
+  // layout is confirmed so mobile never keeps a decorative loop on the main thread.
+  const [bounceScrollHint, setBounceScrollHint] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 1024px)");
+    const update = () => setBounceScrollHint(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
 
   return (
     <section 
@@ -175,7 +191,17 @@ const HeroSection = () => {
             className="mb-4 flex max-w-xl items-center gap-3 border-y border-border py-2.5 lg:hidden"
           >
             <span className="flex h-16 w-20 shrink-0 items-center justify-center">
-              <img src={uaiBadge} alt="Unreal Authorized Instructor 2026" className="h-full w-full object-contain" />
+              <img
+                src={instructorBadgeSrc}
+                srcSet={instructorBadgeSrcSet}
+                sizes="80px"
+                width={instructorBadgeWidth}
+                height={instructorBadgeHeight}
+                alt="Unreal Authorized Instructor 2026"
+                decoding="async"
+                {...{ fetchpriority: "low" }}
+                className="h-full w-full object-contain"
+              />
             </span>
             <span>
               <span className="block font-display text-[9px] uppercase tracking-[0.2em] text-primary">Статус 2026</span>
@@ -233,7 +259,7 @@ const HeroSection = () => {
         className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 lg:block"
       >
         <motion.div
-          animate={reduceMotion ? undefined : { y: [0, 10, 0] }}
+          animate={reduceMotion || !bounceScrollHint ? undefined : { y: [0, 10, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
           className="w-6 h-10 rounded-full border-2 border-muted-foreground/40 flex justify-center pt-2"
         >
