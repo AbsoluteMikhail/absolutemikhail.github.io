@@ -1,5 +1,5 @@
+import { EntranceArticle } from "@/components/ui/entrance-motion";
 import { SectionTitle } from "@/components/ui/section-title";
-import { motion } from "framer-motion";
 import { Building2, Cpu, ServerCog } from "lucide-react";
 import { engineeringFoundation } from "@/content/experience";
 
@@ -27,7 +27,7 @@ const EngineeringFoundationSection = () => (
         {engineeringFoundation.map((stage, index) => {
           const Icon = stageIcons[index];
           return (
-            <motion.article
+            <EntranceArticle
               key={stage.period}
               initial={{ opacity: 0, y: 22 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -51,7 +51,7 @@ const EngineeringFoundationSection = () => (
                   </p>
                 )}
               </div>
-            </motion.article>
+            </EntranceArticle>
           );
         })}
       </div>

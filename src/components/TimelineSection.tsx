@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { EntranceArticle } from "@/components/ui/entrance-motion";
 import { ArrowUpRight, Trophy, Star, Rocket, Award, Moon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SectionTitle } from "@/components/ui/section-title";
@@ -29,7 +29,7 @@ const TimelineSection = () => (
         {milestones.map((milestone) => {
           const Icon = timelineIcons[milestone.icon];
           return (
-            <motion.article
+            <EntranceArticle
               key={milestone.year}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -58,7 +58,7 @@ const TimelineSection = () => (
                   </div>
                 )}
               </div>
-            </motion.article>
+            </EntranceArticle>
           );
         })}
       </div>

@@ -64,6 +64,7 @@ describe("Academy Markdown extensions", () => {
     renderMarkdown(`| Эффект | Скорость |\n|---|---:|\n| Болото | 300 |`);
 
     expect(screen.getByRole("table")).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Таблица" })).toHaveAttribute("tabindex", "0");
     expect(screen.getByText("Болото")).toBeInTheDocument();
     expect(screen.getByText("300")).toBeInTheDocument();
   });

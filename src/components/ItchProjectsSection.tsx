@@ -1,5 +1,5 @@
+import { EntranceLink } from "@/components/ui/entrance-motion";
 import { SectionTitle } from "@/components/ui/section-title";
-import { motion } from "framer-motion";
 import {
   ArrowUpRight,
   Code2,
@@ -48,7 +48,7 @@ const ItchProjectsSection = () => (
 
     <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
       {itchProjects.map((project, index) => (
-        <motion.a
+        <EntranceLink
           key={project.title}
           href={project.url}
           target="_blank"
@@ -100,10 +100,10 @@ const ItchProjectsSection = () => (
               </div>
             </div>
           </div>
-        </motion.a>
+        </EntranceLink>
       ))}
 
-      <motion.a
+      <EntranceLink
         href="https://mikhaile.itch.io/"
         target="_blank"
         rel="noopener noreferrer"
@@ -128,7 +128,7 @@ const ItchProjectsSection = () => (
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
           </span>
         </div>
-      </motion.a>
+      </EntranceLink>
     </div>
   </section>
 );

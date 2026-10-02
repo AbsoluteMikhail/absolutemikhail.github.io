@@ -1,5 +1,5 @@
 import { SectionTitle } from "@/components/ui/section-title";
-import { motion } from "framer-motion";
+import { EntrancePageTitle, EntranceParagraph } from "@/components/ui/entrance-motion";
 import { Link, useLocation } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -39,22 +39,22 @@ const Projects = () => {
                 <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                 Назад на главную
               </Link>
-              <motion.h1
+              <EntrancePageTitle
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="text-4xl md:text-6xl font-display font-bold tracking-tight"
               >
                 ВСЕ <span className="gradient-text">ПРОЕКТЫ</span>
-              </motion.h1>
+              </EntrancePageTitle>
             </div>
-            <motion.p
+            <EntranceParagraph
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
               className="text-muted-foreground max-w-md md:text-right"
             >
               Здесь живут мои релизы, командные работы, джемовые эксперименты и замороженные идеи. Можно рассматривать обложки, открывать игры и прослеживать, как менялись проекты.
-            </motion.p>
+            </EntranceParagraph>
           </div>
 
           <div className="grid grid-cols-1 gap-x-10 gap-y-12 md:grid-cols-2">
@@ -80,7 +80,7 @@ const Projects = () => {
 
               <div className="grid grid-cols-1 gap-x-10 gap-y-12 md:grid-cols-2">
                 {frozenProjects.map((project) => (
-                  <ProjectExhibit key={project.id} project={project} href={trailingPath(projectPath(project.slug))} />
+                  <ProjectExhibit key={project.id} project={project} headingLevel={3} href={trailingPath(projectPath(project.slug))} />
                 ))}
               </div>
             </section>

@@ -1,5 +1,5 @@
+import { EntranceArticle } from "@/components/ui/entrance-motion";
 import { SectionTitle } from "@/components/ui/section-title";
-import { motion } from "framer-motion";
 import { ArrowUpRight, BriefcaseBusiness, Gamepad2, GraduationCap, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
 import { trailingPath } from "@/constants/routeMetadata.js";
@@ -45,7 +45,7 @@ const ProofSection = () => (
           );
 
           return (
-            <motion.article
+            <EntranceArticle
               initial={{ opacity: 0, y: 18 }}
               key={item.label}
               transition={{ delay: index * 0.08, duration: 0.4 }}
@@ -61,7 +61,7 @@ const ProofSection = () => (
                   {content}
                 </Link>
               )}
-            </motion.article>
+            </EntranceArticle>
           );
         })}
       </div>

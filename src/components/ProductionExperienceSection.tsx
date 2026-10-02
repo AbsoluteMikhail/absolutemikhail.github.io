@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { EntranceArticle } from "@/components/ui/entrance-motion";
 import { Check, Clapperboard, Code2, Gauge, Network } from "lucide-react";
 import { SectionTitle } from "@/components/ui/section-title";
 import { SectionBadge } from "@/components/ui/section-badge";
@@ -29,7 +29,7 @@ const ProductionExperienceSection = () => (
         {productionExperience.map((item) => {
           const Icon = experienceIcons[item.icon];
           return (
-            <motion.article
+            <EntranceArticle
               key={item.company}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -61,7 +61,7 @@ const ProductionExperienceSection = () => (
                 <p className="mt-2 text-[10px] uppercase leading-5 tracking-[0.12em] text-foreground">{item.highlightLabel}</p>
                 <p className="mt-4 text-sm leading-6 text-muted-foreground">{item.result}</p>
               </div>
-            </motion.article>
+            </EntranceArticle>
           );
         })}
       </div>

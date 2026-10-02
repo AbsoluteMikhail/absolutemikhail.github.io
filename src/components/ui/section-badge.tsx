@@ -1,4 +1,5 @@
-import { motion, type HTMLMotionProps } from "framer-motion";
+import { EntranceDiv } from "@/components/ui/entrance-motion";
+import type { HTMLMotionProps } from "framer-motion";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -10,7 +11,7 @@ interface SectionBadgeProps extends Omit<HTMLMotionProps<"div">, "children"> {
 }
 
 export const SectionBadge = ({ tone = "primary", size = "sm", icon, className, children, ...props }: SectionBadgeProps) => (
-  <motion.div
+  <EntranceDiv
     className={cn(
       "mb-5 inline-flex items-center gap-3",
       tone === "primary" ? "text-primary" : "text-accent",
@@ -26,5 +27,5 @@ export const SectionBadge = ({ tone = "primary", size = "sm", icon, className, c
     )}>
       {children}
     </span>
-  </motion.div>
+  </EntranceDiv>
 );

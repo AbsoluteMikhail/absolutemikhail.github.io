@@ -32,6 +32,8 @@ describe("individual project pages", () => {
     for (const project of projectPages) {
       expect(document.querySelector(`a[href="${projectPath(project.slug)}/"]`)).not.toBeNull();
     }
+    expect(screen.getByRole("heading", { name: "DUELANT", level: 2 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Moonshine Mayhem", level: 3 })).toBeInTheDocument();
     fireEvent.click(screen.getByRole("link", { name: "Подробнее о проекте DUELANT" }));
     expect(screen.getByRole("heading", { level: 1, name: "DUELANT" })).toBeInTheDocument();
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();

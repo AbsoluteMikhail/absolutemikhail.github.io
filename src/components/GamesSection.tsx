@@ -1,7 +1,7 @@
+import { EntranceDiv, EntranceParagraph } from "@/components/ui/entrance-motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { SectionBadge } from "@/components/ui/section-badge";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { buttonStyles } from "@/components/ui/button";
 import {
   ArrowUpRight,
@@ -49,7 +49,7 @@ const GamesSection = () => {
             <br />
             <span className="text-foreground">я приложил руку</span>
           </SectionTitle>
-          <motion.p
+          <EntranceParagraph
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -58,16 +58,16 @@ const GamesSection = () => {
           >
             Дуэли, вампиры в VR, грибник с дробовиком и Колобок против ящеров.
             Мои игры и работа в командах — с видео, скриншотами и подробностями.
-          </motion.p>
+          </EntranceParagraph>
         </div>
 
         <div className="grid gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-y-14">
           {homepageProjects.map((game, i) => (
-            <ProjectExhibit key={game.id} project={game} featured={i === 0} onSelect={handleOpenModal} />
+            <ProjectExhibit key={game.id} project={game} headingLevel={3} featured={i === 0} onSelect={handleOpenModal} />
           ))}
         </div>
 
-        <motion.div
+        <EntranceDiv
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
@@ -140,9 +140,9 @@ const GamesSection = () => {
               </div>
             </div>
           </Link>
-        </motion.div>
+        </EntranceDiv>
 
-        <motion.div
+        <EntranceDiv
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -161,7 +161,7 @@ const GamesSection = () => {
           >
             Моя история
           </a>
-        </motion.div>
+        </EntranceDiv>
       </div>
 
       <ProjectDetailModal

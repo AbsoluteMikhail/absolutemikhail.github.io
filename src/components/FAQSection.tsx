@@ -1,13 +1,13 @@
+import { EntranceDiv, EntranceParagraph } from "@/components/ui/entrance-motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { SectionBadge } from "@/components/ui/section-badge";
-import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { faqItems } from "@/content/faq";
 
 const FAQSection = () => (
   <section id="faq" className="exhibition-section bg-background">
     <div className="container mx-auto grid gap-x-16 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-      <motion.div
+      <EntranceDiv
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55 }}
@@ -18,9 +18,9 @@ const FAQSection = () => (
         <SectionTitle>
           Что важно знать перед консультацией
         </SectionTitle>
-      </motion.div>
+      </EntranceDiv>
 
-      <motion.div
+      <EntranceDiv
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, delay: 0.1 }}
@@ -38,9 +38,9 @@ const FAQSection = () => (
             </details>
           ))}
         </div>
-      </motion.div>
+      </EntranceDiv>
 
-      <motion.p
+      <EntranceParagraph
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.2 }}
@@ -48,7 +48,7 @@ const FAQSection = () => (
         className="mt-6 max-w-2xl text-sm leading-6 text-muted-foreground lg:col-start-2"
       >
         Не нашли ответа? Опишите задачу в Telegram — я помогу выбрать формат.
-      </motion.p>
+      </EntranceParagraph>
     </div>
   </section>
 );

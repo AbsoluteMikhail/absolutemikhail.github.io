@@ -1,13 +1,13 @@
+import { EntranceDiv, EntranceArticle } from "@/components/ui/entrance-motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { SectionBadge } from "@/components/ui/section-badge";
-import { motion } from "framer-motion";
 import { MessageSquareQuote } from "lucide-react";
 import { menteeReviews } from "@/content/reviews";
 
 const MenteeReviewsSection = () => (
   <section id="mentee-reviews" className="exhibition-section border-y border-border/60 bg-card/25">
     <div className="container relative z-10 mx-auto px-6">
-      <motion.div
+      <EntranceDiv
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55 }}
@@ -21,11 +21,11 @@ const MenteeReviewsSection = () => (
         <p className="mt-5 text-lg leading-8 text-foreground/70 [html.light_&]:text-muted-foreground">
           Большинство учеников приходят с собственными проектами или готовятся к работе в индустрии.
         </p>
-      </motion.div>
+      </EntranceDiv>
 
       <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
         {menteeReviews.map((review, index) => (
-          <motion.article
+          <EntranceArticle
             className="flex h-full flex-col border-t border-primary/40 pt-6"
             initial={{ opacity: 0, y: 30 }}
             key={review.name}
@@ -47,7 +47,7 @@ const MenteeReviewsSection = () => (
                 {review.name}
               </p>
             </div>
-          </motion.article>
+          </EntranceArticle>
         ))}
       </div>
     </div>
