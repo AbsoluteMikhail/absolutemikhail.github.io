@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { SectionBadge } from "@/components/ui/section-badge";
 import { motion } from "framer-motion";
@@ -8,7 +9,7 @@ const FAQSection = () => (
   <section id="faq" className="exhibition-section bg-background">
     <div className="container mx-auto grid gap-x-16 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={motionInitial({ opacity: 0, y: 24 })}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55 }}
         viewport={{ once: true }}
@@ -21,7 +22,7 @@ const FAQSection = () => (
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={motionInitial({ opacity: 0, y: 24 })}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, delay: 0.1 }}
         viewport={{ once: true }}
@@ -41,7 +42,7 @@ const FAQSection = () => (
       </motion.div>
 
       <motion.p
-        initial={{ opacity: 0, y: 16 }}
+        initial={motionInitial({ opacity: 0, y: 16 })}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.2 }}
         viewport={{ once: true }}

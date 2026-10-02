@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink, ChevronRight, ChevronLeft, Play } from "lucide-react";
 import { useState, useEffect, useId } from "react";
@@ -45,7 +46,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
   return (
     <Modal isOpen={isOpen} onClose={onClose} labelledBy={titleId}>
       <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
+        initial={motionInitial({ scale: 0.9, opacity: 0 })}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", damping: 25, stiffness: 300 }}
         className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-xl border border-border bg-card"
@@ -64,7 +65,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
-              initial={{ opacity: 0, x: 20 }}
+              initial={motionInitial({ opacity: 0, x: 20 })}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}

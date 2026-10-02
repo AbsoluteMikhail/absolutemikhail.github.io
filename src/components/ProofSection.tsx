@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { motion } from "framer-motion";
 import { ArrowUpRight, BriefcaseBusiness, Gamepad2, GraduationCap, Trophy } from "lucide-react";
@@ -46,7 +47,7 @@ const ProofSection = () => (
 
           return (
             <motion.article
-              initial={{ opacity: 0, y: 18 }}
+              initial={motionInitial({ opacity: 0, y: 18 })}
               key={item.label}
               transition={{ delay: index * 0.08, duration: 0.4 }}
               viewport={{ once: true }}

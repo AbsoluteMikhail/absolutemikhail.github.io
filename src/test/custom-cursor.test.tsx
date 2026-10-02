@@ -31,7 +31,7 @@ describe("custom cursor in dialogs", () => {
     mockPointer(true, false);
     // JSDOM has no native top layer. Mock only its :modal detection.
     const matches = Element.prototype.matches;
-    vi.spyOn(HTMLDialogElement.prototype, "matches").mockImplementation(function (selector) {
+    vi.spyOn(HTMLDialogElement.prototype, "matches").mockImplementation(function (this: HTMLDialogElement, selector) {
       return selector === ":modal" ? this.open : matches.call(this, selector);
     });
     const { rerender, unmount } = render(<><CustomCursor /><dialog /></>);

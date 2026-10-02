@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { useId, useState, type ReactNode, type Ref, type RefObject } from "react";
 import { motion } from "framer-motion";
 import Modal from "@/components/ui/modal";
@@ -120,7 +121,7 @@ export const ContactMessenger = ({
     >
       <motion.div
         className="relative max-h-[calc(100svh-2rem)] w-full max-w-sm overflow-y-auto rounded-xl border border-border bg-card p-6 shadow-2xl shadow-black/40 [html.light_&]:shadow-foreground/20"
-        initial={{ opacity: 0, y: 18, scale: 0.96 }}
+        initial={motionInitial({ opacity: 0, y: 18, scale: 0.96 })}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.2 }}
       >

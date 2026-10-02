@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
@@ -74,7 +75,7 @@ export const AcademyImageLightbox = ({
                   animate={{ opacity: 1 }}
                   className="academy-lightbox"
                   exit={{ opacity: 0 }}
-                  initial={{ opacity: 0 }}
+                  initial={motionInitial({ opacity: 0 })}
                   onClick={() => setOpen(false)}
                 >
                   <motion.div
@@ -83,7 +84,7 @@ export const AcademyImageLightbox = ({
                     aria-modal="true"
                     className="academy-lightbox__content"
                     exit={{ opacity: 0, scale: 0.94 }}
-                    initial={{ opacity: 0, scale: 0.94 }}
+                    initial={motionInitial({ opacity: 0, scale: 0.94 })}
                     onClick={(event) => event.stopPropagation()}
                     role="dialog"
                     transition={{ damping: 25, stiffness: 300, type: "spring" }}

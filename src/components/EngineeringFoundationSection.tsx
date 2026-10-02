@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { motion } from "framer-motion";
 import { Building2, Cpu, ServerCog } from "lucide-react";
@@ -29,7 +30,7 @@ const EngineeringFoundationSection = () => (
           return (
             <motion.article
               key={stage.period}
-              initial={{ opacity: 0, y: 22 }}
+              initial={motionInitial({ opacity: 0, y: 22 })}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.45, delay: index * 0.08 }}

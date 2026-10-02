@@ -2,7 +2,7 @@ import { projectPages, projectPath } from "@/lib/projectPages";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import { AppContent } from "./App";
-import type { InitialRoute } from "./App";
+import { loadInitialPage } from "@/lib/appRoutes";
 import CustomCursor from "./components/CustomCursor";
 import { academyCourses, academyTopics } from "./lib/academy";
 export { resolvePageMetadata } from "@/lib/resolvePageMetadata";
@@ -26,41 +26,6 @@ export const prerenderPaths = [
   ...academyTopicPaths,
   ...academyPaths,
 ];
-
-const loadInitialPage = async (url: string) => {
-  if (url === "/privacy" || url === "/terms") {
-    const module = await import("@/pages/Legal");
-    return { InitialPage: module.default, initialRoute: "legal" as InitialRoute };
-  }
-  if (url.replace(/\/+$/, "") === "/snippet") {
-    const module = await import("@/pages/OGSnippet");
-    return { InitialPage: module.default, initialRoute: "snippet" as InitialRoute };
-  }
-  if (url.startsWith("/projects/") && url !== "/projects/") {
-    const module = await import("@/pages/Project");
-    return { InitialPage: module.default, initialRoute: "project" as InitialRoute };
-  }
-
-  if (url === "/") {
-    const module = await import("./pages/Index");
-    return { InitialPage: module.default, initialRoute: "home" as InitialRoute };
-  }
-
-  if (url === "/projects") {
-    const module = await import("./pages/Projects");
-    return { InitialPage: module.default, initialRoute: "projects" as InitialRoute };
-  }
-
-  if (url === "/malena/privacy") {
-    const module = await import("./pages/MalenaPrivacy");
-    return { InitialPage: module.default, initialRoute: "malenaPrivacy" as InitialRoute };
-  }
-
-  const module = await import("./pages/Academy");
-  const { preloadAcademyPage } = await import("@/lib/academyContent");
-  await preloadAcademyPage(url);
-  return { InitialPage: module.default, initialRoute: "academy" as InitialRoute };
-};
 
 export const render = async (url: string) => {
   const initialPage = await loadInitialPage(url);

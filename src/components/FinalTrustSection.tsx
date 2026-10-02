@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { SectionBadge } from "@/components/ui/section-badge";
 import { motion } from "framer-motion";
@@ -9,7 +10,7 @@ const FinalTrustSection = () => (
     <div className="absolute left-1/2 top-0 h-px w-full -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
     <div className="container relative z-10 mx-auto px-6">
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={motionInitial({ opacity: 0, y: 24 })}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55 }}
         viewport={{ once: true }}

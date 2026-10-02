@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { motion } from "framer-motion";
 import {
@@ -53,7 +54,7 @@ const ItchProjectsSection = () => (
           href={project.url}
           target="_blank"
           rel="noopener noreferrer"
-          initial={{ opacity: 0, y: 24 }}
+          initial={motionInitial({ opacity: 0, y: 24 })}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ delay: Math.min(index * 0.06, 0.24) }}
@@ -107,7 +108,7 @@ const ItchProjectsSection = () => (
         href="https://mikhaile.itch.io/"
         target="_blank"
         rel="noopener noreferrer"
-        initial={{ opacity: 0, y: 24 }}
+        initial={motionInitial({ opacity: 0, y: 24 })}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         className="group flex min-h-[360px] flex-col justify-between gap-8 overflow-hidden rounded-xl border-t border-primary/50 bg-gradient-to-br from-primary/15 to-card/30 p-7 transition-colors hover:bg-primary/10"

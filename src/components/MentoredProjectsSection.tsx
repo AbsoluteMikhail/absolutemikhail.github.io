@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { motion } from "framer-motion";
 import { ArrowUpRight, CheckCircle2, GraduationCap } from "lucide-react";
@@ -42,7 +43,7 @@ const MentoredProjectsSection = () => (
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 24 }}
+            initial={motionInitial({ opacity: 0, y: 24 })}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ delay: index * 0.07 }}

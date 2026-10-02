@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { useId, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
@@ -18,7 +19,7 @@ const LegalModal = ({ isOpen, onClose, title, content }: LegalModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} labelledBy={titleId}>
       <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
+        initial={motionInitial({ scale: 0.9, opacity: 0 })}
         animate={{ scale: 1, opacity: 1 }}
         className="relative flex max-h-[80svh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-card text-foreground shadow-2xl [html.light_&]:bg-popover [html.light_&]:text-popover-foreground"
       >

@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { SectionBadge } from "@/components/ui/section-badge";
 import { motion } from "framer-motion";
@@ -24,7 +25,7 @@ const MentoringSection = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={motionInitial({ opacity: 0, y: 30 })}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
@@ -48,7 +49,7 @@ const MentoringSection = () => {
             return (
               <motion.div
                 key={pkg.title}
-                initial={{ opacity: 0, y: 40 }}
+                initial={motionInitial({ opacity: 0, y: 40 })}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.15 }}
@@ -124,7 +125,7 @@ const MentoringSection = () => {
         </div>
 
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={motionInitial({ opacity: 0 })}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.5 }}

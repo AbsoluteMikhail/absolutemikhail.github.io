@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { motion } from "framer-motion";
 import { Check, Clapperboard, Code2, Gauge, Network } from "lucide-react";
 import { SectionTitle } from "@/components/ui/section-title";
@@ -31,7 +32,7 @@ const ProductionExperienceSection = () => (
           return (
             <motion.article
               key={item.company}
-              initial={{ opacity: 0, y: 20 }}
+              initial={motionInitial({ opacity: 0, y: 20 })}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.45 }}

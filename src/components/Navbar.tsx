@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { useState, useEffect, useRef, useId } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
@@ -56,7 +57,7 @@ const Navbar = () => {
     <>
     <a href="#main-content" className="skip-link">Перейти к содержимому</a>
     <motion.nav
-      initial={{ y: -100 }}
+      initial={motionInitial({ y: -100 })}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -125,7 +126,7 @@ const Navbar = () => {
         {isOpen && (
           <motion.div
             id={menuId}
-            initial={{ opacity: 0, height: 0 }}
+            initial={motionInitial({ opacity: 0, height: 0 })}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
