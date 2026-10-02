@@ -21,6 +21,7 @@ const CourseNavigation = ({ course, activeLessonSlug, headings, activeHeading }:
   return (
   <div>
     <Link
+      data-cursor="read"
       aria-current={!activeLessonSlug ? "page" : undefined}
       className={cn("mb-2 block rounded-md px-3 py-2 text-sm font-semibold transition-colors hover:text-primary", !activeLessonSlug && "bg-primary/10 text-primary")}
       to={trailingPath(`/academy/${course.slug}`)}
@@ -38,6 +39,7 @@ const CourseNavigation = ({ course, activeLessonSlug, headings, activeHeading }:
                 return (
                   <li key={lesson.slug}>
                     <Link
+                      data-cursor="read"
                       aria-current={active ? "page" : undefined}
                       className={cn(
                         "flex gap-3 rounded-md px-3 py-2.5 text-sm transition-colors",
@@ -116,7 +118,7 @@ export const AcademyNavigation = (props: AcademyNavigationProps) => {
     <div className="hidden lg:flex lg:min-h-0 lg:flex-col">
       <div className="shrink-0">
         <p className="mb-2 px-3 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">{props.course.format}</p>
-        {props.course.lessons.length > 0 && <Link className="mb-5 block px-3 font-display text-base font-bold leading-6 hover:text-primary" to={trailingPath(`/academy/${props.course.slug}`)}>{props.course.title}</Link>}
+        {props.course.lessons.length > 0 && <Link data-cursor="read" className="mb-5 block px-3 font-display text-base font-bold leading-6 hover:text-primary" to={trailingPath(`/academy/${props.course.slug}`)}>{props.course.title}</Link>}
         <ReadingProgress percent={reading.percent} />
         {resume}
       </div>

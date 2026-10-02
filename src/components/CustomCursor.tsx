@@ -7,11 +7,44 @@ const INTERACTIVE_SELECTOR =
 const NATIVE_CURSOR_SELECTOR =
   'input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"], [class*="cursor-grab"], [class*="cursor-grabbing"]';
 
+const CURSOR_LABELS: Record<string, string> = {
+  play: "PLAY",
+  read: "READ",
+  view: "VIEW",
+  external: "↗",
+};
+
+const SPARK_COUNT = 6;
+const SPARK_MS = 280;
+
+const isExternalAnchor = (anchor: Element) => {
+  if (anchor.getAttribute("target") === "_blank") return true;
+  const href = anchor.getAttribute("href");
+  if (!href || href.startsWith("/") || href.startsWith("#") || href.startsWith("?") || href.startsWith("mailto:") || href.startsWith("tel:")) {
+    return false;
+  }
+  try {
+    return new URL(href, window.location.href).origin !== window.location.origin;
+  } catch {
+    return false;
+  }
+};
+
+const resolveCursorLabel = (target: Element | null) => {
+  if (!target) return "";
+  const marked = target.closest("[data-cursor]");
+  const token = marked?.getAttribute("data-cursor")?.trim().toLowerCase() ?? "";
+  if (token in CURSOR_LABELS) return CURSOR_LABELS[token];
+  const anchor = target.closest("a[href]");
+  return anchor && isExternalAnchor(anchor) ? "↗" : "";
+};
+
 const CustomCursor = () => {
   const [enabled, setEnabled] = useState(false);
   const [cursorLayer, setCursorLayer] = useState<HTMLDivElement | null>(null);
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
+  const reticleRef = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLSpanElement>(null);
+  const sparkHostRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const pointerQuery = window.matchMedia(FINE_POINTER_QUERY);
@@ -35,6 +68,11 @@ const CustomCursor = () => {
     const layer = document.createElement("div");
     layer.className = "custom-cursor-layer";
     layer.setAttribute("aria-hidden", "true");
+    const sparkHost = document.createElement("div");
+    sparkHost.className = "cursor-spark-host";
+    layer.appendChild(sparkHost);
+    sparkHostRef.current = sparkHost;
+
     const updateLayer = () => {
       const dialogs = Array.from(document.querySelectorAll<HTMLDialogElement>("dialog[open]"));
       const target = dialogs.reverse().find((dialog) => dialog.matches(":modal")) ?? document.body;
@@ -49,6 +87,7 @@ const CustomCursor = () => {
 
     return () => {
       observer.disconnect();
+      sparkHostRef.current = null;
       layer.remove();
       setCursorLayer(null);
     };
@@ -57,87 +96,131 @@ const CustomCursor = () => {
   useEffect(() => {
     if (!enabled) return;
 
-    const dot = dotRef.current;
-    const ring = ringRef.current;
-    if (!dot || !ring) return;
+    const reticle = reticleRef.current;
+    const label = labelRef.current;
+    const sparkHost = sparkHostRef.current;
+    if (!reticle || !label || !sparkHost) return;
 
     document.documentElement.classList.add("custom-cursor-enabled");
 
-    let animationFrame = 0;
-    let targetX = window.innerWidth / 2;
-    let targetY = window.innerHeight / 2;
-    let ringX = targetX;
-    let ringY = targetY;
+    let frame = 0;
+    let queued = false;
+    let hasPosition = false;
+    let x = -100;
+    let y = -100;
+    let moveX = 0;
+    let moveY = 0;
+    let useNativeCursor = false;
+    const timers = new Set<number>();
 
-    const setPosition = (element: HTMLElement, x: number, y: number) => {
-      element.style.setProperty("--cursor-x", `${x}px`);
-      element.style.setProperty("--cursor-y", `${y}px`);
+    const paint = () => {
+      queued = false;
+      const flip = x > window.innerWidth - 88;
+      const raise = y > window.innerHeight - 40;
+      for (const element of [reticle, label]) {
+        element.style.setProperty("--cursor-x", `${x}px`);
+        element.style.setProperty("--cursor-y", `${y}px`);
+        element.classList.toggle("is-label-flip", flip);
+        element.classList.toggle("is-label-raise", raise);
+      }
+      if (!useNativeCursor) reticle.classList.add("is-visible");
     };
 
-    const animateRing = () => {
-      ringX += (targetX - ringX) * 0.2;
-      ringY += (targetY - ringY) * 0.2;
-      setPosition(ring, ringX, ringY);
-      animationFrame = window.requestAnimationFrame(animateRing);
+    const queuePaint = () => {
+      if (queued) return;
+      queued = true;
+      frame = window.requestAnimationFrame(paint);
     };
 
     const showCursor = () => {
-      dot.classList.add("is-visible");
-      ring.classList.add("is-visible");
+      if (!useNativeCursor && hasPosition) reticle.classList.add("is-visible");
     };
 
     const hideCursor = () => {
-      dot.classList.remove("is-visible");
-      ring.classList.remove("is-visible");
+      reticle.classList.remove("is-visible");
+      label.classList.remove("is-on");
     };
 
     const handlePointerMove = (event: PointerEvent) => {
-      targetX = event.clientX;
-      targetY = event.clientY;
-      setPosition(dot, targetX, targetY);
-      showCursor();
+      const nextX = Math.round(event.clientX);
+      const nextY = Math.round(event.clientY);
+      if (hasPosition) {
+        moveX = nextX - x;
+        moveY = nextY - y;
+      }
+      hasPosition = true;
+      x = nextX;
+      y = nextY;
+      queuePaint();
     };
 
     const handlePointerOver = (event: PointerEvent) => {
       const target = event.target instanceof Element ? event.target : null;
       const interactive = Boolean(target?.closest(INTERACTIVE_SELECTOR));
-      const useNativeCursor =
-        Boolean(target?.closest(NATIVE_CURSOR_SELECTOR)) && !interactive;
+      useNativeCursor = Boolean(target?.closest(NATIVE_CURSOR_SELECTOR)) && !interactive;
+      reticle.classList.toggle("is-hidden", useNativeCursor);
 
-      dot.classList.toggle("is-hidden", useNativeCursor);
-      ring.classList.toggle("is-hidden", useNativeCursor);
-      dot.classList.toggle("is-interactive", interactive && !useNativeCursor);
-      ring.classList.toggle("is-interactive", interactive && !useNativeCursor);
+      const caption = useNativeCursor ? "" : resolveCursorLabel(target);
+      if (label.textContent !== caption) label.textContent = caption;
+      label.classList.toggle("is-on", caption !== "");
+      reticle.classList.toggle("is-focused", !useNativeCursor && (interactive || caption !== ""));
+      if (useNativeCursor) reticle.classList.remove("is-visible");
     };
 
-    const handlePointerDown = () => {
-      dot.classList.add("is-pressed");
-      ring.classList.add("is-pressed");
+    const removeSpark = (spark: HTMLElement) => {
+      spark.remove();
     };
 
-    const handlePointerUp = () => {
-      dot.classList.remove("is-pressed");
-      ring.classList.remove("is-pressed");
+    const spawnSpark = (originX: number, originY: number, dx: number, dy: number, kind: "shard" | "flash" | "trail") => {
+      while (sparkHost.childElementCount > 36) sparkHost.firstElementChild?.remove();
+      const spark = document.createElement("span");
+      spark.className = kind === "flash" ? "cursor-spark cursor-spark-flash" : "cursor-spark";
+      if (kind === "trail") spark.classList.add("cursor-spark-trail");
+      spark.style.setProperty("--spark-x", `${originX}px`);
+      spark.style.setProperty("--spark-y", `${originY}px`);
+      spark.style.setProperty("--spark-dx", `${dx}px`);
+      spark.style.setProperty("--spark-dy", `${dy}px`);
+      sparkHost.appendChild(spark);
+      spark.addEventListener("animationend", () => removeSpark(spark), { once: true });
+      const timer = window.setTimeout(() => {
+        timers.delete(timer);
+        removeSpark(spark);
+      }, SPARK_MS + 80);
+      timers.add(timer);
     };
 
-    setPosition(dot, targetX, targetY);
-    setPosition(ring, ringX, ringY);
-    animationFrame = window.requestAnimationFrame(animateRing);
+    const handlePointerDown = (event: PointerEvent) => {
+      if (useNativeCursor || event.button !== 0) return;
+      const originX = Math.round(event.clientX);
+      const originY = Math.round(event.clientY);
+      for (let index = 0; index < SPARK_COUNT; index += 1) {
+        const angle = (Math.PI * 2 * index) / SPARK_COUNT + (Math.random() - 0.5) * 0.45;
+        const distance = 12 + Math.random() * 14;
+        spawnSpark(originX, originY, Math.cos(angle) * distance, Math.sin(angle) * distance, "shard");
+      }
+      spawnSpark(originX, originY, 0, 0, "flash");
+      const speed = Math.hypot(moveX, moveY);
+      if (speed > 3) {
+        const backX = -moveX / speed;
+        const backY = -moveY / speed;
+        spawnSpark(originX, originY, backX * 10, backY * 10, "trail");
+        spawnSpark(originX + backX * 6, originY + backY * 6, backX * 16, backY * 16, "trail");
+      }
+    };
 
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
     window.addEventListener("pointerover", handlePointerOver, { passive: true });
     window.addEventListener("pointerdown", handlePointerDown, { passive: true });
-    window.addEventListener("pointerup", handlePointerUp, { passive: true });
     document.documentElement.addEventListener("mouseleave", hideCursor);
     document.documentElement.addEventListener("mouseenter", showCursor);
 
     return () => {
       document.documentElement.classList.remove("custom-cursor-enabled");
-      window.cancelAnimationFrame(animationFrame);
+      window.cancelAnimationFrame(frame);
+      timers.forEach((timer) => window.clearTimeout(timer));
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerover", handlePointerOver);
       window.removeEventListener("pointerdown", handlePointerDown);
-      window.removeEventListener("pointerup", handlePointerUp);
       document.documentElement.removeEventListener("mouseleave", hideCursor);
       document.documentElement.removeEventListener("mouseenter", showCursor);
     };
@@ -147,8 +230,14 @@ const CustomCursor = () => {
 
   return createPortal(
     <>
-      <div ref={ringRef} className="custom-cursor custom-cursor-ring" aria-hidden="true" />
-      <div ref={dotRef} className="custom-cursor custom-cursor-dot" aria-hidden="true" />
+      <div ref={reticleRef} className="custom-cursor custom-cursor-reticle" aria-hidden="true">
+        <span className="reticle-arm reticle-arm-n" />
+        <span className="reticle-arm reticle-arm-e" />
+        <span className="reticle-arm reticle-arm-s" />
+        <span className="reticle-arm reticle-arm-w" />
+        <span className="reticle-dot" />
+      </div>
+      <span ref={labelRef} className="reticle-label" />
     </>,
     cursorLayer,
   );

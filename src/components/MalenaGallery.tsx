@@ -37,7 +37,7 @@ const MalenaGallery = ({ onClose }: MalenaGalleryProps) => {
           </IconButton>
         </div>
 
-        <div className="min-h-0 bg-background">
+        <div className="min-h-0 bg-background" data-cursor="view">
           <img
             key={currentPortrait.src}
             src={currentPortrait.src}
@@ -66,6 +66,7 @@ const MalenaGallery = ({ onClose }: MalenaGalleryProps) => {
             {portraits.map((portrait, index) => (
               <button
                 key={portrait.src}
+                data-cursor="view"
                 type="button"
                 aria-label={`Открыть портрет ${index + 1}: ${portrait.title}`}
                 aria-current={currentIndex === index ? "true" : undefined}

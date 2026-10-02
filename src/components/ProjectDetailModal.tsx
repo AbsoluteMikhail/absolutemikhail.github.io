@@ -96,6 +96,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
                   ) : (
                     <button
                       type="button"
+                      data-cursor="play"
                       aria-label={`Воспроизвести видео проекта ${project.title}`}
                       className="relative w-full h-full cursor-pointer group/play"
                       onClick={() => setIsVideoPlaying(true)}

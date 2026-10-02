@@ -232,6 +232,7 @@ const CourseCard = ({ course }: { course: AcademyCourse }) => {
   const progress = getCourseProgress(course, useAcademyProgress());
   return (
   <Link
+    data-cursor="read"
     className={cn(
       "group grid items-start gap-5 rounded-lg border border-border bg-card/35 p-5 transition-colors hover:border-primary/45 hover:bg-card/60 md:gap-8 md:p-6",
       course.cover && "md:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)]",
@@ -425,6 +426,7 @@ const CoursePage = ({ course, content }: { course: AcademyCourse; content: Acade
                   <div className="grid gap-3">
                     {block.lessons.map((lesson) => (
                       <Link
+                        data-cursor="read"
                         className="group rounded-lg border border-border bg-card/35 p-4 transition-colors hover:border-primary/45 hover:bg-card/60"
                         key={lesson.slug}
                         to={trailingPath(`/academy/${course.slug}/${lesson.slug}`)}
@@ -467,6 +469,7 @@ const LessonPager = ({
     <nav className="mt-14 grid gap-3 border-t border-border pt-8 md:grid-cols-2">
       {previousLesson ? (
         <Link
+          data-cursor="read"
           className="rounded-lg border border-border bg-card/35 p-4 transition-colors hover:border-primary/45 hover:bg-card/60"
           to={trailingPath(`/academy/${course.slug}/${previousLesson.slug}`)}
         >
@@ -482,6 +485,7 @@ const LessonPager = ({
 
       {nextLesson ? (
         <Link
+          data-cursor="read"
           className="rounded-lg border border-border bg-card/35 p-4 text-right transition-colors hover:border-primary/45 hover:bg-card/60"
           to={trailingPath(`/academy/${course.slug}/${nextLesson.slug}`)}
         >

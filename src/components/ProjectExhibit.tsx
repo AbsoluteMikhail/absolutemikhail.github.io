@@ -29,7 +29,8 @@ export default function ProjectExhibit({ project, onSelect, href, featured = fal
       transition={{ duration: 0.45 }}
       className={cn("group relative flex min-w-0 flex-col gap-5", featured && "lg:col-span-3 lg:grid lg:grid-cols-[1.65fr_1fr] lg:items-center lg:gap-10")}
     >
-      {href ? <Link to={href} aria-label={`Подробнее о проекте ${project.title}`} className="absolute inset-0 z-20 rounded-xl focus-visible:ring-2 focus-visible:ring-primary" /> : <button
+      {href ? <Link to={href} data-cursor="play" aria-label={`Подробнее о проекте ${project.title}`} className="absolute inset-0 z-20 rounded-xl focus-visible:ring-2 focus-visible:ring-primary" /> : <button
+        data-cursor="play"
         type="button"
         onClick={() => onSelect?.(project)}
         aria-label={`Подробнее о проекте ${project.title}`}

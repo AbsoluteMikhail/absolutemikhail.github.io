@@ -41,7 +41,7 @@ const AcademySection = () => (
             )}
             <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-primary">{material.format}</p>
             <h3 className="mt-3 font-display text-xl font-bold leading-snug text-foreground">
-              <Link className="transition-colors after:absolute after:inset-0 after:rounded-lg hover:text-primary focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-accent focus-visible:after:ring-offset-4 focus-visible:after:ring-offset-background" to={trailingPath(material.href)}>
+              <Link data-cursor="read" className="transition-colors after:absolute after:inset-0 after:rounded-lg hover:text-primary focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-accent focus-visible:after:ring-offset-4 focus-visible:after:ring-offset-background" to={trailingPath(material.href)}>
                 {material.title}
               </Link>
             </h3>
