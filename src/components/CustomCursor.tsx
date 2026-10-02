@@ -43,6 +43,7 @@ const CustomCursor = () => {
   const [enabled, setEnabled] = useState(false);
   const [cursorLayer, setCursorLayer] = useState<HTMLDivElement | null>(null);
   const reticleRef = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLSpanElement>(null);
   const sparkHostRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -96,7 +97,7 @@ const CustomCursor = () => {
     if (!enabled) return;
 
     const reticle = reticleRef.current;
-    const label = reticle?.querySelector<HTMLElement>(".reticle-label");
+    const label = labelRef.current;
     const sparkHost = sparkHostRef.current;
     if (!reticle || !label || !sparkHost) return;
 
@@ -114,11 +115,15 @@ const CustomCursor = () => {
 
     const paint = () => {
       queued = false;
-      reticle.style.setProperty("--cursor-x", `${x}px`);
-      reticle.style.setProperty("--cursor-y", `${y}px`);
+      const flip = x > window.innerWidth - 88;
+      const raise = y > window.innerHeight - 40;
+      for (const element of [reticle, label]) {
+        element.style.setProperty("--cursor-x", `${x}px`);
+        element.style.setProperty("--cursor-y", `${y}px`);
+        element.classList.toggle("is-label-flip", flip);
+        element.classList.toggle("is-label-raise", raise);
+      }
       if (!useNativeCursor) reticle.classList.add("is-visible");
-      reticle.classList.toggle("is-label-flip", x > window.innerWidth - 88);
-      reticle.classList.toggle("is-label-raise", y > window.innerHeight - 40);
     };
 
     const queuePaint = () => {
@@ -133,6 +138,7 @@ const CustomCursor = () => {
 
     const hideCursor = () => {
       reticle.classList.remove("is-visible");
+      label.classList.remove("is-on");
     };
 
     const handlePointerMove = (event: PointerEvent) => {
@@ -223,14 +229,16 @@ const CustomCursor = () => {
   if (!enabled || !cursorLayer) return null;
 
   return createPortal(
-    <div ref={reticleRef} className="custom-cursor custom-cursor-reticle" aria-hidden="true">
-      <span className="reticle-arm reticle-arm-n" />
-      <span className="reticle-arm reticle-arm-e" />
-      <span className="reticle-arm reticle-arm-s" />
-      <span className="reticle-arm reticle-arm-w" />
-      <span className="reticle-dot" />
-      <span className="reticle-label" />
-    </div>,
+    <>
+      <div ref={reticleRef} className="custom-cursor custom-cursor-reticle" aria-hidden="true">
+        <span className="reticle-arm reticle-arm-n" />
+        <span className="reticle-arm reticle-arm-e" />
+        <span className="reticle-arm reticle-arm-s" />
+        <span className="reticle-arm reticle-arm-w" />
+        <span className="reticle-dot" />
+      </div>
+      <span ref={labelRef} className="reticle-label" />
+    </>,
     cursorLayer,
   );
 };
