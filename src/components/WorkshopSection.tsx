@@ -25,6 +25,7 @@ const WorkshopSection = () => {
             <figure>
               <button
                 type="button"
+                data-cursor="view"
                 aria-label="Открыть галерею Малены"
                 aria-haspopup="dialog"
                 onClick={() => setIsGalleryOpen(true)}

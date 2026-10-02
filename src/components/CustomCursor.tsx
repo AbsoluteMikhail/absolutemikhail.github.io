@@ -6,6 +6,9 @@ const INTERACTIVE_SELECTOR =
   'a, button, [role="button"], summary, select, input[type="button"], input[type="submit"], input[type="checkbox"], input[type="radio"], [data-cursor="interactive"]';
 const NATIVE_CURSOR_SELECTOR =
   'input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"], [class*="cursor-grab"], [class*="cursor-grabbing"]';
+// Cross-origin players keep their own cursor and swallow pointer events.
+// A same-document <video> still receives events, so the crosshair can follow it.
+const EMBEDDED_PLAYER_SELECTOR = "iframe, embed, object";
 
 const CURSOR_LABELS: Record<string, string> = {
   play: "PLAY",
@@ -111,6 +114,7 @@ const CustomCursor = () => {
     let moveX = 0;
     let moveY = 0;
     let useNativeCursor = false;
+    let overEmbedded = false;
     const timers = new Set<number>();
 
     const paint = () => {
@@ -132,13 +136,48 @@ const CustomCursor = () => {
       frame = window.requestAnimationFrame(paint);
     };
 
-    const showCursor = () => {
+    const applyPointerTarget = (target: Element | null) => {
+      const interactive = Boolean(target?.closest(INTERACTIVE_SELECTOR));
+      const embedded = Boolean(target?.closest(EMBEDDED_PLAYER_SELECTOR));
+      useNativeCursor = embedded || (Boolean(target?.closest(NATIVE_CURSOR_SELECTOR)) && !interactive);
+      reticle.classList.toggle("is-hidden", useNativeCursor);
+      if (useNativeCursor) reticle.classList.remove("is-visible");
+
+      const caption = useNativeCursor ? "" : resolveCursorLabel(target);
+      if (label.textContent !== caption) label.textContent = caption;
+      label.classList.toggle("is-on", caption !== "");
+      reticle.classList.toggle("is-focused", !useNativeCursor && (interactive || caption !== ""));
       if (!useNativeCursor && hasPosition) reticle.classList.add("is-visible");
+
+      if (overEmbedded && !embedded) {
+        // Chrome can keep the frame's arrow after the pointer comes back.
+        document.documentElement.style.setProperty("cursor", "none", "important");
+      }
+      overEmbedded = embedded;
+    };
+
+    const syncFromPoint = () => {
+      if (!hasPosition) return;
+      const hit = document.elementFromPoint(x, y);
+      if (hit instanceof Element) applyPointerTarget(hit);
+    };
+
+    const showCursor = () => {
+      if (!hasPosition) return;
+      const hit = document.elementFromPoint(x, y);
+      if (hit instanceof Element) {
+        applyPointerTarget(hit);
+        return;
+      }
+      if (!useNativeCursor) reticle.classList.add("is-visible");
     };
 
     const hideCursor = () => {
       reticle.classList.remove("is-visible");
       label.classList.remove("is-on");
+      if (!hasPosition) return;
+      const hit = document.elementFromPoint(x, y);
+      if (hit instanceof Element && hit.closest(EMBEDDED_PLAYER_SELECTOR)) applyPointerTarget(hit);
     };
 
     const handlePointerMove = (event: PointerEvent) => {
@@ -151,20 +190,22 @@ const CustomCursor = () => {
       hasPosition = true;
       x = nextX;
       y = nextY;
+      const target = event.target instanceof Element ? event.target : null;
+      if (target) applyPointerTarget(target);
       queuePaint();
     };
 
     const handlePointerOver = (event: PointerEvent) => {
+      // Inside a frame the page stops receiving moves, so the stored point is stale.
+      // Place the crosshair at the boundary as soon as the pointer re-enters the page.
+      if (Number.isFinite(event.clientX) && Number.isFinite(event.clientY)) {
+        x = Math.round(event.clientX);
+        y = Math.round(event.clientY);
+        hasPosition = true;
+      }
       const target = event.target instanceof Element ? event.target : null;
-      const interactive = Boolean(target?.closest(INTERACTIVE_SELECTOR));
-      useNativeCursor = Boolean(target?.closest(NATIVE_CURSOR_SELECTOR)) && !interactive;
-      reticle.classList.toggle("is-hidden", useNativeCursor);
-
-      const caption = useNativeCursor ? "" : resolveCursorLabel(target);
-      if (label.textContent !== caption) label.textContent = caption;
-      label.classList.toggle("is-on", caption !== "");
-      reticle.classList.toggle("is-focused", !useNativeCursor && (interactive || caption !== ""));
-      if (useNativeCursor) reticle.classList.remove("is-visible");
+      applyPointerTarget(target);
+      queuePaint();
     };
 
     const removeSpark = (spark: HTMLElement) => {
@@ -208,19 +249,38 @@ const CustomCursor = () => {
       }
     };
 
+    const scheduleSync = () => {
+      window.requestAnimationFrame(syncFromPoint);
+    };
+
+    const embeddedObserver = new MutationObserver((records) => {
+      const relevant = records.some((record) =>
+        [...record.addedNodes, ...record.removedNodes].some((node) =>
+          node instanceof Element &&
+          (node.matches(EMBEDDED_PLAYER_SELECTOR) || node.querySelector(EMBEDDED_PLAYER_SELECTOR) !== null),
+        ),
+      );
+      if (relevant) scheduleSync();
+    });
+    embeddedObserver.observe(document.body, { childList: true, subtree: true });
+
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
     window.addEventListener("pointerover", handlePointerOver, { passive: true });
     window.addEventListener("pointerdown", handlePointerDown, { passive: true });
+    window.addEventListener("pointerup", scheduleSync, { passive: true });
     document.documentElement.addEventListener("mouseleave", hideCursor);
     document.documentElement.addEventListener("mouseenter", showCursor);
 
     return () => {
       document.documentElement.classList.remove("custom-cursor-enabled");
+      document.documentElement.style.removeProperty("cursor");
+      embeddedObserver.disconnect();
       window.cancelAnimationFrame(frame);
       timers.forEach((timer) => window.clearTimeout(timer));
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerover", handlePointerOver);
       window.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("pointerup", scheduleSync);
       document.documentElement.removeEventListener("mouseleave", hideCursor);
       document.documentElement.removeEventListener("mouseenter", showCursor);
     };

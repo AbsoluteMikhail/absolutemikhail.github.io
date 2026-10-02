@@ -653,6 +653,11 @@ html.snippet-capture .custom-cursor {
     cursor: none !important;
   }
 
+  /* The frame draws the system cursor. Keeping cursor:none here stacks it on the crosshair. */
+  html.custom-cursor-enabled :is(iframe, embed, object) {
+    cursor: auto !important;
+  }
+
   html.custom-cursor-enabled :is(
     input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
     textarea,
@@ -697,6 +702,7 @@ html.snippet-capture .custom-cursor {
   .custom-cursor-reticle.is-hidden,
   .custom-cursor-reticle.is-hidden .reticle-label {
     opacity: 0;
+    transition: none;
   }
 
   .custom-cursor-reticle.is-focused {

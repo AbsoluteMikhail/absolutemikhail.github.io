@@ -123,6 +123,57 @@ describe("crosshair labels and click", () => {
     expect(document.querySelector(".cursor-spark")).toBeNull();
   });
 
+  it("yields to the system cursor over an embedded player and keeps the crosshair over video", async () => {
+    mockPointer(true, false);
+    const { rerender } = render(
+      <>
+        <CustomCursor />
+        <button type="button" data-cursor="play">Смотреть</button>
+        <video aria-label="Ролик" />
+        <a href="/projects/duelant" data-cursor="play">Проект</a>
+      </>,
+    );
+
+    const label = document.querySelector(".reticle-label");
+    const reticle = document.querySelector(".custom-cursor-reticle");
+    const play = document.querySelector("button")!;
+
+    fireEvent.pointerOver(play);
+    expect(label).toHaveTextContent("PLAY");
+
+    fireEvent.pointerOver(document.querySelector("video")!);
+    expect(reticle).not.toHaveClass("is-hidden");
+    expect(label?.textContent).toBe("");
+
+    fireEvent(window, new MouseEvent("pointermove", { clientX: 30, clientY: 40 }));
+    await flushCursorFrame();
+    document.elementFromPoint = () => null;
+    vi.spyOn(document, "elementFromPoint").mockImplementation(() => document.querySelector("iframe"));
+    rerender(
+      <>
+        <CustomCursor />
+        <iframe title="Плеер" />
+        <a href="/projects/duelant" data-cursor="play">Проект</a>
+      </>,
+    );
+    await act(async () => {
+      await new Promise<void>((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+      });
+    });
+    expect(reticle).toHaveClass("is-hidden");
+    expect(reticle).not.toHaveClass("is-visible");
+    expect(label).not.toHaveClass("is-on");
+
+    fireEvent.mouseEnter(document.documentElement);
+    expect(reticle).toHaveClass("is-hidden");
+
+    fireEvent.pointerOver(document.querySelector("a[data-cursor='play']")!);
+    expect(label).toHaveTextContent("PLAY");
+    expect(reticle).not.toHaveClass("is-hidden");
+    expect(document.documentElement.style.cursor).toBe("none");
+  });
+
   it("spawns a short pixel burst and clears it", async () => {
     mockPointer(true, false);
     render(<CustomCursor />);
@@ -135,6 +186,11 @@ describe("crosshair labels and click", () => {
 
 describe("light theme cursor and logo styles", () => {
   const css = readFileSync("src/index.css", "utf8");
+
+  it("lets an embedded player use the system cursor without fading the crosshair out over it", () => {
+    expect(css).toMatch(/html\.custom-cursor-enabled :is\(iframe, embed, object\) \{\s*cursor:\s*auto !important;/);
+    expect(css).toMatch(/\.custom-cursor-reticle\.is-hidden,\s*\.custom-cursor-reticle\.is-hidden \.reticle-label \{\s*opacity:\s*0;\s*transition:\s*none;/);
+  });
 
   it("keeps the light crosshair crisp, without a neon bloom", () => {
     expect(css).toMatch(/html\.light \.custom-cursor-reticle :is\(\.reticle-dot, \.reticle-arm\) \{[^}]*box-shadow:\s*0 0 0 1px hsl\(var\(--background\)\)/s);
