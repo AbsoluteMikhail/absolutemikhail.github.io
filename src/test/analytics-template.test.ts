@@ -3,6 +3,16 @@ import { JSDOM } from "jsdom";
 import { describe, expect, it } from "vitest";
 
 describe("analytics HTML bootstrap", () => {
+  it.each([false, true])("shows consent controls only when JavaScript can operate them (enabled: %s)", (enabled) => {
+    const html = readFileSync("index.html", "utf8");
+    const dom = new JSDOM(html, { runScripts: enabled ? "dangerously" : undefined, url: "https://gamepunk.ru/" });
+    const banner = dom.window.document.createElement("aside");
+    banner.className = "analytics-banner";
+    dom.window.document.body.appendChild(banner);
+    expect(dom.window.getComputedStyle(banner).display).toBe(enabled ? "block" : "none");
+    dom.window.close();
+  });
+
   it("only prepares the local gtag queue and never embeds external counters", () => {
     const html = readFileSync("index.html", "utf8");
     // jsdom does not enable external resources here: no network traffic.
