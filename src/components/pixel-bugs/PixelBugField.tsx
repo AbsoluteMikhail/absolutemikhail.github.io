@@ -68,11 +68,8 @@ const PixelBugField = () => {
   onKillRef.current = (points, x, y) => {
     const id = performance.now();
     setPops((items) => [...items.slice(-8), { id, text: formatBugXp(points), x, y }]);
-    setScore((state) => {
-      const next = registerKill(state, points, readStoredBugScore());
-      writeStoredBugScore(next.total);
-      return next;
-    });
+    const stored = readStoredBugScore();
+    setScore((state) => registerKill(state, points, stored));
   };
 
   useEffect(() => {
