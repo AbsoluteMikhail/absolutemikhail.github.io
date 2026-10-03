@@ -1,3 +1,5 @@
+import { gameProjectCount, projectCountLabel } from "@/constants/portfolioStats";
+
 export type ProofIcon = "experience" | "award" | "instructor" | "projects";
 
 export interface ProofItem {
@@ -32,7 +34,7 @@ export const proofItems: ProofItem[] = [
   },
   {
     icon: "projects",
-    value: "20 проектов",
+    value: `${gameProjectCount} ${projectCountLabel}`,
     label: "публичные релизы, джемы и игровые прототипы",
     linkLabel: "Посмотреть игры",
     href: "/projects",

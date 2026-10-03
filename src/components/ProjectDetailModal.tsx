@@ -14,7 +14,7 @@ interface ProjectDetailModalProps {
   onClose: () => void;
 }
 
-const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProps) => {
+const ProjectDialog = ({ project, isOpen, onClose }: ProjectDetailModalProps & { project: Project }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const titleId = useId();
@@ -29,14 +29,16 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
     setIsVideoPlaying(false);
   }, [currentSlide]);
 
-  if (!project) return null;
-
   const getSlides = (p: Project) => [
     ...(p.videoUrl ? [{ type: "video" as const, url: p.videoUrl }] : []),
     ...p.screenshots.map((shot) => ({ type: "image" as const, url: shot.src, srcSet: shot.srcSet, width: shot.width, height: shot.height })),
   ];
 
-  const slides = getSlides(project);
+  const media = getSlides(project);
+  const slides = media.length ? media : [{
+    type: "image" as const, url: project.cover, srcSet: project.coverSrcSet,
+    width: project.coverWidth, height: project.coverHeight,
+  }];
   const storeLinks = project.storeLinks ?? (
     project.storeUrl
       ? [{ label: "Смотреть проект", url: project.storeUrl }]
@@ -128,7 +130,9 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
                   sizes="(min-width: 896px) 896px, 100vw"
                   width={"width" in slides[currentSlide] ? slides[currentSlide].width : undefined}
                   height={"height" in slides[currentSlide] ? slides[currentSlide].height : undefined}
-                  alt={`Скриншот проекта ${project.title}, кадр ${currentSlide}`}
+                  alt={media.length
+                    ? `Скриншот проекта ${project.title}, кадр ${currentSlide + (project.videoUrl ? 0 : 1)}`
+                    : `Обложка проекта ${project.title}`}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover pointer-events-none"
@@ -292,5 +296,9 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
     </Modal>
   );
 };
+
+// Reset gallery and playback together before rendering another project's media.
+const ProjectDetailModal = ({ project, ...props }: ProjectDetailModalProps) =>
+  project ? <ProjectDialog key={project.id} project={project} {...props} /> : null;
 
 export default ProjectDetailModal;

@@ -91,6 +91,23 @@ describe("contact dialog", () => {
 });
 
 describe("portfolio and legal dialogs", () => {
+  it("resets a selected slide when an open dialog switches to a shorter gallery", async () => {
+    const first = projects.find((item) => item.slug === "duelant")!;
+    const second = projects.find((item) => item.slug === "malenastrom")!;
+    const view = render(<ProjectDetailModal project={first} isOpen onClose={() => undefined} />);
+    fireEvent.click(screen.getByRole("button", { name: "Предыдущий кадр" }));
+    await waitFor(() => expect(screen.getByRole("img", { name: /Скриншот проекта/ })).toHaveAttribute("src", first.screenshots[first.screenshots.length - 1].src));
+    view.rerender(<ProjectDetailModal project={second} isOpen onClose={() => undefined} />);
+    expect(screen.getByRole("img", { name: /Скриншот проекта/ })).toHaveAttribute("src", second.screenshots[0].src);
+  });
+
+  it("uses the cover when a project has neither video nor screenshots", () => {
+    const project = { ...projects[0], videoUrl: undefined, screenshots: [] };
+    render(<ProjectDetailModal project={project} isOpen onClose={() => undefined} />);
+    expect(screen.getByRole("img", { name: `Обложка проекта ${project.title}` })).toHaveAttribute("src", project.cover);
+    expect(screen.queryByRole("button", { name: "Следующий кадр" })).not.toBeInTheDocument();
+  });
+
   it("starts a project without video on its first screenshot and cycles only through images", async () => {
     const project = projects.find((item) => item.slug === "malenastrom")!;
     render(<ProjectDetailModal project={project} isOpen onClose={() => undefined} />);
