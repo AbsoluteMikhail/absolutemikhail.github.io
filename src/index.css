@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* The HTML template is shared by every route and is outside Tailwind's content scan. */
+.noscript-contact-notice {
+  @apply mx-auto max-w-3xl px-6 pb-4 pt-24 text-sm leading-6 text-muted-foreground;
+}
+
 @layer base {
   :root {
     --background: 225 15% 7%;
