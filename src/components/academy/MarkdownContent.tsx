@@ -321,8 +321,8 @@ export const MarkdownContent = ({ className = "", content }: MarkdownContentProp
 
         if (block.type === "table") {
           return (
-            <div className="academy-table-wrap" key={index}>
-              <table>
+            <div className="academy-table-wrap" role="group" aria-label="Таблица" tabIndex={0} key={index}>
+              <table className={block.headers.length > 2 ? "min-w-[560px]" : "table-fixed sm:table-auto"}>
                 <thead>
                   <tr>
                     {block.headers.map((header, headerIndex) => (

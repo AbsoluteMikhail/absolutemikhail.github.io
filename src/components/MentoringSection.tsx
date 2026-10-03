@@ -1,7 +1,6 @@
-import { motionInitial } from "@/lib/motion";
+import { EntranceDiv } from "@/components/ui/entrance-motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { SectionBadge } from "@/components/ui/section-badge";
-import { motion } from "framer-motion";
 import { Check, MessageCircle, SearchCode, Network } from "lucide-react";
 import { ContactMessenger } from "@/components/ContactMessenger";
 import { mentoringButtonStyles } from "@/components/ui/button";
@@ -24,8 +23,8 @@ const MentoringSection = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={motionInitial({ opacity: 0, y: 30 })}
+        <EntranceDiv
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
@@ -41,15 +40,15 @@ const MentoringSection = () => {
             Преподаю UE C++, провожу код-ревью и помогаю командам с архитектурой
             игровых проектов. Можно прийти с одним вопросом или со своим проектом.
           </p>
-        </motion.div>
+        </EntranceDiv>
 
         <div className="grid gap-6 lg:grid-cols-3">
           {mentoringPackages.map((pkg, index) => {
             const Icon = packageIcons[pkg.icon];
             return (
-              <motion.div
+              <EntranceDiv
                 key={pkg.title}
-                initial={motionInitial({ opacity: 0, y: 40 })}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.15 }}
@@ -119,13 +118,13 @@ const MentoringSection = () => {
                 >
                   {pkg.buttonText}
                 </ContactMessenger>
-              </motion.div>
+              </EntranceDiv>
             );
           })}
         </div>
 
-        <motion.div
-          initial={motionInitial({ opacity: 0 })}
+        <EntranceDiv
+          initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.5 }}
@@ -144,7 +143,7 @@ const MentoringSection = () => {
               Если потребуется больше времени — заранее обсудим план.
             </span>
           </p>
-        </motion.div>
+        </EntranceDiv>
       </div>
     </section>
   );

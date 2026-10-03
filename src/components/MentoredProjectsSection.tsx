@@ -1,6 +1,5 @@
-import { motionInitial } from "@/lib/motion";
+import { EntranceLink } from "@/components/ui/entrance-motion";
 import { SectionTitle } from "@/components/ui/section-title";
-import { motion } from "framer-motion";
 import { ArrowUpRight, CheckCircle2, GraduationCap } from "lucide-react";
 import { mentoredProjects } from "@/constants/mentoredProjects";
 
@@ -38,12 +37,12 @@ const MentoredProjectsSection = () => (
 
       <div className="relative grid grid-cols-1 gap-x-10 gap-y-10 md:grid-cols-2">
         {mentoredProjects.map((project, index) => (
-          <motion.a
+          <EntranceLink
             key={project.title}
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            initial={motionInitial({ opacity: 0, y: 24 })}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ delay: index * 0.07 }}
@@ -88,7 +87,7 @@ const MentoredProjectsSection = () => (
                 </div>
               </div>
             </div>
-          </motion.a>
+          </EntranceLink>
         ))}
       </div>
     </div>

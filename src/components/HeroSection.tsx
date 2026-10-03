@@ -1,4 +1,4 @@
-import { motionInitial } from "@/lib/motion";
+import { EntranceDiv, EntranceParagraph, EntranceLink, EntrancePageTitle } from "@/components/ui/entrance-motion";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
@@ -20,7 +20,7 @@ const HeroSection = () => {
   // layout is confirmed so mobile never keeps a decorative loop on the main thread.
   const [bounceScrollHint, setBounceScrollHint] = useState(false);
   useEffect(() => {
-    const query = window.matchMedia("(min-width: 1024px)");
+    const query = window.matchMedia("(min-width: 1024px) and (hover: hover) and (pointer: fine)");
     const update = () => setBounceScrollHint(query.matches);
     update();
     query.addEventListener("change", update);
@@ -40,8 +40,8 @@ const HeroSection = () => {
     >
       {/* Mobile: photo on top */}
       <div className="relative h-[28svh] min-h-[200px] max-h-[260px] w-full md:hidden">
-        <motion.div
-          initial={motionInitial({ opacity: 0, scale: 1.1 })}
+        <EntranceDiv
+          initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2 }}
           className="h-full w-full"
@@ -57,7 +57,7 @@ const HeroSection = () => {
             className="h-full w-full object-cover object-[center_20%]"
             style={{ filter: 'brightness(0.9) contrast(1.1) saturate(0.8)' }}
           />
-        </motion.div>
+        </EntranceDiv>
         <div 
           className="absolute inset-0"
           style={{
@@ -76,8 +76,8 @@ const HeroSection = () => {
           WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 35%, black 85%, transparent 100%)'
         }}
       >
-        <motion.div 
-          initial={motionInitial({ opacity: 0, x: 50 })}
+        <EntranceDiv
+          initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
           className="relative h-full w-full"
@@ -100,7 +100,7 @@ const HeroSection = () => {
           {/* Subtle Glow like in OG Snippet */}
           <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px] mix-blend-screen [html.light_&]:mix-blend-normal" />
 
-        </motion.div>
+        </EntranceDiv>
       </div>
 
       {/* Desktop credential card: the supplied badge stays replaceable as one asset. */}
@@ -110,14 +110,14 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 pb-10 pt-2 md:pb-24 md:pt-32">
-        <motion.div
-          initial={motionInitial({ opacity: 0, y: 40 })}
+        <EntranceDiv
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="max-w-2xl md:max-w-[58%] lg:max-w-[60%]"
         >
-          <motion.div
-            initial={motionInitial({ opacity: 0, x: -20 })}
+          <EntranceDiv
+            initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
             className="mb-5 border-l-2 border-primary pl-4 md:mb-7"
@@ -132,20 +132,20 @@ const HeroSection = () => {
               <span className="hidden md:inline"> · </span>
               <span className="mt-1 block md:mt-0 md:inline">GamePunk Studio</span>
             </span>
-          </motion.div>
+          </EntranceDiv>
 
-          <motion.h1
-            initial={motionInitial({ opacity: 0, y: 20 })}
+          <EntrancePageTitle
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.7 }}
             className="hero-heading-shadow mb-5 font-display text-[clamp(1.6rem,7.2vw,3rem)] font-black leading-[1.12] tracking-tight md:mb-7 md:text-[clamp(2rem,4vw,3.8rem)]"
           >
             <span className="block gradient-text">ДЕЛАЮ ИГРЫ</span>
             <span className="block text-foreground">ДЕЛЮСЬ ОПЫТОМ</span>
-          </motion.h1>
+          </EntrancePageTitle>
 
-          <motion.div
-            initial={motionInitial({ opacity: 0, y: 20 })}
+          <EntranceDiv
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.7 }}
             className="mb-4 max-w-lg md:mb-8"
@@ -154,10 +154,10 @@ const HeroSection = () => {
               Разрабатываю игры на Unreal Engine. Помогаю с C++, Blueprint
               и архитектурой — в статьях и на личных занятиях.
             </p>
-          </motion.div>
+          </EntranceDiv>
 
-          <motion.div
-            initial={motionInitial({ opacity: 0, y: 20 })}
+          <EntranceDiv
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.72, duration: 0.7 }}
             className="mb-4 grid grid-cols-2 items-center gap-3 sm:flex sm:flex-wrap md:mb-6"
@@ -180,10 +180,10 @@ const HeroSection = () => {
             >
               Обсудить задачу →
             </a>
-          </motion.div>
+          </EntranceDiv>
 
-          <motion.a
-            initial={motionInitial({ opacity: 0, y: 16 })}
+          <EntranceLink
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.82, duration: 0.6 }}
             href="https://credential.unrealengine.com/b0a726a2-6749-4f13-a1c9-8ebfcc3d6034"
@@ -210,10 +210,10 @@ const HeroSection = () => {
                 Unreal Authorized Instructor
               </strong>
             </span>
-          </motion.a>
+          </EntranceLink>
 
-          <motion.p
-            initial={motionInitial({ opacity: 0, y: 16 })}
+          <EntranceParagraph
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.92, duration: 0.6 }}
             className="mb-5 flex flex-col gap-2 text-sm text-muted-foreground sm:gap-1.5 md:mb-7"
@@ -222,10 +222,10 @@ const HeroSection = () => {
               <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
               С 2015 года в Unreal Engine · 20 игровых проектов
             </span>
-          </motion.p>
+          </EntranceParagraph>
 
-          <motion.div
-            initial={motionInitial({ opacity: 0, y: 16 })}
+          <EntranceDiv
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.6 }}
             className="flex flex-wrap gap-1 sm:gap-2"
@@ -248,13 +248,13 @@ const HeroSection = () => {
                 <social.icon className="h-10 w-10" />
               </a>
             ))}
-          </motion.div>
-        </motion.div>
+          </EntranceDiv>
+        </EntranceDiv>
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
-        initial={motionInitial({ opacity: 0 })}
+      <EntranceDiv
+        initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
         className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 lg:block"
@@ -266,7 +266,7 @@ const HeroSection = () => {
         >
           <div className="w-1 h-2 rounded-full bg-primary" />
         </motion.div>
-      </motion.div>
+      </EntranceDiv>
     </section>
   );
 };

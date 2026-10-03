@@ -1,6 +1,5 @@
-import { motionInitial } from "@/lib/motion";
+import { EntranceLink } from "@/components/ui/entrance-motion";
 import { SectionTitle } from "@/components/ui/section-title";
-import { motion } from "framer-motion";
 import {
   ArrowUpRight,
   Code2,
@@ -49,12 +48,12 @@ const ItchProjectsSection = () => (
 
     <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
       {itchProjects.map((project, index) => (
-        <motion.a
+        <EntranceLink
           key={project.title}
           href={project.url}
           target="_blank"
           rel="noopener noreferrer"
-          initial={motionInitial({ opacity: 0, y: 24 })}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ delay: Math.min(index * 0.06, 0.24) }}
@@ -101,14 +100,14 @@ const ItchProjectsSection = () => (
               </div>
             </div>
           </div>
-        </motion.a>
+        </EntranceLink>
       ))}
 
-      <motion.a
+      <EntranceLink
         href="https://mikhaile.itch.io/"
         target="_blank"
         rel="noopener noreferrer"
-        initial={motionInitial({ opacity: 0, y: 24 })}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         className="group flex min-h-[360px] flex-col justify-between gap-8 overflow-hidden rounded-xl border-t border-primary/50 bg-gradient-to-br from-primary/15 to-card/30 p-7 transition-colors hover:bg-primary/10"
@@ -129,7 +128,7 @@ const ItchProjectsSection = () => (
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
           </span>
         </div>
-      </motion.a>
+      </EntranceLink>
     </div>
   </section>
 );

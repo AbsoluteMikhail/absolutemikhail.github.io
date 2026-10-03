@@ -54,6 +54,7 @@ describe("homepage product hierarchy", () => {
     expect(featured.length).toBeGreaterThanOrEqual(3);
     expect(featured.length).toBeLessThanOrEqual(5);
     expect(screen.getByRole("button", { name: "Подробнее о проекте DUELANT" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "DUELANT", level: 3 })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Подробнее о проекте ЗВЁЗДНЫЙ КОЧЕВНИК" })).not.toBeInTheDocument();
   });
 

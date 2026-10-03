@@ -233,6 +233,7 @@
 
   .academy-prose {
     @apply text-base leading-8 text-foreground/90;
+    overflow-wrap: anywhere;
   }
 
   .academy-prose > * + * {
@@ -488,16 +489,21 @@
     @apply overflow-x-auto rounded-lg border border-border bg-card/35;
   }
 
+  .academy-table-wrap:focus-visible {
+    outline: 2px solid hsl(var(--accent));
+    outline-offset: 4px;
+  }
+
   .academy-table-wrap table {
-    @apply w-full min-w-[560px] border-collapse text-left text-sm;
+    @apply w-full border-collapse text-left text-sm;
   }
 
   .academy-table-wrap th {
-    @apply border-b border-border bg-secondary/70 px-4 py-3 font-semibold text-foreground;
+    @apply border-b border-border bg-secondary/70 px-3 py-3 font-semibold text-foreground sm:px-4;
   }
 
   .academy-table-wrap td {
-    @apply border-b border-border/70 px-4 py-3 align-top text-foreground/85;
+    @apply border-b border-border/70 px-3 py-3 align-top text-foreground/85 sm:px-4;
   }
 
   .academy-table-wrap tbody tr:last-child td {

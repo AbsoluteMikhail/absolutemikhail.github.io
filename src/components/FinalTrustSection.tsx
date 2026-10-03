@@ -1,7 +1,6 @@
-import { motionInitial } from "@/lib/motion";
+import { EntranceDiv } from "@/components/ui/entrance-motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { SectionBadge } from "@/components/ui/section-badge";
-import { motion } from "framer-motion";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { ContactMessenger } from "@/components/ContactMessenger";
 
@@ -9,8 +8,8 @@ const FinalTrustSection = () => (
   <section className="exhibition-section exhibition-warm relative overflow-hidden border-y border-primary/25">
     <div className="absolute left-1/2 top-0 h-px w-full -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
     <div className="container relative z-10 mx-auto px-6">
-      <motion.div
-        initial={motionInitial({ opacity: 0, y: 24 })}
+      <EntranceDiv
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55 }}
         viewport={{ once: true }}
@@ -37,7 +36,7 @@ const FinalTrustSection = () => (
           Написать Михаилу
           <ArrowUpRight className="h-4 w-4" />
         </ContactMessenger>
-      </motion.div>
+      </EntranceDiv>
     </div>
   </section>
 );

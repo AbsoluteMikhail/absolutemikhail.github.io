@@ -98,6 +98,7 @@ export const canonicalUrl = (pathname) => {
 
 // Keep the page's schema and its navigation trail in the same JSON-LD payload
 // for both client navigation and prerendered HTML.
+/** @param {import("../lib/pageMetadata").PageMetadata} metadata */
 export const getPageStructuredData = (metadata) => {
   if (!metadata.breadcrumbs?.length) return metadata.structuredData;
   const breadcrumbs = {

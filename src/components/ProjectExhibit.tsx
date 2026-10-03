@@ -1,6 +1,5 @@
-import { motionInitial } from "@/lib/motion";
+import { EntranceArticle } from "@/components/ui/entrance-motion";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import type { Project } from "@/constants/projects";
 import ProjectStatusIcon from "@/components/ProjectStatusIcon";
@@ -10,6 +9,7 @@ type ProjectExhibitProps = {
   project: Project;
   featured?: boolean;
   priority?: boolean;
+  headingLevel?: 2 | 3;
 } & ({ onSelect: (project: Project) => void; href?: never } | { href: string; onSelect?: never });
 
 const coverSizes = {
@@ -21,10 +21,11 @@ const coverSizes = {
   home: "(min-width: 1024px) calc((min(100vw, 1280px) - 3rem - 4rem) / 3), (min-width: 768px) calc((min(100vw, 1280px) - 3rem - 2rem) / 2), calc(100vw - 3rem)",
 };
 
-export default function ProjectExhibit({ project, onSelect, href, featured = false, priority = false }: ProjectExhibitProps) {
+export default function ProjectExhibit({ project, onSelect, href, featured = false, priority = false, headingLevel = 2 }: ProjectExhibitProps) {
+  const Heading = headingLevel === 2 ? "h2" : "h3";
   return (
-    <motion.article
-      initial={motionInitial({ opacity: 0, y: 24 })}
+    <EntranceArticle
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.12 }}
       transition={{ duration: 0.45 }}
@@ -61,11 +62,11 @@ export default function ProjectExhibit({ project, onSelect, href, featured = fal
             <ProjectStatusIcon status={project.stats} className="h-3.5 w-3.5" />{project.stats}
           </span>
         </div>
-        <h2 className={cn("font-display text-2xl font-bold leading-tight tracking-tight transition-colors group-hover:text-primary", featured && "lg:text-4xl")}>{project.title}</h2>
+        <Heading className={cn("font-display text-2xl font-bold leading-tight tracking-tight transition-colors group-hover:text-primary", featured && "lg:text-4xl")}>{project.title}</Heading>
         {project.role && <p className="mt-3 text-xs font-medium leading-5 text-primary">{project.role}</p>}
         <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">{project.shortDesc}</p>
         <span className="exhibition-link mt-4" aria-hidden="true">Подробнее<ArrowUpRight className="h-4 w-4" /></span>
       </div>
-    </motion.article>
+    </EntranceArticle>
   );
 }
