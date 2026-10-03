@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { academyCourses, academyTopics } from "@/lib/academy";
 import { getAcademyMetadata, getAcademyRoute } from "@/lib/academyRoutes";
 import { resolvePageMetadata } from "@/lib/resolvePageMetadata";
+import { canonicalUrl, getPageStructuredData } from "@/constants/routeMetadata.js";
 
 describe("Academy route metadata", () => {
   it("gives every published page its own title and description", async () => {
@@ -23,6 +24,34 @@ describe("Academy route metadata", () => {
     for (const path of ["/academy/missing", "/academy/topics/missing", "/academy/topics/cpp/extra", "/academy/ue-cpp-blueprint-devs/01-ue-cpp-environment/extra"]) {
       expect(getAcademyRoute(path).type).toBe("notFound");
       expect(getAcademyMetadata(path).robots).toContain("noindex");
+      expect(getPageStructuredData(getAcademyMetadata(path))).toBeUndefined();
+    }
+  });
+
+  it("adds canonical breadcrumbs to home, topics, materials and lessons alongside their schemas", () => {
+    const home = { name: "Главная", pathname: "/" };
+    const academy = { name: "Academy", pathname: "/academy" };
+    const trails = [
+      [home, academy],
+      ...academyTopics.map((topic) => [home, academy, { name: topic.title, pathname: `/academy/topics/${topic.slug}` }]),
+      ...academyCourses.flatMap((course) => {
+        const material = { name: course.title, pathname: `/academy/${course.slug}` };
+        return [
+          [home, academy, material],
+          ...course.lessons.map((lesson) => [home, academy, material, { name: lesson.meta.title, pathname: `${material.pathname}/${lesson.slug}` }]),
+        ];
+      }),
+    ];
+    for (const trail of trails) {
+      const metadata = getAcademyMetadata(`${trail[trail.length - 1].pathname}/`);
+      const breadcrumbs = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: trail.map(({ name, pathname }, index) => ({
+          "@type": "ListItem", position: index + 1, name, item: canonicalUrl(pathname),
+        })),
+      };
+      expect(getPageStructuredData(metadata)).toEqual(metadata.structuredData ? [metadata.structuredData, breadcrumbs] : breadcrumbs);
     }
   });
 

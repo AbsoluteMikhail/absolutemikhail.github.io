@@ -5,6 +5,7 @@ import {
   canonicalUrl,
   defaultSocialImage,
   findRouteMetadata,
+  getPageStructuredData,
   normalizePathname,
   notFoundMetadata,
 } from "@/constants/routeMetadata.js";
@@ -66,8 +67,9 @@ const RouteMetadata = () => {
       const canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
       canonical?.setAttribute("href", canonicalUrl(normalizedPathname));
 
+      const data = getPageStructuredData(metadata);
       let structuredData = document.head.querySelector<HTMLScriptElement>("#structured-data");
-      if (!metadata.structuredData) {
+      if (!data) {
         structuredData?.remove();
         return;
       }
@@ -77,7 +79,7 @@ const RouteMetadata = () => {
         structuredData.type = "application/ld+json";
         document.head.appendChild(structuredData);
       }
-      structuredData.textContent = JSON.stringify(metadata.structuredData).replace(/</g, "\\u003c");
+      structuredData.textContent = JSON.stringify(data).replace(/</g, "\\u003c");
     };
     void resolvePageMetadata(normalizedPathname).then(applyMetadata, () => applyMetadata(fallback));
     return () => { active = false; };

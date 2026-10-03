@@ -10,6 +10,7 @@ import { itchProjects } from "@/constants/itchProjects";
 import { mentoredProjects } from "@/constants/mentoredProjects";
 import { projectPages, projectPath } from "@/lib/projectPages";
 import { resolvePageMetadata } from "@/lib/resolvePageMetadata";
+import { canonicalUrl, getPageStructuredData } from "@/constants/routeMetadata.js";
 
 describe("individual project pages", () => {
   it("gives every enabled project a unique indexable route and matching metadata", async () => {
@@ -19,7 +20,23 @@ describe("individual project pages", () => {
       expect(metadata.title).toContain(project.title);
       expect(metadata.description).toBe(project.description);
       expect(metadata.robots).toBe("index, follow");
+      expect(metadata.image).toBe(project.cover);
+      expect(metadata.imageWidth).toBe(project.coverWidth);
+      expect(metadata.imageHeight).toBe(project.coverHeight);
+      expect(getPageStructuredData(metadata)).toEqual([
+        metadata.structuredData,
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Главная", item: canonicalUrl("/") },
+            { "@type": "ListItem", position: 2, name: "Игры и проекты", item: canonicalUrl("/projects") },
+            { "@type": "ListItem", position: 3, name: project.title, item: canonicalUrl(projectPath(project.slug)) },
+          ],
+        },
+      ]);
     }
+    expect(new Set(projectPages.map((project) => project.cover)).size).toBe(projectPages.length);
     expect((await resolvePageMetadata("/projects/not-a-game")).robots).toContain("noindex");
   });
 

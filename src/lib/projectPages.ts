@@ -35,6 +35,10 @@ const mikhail = {
 
 export const projectsIndexMetadata = (): PageMetadata => ({
   ...findRouteMetadata("/projects")!,
+  breadcrumbs: [
+    { name: "Главная", pathname: "/" },
+    { name: "Игры и проекты", pathname: "/projects" },
+  ],
   structuredData: {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -71,6 +75,11 @@ export const projectPageMetadata = (project: ProjectPage): PageMetadata => {
     imageAlt: `Обложка игры ${project.title}`,
     imageWidth: project.coverWidth,
     imageHeight: project.coverHeight,
+    breadcrumbs: [
+      { name: "Главная", pathname: "/" },
+      { name: "Игры и проекты", pathname: "/projects" },
+      { name: project.title, pathname: projectPath(project.slug) },
+    ],
     structuredData: data,
   };
 };

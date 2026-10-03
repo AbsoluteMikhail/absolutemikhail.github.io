@@ -9,4 +9,5 @@ export type PageMetadata = {
   updated?: string;
   ogType?: "website" | "article";
   structuredData?: Record<string, unknown>;
+  breadcrumbs?: Array<{ name: string; pathname: string }>;
 };

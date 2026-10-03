@@ -66,10 +66,15 @@ const courseList = (courses: readonly AcademyCourse[]) => ({
 export const getAcademyMetadata = (pathname: string): PageMetadata => {
   const route = getAcademyRoute(pathname);
   if (route.type === "notFound") return notFoundMetadata;
+  const breadcrumbs = [
+    { name: "Главная", pathname: "/" },
+    { name: "Academy", pathname: "/academy" },
+  ];
   if (route.type === "home") {
     return {
       ...findRouteMetadata("/academy")!,
       updated: getLatestAcademyUpdate(academyCourses),
+      breadcrumbs,
       structuredData: courseList(academyCourses),
     };
   }
@@ -78,7 +83,15 @@ export const getAcademyMetadata = (pathname: string): PageMetadata => {
     : `${route.lesson.meta.title} — урок ${route.course.lessons.indexOf(route.lesson) + 1}`;
   const description = route.type === "topic" ? route.topic.description
     : route.type === "course" ? route.course.description : route.lesson.meta.description;
-  const base = { title: `${title} | Absolute Mikhail Academy`, description, robots: "index, follow" };
+  if (route.type === "topic") {
+    breadcrumbs.push({ name: route.topic.title, pathname: `/academy/topics/${route.topic.slug}` });
+  } else {
+    breadcrumbs.push({ name: route.course.title, pathname: `/academy/${route.course.slug}` });
+    if (route.type === "lesson") {
+      breadcrumbs.push({ name: route.lesson.meta.title, pathname: `/academy/${route.course.slug}/${route.lesson.slug}` });
+    }
+  }
+  const base = { title: `${title} | Absolute Mikhail Academy`, description, robots: "index, follow", breadcrumbs };
   if (route.type === "topic") {
     const courses = getAcademyCoursesByTopic(route.topic.slug);
     return {
