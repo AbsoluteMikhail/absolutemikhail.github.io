@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { telegramCommunityUrl } from "@/constants/contactLinks";
+import { gameProjectCount, gameProjectCountLabel } from "@/constants/portfolioStats";
 import heroPhoto from "@/assets/hero-photo.webp";
 import {
   instructorBadgeHeight,
@@ -220,7 +221,7 @@ const HeroSection = () => {
           >
             <span className="inline-flex items-start gap-2">
               <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-              С 2015 года в Unreal Engine · 20 игровых проектов
+              С 2015 года в Unreal Engine · {gameProjectCount} {gameProjectCountLabel}
             </span>
           </EntranceParagraph>
 

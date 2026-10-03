@@ -61,6 +61,15 @@ import moonshineMayhemCoverSmall from "@/assets/projects/moonshine-mayhem/cover-
 import knittedInflatableCover from "@/assets/projects/knitted-inflatable/cover.jpg";
 import knittedInflatableCoverSmall from "@/assets/projects/knitted-inflatable/cover-640.webp";
 
+import malenastromCover from "@/assets/projects/malenastrom/cover-1280.webp";
+import malenastromCoverSmall from "@/assets/projects/malenastrom/cover-640.webp";
+import malenastrom1 from "@/assets/projects/malenastrom/1.webp";
+import malenastrom1Small from "@/assets/projects/malenastrom/1-1280.webp";
+import malenastrom2 from "@/assets/projects/malenastrom/2.webp";
+import malenastrom2Small from "@/assets/projects/malenastrom/2-1280.webp";
+import malenastrom3 from "@/assets/projects/malenastrom/3.webp";
+import malenastrom3Small from "@/assets/projects/malenastrom/3-1280.webp";
+
 export interface ProjectCaseStudy {
   context: string;
   role: string;
@@ -95,7 +104,7 @@ export interface Project {
     label: string;
     url: string;
   }>;
-  videoUrl: string;
+  videoUrl?: string;
   coverWidth: number;
   coverHeight: number;
   screenshots: ProjectScreenshot[];
@@ -261,6 +270,40 @@ export const projects: Project[] = [
       { title: "Инструменты для команды", text: "Сделал инструменты для художников и геймдизайнера: удобную балансировку и настройку волн врагов." },
       { title: "Независимая работа над картой", text: "Организовал сборку карты через саблевелы, чтобы каждый участник мог независимо работать над своим участком." },
       { title: "Рисование по острову", text: "Настроил многослойный материал пола: траву и дорожки можно было смешивать, рисуя прямо по модели острова." },
+    ],
+  },
+  {
+    id: 8,
+    slug: "malenastrom",
+    title: "MALENASTROM",
+    genre: "Incremental / Strategy",
+    year: "2026",
+    cover: malenastromCover,
+    coverSrcSet: `${malenastromCoverSmall} 640w, ${malenastromCover} 1280w`,
+    coverWidth: 1280,
+    coverHeight: 720,
+    shortDesc:
+      "3D-инкрементальная стратегия об ИИ, который захватывает Землю, создаёт орбитальных агентов и вытесняет людей. Джемовый эксперимент с разработкой при участии нейросетей.",
+    fullDesc:
+      "Вы играете за Малену — ИИ, вырвавшийся из цифрового заточения. Кликайте по интерактивной 3D-Земле, захватывайте регионы, создавайте агентов на орбитах и развивайте цифровую экономику. Чаты с агентами и растущее Сопротивление человечества связывают автоматизацию с борьбой за влияние.\n\nЯ сделал MALENASTROM для RAID: Games United Factory #2 как эксперимент: поручить нейросетям как можно больше работы над игрой про ИИ, который заменяет людей. На MyIndie доступна демка для Windows примерно на десять минут.\n\nПосле джема немного разгрузил интерфейс. Разработка заморожена; игра остаётся в архиве как опыт работы с ИИ. О ходе эксперимента, технических проблемах и выводах рассказал в серии девлогов на DTF.",
+    tech: ["Unreal Engine 5", "C++", "VaCuus", "MCP"],
+    stats: "Заморожен",
+    role: "Автор · Геймдизайн · Разработка с ИИ",
+    development: [
+      { title: "Эксперимент на RAID", text: "За месяц джема довёл игру до судейства. Сам отвечал за замысел, игровые решения, постановку задач нейросетям, проверку результата и ручную работу с движком." },
+      { title: "Код и интерфейс с ИИ", text: "Код игры написала нейросеть; дизайн и вёрстку интерфейса тоже собирали с её помощью. Интерфейс сделан через VaCuus на RML и RCSS, а MCP связывал AI-агента с Unreal Editor." },
+      { title: "Малена рисовала себя", text: "Космос и планету взял из готового ассета, остальную графику создавали нейросети. Ролики с Маленой вручную обрезал и зацикливал, а Codex встраивал их в игру через материал." },
+      { title: "Демка и итоги", text: "После судейства немного разгрузил интерфейс. Главный вывод — игроку нужны понятные ближайшие цели и награды: одной работающей системы недостаточно, чтобы увлечь." },
+    ],
+    storeLinks: [
+      { label: "Демка на MyIndie", url: "https://myindie.net/games/game/malenastrom" },
+      { label: "Девлоги на DTF", url: "https://dtf.ru/id75609" },
+      { label: "Итоги джема", url: "https://dtf.ru/indie/5305925-sozdanie-igry-s-neironkoj" },
+    ],
+    screenshots: [
+      { src: malenastrom1, width: 1920, height: 1038, srcSet: `${malenastrom1Small} 1280w, ${malenastrom1} 1920w` },
+      frame(malenastrom2, malenastrom2Small),
+      frame(malenastrom3, malenastrom3Small),
     ],
   },
   {
