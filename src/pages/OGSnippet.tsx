@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { Award } from "lucide-react";
@@ -104,7 +105,7 @@ const OGSnippet = () => {
         {/* Left Side Content */}
         <div className="relative z-10 flex h-full max-w-3xl -translate-y-14 flex-col justify-center px-10">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={motionInitial({ opacity: 0, x: -20 })}
             animate={{ opacity: 1, x: 0 }}
             className="inline-block mb-6 px-5 py-2 rounded-full border border-primary/40 bg-primary/10 w-fit"
           >
@@ -114,7 +115,7 @@ const OGSnippet = () => {
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={motionInitial({ opacity: 0, y: 20 })}
             animate={{ opacity: 1, y: 0 }}
             className="mb-8 font-display text-8xl font-black leading-[0.9] tracking-[0.05em]"
             style={{ textShadow: '0 0 40px rgba(0,0,0,0.5)' }}
@@ -125,7 +126,7 @@ const OGSnippet = () => {
           </motion.h1>
 
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={motionInitial({ opacity: 0 })}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
             className="flex items-center gap-4 mb-10"
@@ -138,7 +139,7 @@ const OGSnippet = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={motionInitial({ opacity: 0, y: 20 })}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
             className="flex gap-12"

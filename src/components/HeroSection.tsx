@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
@@ -40,7 +41,7 @@ const HeroSection = () => {
       {/* Mobile: photo on top */}
       <div className="relative h-[28svh] min-h-[200px] max-h-[260px] w-full md:hidden">
         <motion.div
-          initial={{ opacity: 0, scale: 1.1 }}
+          initial={motionInitial({ opacity: 0, scale: 1.1 })}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2 }}
           className="h-full w-full"
@@ -76,7 +77,7 @@ const HeroSection = () => {
         }}
       >
         <motion.div 
-          initial={{ opacity: 0, x: 50 }}
+          initial={motionInitial({ opacity: 0, x: 50 })}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
           className="relative h-full w-full"
@@ -110,13 +111,13 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 pb-10 pt-2 md:pb-24 md:pt-32">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={motionInitial({ opacity: 0, y: 40 })}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="max-w-2xl md:max-w-[58%] lg:max-w-[60%]"
         >
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={motionInitial({ opacity: 0, x: -20 })}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
             className="mb-5 border-l-2 border-primary pl-4 md:mb-7"
@@ -134,7 +135,7 @@ const HeroSection = () => {
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={motionInitial({ opacity: 0, y: 20 })}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.7 }}
             className="hero-heading-shadow mb-5 font-display text-[clamp(1.6rem,7.2vw,3rem)] font-black leading-[1.12] tracking-tight md:mb-7 md:text-[clamp(2rem,4vw,3.8rem)]"
@@ -144,7 +145,7 @@ const HeroSection = () => {
           </motion.h1>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={motionInitial({ opacity: 0, y: 20 })}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.7 }}
             className="mb-4 max-w-lg md:mb-8"
@@ -156,7 +157,7 @@ const HeroSection = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={motionInitial({ opacity: 0, y: 20 })}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.72, duration: 0.7 }}
             className="mb-4 grid grid-cols-2 items-center gap-3 sm:flex sm:flex-wrap md:mb-6"
@@ -182,7 +183,7 @@ const HeroSection = () => {
           </motion.div>
 
           <motion.a
-            initial={{ opacity: 0, y: 16 }}
+            initial={motionInitial({ opacity: 0, y: 16 })}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.82, duration: 0.6 }}
             href="https://credential.unrealengine.com/b0a726a2-6749-4f13-a1c9-8ebfcc3d6034"
@@ -212,7 +213,7 @@ const HeroSection = () => {
           </motion.a>
 
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
+            initial={motionInitial({ opacity: 0, y: 16 })}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.92, duration: 0.6 }}
             className="mb-5 flex flex-col gap-2 text-sm text-muted-foreground sm:gap-1.5 md:mb-7"
@@ -224,7 +225,7 @@ const HeroSection = () => {
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={motionInitial({ opacity: 0, y: 16 })}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.6 }}
             className="flex flex-wrap gap-1 sm:gap-2"
@@ -253,7 +254,7 @@ const HeroSection = () => {
 
       {/* Scroll indicator */}
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={motionInitial({ opacity: 0 })}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
         className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 lg:block"

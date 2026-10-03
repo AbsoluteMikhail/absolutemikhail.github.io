@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { SectionBadge } from "@/components/ui/section-badge";
 import { motion } from "framer-motion";
@@ -8,7 +9,7 @@ const MenteeReviewsSection = () => (
   <section id="mentee-reviews" className="exhibition-section border-y border-border/60 bg-card/25">
     <div className="container relative z-10 mx-auto px-6">
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={motionInitial({ opacity: 0, y: 24 })}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55 }}
         viewport={{ once: true }}
@@ -27,7 +28,7 @@ const MenteeReviewsSection = () => (
         {menteeReviews.map((review, index) => (
           <motion.article
             className="flex h-full flex-col border-t border-primary/40 pt-6"
-            initial={{ opacity: 0, y: 30 }}
+            initial={motionInitial({ opacity: 0, y: 30 })}
             key={review.name}
             transition={{ delay: index * 0.12, duration: 0.5 }}
             viewport={{ once: true }}

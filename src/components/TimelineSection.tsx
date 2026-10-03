@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Trophy, Star, Rocket, Award, Moon } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -31,7 +32,7 @@ const TimelineSection = () => (
           return (
             <motion.article
               key={milestone.year}
-              initial={{ opacity: 0, y: 20 }}
+              initial={motionInitial({ opacity: 0, y: 20 })}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.45 }}

@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
@@ -23,7 +24,7 @@ const coverSizes = {
 export default function ProjectExhibit({ project, onSelect, href, featured = false, priority = false }: ProjectExhibitProps) {
   return (
     <motion.article
-      initial={{ opacity: 0, y: 24 }}
+      initial={motionInitial({ opacity: 0, y: 24 })}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.12 }}
       transition={{ duration: 0.45 }}

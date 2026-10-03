@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { SectionBadge } from "@/components/ui/section-badge";
 import { useId, useState } from "react";
@@ -65,7 +66,7 @@ const ReviewsSection = () => {
     <section className="py-14 md:py-20 overflow-hidden bg-card/25">
       <div className="container mx-auto px-6 mb-16 text-center">
         <SectionBadge
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={motionInitial({ opacity: 0, scale: 0.9 })}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           tone="accent"
@@ -74,7 +75,7 @@ const ReviewsSection = () => {
           Фидбек
         </SectionBadge>
         <SectionTitle
-          initial={{ opacity: 0, y: 20 }}
+          initial={motionInitial({ opacity: 0, y: 20 })}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
 

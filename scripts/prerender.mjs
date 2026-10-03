@@ -45,42 +45,6 @@ const replaceOrInsertHeadTag = (html, matcher, tag) => {
   return html.replace("</head>", `    ${tag}\n  </head>`);
 };
 
-// Framer Motion serializes its initial animation state during SSR. Without
-// JavaScript, that leaves large parts of the prerendered page at opacity: 0
-// or translated outside the viewport. The client replaces (rather than
-// hydrates) this markup, so we can expose the final readable state here while
-// preserving the normal entrance animations in the client render.
-const revealPrerenderedContent = (markup) =>
-  markup.replace(/\sstyle="([^"]*)"/g, (attribute, serializedStyles) => {
-    let changed = false;
-    const visibleStyles = serializedStyles
-      .split(";")
-      .map((declaration) => declaration.trim())
-      .filter(Boolean)
-      .flatMap((declaration) => {
-        const separatorIndex = declaration.indexOf(":");
-        if (separatorIndex === -1) return [declaration];
-
-        const property = declaration.slice(0, separatorIndex).trim().toLowerCase();
-        const value = declaration.slice(separatorIndex + 1).trim();
-
-        if (property === "opacity" && /^0(?:\.0+)?$/.test(value)) {
-          changed = true;
-          return ["opacity:1"];
-        }
-
-        if (property === "transform") {
-          changed = true;
-          return [];
-        }
-
-        return [declaration];
-      });
-
-    if (!changed) return attribute;
-    return visibleStyles.length > 0 ? ` style="${visibleStyles.join(";")}"` : "";
-  });
-
 const removeHeadTag = (html, matcher) => html.replace(matcher, "");
 
 // The hero portrait is the mobile LCP image. Ask for it before the font
@@ -163,11 +127,9 @@ const renderRouteHtml = (pathname, metadata, renderedMarkup = "") => {
     html = html.replace("</head>", `    ${script}\n  </head>`);
   }
 
-  const visibleMarkup = revealPrerenderedContent(renderedMarkup);
-
   return html.replace(
     /<div\s+id=["']root["']\s*><\/div>/i,
-    () => `<div id="root">${visibleMarkup}</div>`,
+    () => `<div id="root">${renderedMarkup}</div>`,
   );
 };
 

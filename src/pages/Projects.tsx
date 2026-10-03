@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
@@ -40,7 +41,7 @@ const Projects = () => {
                 Назад на главную
               </Link>
               <motion.h1
-                initial={{ opacity: 0, y: 20 }}
+                initial={motionInitial({ opacity: 0, y: 20 })}
                 animate={{ opacity: 1, y: 0 }}
                 className="text-4xl md:text-6xl font-display font-bold tracking-tight"
               >
@@ -48,7 +49,7 @@ const Projects = () => {
               </motion.h1>
             </div>
             <motion.p
-              initial={{ opacity: 0 }}
+              initial={motionInitial({ opacity: 0 })}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
               className="text-muted-foreground max-w-md md:text-right"

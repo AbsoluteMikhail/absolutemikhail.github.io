@@ -1,3 +1,4 @@
+import { motionInitial } from "@/lib/motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { SectionBadge } from "@/components/ui/section-badge";
 import { useState } from "react";
@@ -32,7 +33,7 @@ const GamesSection = () => {
       <div className="container mx-auto px-6">
         <div className="mb-12 max-w-4xl md:mb-16">
           <SectionBadge
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={motionInitial({ opacity: 0, scale: 0.9 })}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             size="md"
@@ -40,7 +41,7 @@ const GamesSection = () => {
             Избранные проекты
           </SectionBadge>
           <SectionTitle
-            initial={{ opacity: 0, y: 20 }}
+            initial={motionInitial({ opacity: 0, y: 20 })}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="mb-6"
@@ -50,7 +51,7 @@ const GamesSection = () => {
             <span className="text-foreground">я приложил руку</span>
           </SectionTitle>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={motionInitial({ opacity: 0, y: 20 })}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
@@ -68,7 +69,7 @@ const GamesSection = () => {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={motionInitial({ opacity: 0, y: 24 })}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           className="mt-14 grid gap-8 border-y border-border py-8 lg:grid-cols-2 lg:gap-16"
@@ -143,7 +144,7 @@ const GamesSection = () => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={motionInitial({ opacity: 0, y: 20 })}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row"

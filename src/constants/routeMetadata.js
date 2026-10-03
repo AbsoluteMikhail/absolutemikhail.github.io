@@ -1,5 +1,6 @@
 export const siteUrl = "https://gamepunk.ru";
 
+/** @type {(import("../lib/pageMetadata").PageMetadata & { path: string, match: "exact" | "prefix" })[]} */
 export const routeMetadata = [
   {
     path: "/",
@@ -83,11 +84,13 @@ export const defaultSocialImage = {
   height: 630,
 };
 
+/** @param {string} pathname */
 export const normalizePathname = (pathname) => {
   if (pathname === "/") return pathname;
   return pathname.replace(/\/+$/, "") || "/";
 };
 
+/** @param {string} pathname */
 export const canonicalUrl = (pathname) => {
   const path = normalizePathname(pathname);
   return `${siteUrl}${path === "/" ? "/" : `${path}/`}`;
@@ -111,6 +114,7 @@ export const getPageStructuredData = (metadata) => {
 };
 
 // GitHub Pages answers the directory URL (trailing slash) with 200 and redirects the slash-less form.
+/** @param {string} value */
 export const trailingPath = (value) => {
   if (typeof value !== "string" || value.length === 0) return value;
   if (value.startsWith("#") || /^(https?:)?\/\//i.test(value) || value.startsWith("mailto:")) return value;
@@ -131,12 +135,14 @@ export const trailingPath = (value) => {
   return `${normalized}/${query}${hash}`;
 };
 
+/** @param {string | undefined} value */
 export const absoluteUrl = (value) => {
   if (!value) return defaultSocialImage.url;
   if (/^https?:\/\//i.test(value)) return value;
   return `${siteUrl}${value.startsWith("/") ? value : `/${value}`}`;
 };
 
+/** @param {string} value */
 const escapeXml = (value) =>
   value
     .replaceAll("&", "&amp;")
@@ -144,6 +150,7 @@ const escapeXml = (value) =>
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;");
 
+/** @param {{ pathname: string, updated?: string }[]} entries */
 export const renderSitemap = (entries) => {
   const urls = entries
     .map(({ pathname, updated }) => {
@@ -157,6 +164,7 @@ export const renderSitemap = (entries) => {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 };
 
+/** @param {string} pathname */
 export const findRouteMetadata = (pathname) => {
   const normalizedPathname = normalizePathname(pathname);
 
