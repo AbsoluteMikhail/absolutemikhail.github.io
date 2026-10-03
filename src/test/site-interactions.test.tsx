@@ -91,8 +91,10 @@ describe("contact dialog", () => {
 describe("portfolio and legal dialogs", () => {
   it("exposes project cards as buttons and resets the gallery between projects", () => {
     render(<MemoryRouter><GamesSection /></MemoryRouter>);
+    expect(screen.getByRole("button", { name: "Подробнее о проекте DUELANT" })).not.toHaveAttribute("data-cursor");
     fireEvent.click(screen.getByRole("button", { name: "Подробнее о проекте DUELANT" }));
     expect(screen.getByRole("dialog", { name: "DUELANT" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Воспроизвести видео проекта DUELANT" })).toHaveAttribute("data-cursor", "play");
     fireEvent.click(screen.getByRole("button", { name: "Следующий кадр" }));
     expect(screen.getByRole("button", { name: "Открыть кадр 2 из 6" })).toHaveAttribute("aria-current", "true");
     fireEvent.click(screen.getByRole("button", { name: "Закрыть описание проекта" }));

@@ -51,10 +51,12 @@ describe("individual project pages", () => {
     }
     expect(screen.getByRole("heading", { name: "DUELANT", level: 2 })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Moonshine Mayhem", level: 3 })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Подробнее о проекте DUELANT" })).not.toHaveAttribute("data-cursor");
     fireEvent.click(screen.getByRole("link", { name: "Подробнее о проекте DUELANT" }));
     expect(screen.getByRole("heading", { level: 1, name: "DUELANT" })).toBeInTheDocument();
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(document.querySelector("iframe")).toBeNull();
+    expect(screen.getByRole("button", { name: "Воспроизвести видео проекта DUELANT" })).toHaveAttribute("data-cursor", "play");
     fireEvent.click(screen.getByRole("button", { name: "Воспроизвести видео проекта DUELANT" }));
     expect(screen.getByTitle("Видео проекта DUELANT")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("link", { name: "Dixotomia" }));
