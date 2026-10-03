@@ -32,7 +32,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProp
   if (!project) return null;
 
   const getSlides = (p: Project) => [
-    { type: "video", url: p.videoUrl },
+    ...(p.videoUrl ? [{ type: "video" as const, url: p.videoUrl }] : []),
     ...p.screenshots.map((shot) => ({ type: "image" as const, url: shot.src, srcSet: shot.srcSet, width: shot.width, height: shot.height })),
   ];
 

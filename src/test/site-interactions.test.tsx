@@ -1,10 +1,12 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { ContactMessenger } from "@/components/ContactMessenger";
 import GamesSection from "@/components/GamesSection";
+import ProjectDetailModal from "@/components/ProjectDetailModal";
 import LegalModal from "@/components/LegalModal";
 import { decodeContactLink, encodedContactLinks } from "@/constants/contactLinks";
+import { projects } from "@/constants/projects";
 
 // jsdom does not implement the dialog top layer. These tests cover React
 // wiring; the real top layer and focus behavior are also verified in the browser.
@@ -89,6 +91,17 @@ describe("contact dialog", () => {
 });
 
 describe("portfolio and legal dialogs", () => {
+  it("starts a project without video on its first screenshot and cycles only through images", async () => {
+    const project = projects.find((item) => item.slug === "malenastrom")!;
+    render(<ProjectDetailModal project={project} isOpen onClose={() => undefined} />);
+    expect(screen.queryByRole("button", { name: /Воспроизвести видео/ })).not.toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Скриншот проекта/ })).toHaveAttribute("src", project.screenshots[0].src);
+    fireEvent.click(screen.getByRole("button", { name: "Предыдущий кадр" }));
+    await waitFor(() => expect(screen.getByRole("img", { name: /Скриншот проекта/ })).toHaveAttribute("src", project.screenshots[2].src));
+    fireEvent.click(screen.getByRole("button", { name: "Следующий кадр" }));
+    await waitFor(() => expect(screen.getByRole("img", { name: /Скриншот проекта/ })).toHaveAttribute("src", project.screenshots[0].src));
+  });
+
   it("exposes project cards as buttons and resets the gallery between projects", () => {
     render(<MemoryRouter><GamesSection /></MemoryRouter>);
     fireEvent.click(screen.getByRole("button", { name: "Подробнее о проекте DUELANT" }));

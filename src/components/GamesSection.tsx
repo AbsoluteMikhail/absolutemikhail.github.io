@@ -12,6 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import { featuredProjects, type Project } from "@/constants/projects";
 import { mentoredProjects } from "@/constants/mentoredProjects";
+import { gameProjectCount, gameProjectCountLabel } from "@/constants/portfolioStats";
 import ProjectDetailModal from "@/components/ProjectDetailModal";
 import ProjectExhibit from "@/components/ProjectExhibit";
 
@@ -91,7 +92,7 @@ const GamesSection = () => {
                 С чего начинаются игры
               </h3>
               <p className="mt-4 max-w-lg text-sm leading-6 text-muted-foreground">
-                В общем архиве — 20 игровых проектов, включая короткие эксперименты
+                В общем архиве — {gameProjectCount} {gameProjectCountLabel}, включая короткие эксперименты
                 и джемовые работы. DUELANT тоже начинался как идея для джема,
                 а затем вырос в большой коммерческий проект.
               </p>

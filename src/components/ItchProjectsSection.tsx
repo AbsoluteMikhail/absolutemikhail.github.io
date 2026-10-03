@@ -9,9 +9,10 @@ import {
   Users,
 } from "lucide-react";
 import { itchProjects } from "@/constants/itchProjects";
+import { gameProjectCount, gameProjectCountLabel } from "@/constants/portfolioStats";
 
 const authorityFacts = [
-  { icon: Gamepad2, value: "20", label: "игровых проектов" },
+  { icon: Gamepad2, value: String(gameProjectCount), label: gameProjectCountLabel },
   { icon: Timer, value: "2–8 дней", label: "на джемовый проект" },
   { icon: Users, value: "Соло + команда", label: "оба формата разработки" },
 ] as const;
