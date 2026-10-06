@@ -1,8 +1,9 @@
 import guestOfAntiquityCover from "@/assets/projects/mentored/guest-of-antiquity.webp";
+import guestOfAntiquityLogo from "@/assets/projects/mentored/guest-of-antiquity-logo.webp";
 import phantasmaCover from "@/assets/projects/mentored/phantasma.gif";
 import potatoDedCover from "@/assets/projects/mentored/potato-ded.webp";
 import anyWorldCover from "@/assets/projects/mentored/any-world.webp";
-import relsuCover from "@/assets/projects/mentored/relsu.jpg";
+import relsuCover from "@/assets/projects/mentored/relsu.webp";
 import silentObserverCover from "@/assets/projects/mentored/silent-observer.webp";
 
 export interface MentoredProject {
@@ -11,6 +12,7 @@ export interface MentoredProject {
   genre: string;
   status: string;
   cover: string;
+  coverLogo?: string;
   description: string;
   contribution: string;
   url: string;
@@ -40,14 +42,26 @@ export const mentoredProjects: MentoredProject[] = [
     url: "https://store.steampowered.com/app/3783850/RELSU/?curator_clanid=45056388",
   },
   {
+    slug: "any-world",
+    title: "Any World",
+    genre: "Open-world 3D Platformer",
+    status: "В разработке",
+    cover: anyWorldCover,
+    description:
+      "Большое приключение инопланетянина Оттиса по семи островам с разными стилями, механиками и музыкой.",
+    contribution: "Менторство разработки",
+    url: "https://ideagame.itch.io/any-world",
+  },
+  {
     slug: "guest-of-antiquity",
     title: "Гость древности",
     genre: "Puzzle-platformer",
     status: "В релизе",
     cover: guestOfAntiquityCover,
+    coverLogo: guestOfAntiquityLogo,
     description:
       "Приключение в доисторических пещерах с системой копания, поиском артефактов и платформенными испытаниями.",
-    contribution: "Наставник проекта",
+    contribution: "Ментор команды",
     url: "https://andrey-surnachev.itch.io/guest-of-antiquity",
   },
   {
@@ -71,16 +85,5 @@ export const mentoredProjects: MentoredProject[] = [
       "Весёлая аркада о деде Антоне, который с лопатой отправляется спасать урожай от гигантских майских жуков.",
     contribution: "Поддержка команды за 72 часа",
     url: "https://elpadlos.itch.io/potato-ded",
-  },
-  {
-    slug: "any-world",
-    title: "Any World",
-    genre: "Open-world 3D Platformer",
-    status: "В разработке",
-    cover: anyWorldCover,
-    description:
-      "Большое приключение инопланетянина Оттиса по семи островам с разными стилями, механиками и музыкой.",
-    contribution: "Менторство разработки",
-    url: "https://ideagame.itch.io/any-world",
   },
 ];
