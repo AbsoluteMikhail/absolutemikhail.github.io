@@ -3,6 +3,7 @@ import phantasmaCover from "@/assets/projects/mentored/phantasma.gif";
 import potatoDedCover from "@/assets/projects/mentored/potato-ded.webp";
 import anyWorldCover from "@/assets/projects/mentored/any-world.webp";
 import relsuCover from "@/assets/projects/mentored/relsu.jpg";
+import silentObserverCover from "@/assets/projects/mentored/silent-observer.webp";
 
 export interface MentoredProject {
   slug: string;
@@ -16,6 +17,17 @@ export interface MentoredProject {
 }
 
 export const mentoredProjects: MentoredProject[] = [
+  {
+    slug: "silent-observer",
+    title: "Silent Observer",
+    genre: "Psychological Horror / Exploration",
+    status: "В разработке · Демо в Steam",
+    cover: silentObserverCover,
+    description:
+      "Психологический хоррор от первого лица: лифт открывает путь в разные миры, где нужно искать подсказки, решать головоломки и собирать фрагменты загадочной истории.",
+    contribution: "Куратор проекта",
+    url: "https://store.steampowered.com/app/3111430/Silent_Observer/?curator_clanid=45056388",
+  },
   {
     slug: "relsu",
     title: "RELSU",
