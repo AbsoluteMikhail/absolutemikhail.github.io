@@ -30,7 +30,7 @@ const MentoredProjectsSection = () => (
           </div>
           <div>
             <div className="font-display text-2xl font-bold text-foreground">{mentoredProjects.length}</div>
-            <div className="text-xs text-muted-foreground">публичных проекта</div>
+            <div className="text-xs text-muted-foreground">публичных проектов</div>
           </div>
         </div>
       </div>
@@ -46,20 +46,39 @@ const MentoredProjectsSection = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ delay: index * 0.07 }}
-            className="group grid min-w-0 gap-5 xl:grid-cols-[170px_1fr]"
+            className="group grid min-w-0 grid-rows-[auto_1fr] items-start gap-5 xl:grid-cols-[170px_1fr] xl:grid-rows-1"
           >
-            <div className="relative aspect-[315/250] overflow-hidden rounded-xl bg-secondary xl:aspect-auto xl:min-h-[240px]">
+            <div className="relative isolate aspect-[2/3] w-full max-w-[240px] justify-self-center overflow-hidden rounded-xl bg-secondary xl:max-w-none">
               <img
                 src={project.cover}
-                alt={`Обложка проекта ${project.title}`}
+                alt=""
+                aria-hidden="true"
                 loading="lazy"
                 decoding="async"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="absolute inset-0 -z-10 h-full w-full scale-110 object-cover opacity-30 blur-xl"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent sm:bg-gradient-to-r" />
+              <div className="flex h-full flex-col justify-center gap-4">
+                {project.coverLogo && (
+                  <img
+                    src={project.coverLogo}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full px-3"
+                  />
+                )}
+                <img
+                  src={project.cover}
+                  alt={`Обложка проекта ${project.title}`}
+                  loading="lazy"
+                  decoding="async"
+                  className="min-h-0 w-full object-contain"
+                />
+              </div>
             </div>
 
-            <div className="flex min-w-0 flex-col">
+            <div className="flex h-full min-w-0 flex-col">
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>
                   <span className="text-[10px] font-display uppercase tracking-widest text-primary">
@@ -72,7 +91,7 @@ const MentoredProjectsSection = () => (
                 <ArrowUpRight className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
               </div>
 
-              <p className="text-sm leading-relaxed text-muted-foreground">
+              <p className="flex-1 text-sm leading-relaxed text-muted-foreground">
                 {project.description}
               </p>
 
