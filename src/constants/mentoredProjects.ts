@@ -45,7 +45,7 @@ export const mentoredProjects: MentoredProject[] = [
     slug: "any-world",
     title: "Any World",
     genre: "Open-world 3D Platformer",
-    status: "В разработке",
+    status: "В разработке · Демо в Steam",
     cover: anyWorldCover,
     description:
       "Большое приключение инопланетянина Оттиса по семи островам с разными стилями, механиками и музыкой.",
@@ -56,7 +56,7 @@ export const mentoredProjects: MentoredProject[] = [
     slug: "guest-of-antiquity",
     title: "Гость древности",
     genre: "Puzzle-platformer",
-    status: "В релизе",
+    status: "Играбельное демо · Первая игра команды",
     cover: guestOfAntiquityCover,
     coverLogo: guestOfAntiquityLogo,
     description:
@@ -68,7 +68,7 @@ export const mentoredProjects: MentoredProject[] = [
     slug: "phantasma",
     title: "Phantasma",
     genre: "Horror / Puzzle-platformer",
-    status: "В релизе",
+    status: "Играбельное демо · Первая игра команды",
     cover: phantasmaCover,
     description:
       "Атмосферная история о мальчике, который попадает в логово людоедки и сталкивается со своими страхами.",

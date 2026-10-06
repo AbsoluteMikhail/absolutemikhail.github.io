@@ -46,7 +46,7 @@ const MentoredProjectsSection = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ delay: index * 0.07 }}
-            className="group grid min-w-0 items-start gap-5 xl:grid-cols-[170px_1fr]"
+            className="group grid min-w-0 grid-rows-[auto_1fr] items-start gap-5 xl:grid-cols-[170px_1fr] xl:grid-rows-1"
           >
             <div className="relative isolate aspect-[2/3] w-full max-w-[240px] justify-self-center overflow-hidden rounded-xl bg-secondary xl:max-w-none">
               <img
@@ -78,7 +78,7 @@ const MentoredProjectsSection = () => (
               </div>
             </div>
 
-            <div className="flex min-w-0 flex-col">
+            <div className="flex h-full min-w-0 flex-col">
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>
                   <span className="text-[10px] font-display uppercase tracking-widest text-primary">
@@ -91,7 +91,7 @@ const MentoredProjectsSection = () => (
                 <ArrowUpRight className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
               </div>
 
-              <p className="text-sm leading-relaxed text-muted-foreground">
+              <p className="flex-1 text-sm leading-relaxed text-muted-foreground">
                 {project.description}
               </p>
 
