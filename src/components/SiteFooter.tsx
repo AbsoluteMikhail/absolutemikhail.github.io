@@ -2,6 +2,7 @@ import { ArrowUpRight, Mail, MapPin } from "lucide-react";
 import { telegramCommunityUrl } from "@/constants/contactLinks";
 import { ContactMessenger } from "@/components/ContactMessenger";
 import LegalLinks from "@/components/LegalLinks";
+import InstructorBadgeNotice from "@/components/InstructorBadgeNotice";
 import Logo from "@/components/Logo";
 import { trailingPath } from "@/constants/routeMetadata.js";
 import {
@@ -108,6 +109,8 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
               </div>
             </div>
           </div>
+
+          <InstructorBadgeNotice className="mb-8 max-w-4xl" />
 
           <div className="flex flex-col items-center justify-between gap-6 border-t border-border/50 pt-8 md:flex-row">
             <div className="flex flex-col items-center gap-2 md:items-start">

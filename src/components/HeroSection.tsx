@@ -1,4 +1,4 @@
-import { EntranceDiv, EntranceParagraph, EntranceLink, EntrancePageTitle } from "@/components/ui/entrance-motion";
+import { EntranceDiv, EntranceParagraph, EntrancePageTitle } from "@/components/ui/entrance-motion";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
@@ -7,6 +7,7 @@ import { gameProjectCount, gameProjectCountLabel } from "@/constants/portfolioSt
 import heroPhoto from "@/assets/hero-photo.webp";
 import {
   instructorBadgeHeight,
+  instructorBadgeNoticeId,
   instructorBadgeSrc,
   instructorBadgeSrcSet,
   instructorBadgeWidth,
@@ -183,35 +184,46 @@ const HeroSection = () => {
             </a>
           </EntranceDiv>
 
-          <EntranceLink
+          <EntranceDiv
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.82, duration: 0.6 }}
-            href="https://credential.unrealengine.com/b0a726a2-6749-4f13-a1c9-8ebfcc3d6034"
-            target="_blank"
-            rel="noopener noreferrer"
             className="mb-4 flex max-w-xl items-center gap-3 border-y border-border py-2.5 lg:hidden"
           >
-            <span className="flex h-16 w-20 shrink-0 items-center justify-center">
-              <img
-                src={instructorBadgeSrc}
-                srcSet={instructorBadgeSrcSet}
-                sizes="80px"
-                width={instructorBadgeWidth}
-                height={instructorBadgeHeight}
-                alt="Unreal Authorized Instructor 2026"
-                decoding="async"
-                {...{ fetchpriority: "low" }}
-                className="h-full w-full object-contain"
-              />
-            </span>
-            <span>
-              <span className="block font-display text-[9px] uppercase tracking-[0.2em] text-primary">Статус 2026</span>
-              <strong className="mt-1 block font-display text-xs uppercase leading-5 tracking-[0.07em] text-foreground">
-                Unreal Authorized Instructor
-              </strong>
-            </span>
-          </EntranceLink>
+            <a
+              href="https://credential.unrealengine.com/b0a726a2-6749-4f13-a1c9-8ebfcc3d6034"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-w-0 flex-1 items-center gap-3 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+            >
+              <span className="flex h-16 w-20 shrink-0 items-center justify-center">
+                <img
+                  src={instructorBadgeSrc}
+                  srcSet={instructorBadgeSrcSet}
+                  sizes="80px"
+                  width={instructorBadgeWidth}
+                  height={instructorBadgeHeight}
+                  alt="Unreal Authorized Instructor 2026"
+                  decoding="async"
+                  {...{ fetchpriority: "low" }}
+                  className="h-full w-full object-contain"
+                />
+              </span>
+              <span>
+                <span className="block font-display text-[9px] uppercase tracking-[0.2em] text-primary">Статус 2026</span>
+                <strong className="mt-1 block font-display text-xs uppercase leading-5 tracking-[0.07em] text-foreground">
+                  Unreal Authorized Instructor
+                </strong>
+              </span>
+            </a>
+            <a
+              href={`#${instructorBadgeNoticeId}`}
+              aria-label="Пояснение об авторизации Unreal Authorized Instructor"
+              className="flex h-11 w-6 shrink-0 items-center justify-center rounded text-primary hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+            >
+              *
+            </a>
+          </EntranceDiv>
 
           <EntranceParagraph
             initial={{ opacity: 0, y: 16 }}

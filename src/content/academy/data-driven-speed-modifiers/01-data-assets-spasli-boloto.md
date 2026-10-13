@@ -7,6 +7,7 @@ block: Практический кейс
 video: 1
 order: 1
 status: Урок
+updated: 2026-10-13
 pain: Каждый новый эффект скорости добавляет флаг, Branch и ещё один способ сломать восстановление значения.
 mainIdea: Объекты мира только сообщают об эффекте, данные описывают его правила, а один компонент считает результат из актуального состояния.
 youtube: https://youtu.be/Q8SXNGHKD8s
@@ -423,3 +424,13 @@ BP_Spawner явно назначает себя владельцем созда�
 - [Asset Management in Unreal Engine](https://dev.epicgames.com/documentation/en-us/unreal-engine/asset-management-in-unreal-engine)
 - [Basic Components in Unreal Engine](https://dev.epicgames.com/documentation/en-us/unreal-engine/basic-components-in-unreal-engine)
 - [Understanding the Gameplay Ability System](https://dev.epicgames.com/documentation/en-us/unreal-engine/understanding-the-unreal-engine-gameplay-ability-system)
+
+## Авторство и материалы сцены
+
+Демонстрационную сцену и систему модификаторов скорости я создал самостоятельно. Материалы взяты из встроенного шаблона Third Person в Unreal Engine. Источник этих материалов — Epic Games; на них распространяются условия Unreal Engine, а не моя лицензия 0BSD. Под [0BSD](/academy-code-license.txt) опубликованы только мои авторские учебные Blueprint-примеры.
+
+## Вопросы и помощь
+
+Вопросы по уроку можно оставить в моём [Telegram-канале](contact:telegram-community) или в комментариях [под видео на YouTube](https://youtu.be/Q8SXNGHKD8s).
+
+Если нужна помощь, чтобы разобраться в теме или применить её в своём проекте, можно записаться ко мне на [личный менторинг](/#mentoring).

@@ -2,6 +2,7 @@ import { forwardRef, type AnchorHTMLAttributes } from "react";
 import { Award, ExternalLink } from "lucide-react";
 import {
   instructorBadgeHeight,
+  instructorBadgeNoticeId,
   instructorBadgeSrc,
   instructorBadgeSrcSet,
   instructorBadgeWidth,
@@ -21,16 +22,11 @@ const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardPro
     },
     ref,
   ) => (
-    <a
-      ref={ref}
-      href={href}
-      rel={rel}
-      target={target}
+    <div
       className={cn(
         "group block rounded-xl border-t border-white/25 bg-background/85 p-5 shadow-2xl shadow-black/30 backdrop-blur-xl transition-colors hover:bg-background/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 [container-type:inline-size] [html.light_&]:border-border [html.light_&]:shadow-foreground/15",
         className,
       )}
-      {...props}
     >
       <span className="grid grid-cols-[6rem_minmax(0,1fr)] items-center gap-x-4">
         <span className="col-start-1 row-start-1 flex h-20 w-24 shrink-0 items-center justify-center">
@@ -54,6 +50,15 @@ const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardPro
             </span>
             <strong className="block font-display text-sm uppercase leading-5 tracking-[0.08em] text-foreground">
               Unreal Authorized Instructor
+              <sup>
+                <a
+                  href={`#${instructorBadgeNoticeId}`}
+                  aria-label="Пояснение об авторизации Unreal Authorized Instructor"
+                  className="inline-flex min-h-6 min-w-6 items-center justify-center rounded text-primary hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+                >
+                  *
+                </a>
+              </sup>
             </strong>
           </span>
           <span className="mt-3 block text-xs leading-5 text-muted-foreground credential-narrow:col-span-2 credential-narrow:col-start-1 credential-narrow:row-start-2">
@@ -71,11 +76,18 @@ const InstructorBadgeCard = forwardRef<HTMLAnchorElement, InstructorBadgeCardPro
           <span className="text-[10px] text-muted-foreground">в коммерции</span>
         </span>
       </span>
-      <span className="mt-4 flex items-center justify-start gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-primary transition-colors group-hover:text-primary/80">
+      <a
+        ref={ref}
+        href={href}
+        rel={rel}
+        target={target}
+        className="mt-4 flex min-h-11 items-center justify-start gap-1.5 rounded text-[10px] font-bold uppercase tracking-[0.16em] text-primary transition-colors hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+        {...props}
+      >
         Открыть официальный credential
         <ExternalLink className="h-3.5 w-3.5" />
-      </span>
-    </a>
+      </a>
+    </div>
   ),
 );
 

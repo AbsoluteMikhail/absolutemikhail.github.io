@@ -34,6 +34,7 @@ import {
 import { MarkdownContent } from "@/components/academy/MarkdownContent";
 import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
 import InstructorBadgeCard from "@/components/InstructorBadgeCard";
+import InstructorBadgeNotice from "@/components/InstructorBadgeNotice";
 import { cn } from "@/lib/utils";
 import { AcademyNavigation } from "@/components/academy/AcademyNavigation";
 import { Button } from "@/components/ui/button";
@@ -97,6 +98,7 @@ const AcademyShell = ({ children }: { children: React.ReactNode }) => (
 
     {children}
     <footer className="border-t border-border px-6 py-6">
+      <InstructorBadgeNotice className="mx-auto mb-6 max-w-4xl" />
       <p className="mb-3 text-center text-sm leading-6 text-muted-foreground">
         Мой учебный код можно свободно использовать в своих проектах. Упоминание автора — по желанию.
         {" "}<a className="underline underline-offset-4" href="/terms/#educational-code">Условия и лицензия 0BSD</a>

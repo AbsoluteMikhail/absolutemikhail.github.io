@@ -2,6 +2,7 @@ import type React from "react";
 import { Link } from "react-router-dom";
 import { AlertTriangle, Info, Lightbulb } from "lucide-react";
 import { trailingPath } from "@/constants/routeMetadata.js";
+import { telegramCommunityUrl } from "@/constants/contactLinks";
 import { slugify, type AcademyHeading } from "@/lib/academyMarkdown";
 import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
 import { AcademyFlowDiagram } from "@/components/academy/AcademyFlowDiagram";
@@ -229,7 +230,8 @@ const renderInline = (text: string) => {
       const linkMatch = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
 
       if (linkMatch) {
-        const [, label, href] = linkMatch;
+        const [, label, destination] = linkMatch;
+        const href = destination === "contact:telegram-community" ? telegramCommunityUrl : destination;
         const isExternal = /^https?:\/\//.test(href);
         const isLocalFile = /^\/(?!\/)[^?#]+\.[a-z0-9]+(?:[?#].*)?$/i.test(href);
 

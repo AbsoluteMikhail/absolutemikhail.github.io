@@ -3,6 +3,7 @@ import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import { MarkdownContent } from "../components/academy/MarkdownContent";
 import { getHeadings } from "@/lib/academyMarkdown";
+import { telegramCommunityUrl } from "@/constants/contactLinks";
 
 const renderMarkdown = (content: string) =>
   render(
@@ -12,6 +13,12 @@ const renderMarkdown = (content: string) =>
   );
 
 describe("Academy Markdown extensions", () => {
+  it("resolves the community contact from its source and preserves the mentoring anchor", () => {
+    renderMarkdown("[Telegram](contact:telegram-community) и [Менторинг](/#mentoring)");
+    expect(screen.getByRole("link", { name: "Telegram" })).toHaveAttribute("href", telegramCommunityUrl);
+    expect(screen.getByRole("link", { name: "Telegram" })).toHaveAttribute("target", "_blank");
+    expect(screen.getByRole("link", { name: "Менторинг" })).toHaveAttribute("href", "/#mentoring");
+  });
   it("keeps links clickable inside emphasis", () => {
     renderMarkdown("**[harness](https://code.claude.com/docs/en/glossary)**");
     expect(screen.getByRole("link", { name: "harness" })).toHaveAttribute("href", "https://code.claude.com/docs/en/glossary");

@@ -47,12 +47,12 @@ describe("page metadata", () => {
     const lesson = await resolvePageMetadata("/academy/data-driven-speed-modifiers/01-data-assets-spasli-boloto");
     const freshLesson = await resolvePageMetadata("/academy/ai-intro/01-first-steps");
     expect(course.image).toBe("/academy/data-driven-speed-modifiers/cover.webp");
-    expect(course.updated).toBe("2026-09-02");
+    expect(course.updated).toBe("2026-10-13");
     expect(course.structuredData).toMatchObject({ "@type": "Course", name: "Data Assets спасли моё болото" });
     expect(lesson.structuredData).toMatchObject({ "@type": "Article" });
     expect(lesson.ogType).toBe("article");
-    expect(lesson.updated).toBeUndefined();
-    expect(freshLesson.updated).toBe("2026-09-21");
+    expect(lesson.updated).toBe("2026-10-13");
+    expect(freshLesson.updated).toBe("2026-10-13");
     expect((await resolvePageMetadata("/academy")).structuredData).toMatchObject({ "@type": "ItemList" });
   });
 
@@ -63,7 +63,7 @@ describe("page metadata", () => {
       "@type": "Article",
       headline: "Локализация в Unreal Engine: текст, субтитры, озвучка и текстуры",
       author: { name: "Михаил Ефремов" },
-      dateModified: "2026-09-21",
+      dateModified: "2026-10-13",
     });
     expect(article.structuredData?.provider).toBeUndefined();
     const collection = await resolvePageMetadata("/academy/useful-ue");
