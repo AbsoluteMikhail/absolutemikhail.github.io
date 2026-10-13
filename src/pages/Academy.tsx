@@ -26,12 +26,14 @@ import {
   getAcademyCoursesByTopic,
   getLessonAvailabilityLabel,
   groupLessonsByBlock,
+  isLessonReady,
   sortAcademyCoursesByUpdated,
   type AcademyCourse,
   type AcademyLesson,
   type AcademyTopic,
 } from "@/lib/academy";
 import { MarkdownContent } from "@/components/academy/MarkdownContent";
+import { SupportAuthor } from "@/components/academy/SupportAuthor";
 import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
 import InstructorBadgeCard from "@/components/InstructorBadgeCard";
 import InstructorBadgeNotice from "@/components/InstructorBadgeNotice";
@@ -416,6 +418,8 @@ const CoursePage = ({ course, content }: { course: AcademyCourse; content: Acade
 
         <MarkdownContent className="mt-10" content={content.body} />
 
+        {(!course.lessons.length || course.lessons.some((lesson) => isLessonReady(course, lesson))) && <SupportAuthor />}
+
         {course.lessons.length ? (
           <section className="mt-14">
             <h2 className="mb-6 font-display text-2xl font-bold">Уроки курса</h2>
@@ -567,6 +571,7 @@ const LessonPage = ({ course, lesson, content }: { course: AcademyCourse; lesson
         ) : null}
 
         <MarkdownContent content={content.body} />
+        {isLessonReady(course, lesson) && <SupportAuthor />}
         <LessonPager course={course} lesson={lesson} />
       </article>
     </main>

@@ -5,6 +5,7 @@ import { JSDOM } from "jsdom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { render } from "@/entry-server";
 import { motionInitial } from "@/lib/motion";
+import { donationAlertsUrl } from "@/constants/contactLinks";
 
 const documents: JSDOM[] = [];
 beforeEach(() => vi.stubEnv("SSR", true));
@@ -44,6 +45,25 @@ describe("readable server rendering", () => {
       expect(bar.querySelector<HTMLElement>("div")?.style.transform).toBe("scaleX(0)");
     }
     expect(doc.querySelector("details > summary")?.textContent).toContain("Содержание и разделы");
+  });
+
+  it.each([
+    ["/academy/ue-localization/", true],
+    ["/academy/ai-intro/", true],
+    ["/academy/ai-intro/01-first-steps/", true],
+    ["/academy/ue-cpp-blueprint-devs/", false],
+    ["/academy/ue-cpp-blueprint-devs/01-ue-cpp-environment/", false],
+    ["/academy/", false],
+  ])("offers optional author support on ready materials only: %s", async (path, shown) => {
+    const doc = parseMarkup(await render(path));
+    const links = doc.querySelectorAll(`a[href="${donationAlertsUrl}"]`);
+    expect(links).toHaveLength(shown ? 1 : 0);
+    if (shown) {
+      expect(links[0].getAttribute("target")).toBe("_blank");
+      expect(links[0].getAttribute("rel")).toBe("noopener noreferrer");
+      expect(doc.getElementById("support-author-title")?.textContent).toBe("Материал пригодился?");
+    }
+    expect(doc.querySelector('iframe[src*="donationalerts"], script[src*="donationalerts"]')).toBeNull();
   });
 
   it("does not confuse a missing page with Academy during SSR", async () => {

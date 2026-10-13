@@ -1,4 +1,5 @@
 export const telegramCommunityUrl = "https://t.me/Absolute_Unreal";
+export const donationAlertsUrl = "https://www.donationalerts.com/r/absolutemikhail";
 
 export const encodedContactLinks = {
   telegram: "aHR0cHM6Ly90Lm1lL0Fic29sdXRlTWlraGFpbA==",
