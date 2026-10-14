@@ -57,9 +57,15 @@ describe("academy content structure", () => {
     expect(getAcademyCoursesByTopic("unreal-engine")).toContain(course);
   });
 
-  it("keeps empty topics available for future materials", () => {
+  it("publishes the Ubuntu routing article in Tools and IT", () => {
+    const article = getAcademyCourse("ubuntu-server-split-routing");
+
     expect(getAcademyTopic("tools")?.title).toBe("Инструменты и IT");
-    expect(getAcademyCoursesByTopic("tools")).toEqual([]);
+    expect(article?.format).toBe("Статья");
+    expect(article?.status).toBe("Опубликован");
+    expect(article?.cover).toBe("/academy/ubuntu-server-split-routing/cover.webp");
+    expect(article?.lessons).toHaveLength(0);
+    expect(getAcademyCoursesByTopic("tools")).toContain(article);
   });
 
   it("publishes the AI mini-course as three ordered text lessons", () => {
