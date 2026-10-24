@@ -52,7 +52,7 @@ describe("page metadata", () => {
     expect(lesson.structuredData).toMatchObject({ "@type": "Article" });
     expect(lesson.ogType).toBe("article");
     expect(lesson.updated).toBe("2026-10-13");
-    expect(freshLesson.updated).toBe("2026-10-13");
+    expect(freshLesson.updated).toBe("2026-10-24");
     expect((await resolvePageMetadata("/academy")).structuredData).toMatchObject({ "@type": "ItemList" });
   });
 
