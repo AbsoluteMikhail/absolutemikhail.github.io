@@ -133,8 +133,8 @@ const OGSnippet = () => {
           >
             <div className="h-px w-12 bg-primary/50" />
             <p className="font-display text-2xl font-bold uppercase leading-tight tracking-[0.08em]">
-              <span className="block text-foreground">Unreal-проекты</span>
-              <span className="block text-foreground/70">до релиза</span>
+              <span className="block text-foreground">Unreal-проекты до релиза</span>
+              <span className="mt-2 block text-xl text-accent">Менторинг · ИИ-пайплайны</span>
             </p>
           </motion.div>
 
