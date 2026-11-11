@@ -7,6 +7,8 @@ afterEach(() => vi.restoreAllMocks());
 describe("shared application routes", () => {
   it.each([
     ["/", "home"],
+    ["/games", "games"],
+    ["/games/", "games"],
     ["/projects", "projects"],
     ["/projects/", "projects"],
     ["/projects/duelant/", "project"],

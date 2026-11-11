@@ -3,6 +3,11 @@ import revengeOfTheCatCover from "@/assets/projects/jams/revenge-of-the-cat.webp
 import weekendJamCover from "@/assets/projects/jams/weekend-jam.jpg";
 import forTheKingCover from "@/assets/projects/jams/for-the-king.jpg";
 import handleWithCareCover from "@/assets/projects/jams/handle-with-care.webp";
+import gerasimPreview from "@/assets/projects/jams/gerasim-preview.mp4";
+import forTheKingPreview from "@/assets/projects/jams/for-the-king-preview.mp4";
+import revengeOfTheCatPreview from "@/assets/projects/jams/revenge-of-the-cat-preview.mp4";
+import weekendJamPreview from "@/assets/projects/jams/weekend-jam-preview.mp4";
+import handleWithCarePreview from "@/assets/projects/jams/handle-with-care-preview.mp4";
 
 export interface ItchProject {
   slug: string;
@@ -10,6 +15,7 @@ export interface ItchProject {
   genre: string;
   year: string;
   cover: string;
+  previewUrl?: string;
   description: string;
   achievement: string;
   role: string;
@@ -20,6 +26,7 @@ export interface ItchProject {
 export const itchProjects: ItchProject[] = [
   {
     slug: "gerasim-protiv-besov",
+    previewUrl: gerasimPreview,
     title: "ГЕРАСИМ против БЕСОВ",
     genre: "Survival / Adventure",
     year: "2024",
@@ -33,6 +40,7 @@ export const itchProjects: ItchProject[] = [
   },
   {
     slug: "for-the-king",
+    previewUrl: forTheKingPreview,
     title: "ЗА КОРОЛЯ",
     genre: "Strategy / Management",
     year: "2022",
@@ -46,6 +54,7 @@ export const itchProjects: ItchProject[] = [
   },
   {
     slug: "revenge-of-the-cat",
+    previewUrl: revengeOfTheCatPreview,
     title: "Revenge of the Cat",
     genre: "3D Adventure",
     year: "2021",
@@ -59,6 +68,7 @@ export const itchProjects: ItchProject[] = [
   },
   {
     slug: "weekend-jam-1",
+    previewUrl: weekendJamPreview,
     title: "Weekend Jam #1",
     genre: "FPS / Survival",
     year: "2021",
@@ -72,6 +82,7 @@ export const itchProjects: ItchProject[] = [
   },
   {
     slug: "handle-with-care",
+    previewUrl: handleWithCarePreview,
     title: "Handle With Care",
     genre: "Physics / Simulation",
     year: "2021",

@@ -5,6 +5,7 @@ import { matchRoutes } from "react-router-dom";
 // Keep the catch-all last; loaders keep heavy pages out of the initial bundle.
 export const appRoutes = [
   { id: "home", path: "/", load: () => import("@/pages/Index") },
+  { id: "games", path: "/games", load: () => import("@/pages/Games") },
   { id: "projects", path: "/projects", load: () => import("@/pages/Projects") },
   { id: "project", path: "/projects/:slug", load: () => import("@/pages/Project") },
   { id: "music", path: "/music", load: () => import("@/pages/Music") },

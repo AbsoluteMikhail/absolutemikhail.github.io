@@ -1,3 +1,4 @@
+import { useGamePreview } from "@/lib/useGamePreview";
 import { EntranceLink } from "@/components/ui/entrance-motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import {
@@ -8,7 +9,7 @@ import {
   Trophy,
   Users,
 } from "lucide-react";
-import { itchProjects } from "@/constants/itchProjects";
+import { itchProjects, type ItchProject } from "@/constants/itchProjects";
 import { gameProjectCount, gameProjectCountLabel } from "@/constants/portfolioStats";
 
 const authorityFacts = [
@@ -16,6 +17,66 @@ const authorityFacts = [
   { icon: Timer, value: "2–8 дней", label: "на джемовый проект" },
   { icon: Users, value: "Соло + команда", label: "оба формата разработки" },
 ] as const;
+
+const ItchProjectCard = ({ project, index }: { project: ItchProject; index: number }) => {
+  const { preview, previewEvents } = useGamePreview(project.previewUrl);
+  return (
+    <EntranceLink
+      href={project.url}
+      {...previewEvents}
+      target="_blank"
+      rel="noopener noreferrer"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ delay: Math.min(index * 0.06, 0.24) }}
+      className="group min-w-0"
+    >
+      <div className="relative aspect-[315/250] overflow-hidden rounded-xl bg-secondary">
+        <img
+          src={project.cover}
+          alt={`Обложка игры ${project.title}`}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        {preview}
+        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
+        <span className="absolute left-4 top-4 rounded bg-background/85 px-3 py-1 text-[10px] font-display uppercase tracking-widest text-primary backdrop-blur-md">
+          {project.genre}
+        </span>
+        <span className="absolute bottom-4 left-4 text-xs font-display tracking-widest text-white/70 [html.light_&]:text-foreground">
+          {project.year}
+        </span>
+      </div>
+
+      <div className="pt-5">
+        <div className="mb-4 flex items-start justify-between gap-4">
+          <h3 className="font-display text-xl font-bold text-foreground transition-colors group-hover:text-primary">
+            {project.title}
+          </h3>
+          <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-primary transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+        </div>
+        <p className="min-h-[60px] text-sm leading-relaxed text-muted-foreground">
+          {project.description}
+        </p>
+
+        <div className="mt-6 space-y-2 border-t border-border/60 pt-5 text-xs">
+          <div className="flex items-center gap-2 text-primary">
+            <Trophy className="h-3.5 w-3.5 shrink-0" />
+            <span className="font-medium">{project.achievement}</span>
+          </div>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Code2 className="h-3.5 w-3.5 shrink-0" />
+            <span>{project.role}</span>
+            <span className="text-border">•</span>
+            <span>{project.duration}</span>
+          </div>
+        </div>
+      </div>
+    </EntranceLink>
+  );
+};
 
 const ItchProjectsSection = () => (
   <section id="jams" className="scroll-mt-24 mt-20 border-t border-border pt-12 md:mt-28" aria-labelledby="itch-projects-title">
@@ -48,61 +109,7 @@ const ItchProjectsSection = () => (
     </div>
 
     <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
-      {itchProjects.map((project, index) => (
-        <EntranceLink
-          key={project.title}
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ delay: Math.min(index * 0.06, 0.24) }}
-          className="group min-w-0"
-        >
-          <div className="relative aspect-[315/250] overflow-hidden rounded-xl bg-secondary">
-            <img
-              src={project.cover}
-              alt={`Обложка игры ${project.title}`}
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
-            <span className="absolute left-4 top-4 rounded bg-background/85 px-3 py-1 text-[10px] font-display uppercase tracking-widest text-primary backdrop-blur-md">
-              {project.genre}
-            </span>
-            <span className="absolute bottom-4 left-4 text-xs font-display tracking-widest text-white/70 [html.light_&]:text-foreground">
-              {project.year}
-            </span>
-          </div>
-
-          <div className="pt-5">
-            <div className="mb-4 flex items-start justify-between gap-4">
-              <h3 className="font-display text-xl font-bold text-foreground transition-colors group-hover:text-primary">
-                {project.title}
-              </h3>
-              <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-primary transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-            </div>
-            <p className="min-h-[60px] text-sm leading-relaxed text-muted-foreground">
-              {project.description}
-            </p>
-
-            <div className="mt-6 space-y-2 border-t border-border/60 pt-5 text-xs">
-              <div className="flex items-center gap-2 text-primary">
-                <Trophy className="h-3.5 w-3.5 shrink-0" />
-                <span className="font-medium">{project.achievement}</span>
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Code2 className="h-3.5 w-3.5 shrink-0" />
-                <span>{project.role}</span>
-                <span className="text-border">•</span>
-                <span>{project.duration}</span>
-              </div>
-            </div>
-          </div>
-        </EntranceLink>
-      ))}
+      {itchProjects.map((project, index) => <ItchProjectCard key={project.slug} project={project} index={index} />)}
 
       <EntranceLink
         href="https://mikhaile.itch.io/"

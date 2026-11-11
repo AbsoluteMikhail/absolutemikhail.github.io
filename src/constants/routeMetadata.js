@@ -11,6 +11,14 @@ export const routeMetadata = [
     robots: "index, follow",
   },
   {
+    path: "/games",
+    match: "exact",
+    title: "Игры студии GamePunk",
+    description:
+      "Игры студии GamePunk: DUELANT, G.R.I.B.N.I.K., Колобок против ящеров и Звёздный кочевник. Описания и ссылки на игровые площадки.",
+    robots: "index, follow",
+  },
+  {
     path: "/projects",
     match: "exact",
     title: "Игры и проекты на Unreal Engine | Absolute Mikhail",

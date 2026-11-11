@@ -16,6 +16,7 @@ describe("client route metadata", () => {
   it("updates prerendered JSON-LD and social images on navigation and removes stale breadcrumbs", async () => {
     const paths = [
       "/projects/duelant/",
+      "/games/",
       "/academy/ai-intro/01-first-steps/",
       "/academy/topics/tools/",
       "/malena/privacy/",

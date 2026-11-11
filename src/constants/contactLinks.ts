@@ -1,6 +1,13 @@
 export const telegramCommunityUrl = "https://t.me/Absolute_Unreal";
 export const donationAlertsUrl = "https://www.donationalerts.com/r/absolutemikhail";
 
+export const gamepunkLinks = {
+  steam: "https://store.steampowered.com/developer/GamePunk-Studio/",
+  linkedin: "https://www.linkedin.com/company/106789897",
+  x: "https://x.com/AbsoluteMikhail",
+  youtube: "https://www.youtube.com/@Absolute-Unreal",
+} as const;
+
 export const encodedContactLinks = {
   telegram: "aHR0cHM6Ly90Lm1lL0Fic29sdXRlTWlraGFpbA==",
   max: "aHR0cHM6Ly9tYXgucnUvdS9mOUxIb2REMGNPSVUweExZVjdTbjdXSmN0TDBHMWY0TEdnLVFDV29RTWE0SGhTbVFUV28zdmw3UWQxaw==",

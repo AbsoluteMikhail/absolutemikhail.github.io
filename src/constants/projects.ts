@@ -1,5 +1,6 @@
 import gribnikCover from "@/assets/projects/gribnik/cover-1280.webp";
 import gribnikCoverSmall from "@/assets/projects/gribnik/cover-640.webp";
+import gribnikPreview from "@/assets/projects/gribnik/preview.mp4";
 import gribnik1 from "@/assets/projects/gribnik/1.jpg";
 import gribnik1Small from "@/assets/projects/gribnik/1-1280.webp";
 import gribnik2 from "@/assets/projects/gribnik/2.jpg";
@@ -13,6 +14,7 @@ import gribnik5Small from "@/assets/projects/gribnik/5-1280.webp";
 
 import duelantCover from "@/assets/projects/duelant/cover-1280.webp";
 import duelantCoverSmall from "@/assets/projects/duelant/cover-640.webp";
+import duelantPreview from "@/assets/projects/duelant/preview.mp4";
 import duelant1 from "@/assets/projects/duelant/1.webp";
 import duelant1Small from "@/assets/projects/duelant/1-1280.webp";
 import duelant2 from "@/assets/projects/duelant/2.webp";
@@ -26,6 +28,7 @@ import duelant5Small from "@/assets/projects/duelant/5-1280.webp";
 
 import kolobokCover from "@/assets/projects/kolobok/cover-1280.webp";
 import kolobokCoverSmall from "@/assets/projects/kolobok/cover-640.webp";
+import kolobokPreview from "@/assets/projects/kolobok/preview.mp4";
 import kolobok1 from "@/assets/projects/kolobok/1.jpg";
 import kolobok1Small from "@/assets/projects/kolobok/1-1280.webp";
 import kolobok2 from "@/assets/projects/kolobok/2.jpg";
@@ -40,6 +43,7 @@ import kolobok5Small from "@/assets/projects/kolobok/5-1280.webp";
 import starNomadCover from "@/assets/projects/star-nomad/cover.jpg";
 import starNomadCoverMedium from "@/assets/projects/star-nomad/cover-1280.webp";
 import starNomadCoverSmall from "@/assets/projects/star-nomad/cover-640.webp";
+import starNomadPreview from "@/assets/projects/star-nomad/preview.mp4";
 import starNomad2 from "@/assets/projects/star-nomad/2.jpg";
 import starNomad2Small from "@/assets/projects/star-nomad/2-1280.webp";
 import starNomad3 from "@/assets/projects/star-nomad/3.jpg";
@@ -47,6 +51,7 @@ import starNomad3Small from "@/assets/projects/star-nomad/3-1280.webp";
 
 import dixotomiaCover from "@/assets/projects/dixotomia/cover-1280.webp";
 import dixotomiaCoverSmall from "@/assets/projects/dixotomia/cover-640.webp";
+import dixotomiaPreview from "@/assets/projects/dixotomia/preview.mp4";
 import dixotomia1 from "@/assets/projects/dixotomia/1.webp";
 import dixotomia1Small from "@/assets/projects/dixotomia/1-1280.webp";
 import dixotomia2 from "@/assets/projects/dixotomia/2.jpg";
@@ -58,8 +63,10 @@ import dixotomia4Small from "@/assets/projects/dixotomia/4-1280.webp";
 
 import moonshineMayhemCover from "@/assets/projects/moonshine-mayhem/cover.jpg";
 import moonshineMayhemCoverSmall from "@/assets/projects/moonshine-mayhem/cover-640.webp";
+import moonshineMayhemPreview from "@/assets/projects/moonshine-mayhem/preview.mp4";
 import knittedInflatableCover from "@/assets/projects/knitted-inflatable/cover.jpg";
 import knittedInflatableCoverSmall from "@/assets/projects/knitted-inflatable/cover-640.webp";
+import knittedInflatablePreview from "@/assets/projects/knitted-inflatable/preview.mp4";
 
 import malenastromCover from "@/assets/projects/malenastrom/cover-1280.webp";
 import malenastromCoverSmall from "@/assets/projects/malenastrom/cover-640.webp";
@@ -105,6 +112,7 @@ export interface Project {
     url: string;
   }>;
   videoUrl?: string;
+  previewUrl?: string;
   coverWidth: number;
   coverHeight: number;
   screenshots: ProjectScreenshot[];
@@ -128,6 +136,7 @@ export const projects: Project[] = [
   {
     id: 2,
     slug: "duelant",
+    previewUrl: duelantPreview,
     title: "DUELANT",
     genre: "Duel Simulator",
     year: "2027",
@@ -163,6 +172,7 @@ export const projects: Project[] = [
   {
     id: 5,
     slug: "dixotomia",
+    previewUrl: dixotomiaPreview,
     title: "Dixotomia",
     genre: "VR Action Shooter",
     year: "2026",
@@ -194,6 +204,7 @@ export const projects: Project[] = [
   {
     id: 1,
     slug: "gribnik",
+    previewUrl: gribnikPreview,
     title: "G.R.I.B.N.I.K. в лесу дураков",
     genre: "FPS / Horror",
     year: "2025",
@@ -215,13 +226,14 @@ export const projects: Project[] = [
       { title: "Стенд в Сколково", text: "В 2025 году участвовали со стендом игры в выставке на Неделе видеоигр в Сколково." },
     ],
     featured: true,
-    storeUrl: "https://vkplay.ru/play/game/gribnik-the-forest-of-fools-44079",
+    storeLinks: [{ label: "VK Play", url: "https://vkplay.ru/play/game/gribnik-the-forest-of-fools-44079" }],
     videoUrl: "https://rutube.ru/play/embed/1dbe0a668db24c94fdbead56fb2a6dac/",
     screenshots: [frame(gribnik1, gribnik1Small), frame(gribnik2, gribnik2Small), frame(gribnik3, gribnik3Small), frame(gribnik4, gribnik4Small), frame(gribnik5, gribnik5Small)],
   },
   {
     id: 3,
     slug: "kolobok-protiv-yascherov",
+    previewUrl: kolobokPreview,
     title: "КОЛОБОК против ЯЩЕРОВ",
     genre: "Arcade / Arkanoid",
     year: "2024",
@@ -241,13 +253,14 @@ export const projects: Project[] = [
       { title: "Колобок на защите Руси", text: "Одна из главных фишек — сгенерированные угарные песни про Колобка, защитника Руси." },
     ],
     featured: true,
-    storeUrl: "https://vkplay.ru/play/game/kolobok-protiv-jascherov-arkanoid-40059",
+    storeLinks: [{ label: "VK Play", url: "https://vkplay.ru/play/game/kolobok-protiv-jascherov-arkanoid-40059" }],
     videoUrl: "https://rutube.ru/play/embed/8523cff58d38eb1de92fedfc21ccbfab/",
     screenshots: [frame(kolobok1, kolobok1Small), frame(kolobok2, kolobok2Small), frame(kolobok3, kolobok3Small), frame(kolobok4, kolobok4Small), frame(kolobok5, kolobok5Small)],
   },
   {
     id: 4,
     slug: "star-nomad",
+    previewUrl: starNomadPreview,
     title: "ЗВЁЗДНЫЙ КОЧЕВНИК",
     genre: "Top-down Action",
     year: "2022",
@@ -261,7 +274,7 @@ export const projects: Project[] = [
       "За основу игры взят башкирский эпос «Урал-батыр». Отправляйтесь в путешествие по фантастическому миру, сражайтесь с врагами и знакомьтесь с легендарным сказанием башкирского народа.\n\nВ бою можно рубить врагов мечом, метко стрелять из лука, а когда становится слишком жарко — использовать ледяной посох.",
     tech: ["Unreal Engine 4", "Blueprints", "Action RPG"],
     stats: "В релизе",
-    storeUrl: "https://vkplay.ru/play/game/zvezdnyj-kochevnik-34552",
+    storeLinks: [{ label: "VK Play", url: "https://vkplay.ru/play/game/zvezdnyj-kochevnik-34552" }],
     videoUrl: "https://rutube.ru/play/embed/9b06ff817cf4c60ac87d6d45572b83da/",
     screenshots: [frame(starNomadCover, starNomadCoverMedium), frame(starNomad2, starNomad2Small), frame(starNomad3, starNomad3Small)],
     role: "Руководство командой · Менторинг · Весь код",
@@ -309,6 +322,7 @@ export const projects: Project[] = [
   {
     id: 6,
     slug: "moonshine-mayhem",
+    previewUrl: moonshineMayhemPreview,
     title: "Moonshine Mayhem",
     genre: "Multiplayer FPS",
     year: "2023",
@@ -333,6 +347,7 @@ export const projects: Project[] = [
   {
     id: 7,
     slug: "knitted-and-inflatable",
+    previewUrl: knittedInflatablePreview,
     title: "ВЯЗАННЫЕ и НАДУВНЫЕ",
     genre: "Physics Adventure",
     year: "2021",
@@ -357,3 +372,10 @@ export const projects: Project[] = [
 ];
 
 export const featuredProjects = () => projects.filter((project) => project.featured);
+
+export const gamepunkGames = projects.filter((project) => [
+  "duelant",
+  "gribnik",
+  "kolobok-protiv-yascherov",
+  "star-nomad",
+].includes(project.slug));

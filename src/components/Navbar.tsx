@@ -46,7 +46,7 @@ const Navbar = () => {
   }, [isOpen]);
 
   const navLinks = [
-    { label: "Игры", href: "#games" },
+    { label: "Игры", href: "/games" },
     { label: "Академия", href: "/academy" },
     { label: "Менторинг", href: "#mentoring" },
     { label: "Работа", href: "#production" },

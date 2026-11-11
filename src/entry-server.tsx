@@ -16,6 +16,7 @@ const academyTopicPaths = academyTopics.map((topic) => `/academy/topics/${topic.
 
 export const prerenderPaths = [
   "/",
+  "/games",
   "/projects",
   "/snippet",
   ...projectPages.map((project) => projectPath(project.slug)),

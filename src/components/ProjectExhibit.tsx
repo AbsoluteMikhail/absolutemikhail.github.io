@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import type { Project } from "@/constants/projects";
 import ProjectStatusIcon from "@/components/ProjectStatusIcon";
 import { cn } from "@/lib/utils";
+import { useGamePreview } from "@/lib/useGamePreview";
 
 type ProjectExhibitProps = {
   project: Project;
@@ -23,12 +24,14 @@ const coverSizes = {
 
 export default function ProjectExhibit({ project, onSelect, href, featured = false, priority = false, headingLevel = 2 }: ProjectExhibitProps) {
   const Heading = headingLevel === 2 ? "h2" : "h3";
+  const { preview, previewEvents } = useGamePreview(project.previewUrl);
   return (
     <EntranceArticle
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.12 }}
       transition={{ duration: 0.45 }}
+      {...previewEvents}
       className={cn("group relative flex min-w-0 flex-col gap-5", featured && "lg:col-span-3 lg:grid lg:grid-cols-[1.65fr_1fr] lg:items-center lg:gap-10")}
     >
       {href ? <Link to={href} aria-label={`Подробнее о проекте ${project.title}`} className="absolute inset-0 z-20 rounded-xl focus-visible:ring-2 focus-visible:ring-primary" /> : <button
@@ -52,6 +55,7 @@ export default function ProjectExhibit({ project, onSelect, href, featured = fal
           decoding="async"
           className="aspect-video w-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-[1.025]"
         />
+        {preview}
         <span className="absolute bottom-4 left-4 rounded bg-background/85 px-3 py-2 font-display text-[10px] uppercase tracking-wider text-foreground backdrop-blur-md">{project.genre}</span>
       </div>
       <div className="min-w-0">
