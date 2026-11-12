@@ -59,7 +59,6 @@ const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
               <ul className="space-y-4">
                 {[
                   { label: "Академия", href: "/academy" },
-                  { label: "Игры", href: "/games" },
                   { label: "Менторинг", href: `${homePrefix}#mentoring` },
                   { label: "Отзывы учеников", href: `${homePrefix}#mentee-reviews` },
                   { label: "Проекты", href: `${homePrefix}#games` },

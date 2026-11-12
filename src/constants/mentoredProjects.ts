@@ -27,7 +27,7 @@ export const mentoredProjects: MentoredProject[] = [
     cover: silentObserverCover,
     description:
       "Психологический хоррор от первого лица: лифт открывает путь в разные миры, где нужно искать подсказки, решать головоломки и собирать фрагменты загадочной истории.",
-    contribution: "Куратор проекта",
+    contribution: "Технический консультант",
     url: "https://store.steampowered.com/app/3111430/Silent_Observer/?curator_clanid=45056388",
   },
   {
@@ -38,7 +38,7 @@ export const mentoredProjects: MentoredProject[] = [
     cover: relsuCover,
     description:
       "Динамичный roguelite для одного–четырёх игроков: волны противников, боссы, случайные задания и уникальные деревья навыков.",
-    contribution: "Ментор команды",
+    contribution: "Технический консультант",
     url: "https://store.steampowered.com/app/3783850/RELSU/?curator_clanid=45056388",
   },
   {

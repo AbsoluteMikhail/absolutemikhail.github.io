@@ -2,6 +2,7 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import Navbar from "@/components/Navbar";
+import SiteFooter from "@/components/SiteFooter";
 
 const renderNavigation = (path: string) => render(
   <MemoryRouter initialEntries={[path]}>
@@ -19,6 +20,25 @@ afterEach(() => {
 });
 
 describe("main navigation", () => {
+  it.each(["/", "/projects/", "/games/"])("links to the homepage games section from %s without advertising the studio landing page", (path) => {
+    const href = path === "/" ? "#games" : "/#games";
+    const { container } = render(<MemoryRouter initialEntries={[path]}>
+      <Navbar /><SiteFooter projectsPage={path !== "/"} />
+    </MemoryRouter>);
+    expect(screen.getByRole("link", { name: "Игры" })).toHaveAttribute("href", href);
+    expect(screen.getByRole("link", { name: "Проекты" })).toHaveAttribute("href", href);
+
+    const toggle = screen.getByRole("button", { name: "Открыть меню" });
+    fireEvent.click(toggle);
+    const menu = document.getElementById(toggle.getAttribute("aria-controls")!);
+    const games = within(menu!).getByRole("link", { name: "Игры" });
+    expect(games).toHaveAttribute("href", href);
+    expect(container.querySelector('a[href="/games"], a[href="/games/"]')).toBeNull();
+    fireEvent.click(games);
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(document.body.style.overflow).toBe("");
+  });
+
   it("uses the persistent menu button as the contact dialog focus origin", () => {
     Object.defineProperty(HTMLDialogElement.prototype, "showModal", { configurable: true, value() { this.setAttribute("open", ""); } });
     Object.defineProperty(HTMLDialogElement.prototype, "close", { configurable: true, value() { this.removeAttribute("open"); } });

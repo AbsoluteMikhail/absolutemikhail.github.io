@@ -25,7 +25,7 @@ describe("games showcase", () => {
       }
     }
     expect(screen.getByRole("link", { name: "Портфолио разработчика" })).toHaveAttribute("href", "/projects/");
-    expect(screen.getByRole("link", { name: "Игры" })).toHaveAttribute("href", "/games/");
+    expect(screen.getByRole("link", { name: "Игры" })).toHaveAttribute("href", "/#games");
     expect(screen.getAllByRole("img")[0]).toHaveAttribute("loading", "eager");
     expect(screen.getByRole("link", { name: "Наши игры" })).toHaveAttribute("href", "#studio-games");
     expect(document.getElementById("studio-games")).toBeInTheDocument();
