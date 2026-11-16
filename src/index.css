@@ -496,6 +496,7 @@
 
   .academy-table-wrap table {
     @apply w-full border-collapse text-left text-sm;
+    overflow-wrap: normal;
   }
 
   .academy-table-wrap th {
