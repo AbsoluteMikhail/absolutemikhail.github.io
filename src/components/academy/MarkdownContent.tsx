@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AlertTriangle, Info, Lightbulb } from "lucide-react";
 import { trailingPath } from "@/constants/routeMetadata.js";
 import { telegramCommunityUrl } from "@/constants/contactLinks";
-import { slugify, type AcademyHeading } from "@/lib/academyMarkdown";
+import { parseHeadingLabel, type AcademyHeading } from "@/lib/academyMarkdown";
 import { YouTubeEmbed } from "@/components/academy/YouTubeEmbed";
 import { AcademyFlowDiagram } from "@/components/academy/AcademyFlowDiagram";
 import { BlueprintUEEmbed } from "@/components/academy/BlueprintUEEmbed";
@@ -58,8 +58,7 @@ const parseMarkdown = (content: string): MarkdownBlock[] => {
   const headingIds = new Map<string, number>();
   let index = 0;
 
-  const getHeadingId = (text: string) => {
-    const baseId = slugify(text);
+  const getHeadingId = (baseId: string) => {
     const count = headingIds.get(baseId) ?? 0;
     const id = count === 0 ? baseId : `${baseId}-${count + 1}`;
 
@@ -124,11 +123,11 @@ const parseMarkdown = (content: string): MarkdownBlock[] => {
 
     const headingMatch = trimmedLine.match(/^(#{1,6})\s+(.+)$/);
     if (headingMatch) {
-      const text = headingMatch[2].trim();
+      const { text, id } = parseHeadingLabel(headingMatch[2]);
 
       blocks.push({
         depth: headingMatch[1].length,
-        id: getHeadingId(text),
+        id: getHeadingId(id),
         text,
         type: "heading",
       });

@@ -43,6 +43,12 @@ export const slugify = (value: string) => {
   return slug || "section";
 };
 
+export const parseHeadingLabel = (value: string) => {
+  const match = value.trim().match(/^(.*?)\s+\{#([\p{L}\p{N}_-]+)\}$/u);
+  const text = (match?.[1] ?? value).trim();
+  return { text, id: match?.[2] ?? slugify(text) };
+};
+
 export const getHeadings = (body: string): AcademyHeading[] => {
   const usedIds = new Map<string, number>();
   let inCode = false;
@@ -55,8 +61,7 @@ export const getHeadings = (body: string): AcademyHeading[] => {
     })
     .filter(Boolean)
     .map((match) => {
-      const text = match![2].trim();
-      const baseId = slugify(text);
+      const { text, id: baseId } = parseHeadingLabel(match![2]);
       const currentCount = usedIds.get(baseId) ?? 0;
       const id = currentCount === 0 ? baseId : `${baseId}-${currentCount + 1}`;
 

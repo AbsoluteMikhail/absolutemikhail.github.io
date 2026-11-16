@@ -53,6 +53,19 @@ describe("Academy Markdown extensions", () => {
     headings.forEach((heading) => expect(document.getElementById(heading.id)).toBeInTheDocument());
   });
 
+  it("preserves explicit heading anchors when a title changes and keeps duplicate IDs unique", () => {
+    const content = "## План на 120 минут {#план-на-90-минут}\n\n## Второй план {#план-на-90-минут}\n\n## Обычный раздел";
+    renderMarkdown(content);
+    expect(getHeadings(content)).toEqual([
+      { depth: 2, id: "план-на-90-минут", text: "План на 120 минут" },
+      { depth: 2, id: "план-на-90-минут-2", text: "Второй план" },
+      { depth: 2, id: "обычный-раздел", text: "Обычный раздел" },
+    ]);
+    getHeadings(content).forEach(({ id, text }) => {
+      expect(screen.getByRole("heading", { name: text })).toHaveAttribute("id", id);
+    });
+  });
+
   it("keeps tip and warning callouts on theme tokens instead of pale emerald or amber text", () => {
     renderMarkdown(":::tip Совет\nПроверь контраст.\n:::\n\n:::warning Важно\nНе читай бледный текст.\n:::");
 

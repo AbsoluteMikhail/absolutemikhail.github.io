@@ -71,6 +71,108 @@ export const publicImageMeta: Record<string, { width: number; height: number; sr
     height: 720,
     srcSet: "/academy/ue-localization/cover-640.webp 640w, /academy/ue-localization/cover.webp 1280w",
   },
+  "/academy/unreal-for-programmers/point-light-visible-off.webp": { width: 906, height: 201 },
+  "/academy/unreal-for-programmers/attach-component.webp": { width: 928, height: 603 },
+  "/academy/unreal-for-programmers/add-point-light.webp": { width: 1640, height: 1077 },
+  "/academy/unreal-for-programmers/blueprint-interface.webp": {
+    width: 3840,
+    height: 2078,
+    srcSet: "/academy/unreal-for-programmers/blueprint-interface-960.webp 960w, /academy/unreal-for-programmers/blueprint-interface-1600.webp 1600w, /academy/unreal-for-programmers/blueprint-interface.webp 3840w",
+  },
+  "/academy/unreal-for-programmers/save-on-compile.webp": { width: 943, height: 405 },
+  "/academy/unreal-for-programmers/open-full-blueprint-editor.webp": {
+    width: 3840,
+    height: 2078,
+    srcSet: "/academy/unreal-for-programmers/open-full-blueprint-editor-960.webp 960w, /academy/unreal-for-programmers/open-full-blueprint-editor-1600.webp 1600w, /academy/unreal-for-programmers/open-full-blueprint-editor.webp 3840w",
+  },
+  "/academy/unreal-for-programmers/blueprint-unsaved.webp": {
+    width: 3840,
+    height: 2076,
+    srcSet: "/academy/unreal-for-programmers/blueprint-unsaved-960.webp 960w, /academy/unreal-for-programmers/blueprint-unsaved-1600.webp 1600w, /academy/unreal-for-programmers/blueprint-unsaved.webp 3840w",
+  },
+  "/academy/unreal-for-programmers/editor-preferences-menu.webp": { width: 1190, height: 490 },
+  "/academy/unreal-for-programmers/asset-editor-open-location.webp": {
+    width: 3840,
+    height: 2078,
+    srcSet: "/academy/unreal-for-programmers/asset-editor-open-location-960.webp 960w, /academy/unreal-for-programmers/asset-editor-open-location-1600.webp 1600w, /academy/unreal-for-programmers/asset-editor-open-location.webp 3840w",
+  },
+  "/academy/unreal-for-programmers/asset-types.webp": {
+    width: 3840,
+    height: 2076,
+    srcSet: "/academy/unreal-for-programmers/asset-types-960.webp 960w, /academy/unreal-for-programmers/asset-types-1600.webp 1600w, /academy/unreal-for-programmers/asset-types.webp 3840w",
+  },
+  "/academy/unreal-for-programmers/play-simulate.webp": {
+    width: 3839,
+    height: 2076,
+    srcSet: "/academy/unreal-for-programmers/play-simulate-960.webp 960w, /academy/unreal-for-programmers/play-simulate-1600.webp 1600w, /academy/unreal-for-programmers/play-simulate.webp 3839w",
+  },
+  "/academy/unreal-for-programmers/play-options.webp": {
+    width: 3840,
+    height: 2076,
+    srcSet: "/academy/unreal-for-programmers/play-options-960.webp 960w, /academy/unreal-for-programmers/play-options-1600.webp 1600w, /academy/unreal-for-programmers/play-options.webp 3840w",
+  },
+  "/academy/unreal-for-programmers/click-game-viewport.webp": {
+    width: 3840,
+    height: 2078,
+    srcSet: "/academy/unreal-for-programmers/click-game-viewport-960.webp 960w, /academy/unreal-for-programmers/click-game-viewport-1600.webp 1600w, /academy/unreal-for-programmers/click-game-viewport.webp 3840w",
+  },
+  "/academy/unreal-for-programmers/create-blueprint-class.webp": {
+    width: 3840,
+    height: 2076,
+    srcSet: "/academy/unreal-for-programmers/create-blueprint-class-960.webp 960w, /academy/unreal-for-programmers/create-blueprint-class-1600.webp 1600w, /academy/unreal-for-programmers/create-blueprint-class.webp 3840w",
+  },
+  "/academy/unreal-for-programmers/pick-actor-parent.webp": { width: 1086, height: 1249 },
+  "/academy/unreal-for-programmers/editor-layout.webp": {
+    width: 3840,
+    height: 2076,
+    srcSet: "/academy/unreal-for-programmers/editor-layout-960.webp 960w, /academy/unreal-for-programmers/editor-layout-1600.webp 1600w, /academy/unreal-for-programmers/editor-layout.webp 3840w",
+  },
+  "/academy/unreal-for-programmers/git-download.webp": { width: 1104, height: 742 },
+  "/academy/unreal-for-programmers/git-initialize.webp": {
+    width: 3839,
+    height: 2079,
+    srcSet: "/academy/unreal-for-programmers/git-initialize-960.webp 960w, /academy/unreal-for-programmers/git-initialize-1600.webp 1600w, /academy/unreal-for-programmers/git-initialize.webp 3839w",
+  },
+  "/academy/unreal-for-programmers/engine-source.webp": { width: 1392, height: 875 },
+  "/academy/unreal-for-programmers/keyboard-shortcuts.webp": {
+    width: 3840,
+    height: 2160,
+    srcSet: "/academy/unreal-for-programmers/keyboard-shortcuts-960.webp 960w, /academy/unreal-for-programmers/keyboard-shortcuts-1600.webp 1600w, /academy/unreal-for-programmers/keyboard-shortcuts.webp 3840w",
+  },
+  "/academy/unreal-for-programmers/launcher-install.webp": {
+    width: 3839,
+    height: 2074,
+    srcSet: "/academy/unreal-for-programmers/launcher-install-960.webp 960w, /academy/unreal-for-programmers/launcher-install-1600.webp 1600w, /academy/unreal-for-programmers/launcher-install.webp 3839w",
+  },
+  "/academy/unreal-for-programmers/manage-modules.webp": { width: 1993, height: 1198 },
+  "/academy/unreal-for-programmers/launch-engine.webp": { width: 1194, height: 411 },
+  "/academy/unreal-for-programmers/new-project.webp": { width: 1919, height: 1034 },
+  "/academy/unreal-for-programmers/save-level-as-menu.webp": {
+    width: 1764,
+    height: 1094,
+    srcSet: "/academy/unreal-for-programmers/save-level-as-menu-960.webp 960w, /academy/unreal-for-programmers/save-level-as-menu-1600.webp 1600w, /academy/unreal-for-programmers/save-level-as-menu.webp 1764w",
+  },
+  "/academy/unreal-for-programmers/save-level-as-dialog.webp": {
+    width: 2027,
+    height: 1204,
+    srcSet: "/academy/unreal-for-programmers/save-level-as-dialog-960.webp 960w, /academy/unreal-for-programmers/save-level-as-dialog-1600.webp 1600w, /academy/unreal-for-programmers/save-level-as-dialog.webp 2027w",
+  },
+  "/academy/unreal-for-programmers/folder-color.webp": {
+    width: 1713,
+    height: 1271,
+    srcSet: "/academy/unreal-for-programmers/folder-color-960.webp 960w, /academy/unreal-for-programmers/folder-color-1600.webp 1600w, /academy/unreal-for-programmers/folder-color.webp 1713w",
+  },
+  "/academy/unreal-for-programmers/sublime-merge-open.webp": {
+    width: 3840,
+    height: 2076,
+    srcSet: "/academy/unreal-for-programmers/sublime-merge-open-960.webp 960w, /academy/unreal-for-programmers/sublime-merge-open-1600.webp 1600w, /academy/unreal-for-programmers/sublime-merge-open.webp 3840w",
+  },
+  "/academy/unreal-for-programmers/templates-feature-packs.webp": { width: 1397, height: 1549 },
+  "/academy/unreal-for-programmers/third-person-template.webp": {
+    width: 2121,
+    height: 1506,
+    srcSet: "/academy/unreal-for-programmers/third-person-template-960.webp 960w, /academy/unreal-for-programmers/third-person-template-1440.webp 1440w, /academy/unreal-for-programmers/third-person-template.webp 2121w",
+  },
 };
 
 export const publicImageSize = (src?: string) => {
