@@ -62,7 +62,10 @@ const Index = () => {
           <div className="studio-collage">
             <img className="studio-collage-art" src={heroCollage} width="1088" height="1440" alt={copy.collageAlt} {...{ fetchpriority: "high" }} />
             <img className="studio-collage-sticker" src={unrealSticker} width="384" height="351" alt={copy.stickerAlt} />
-            <span className="studio-character-sticker">{copy.characterSticker}</span>
+            <span className="studio-character-sticker">
+              {copy.characterSticker}<br />
+              <small>{copy.releaseNote}</small>
+            </span>
           </div>
         </section>
 

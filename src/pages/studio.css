@@ -69,6 +69,7 @@
 .studio-collage-art { display: block; width: 100%; height: auto; }
 .studio-collage-sticker { position: absolute; width: 25%; height: auto; left: 3%; bottom: 22%; transform: rotate(-9deg); }
 .studio-character-sticker { position: absolute; right: 4%; bottom: 5%; padding: .04em .45em .15em; background: var(--studio-lime); font-family: 'Studio Hand', cursive; font-size: clamp(25px, 3vw, 43px); font-weight: 700; line-height: 1.05; white-space: nowrap; transform: rotate(-7deg); box-shadow: 1px 3px 1px #17171526; clip-path: polygon(0 4%, 99% 0, 100% 94%, 2% 100%); }
+.studio-character-sticker small { font-size: .64em; }
 .studio-projects { padding-block: 32px 54px; }
 .studio-kicker { font-size: clamp(20px, 1.8vw, 26px); line-height: 1.15; letter-spacing: -.04em; font-weight: 850; margin-bottom: 14px; }
 .studio-page .studio-heading { font-family: 'Studio Display', Impact, sans-serif; font-weight: 900; font-size: clamp(42px, 6.1vw, 88px); line-height: 1; letter-spacing: -.045em; }
