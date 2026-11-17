@@ -15,7 +15,6 @@ import { studioCopy } from "@/constants/studioCopy";
 import { studioLocale } from "@/lib/studioLocale";
 import heroCollage from "@/assets/studio/hero-collage.webp";
 import studioLogo from "@/assets/studio/gamepunk-logo.svg";
-import unrealSticker from "@/assets/studio/unreal-five-sticker.webp";
 import paintArrow from "@/assets/studio/paint-arrow.webp";
 import heroPhoto from "@/assets/hero-photo.webp";
 import bartsevPhoto from "@/assets/studio/alexey-bartsev.webp";
@@ -61,7 +60,6 @@ const Index = () => {
           <p className="studio-eyebrow">{copy.independent[0]}<br />{copy.independent[1]}</p>
           <div className="studio-collage">
             <img className="studio-collage-art" src={heroCollage} width="1088" height="1440" alt={copy.collageAlt} {...{ fetchpriority: "high" }} />
-            <img className="studio-collage-sticker" src={unrealSticker} width="384" height="351" alt={copy.stickerAlt} />
             <span className="studio-character-sticker">
               {copy.characterSticker}<br />
               <small>{copy.releaseNote}</small>
