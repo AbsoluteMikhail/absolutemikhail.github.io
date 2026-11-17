@@ -3,10 +3,10 @@ import { profileExperience } from "@/content/proof";
 export const studioCopy = {
   ru: {
     skip: "Перейти к содержимому", home: "GamePunk — главная", navigation: "Навигация студии", language: "Язык сайта",
-    projects: "Проекты", studio: "Студия", contact: "Связаться", hero: ["ЕСТЬ ИДЕЯ", "БУДЕТ", "ГРОМКО."],
+    projects: "Проекты", studio: "Студия", contact: "Связаться", hero: ["ДЕЛАЕМ ИГРЫ", "С ХАРАКТЕРОМ."],
     description: "Делаем игры и другие штуки,", descriptionEnd: "которых нам самим не хватает.", viewProjects: "Смотреть проекты",
     independent: ["НЕЗАВИСИМАЯ", "СТУДИЯ"], collageAlt: "Малена с обложки «Рождённая помнить» в коллаже из рваной бумаги",
-    stickerAlt: "Наклейка: Unreal Engine в стиле «Пятёрочки»", characterSticker: "Рождённая помнить", releaseNote: "скоро", projectsKicker: "01 / ПРОЕКТЫ", projectsTitle: "Что мы натворили",
+    characterSticker: "Рождённая помнить", releaseNote: "скоро", projectsKicker: "01 / ПРОЕКТЫ", projectsTitle: "Что мы натворили",
     gameTypes: ["Дуэли с отстрелом конечностей", "PSX-стайл хоррор"], cover: "Обложка игры",
     malena: "Малена", malenaType: "ИИ с характером", malenaAlt: "Малена в зелёном платье среди ночных руин и цветов",
     moreGames: "Больше игр в Steam", manifestoKicker: "02 / МАНИФЕСТ", manifesto: ["СВОБОДА ДЕЛАТЬ", "ПО-СВОЕМУ."],
@@ -26,10 +26,10 @@ export const studioCopy = {
   },
   en: {
     skip: "Skip to content", home: "GamePunk — home", navigation: "Studio navigation", language: "Site language",
-    projects: "Projects", studio: "Studio", contact: "Contact", hero: ["BIG IDEAS", "LOUD", "RESULTS."],
+    projects: "Projects", studio: "Studio", contact: "Contact", hero: ["WE MAKE GAMES", "WITH CHARACTER."],
     description: "We make games and other things", descriptionEnd: "we wish existed.", viewProjects: "Explore our projects",
     independent: ["INDEPENDENT", "STUDIO"], collageAlt: "Malena from the Born to Remember cover in a torn-paper collage",
-    stickerAlt: "Sticker: Unreal Engine styled as a Pyaterochka supermarket logo", characterSticker: "Born to Remember", releaseNote: "coming soon", projectsKicker: "01 / PROJECTS", projectsTitle: "What we’ve been up to",
+    characterSticker: "Born to Remember", releaseNote: "coming soon", projectsKicker: "01 / PROJECTS", projectsTitle: "What we’ve been up to",
     gameTypes: ["Duels with limb dismemberment", "PSX-style horror"], cover: "Game cover:",
     malena: "Malena", malenaType: "AI with attitude", malenaAlt: "Malena in a green dress among moonlit ruins and flowers",
     moreGames: "More games on Steam", manifestoKicker: "02 / MANIFESTO", manifesto: ["THE FREEDOM TO", "DO IT OUR WAY."],

@@ -21,12 +21,14 @@ const parseMarkup = (html: string) => {
 };
 
 describe("readable server rendering", () => {
-  it.each([["ru", "ЕСТЬ ИДЕЯ"], ["en", "BIG IDEAS"]])("renders the %s studio preview with the homepage logo and collage", async (language, heading) => {
+  it.each([["ru", "ДЕЛАЕМ ИГРЫ"], ["en", "WE MAKE GAMES"]])("renders the %s studio preview with the homepage logo and collage", async (language, heading) => {
     const doc = parseMarkup(await render(`/snippet/?view=studio&lang=${language}`));
     expect(doc.querySelector("h1")?.textContent).toContain(heading);
     expect(doc.querySelector('.studio-snippet-logo')?.getAttribute("src")).toContain("gamepunk-logo.svg");
-    expect(doc.querySelector('.studio-snippet-art')?.getAttribute("src")).toContain("hero-collage.webp");
-    expect(doc.querySelector('.studio-snippet-sticker')?.getAttribute("src")).toContain("unreal-five-sticker.webp");
+    expect(doc.querySelector('.studio-snippet-collage .studio-collage-art')?.getAttribute("src")).toContain("hero-collage.webp");
+    const sticker = doc.querySelector(".studio-character-sticker");
+    expect(sticker?.firstChild?.textContent).toBe(language === "ru" ? "Рождённая помнить" : "Born to Remember");
+    expect(sticker?.querySelector("small")?.textContent).toBe(language === "ru" ? "скоро" : "coming soon");
     expect(doc.querySelector('#og-snippet-container')?.getAttribute("lang")).toBe(language);
   });
   it("renders the Academy preview without replacing the personal preview", async () => {

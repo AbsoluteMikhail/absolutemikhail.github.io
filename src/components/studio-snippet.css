@@ -1,10 +1,6 @@
 .studio-snippet { width: 1200px; height: 630px; overflow: hidden; }
 .studio-snippet-logo { position: absolute; top: 30px; left: 48px; width: 245px; height: auto; }
 .studio-snippet h1 { position: absolute; top: 135px; left: 48px; z-index: 2; font-family: 'Studio Poster', Impact, sans-serif; font-weight: 800; font-variation-settings: 'wdth' 55; font-size: 124px; line-height: .94; letter-spacing: -.015em; }
-.studio-snippet h1 > span { display: block; white-space: nowrap; }
-.studio-snippet mark { color: inherit; background: var(--studio-lime); padding: .025em .035em .01em; margin-left: -.035em; }
 .studio-snippet-description { position: absolute; left: 48px; bottom: 46px; font-size: 25px; line-height: 1.35; letter-spacing: -.035em; }
 .studio-snippet-label { position: absolute; left: 625px; top: 145px; z-index: 2; font-size: 20px; line-height: 1.02; font-weight: 800; letter-spacing: -.04em; }
 .studio-snippet-collage { position: absolute; right: 28px; bottom: 12px; width: 425px; }
-.studio-snippet-art { display: block; width: 100%; height: auto; }
-.studio-snippet-sticker { position: absolute; width: 25%; height: auto; left: 3%; bottom: 22%; transform: rotate(-9deg); }

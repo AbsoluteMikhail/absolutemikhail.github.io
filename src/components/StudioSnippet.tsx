@@ -1,6 +1,5 @@
-import heroCollage from "@/assets/studio/hero-collage.webp";
+import { StudioHeroCollage, StudioHeroTitle } from "@/components/StudioHero";
 import studioLogo from "@/assets/studio/gamepunk-logo.svg";
-import unrealSticker from "@/assets/studio/unreal-five-sticker.webp";
 import { studioCopy } from "@/constants/studioCopy";
 import type { StudioLocale } from "@/lib/studioLocale";
 import "@/components/studio-snippet.css";
@@ -12,13 +11,10 @@ const StudioSnippet = ({ locale }: { locale: StudioLocale }) => {
       <div className="snippet-frame">
         <div id="og-snippet-container" className="studio-page studio-snippet" lang={locale}>
           <img className="studio-snippet-logo" src={studioLogo} width="1756" height="551" alt="GamePunk" />
-          <h1><span><mark>{copy.hero[0]}</mark>.</span><span>{copy.hero[1]}</span><span>{copy.hero[2]}</span></h1>
+          <StudioHeroTitle locale={locale} />
           <p className="studio-snippet-description">{copy.description}<br />{copy.descriptionEnd}</p>
           <p className="studio-snippet-label">{copy.independent[0]}<br />{copy.independent[1]}</p>
-          <div className="studio-snippet-collage">
-            <img className="studio-snippet-art" src={heroCollage} width="1088" height="1440" alt={copy.collageAlt} />
-            <img className="studio-snippet-sticker" src={unrealSticker} width="384" height="351" alt={copy.stickerAlt} />
-          </div>
+          <StudioHeroCollage locale={locale} className="studio-snippet-collage" />
         </div>
       </div>
     </main>

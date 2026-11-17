@@ -13,7 +13,7 @@ import { trackAnalytics } from "@/lib/analytics";
 import { legalHref } from "@/lib/siteContext";
 import { studioCopy } from "@/constants/studioCopy";
 import { studioLocale } from "@/lib/studioLocale";
-import heroCollage from "@/assets/studio/hero-collage.webp";
+import { StudioHeroCollage, StudioHeroTitle } from "@/components/StudioHero";
 import studioLogo from "@/assets/studio/gamepunk-logo.svg";
 import paintArrow from "@/assets/studio/paint-arrow.webp";
 import heroPhoto from "@/assets/hero-photo.webp";
@@ -53,18 +53,12 @@ const Index = () => {
       <main id="main-content" tabIndex={-1}>
         <section className="studio-hero studio-container" aria-labelledby="studio-title">
           <div className="studio-hero-copy">
-            <h1 id="studio-title"><span className="studio-title-line"><span className="studio-title-highlight">{copy.hero[0]}</span>.</span><span className="studio-title-line">{copy.hero[1]}</span><span className="studio-title-line"><span className="studio-title-marked">{copy.hero[2]}<svg viewBox="0 0 600 24" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M7 17C126 4 357 5 591 13" /><path d="M13 19C153 9 375 7 587 15" /></svg></span></span></h1>
+            <StudioHeroTitle locale={locale} />
             <p className="studio-hero-description">{copy.description}<br className="studio-desktop-break" /> {copy.descriptionEnd}</p>
             <a href="#projects" className={buttonStyles({ variant: "unstyled", size: "none", effect: "none", className: "studio-button" })}>{copy.viewProjects} <ArrowDown aria-hidden="true" /></a>
           </div>
           <p className="studio-eyebrow">{copy.independent[0]}<br />{copy.independent[1]}</p>
-          <div className="studio-collage">
-            <img className="studio-collage-art" src={heroCollage} width="1088" height="1440" alt={copy.collageAlt} {...{ fetchpriority: "high" }} />
-            <span className="studio-character-sticker">
-              {copy.characterSticker}<br />
-              <small>{copy.releaseNote}</small>
-            </span>
-          </div>
+          <StudioHeroCollage locale={locale} className="studio-collage" />
         </section>
 
         <section id="projects" className="studio-projects studio-container" aria-labelledby="studio-projects-title">
