@@ -89,9 +89,14 @@
 .studio-manifesto-arrow { width: 100%; transform: rotate(5deg); }
 .studio-people { padding-block: 65px; }
 .studio-people-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 50px; margin-top: 35px; }
-.studio-person { display: flex; flex-direction: column; gap: 25px; min-width: 0; }
+.studio-person { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .studio-person-intro { display: flex; align-items: flex-start; gap: 28px; }
 .studio-portrait { position: relative; flex-shrink: 0; width: 190px; aspect-ratio: 292 / 363; }
+.studio-portrait-image { width: 100%; height: 100%; }
+.studio-portrait[data-state="error"] img { visibility: hidden; }
+.studio-portrait-error { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; padding: 10px; border: 1px dashed #8e8b83; text-align: center; }
+.studio-person .studio-portrait-error p { margin: 0; font-size: 13px; line-height: 1.35; }
+.studio-portrait-error button { min-height: 44px; padding: 5px 8px; font-size: 13px; font-weight: 750; text-decoration: underline; text-underline-offset: 3px; }
 .studio-portrait img { display: block; width: 100%; height: 100%; filter: grayscale(1) contrast(1.12); mix-blend-mode: multiply; clip-path: polygon(0 16%, 31.5% 16%, 32.5% 14%, 35% 11%, 39% 9%, 44% 8%, 49% 7.7%, 55% 8.5%, 60% 10.5%, 64% 14%, 65% 16%, 100% 16%, 100% 100%, 0 100%); }
 .studio-portrait-outline { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; stroke: #ff2787; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
 .studio-portrait-crop { position: absolute; inset: 0; overflow: hidden; clip-path: polygon(0 18%, 20% 18%, 22% 14%, 28% 11%, 38% 8.5%, 45% 8%, 53% 10%, 59% 14%, 63% 18%, 100% 18%, 100% 100%, 0 100%); }
@@ -102,7 +107,9 @@
 .studio-person .studio-person-role { font-size: 16px; font-weight: 750; }
 .studio-person-role span { display: inline; background: var(--studio-lime); box-decoration-break: clone; -webkit-box-decoration-break: clone; padding-inline: 3px; }
 .studio-person .studio-person-specialization { font-size: 13px; }
-.studio-person-note { border-top: 1px solid #8e8b83; padding-top: 18px; }
+.studio-person-note { padding-top: 0; }
+.studio-person-more { font-size: 15px; gap: 8px; }
+.studio-person-more svg { width: 18px; height: 18px; }
 .studio-person-note p { font-size: 22px; font-weight: 700; line-height: 1.25; margin-block: 0 12px; letter-spacing: -.04em; }
 .studio-person-note .studio-person-achievement { font-size: 16px; font-weight: 450; line-height: 1.5; letter-spacing: -.02em; max-width: 420px; }
 .studio-contact { background-color: var(--studio-lime); background-image: url('../assets/studio/ink-speckles.svg'), url('../assets/studio/grain.svg'); padding-block: 32px 38px; mask-image: url('../assets/studio/torn-paper.svg'); mask-size: 100% 100%; }
@@ -146,6 +153,7 @@
   .studio-collage { right: -25px; top: 80px; width: 46%; }
   .studio-manifesto-layout { grid-template-columns: 1fr 140px; gap: 30px; }
   .studio-people-layout { grid-template-columns: 1fr; gap: 40px; }
+  .studio-person:not(:last-child) { padding-bottom: 28px; border-bottom: 1px solid #8e8b83; }
   .studio-person-intro { gap: 20px; }
   .studio-portrait { width: 130px; }
   .studio-person h3 { font-size: 23px; }

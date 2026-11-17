@@ -43,7 +43,7 @@ describe("studio languages", () => {
     expect(screen.getByRole("link", { name: "Academy (in Russian)" })).toHaveAttribute("href", "/academy/");
     expect(screen.getByRole("link", { name: "Privacy" })).toHaveAttribute("href", "/en/privacy/");
     expect(screen.getByRole("link", { name: "Terms" })).toHaveAttribute("href", "/en/terms/");
-    expect(screen.getByRole("link", { name: "Personal page (in Russian)" })).toHaveAttribute("href", "/mikhail/");
+    expect(screen.getByRole("link", { name: "More (in Russian)" })).toHaveAttribute("href", "/mikhail/");
     fireEvent.click(screen.getByRole("link", { name: "Explore game: DUELANT" }));
     expect(screen.getByRole("link", { name: "Project page (in Russian)" })).toHaveAttribute("href", "/projects/duelant/");
   });

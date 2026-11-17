@@ -10,8 +10,8 @@ describe("studio homepage", () => {
     expect(container.querySelector('a[href="/projects/duelant/"]')).not.toBeNull();
     expect(container.querySelector('a[href="/projects/gribnik/"]')).not.toBeNull();
     expect(container.querySelector('a[href="https://t.me/MalenaOnline_bot"]')).toHaveAttribute("rel", "noopener noreferrer");
-    expect(screen.getByRole("link", { name: "Личная страница" })).toHaveAttribute("href", "/mikhail/");
-    expect(screen.getAllByRole("link", { name: "Проекты Михаила" }).every(link => link.getAttribute("href") === "/projects/")).toBe(true);
+    expect(screen.getByRole("link", { name: "Подробнее" })).toHaveAttribute("href", "/mikhail/");
+    expect(screen.queryByRole("link", { name: "Проекты Михаила" })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Академия" })).toHaveAttribute("href", "/academy/");
     expect(container.querySelectorAll('a[href^="#"]')).not.toHaveLength(0);
     for (const link of container.querySelectorAll('a[href^="#"]')) {
