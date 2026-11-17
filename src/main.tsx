@@ -3,9 +3,11 @@ import { applyDocumentTheme, getThemePreference, resolveAppliedTheme } from "@/l
 import { installAssetRecovery } from "@/lib/assetRecovery";
 import { bootstrapApplication } from "@/lib/bootstrapApplication";
 import { loadInitialPage } from "@/lib/appRoutes";
+import { studioLocale } from "@/lib/studioLocale";
 import "./index.css";
 
 applyDocumentTheme(resolveAppliedTheme(getThemePreference(), window.location.pathname));
+document.documentElement.lang = studioLocale(window.location.pathname);
 
 const rootElement = document.getElementById("root")!;
 installAssetRecovery();

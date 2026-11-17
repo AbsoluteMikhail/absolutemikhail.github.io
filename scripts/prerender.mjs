@@ -86,7 +86,8 @@ const renderRouteHtml = (pathname, metadata, renderedMarkup = "") => {
     [/<meta\b[^>]*\bproperty=["']og:title["'][^>]*>/i, `<meta property="og:title" content="${title}" />`],
     [/<meta\b[^>]*\bproperty=["']og:description["'][^>]*>/i, `<meta property="og:description" content="${description}" />`],
     [/<meta\b[^>]*\bproperty=["']og:url["'][^>]*>/i, `<meta property="og:url" content="${pageUrl}" />`],
-    [/<meta\b[^>]*\bproperty=["']og:site_name["'][^>]*>/i, `<meta property="og:site_name" content="Absolute Mikhail" />`],
+    [/<meta\b[^>]*\bproperty=["']og:site_name["'][^>]*>/i, `<meta property="og:site_name" content="${escapeAttribute(metadata.siteName ?? (metadata.alternates ? "GamePunk" : "Absolute Mikhail"))}" />`],
+    [/<meta\b[^>]*\bproperty=["']og:locale["'][^>]*>/i, `<meta property="og:locale" content="${metadata.language === "en" ? "en_US" : "ru_RU"}" />`],
     [/<meta\b[^>]*\bproperty=["']og:type["'][^>]*>/i, `<meta property="og:type" content="${ogType}" />`],
     [/<meta\b[^>]*\bproperty=["']og:image["'][^>]*>/i, `<meta property="og:image" content="${image}" />`],
     [/<meta\b[^>]*\bproperty=["']og:image:alt["'][^>]*>/i, `<meta property="og:image:alt" content="${imageAlt}" />`],
@@ -102,7 +103,7 @@ const renderRouteHtml = (pathname, metadata, renderedMarkup = "") => {
     );
   }
 
-  const documentTemplate = ["/privacy", "/terms", "/malena/privacy"].includes(pathname)
+  const documentTemplate = ["/privacy", "/terms", "/en/privacy", "/en/terms", "/malena/privacy"].includes(pathname)
     ? template.replace(/\s*<!-- Local command queue only:[\s\S]*?<\/script>/i, "")
     : template;
   const routeTemplate = pathname === "/malena/privacy"
@@ -116,6 +117,13 @@ const renderRouteHtml = (pathname, metadata, renderedMarkup = "") => {
     (html, [matcher, tag]) => replaceOrInsertHeadTag(html, matcher, tag),
     routeTemplate,
   );
+  html = html.replace(/<html\b[^>]*\blang="[^"]*"/i, `<html lang="${metadata.language ?? "ru"}"`);
+  if (metadata.language === "en") {
+    html = html.replace(/(<p class="noscript-contact-notice">)[\s\S]*?(<\/p>)/, "$1Enable JavaScript in your browser to reveal contact details and get in touch.$2");
+  }
+  for (const alternate of metadata.alternates ?? []) {
+    html = html.replace("</head>", `    <link rel="alternate" hreflang="${alternate.language}" href="${canonicalUrl(alternate.pathname)}" />\n  </head>`);
+  }
   if (!imageWidth || !imageHeight) {
     html = removeHeadTag(html, /\s*<meta\b[^>]*\bproperty=["']og:image:width["'][^>]*>/i);
     html = removeHeadTag(html, /\s*<meta\b[^>]*\bproperty=["']og:image:height["'][^>]*>/i);
@@ -151,20 +159,23 @@ const validateHtml = (html, pathname) => {
       throw new Error(`${pathname}: public project and profile pages must be prerendered`);
     }
   }
-  if (pathname === "/") {
+  if (pathname === "/mikhail") {
     const { document } = new JSDOM(html).window;
     const disclosures = [...document.querySelectorAll("#faq details")];
     if (!disclosures.length || disclosures.some((item) => !item.querySelector("summary") || !item.querySelector("p")?.textContent.trim())) {
       throw new Error("Homepage FAQ answers must be readable without JavaScript");
     }
   }
-  if (pathname === "/privacy" || pathname === "/terms") {
+  if (/^\/(en\/)?(privacy|terms)$/.test(pathname)) {
     const { document } = new JSDOM(html).window;
     if (document.querySelectorAll("h1").length !== 1 || !document.querySelector("article section")) {
       throw new Error(`${pathname}: legal document must be readable in the prerendered HTML`);
     }
     if (!document.querySelector('meta[name="robots"]')?.content.includes("noindex")) {
       throw new Error(`${pathname}: legal route must retain noindex`);
+    }
+    if (pathname.startsWith("/en/") && /[А-Яа-яЁё]/.test(document.body.textContent)) {
+      throw new Error(`${pathname}: English legal document contains untranslated text`);
     }
   }
   if (pathname !== "/academy" && !pathname.startsWith("/academy/")) return;
@@ -189,7 +200,7 @@ for (const pathname of outputPaths) {
     ? distDirectory
     : resolve(distDirectory, pathname.slice(1));
   const outputPath = resolve(outputDirectory, "index.html");
-  const html = pathname === "/"
+  const html = pathname === "/mikhail"
     ? prioritizeHomepageLcp(renderRouteHtml(pathname, metadata, renderedMarkup))
     : renderRouteHtml(pathname, metadata, renderedMarkup);
   validateHtml(html, pathname);

@@ -43,12 +43,22 @@ const RouteMetadata = () => {
       const height = metadata.image ? metadata.imageHeight : defaultSocialImage.height;
 
       document.title = metadata.title;
+      document.documentElement.lang = metadata.language ?? "ru";
+      upsertMeta('meta[property="og:locale"]', "property", "og:locale", metadata.language === "en" ? "en_US" : "ru_RU");
+      document.head.querySelectorAll('link[rel="alternate"][hreflang]').forEach(link => link.remove());
+      for (const alternate of metadata.alternates ?? []) {
+        const link = document.createElement("link");
+        link.rel = "alternate";
+        link.hreflang = alternate.language;
+        link.href = canonicalUrl(alternate.pathname);
+        document.head.appendChild(link);
+      }
       upsertMeta('meta[name="description"]', "name", "description", metadata.description);
       upsertMeta('meta[name="robots"]', "name", "robots", metadata.robots ?? "index, follow");
       upsertMeta('meta[property="og:title"]', "property", "og:title", metadata.title);
       upsertMeta('meta[property="og:description"]', "property", "og:description", metadata.description);
       upsertMeta('meta[property="og:url"]', "property", "og:url", canonicalUrl(normalizedPathname));
-      upsertMeta('meta[property="og:site_name"]', "property", "og:site_name", "Absolute Mikhail");
+      upsertMeta('meta[property="og:site_name"]', "property", "og:site_name", metadata.siteName ?? (metadata.alternates ? "GamePunk" : "Absolute Mikhail"));
       upsertMeta('meta[property="og:type"]', "property", "og:type", metadata.ogType ?? "website");
       upsertMeta('meta[property="og:image"]', "property", "og:image", image);
       upsertMeta('meta[property="og:image:alt"]', "property", "og:image:alt", imageAlt);

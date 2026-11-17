@@ -19,8 +19,14 @@ describe("client route metadata", () => {
       "/games/",
       "/academy/ai-intro/01-first-steps/",
       "/academy/topics/tools/",
+      "/academy/",
       "/malena/privacy/",
       "/",
+      "/en/",
+      "/en/privacy/",
+      "/en/terms/",
+      "/privacy/",
+      "/mikhail/",
       "/projects/not-a-game/",
     ];
     render(<MemoryRouter initialEntries={[paths[0]]}>
@@ -34,8 +40,12 @@ describe("client route metadata", () => {
       const data = getPageStructuredData(metadata);
       await waitFor(() => {
         expect(document.title).toBe(metadata.title);
+        expect(document.documentElement.lang).toBe(metadata.language ?? "ru");
+        const alternates = [...document.head.querySelectorAll<HTMLLinkElement>('link[rel="alternate"][hreflang]')];
+        expect(alternates.map(link => [link.hreflang, link.href])).toEqual((metadata.alternates ?? []).map(link => [link.language, canonicalUrl(link.pathname)]));
         expect(document.head.querySelector('link[rel="canonical"]')).toHaveAttribute("href", canonicalUrl(path));
         expect(document.head.querySelector('meta[name="robots"]')).toHaveAttribute("content", metadata.robots);
+        expect(document.head.querySelector('meta[property="og:site_name"]')).toHaveAttribute("content", metadata.siteName ?? (metadata.alternates ? "GamePunk" : "Absolute Mikhail"));
         const scripts = document.head.querySelectorAll("#structured-data");
         expect(scripts).toHaveLength(data ? 1 : 0);
         if (data) expect(JSON.parse(scripts[0].textContent!)).toEqual(data);

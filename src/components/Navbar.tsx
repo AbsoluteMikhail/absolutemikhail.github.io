@@ -16,7 +16,7 @@ const Navbar = () => {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuId = useId();
   const location = useLocation();
-  const isHomePage = location.pathname === "/";
+  const isHomePage = location.pathname.replace(/\/+$/, "") === "/mikhail";
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -46,6 +46,7 @@ const Navbar = () => {
   }, [isOpen]);
 
   const navLinks = [
+    { label: "GamePunk", href: "/" },
     { label: "Игры", href: "#games" },
     { label: "Академия", href: "/academy" },
     { label: "Менторинг", href: "#mentoring" },
@@ -86,7 +87,7 @@ const Navbar = () => {
               ) : (
                 <Link
                   key={link.label}
-                  to={trailingPath(link.href.startsWith("#") ? `/${link.href}` : link.href)}
+                  to={trailingPath(link.href.startsWith("#") ? `/mikhail/${link.href}` : link.href)}
                   className="text-xs font-display tracking-wider uppercase text-foreground/80 hover:text-primary transition-colors"
                 >
                   {link.label}
@@ -146,7 +147,7 @@ const Navbar = () => {
                 ) : (
                   <Link
                     key={link.label}
-                    to={trailingPath(link.href.startsWith("#") ? `/${link.href}` : link.href)}
+                    to={trailingPath(link.href.startsWith("#") ? `/mikhail/${link.href}` : link.href)}
                     onClick={() => setIsOpen(false)}
                     className="text-xl font-display tracking-wider uppercase text-foreground hover:text-primary transition-colors border-b border-border py-4"
                   >

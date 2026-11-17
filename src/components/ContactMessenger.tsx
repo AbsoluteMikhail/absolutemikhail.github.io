@@ -1,4 +1,7 @@
 import { motionInitial } from "@/lib/motion";
+import { trackAnalytics } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
+import "@/components/studio-surfaces.css";
 import { useId, useState, type ReactNode, type Ref, type RefObject } from "react";
 import { motion } from "framer-motion";
 import Modal from "@/components/ui/modal";
@@ -17,6 +20,9 @@ import {
 } from "@/constants/contactLinks";
 
 interface ContactMessengerProps extends ButtonStyleProps {
+  studio?: boolean;
+  analyticsPlacement?: "header" | "contact";
+  locale?: "ru" | "en";
   children?: ReactNode;
   message?: string;
   onOpen?: () => void;
@@ -69,6 +75,9 @@ const MessengerOption = ({ icon, title, description, onClick, textClassName }: M
 
 export const ContactMessenger = ({
   className,
+  studio = false,
+  analyticsPlacement,
+  locale = "ru",
   children,
   message,
   onOpen,
@@ -78,11 +87,13 @@ export const ContactMessenger = ({
   size,
   effect,
 }: ContactMessengerProps) => {
+  const en = locale === "en";
   const [isOpen, setIsOpen] = useState(false);
   const [discordCopied, setDiscordCopied] = useState(false);
   const titleId = useId();
 
   const openMessenger = (messenger: "max" | "telegram") => {
+    if (analyticsPlacement) trackAnalytics("contact_select", { placement: analyticsPlacement, contact_method: messenger });
     const baseUrl = decodeContactLink(encodedContactLinks[messenger]);
     const url =
       messenger === "telegram" && message
@@ -94,6 +105,7 @@ export const ContactMessenger = ({
   };
 
   const openDiscord = () => {
+    if (analyticsPlacement) trackAnalytics("contact_select", { placement: analyticsPlacement, contact_method: "discord" });
     const discordUsername = decodeContactLink(encodedDiscordUsername);
     void navigator.clipboard
       .writeText(discordUsername)
@@ -107,6 +119,7 @@ export const ContactMessenger = ({
   };
 
   const openEmail = () => {
+    if (analyticsPlacement) trackAnalytics("contact_select", { placement: analyticsPlacement, contact_method: "email" });
     window.location.href = decodeContactLink(encodedContactLinks.email);
     setIsOpen(false);
   };
@@ -117,10 +130,10 @@ export const ContactMessenger = ({
       onClose={() => setIsOpen(false)}
       labelledBy={titleId}
       returnFocusRef={returnFocusRef}
-      className="backdrop:bg-background/85 backdrop:backdrop-blur-md"
+      className={cn("backdrop:bg-background/85 backdrop:backdrop-blur-md", studio && "studio-dialog")}
     >
       <motion.div
-        className="relative max-h-[calc(100svh-2rem)] w-full max-w-sm overflow-y-auto rounded-xl border border-border bg-card p-6 shadow-2xl shadow-black/40 [html.light_&]:shadow-foreground/20"
+        className={cn("relative max-h-[calc(100svh-2rem)] w-full max-w-sm overflow-y-auto rounded-xl border border-border bg-card p-6 shadow-2xl shadow-black/40 [html.light_&]:shadow-foreground/20", studio && "studio-surface studio-contact-sheet")}
         initial={motionInitial({ opacity: 0, y: 18, scale: 0.96 })}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.2 }}
@@ -130,17 +143,17 @@ export const ContactMessenger = ({
           variant="quiet"
           onClick={() => setIsOpen(false)}
           className="absolute right-4 top-4"
-          aria-label="Закрыть окно связи"
+          aria-label={en ? "Close contact options" : "Закрыть окно связи"}
         >
           <X className="h-5 w-5" />
         </IconButton>
 
         <div className="pr-10">
           <h2 id={titleId} className="font-display text-2xl font-bold">
-            Где вам удобнее?
+            {en ? "How would you like to get in touch?" : "Где вам удобнее?"}
           </h2>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            Выберите удобный способ связи — отвечу лично.
+            {en ? "Choose a way to reach us — Mikhail will reply personally." : "Выберите удобный способ связи — отвечу лично."}
           </p>
         </div>
 
@@ -150,36 +163,35 @@ export const ContactMessenger = ({
               key={option.id}
               onClick={() => openMessenger(option.id)}
               icon={<option.icon className="h-6 w-6" />}
-              title={option.label}
-              description={option.description}
+              title={en ? `Message on ${option.id === "max" ? "MAX" : "Telegram"}` : option.label}
+              description={en ? (option.id === "max" ? "Open a personal profile" : "Open a private chat") : option.description}
             />
           ))}
 
           <MessengerOption
             onClick={openDiscord}
             icon={<DiscordIcon className="h-6 w-6" />}
-            title="Написать в Discord"
+            title={en ? "Message on Discord" : "Написать в Discord"}
             textClassName="min-w-0 flex-1"
             description={discordCopied ? (
               <span className="inline-flex items-center gap-1 text-emerald-400 [html.light_&]:text-emerald-800">
-                <Check className="h-3 w-3" /> Ник скопирован
+                <Check className="h-3 w-3" /> {en ? "Username copied" : "Ник скопирован"}
               </span>
             ) : (
-              <>Профиль откроется после нажатия</>
+              <>{en ? "Click to open the profile" : "Профиль откроется после нажатия"}</>
             )}
           />
 
           <MessengerOption
             onClick={openEmail}
             icon={<Mail className="h-6 w-6" />}
-            title="Написать по почте"
-            description="Открыть почтовое приложение"
+            title={en ? "Send an email" : "Написать по почте"}
+            description={en ? "Open your email app" : "Открыть почтовое приложение"}
           />
         </div>
 
         <p className="mt-5 text-center text-[11px] leading-5 text-muted-foreground/70">
-          Ссылки открываются только после вашего выбора — это снижает
-          количество автоматического спама.
+          {en ? "Contact links are revealed only when you choose an option to help reduce automated spam." : "Ссылки открываются только после вашего выбора — это снижает количество автоматического спама."}
         </p>
       </motion.div>
     </Modal>
@@ -194,13 +206,14 @@ export const ContactMessenger = ({
         size={size}
         effect={effect}
         onClick={() => {
+          if (analyticsPlacement) trackAnalytics("contact_open", { placement: analyticsPlacement });
           onOpen?.();
           setDiscordCopied(false);
           setIsOpen(true);
         }}
         className={className}
       >
-        {children || "Связаться"}
+        {children || (en ? "Contact" : "Связаться")}
       </Button>
       {modal}
     </>

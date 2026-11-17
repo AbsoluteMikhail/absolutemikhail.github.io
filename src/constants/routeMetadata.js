@@ -3,7 +3,22 @@ export const siteUrl = "https://gamepunk.ru";
 /** @type {(import("../lib/pageMetadata").PageMetadata & { path: string, match: "exact" | "prefix" })[]} */
 export const routeMetadata = [
   {
+    path: "/en",
+    match: "exact",
+    title: "GamePunk — independent game studio",
+    description: "We make games and other things we wish existed. Explore GamePunk’s projects, manifesto and the people behind them.",
+    language: "en",
+    robots: "index, follow",
+  },
+  {
     path: "/",
+    match: "exact",
+    title: "GamePunk — независимая студия игр и экспериментов",
+    description: "Делаем игры и другие штуки, которых нам самим не хватает. Проекты GamePunk, манифест и люди за ними.",
+    robots: "index, follow",
+  },
+  {
+    path: "/mikhail",
     match: "exact",
     title: "Михаил Ефремов / Absolute Mikhail — игры, опыт и менторинг Unreal Engine",
     description:
@@ -46,6 +61,22 @@ export const routeMetadata = [
     match: "exact",
     title: "Пользовательское соглашение | Absolute Mikhail",
     description: "Условия использования материалов gamepunk.ru и свободная лицензия на авторские учебные примеры кода.",
+    robots: "noindex, follow",
+  },
+  {
+    path: "/en/privacy",
+    match: "exact",
+    title: "Privacy Policy | GamePunk",
+    description: "How gamepunk.ru uses analytics, handles enquiries and lets you manage your privacy choices.",
+    language: "en",
+    robots: "noindex, follow",
+  },
+  {
+    path: "/en/terms",
+    match: "exact",
+    title: "Terms of Use | GamePunk",
+    description: "Terms for using gamepunk.ru materials and the free license for original educational code examples.",
+    language: "en",
     robots: "noindex, follow",
   },
   {

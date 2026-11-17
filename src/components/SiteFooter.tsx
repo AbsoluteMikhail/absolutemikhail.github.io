@@ -18,7 +18,7 @@ interface SiteFooterProps {
 }
 
 const SiteFooter = ({ projectsPage = false }: SiteFooterProps) => {
-  const homePrefix = projectsPage ? "/" : "";
+  const homePrefix = projectsPage ? "/mikhail/" : "";
 
   return (
     <>

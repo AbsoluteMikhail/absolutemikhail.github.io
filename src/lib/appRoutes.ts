@@ -5,6 +5,8 @@ import { matchRoutes } from "react-router-dom";
 // Keep the catch-all last; loaders keep heavy pages out of the initial bundle.
 export const appRoutes = [
   { id: "home", path: "/", load: () => import("@/pages/Index") },
+  { id: "home", path: "/en", load: () => import("@/pages/Index") },
+  { id: "mikhail", path: "/mikhail", load: () => import("@/pages/Mikhail") },
   { id: "games", path: "/games", load: () => import("@/pages/Games") },
   { id: "projects", path: "/projects", load: () => import("@/pages/Projects") },
   { id: "project", path: "/projects/:slug", load: () => import("@/pages/Project") },
@@ -13,6 +15,8 @@ export const appRoutes = [
   { id: "snippet", path: "/snippet", load: () => import("@/pages/OGSnippet") },
   { id: "legal", path: "/privacy", load: () => import("@/pages/Legal") },
   { id: "legal", path: "/terms", load: () => import("@/pages/Legal") },
+  { id: "legal", path: "/en/privacy", load: () => import("@/pages/Legal") },
+  { id: "legal", path: "/en/terms", load: () => import("@/pages/Legal") },
   { id: "academy", path: "/academy/*", load: () => import("@/pages/Academy") },
   { id: "malenaPrivacy", path: "/malena/privacy", load: () => import("@/pages/MalenaPrivacy") },
   { id: "notFound", path: "*", load: () => import("@/pages/NotFound") },

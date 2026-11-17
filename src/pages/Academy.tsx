@@ -103,7 +103,7 @@ const AcademyShell = ({ children }: { children: React.ReactNode }) => (
       <InstructorBadgeNotice className="mx-auto mb-6 max-w-4xl" />
       <p className="mb-3 text-center text-sm leading-6 text-muted-foreground">
         Мой учебный код можно свободно использовать в своих проектах. Упоминание автора — по желанию.
-        {" "}<a className="underline underline-offset-4" href="/terms/#educational-code">Условия и лицензия 0BSD</a>
+        {" "}<a className="underline underline-offset-4" href="/terms/?from=academy#educational-code">Условия и лицензия 0BSD</a>
       </p>
       <LegalLinks />
     </footer>

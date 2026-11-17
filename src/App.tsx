@@ -1,6 +1,6 @@
 import { lazy, Suspense, type ComponentType } from "react";
 import { MotionConfig } from "framer-motion";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import ScrollToHashElement from "./components/ScrollToHashElement";
 import RouteMetadata from "./components/RouteMetadata";
 import CustomCursor from "./components/CustomCursor";
@@ -8,14 +8,19 @@ import PrivacyControls from "@/components/PrivacyControls";
 import { ThemeSync } from "@/lib/theme";
 import { AppErrorBoundary } from "@/components/AppErrorBoundary";
 import { appRoutes, type AppRouteId } from "@/lib/appRoutes";
+import { studioLocale } from "@/lib/studioLocale";
+import { isStudioContext, siteContext } from "@/lib/siteContext";
 
 const lazyRoutes = appRoutes.map((route) => ({ ...route, Page: lazy(route.load) }));
 
-const PageFallback = () => (
+const PageFallback = () => {
+  const { pathname } = useLocation();
+  return (
   <div role="status" className="flex min-h-screen items-center justify-center bg-background text-sm text-muted-foreground">
-    Загрузка…
+    {studioLocale(pathname) === "en" ? "Loading…" : "Загрузка…"}
   </div>
-);
+  );
+};
 
 export type InitialRoute = AppRouteId;
 
@@ -32,6 +37,7 @@ const getRouteElement = (
 ) => (initialRoute === route && InitialPage ? <InitialPage /> : <LazyPage />);
 
 export const AppContent = ({ InitialPage, initialRoute }: AppContentProps = {}) => {
+  const { pathname, search } = useLocation();
   const routes = (
     <Routes>
       {lazyRoutes.map(({ id, path, Page }) => (
@@ -42,6 +48,7 @@ export const AppContent = ({ InitialPage, initialRoute }: AppContentProps = {}) 
 
   return (
     <MotionConfig reducedMotion="user">
+      {!isStudioContext(siteContext(pathname, search)) && <CustomCursor />}
       <ScrollToHashElement />
       <RouteMetadata />
       <ThemeSync />
@@ -53,7 +60,6 @@ export const AppContent = ({ InitialPage, initialRoute }: AppContentProps = {}) 
 
 const App = (props: AppContentProps) => (
   <AppErrorBoundary>
-    <CustomCursor />
     <BrowserRouter>
       <AppContent {...props} />
     </BrowserRouter>

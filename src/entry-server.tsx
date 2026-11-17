@@ -3,7 +3,6 @@ import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import { AppContent } from "./App";
 import { loadInitialPage } from "@/lib/appRoutes";
-import CustomCursor from "./components/CustomCursor";
 import { academyCourses, academyTopics } from "./lib/academy";
 export { resolvePageMetadata } from "@/lib/resolvePageMetadata";
 
@@ -16,6 +15,8 @@ const academyTopicPaths = academyTopics.map((topic) => `/academy/topics/${topic.
 
 export const prerenderPaths = [
   "/",
+  "/en",
+  "/mikhail",
   "/games",
   "/projects",
   "/snippet",
@@ -24,6 +25,8 @@ export const prerenderPaths = [
   "/malena/privacy",
   "/privacy",
   "/terms",
+  "/en/privacy",
+  "/en/terms",
   ...academyTopicPaths,
   ...academyPaths,
 ];
@@ -35,7 +38,6 @@ export const render = async (url: string) => {
   // streaming output for Cyrillic attributes on the local Node runtime.
   return renderToString(
     <>
-      <CustomCursor />
       <StaticRouter location={url}>
         <AppContent {...initialPage} />
       </StaticRouter>

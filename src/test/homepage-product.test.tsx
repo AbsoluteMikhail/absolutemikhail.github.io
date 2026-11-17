@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import AcademySection from "@/components/AcademySection";
 import GamesSection from "@/components/GamesSection";
 import MentoringSection from "@/components/MentoringSection";
-import Index from "@/pages/Index";
+import Index from "@/pages/Mikhail";
 import { featuredProjects } from "@/constants/projects";
 import { academyHighlights, resolveAcademyHighlights } from "@/content/academyHighlights";
 import {

@@ -1,8 +1,11 @@
 import { useEffect } from "react";
-import { useLocation, useNavigationType } from "react-router-dom";
+import { useLocation, useNavigate, useNavigationType } from "react-router-dom";
+
+const portfolioAnchors = new Set(["about", "games", "academy", "mentoring", "production", "timeline", "proof", "foundation", "workshop", "faq", "mentee-reviews"]);
 
 const ScrollToHashElement = () => {
-  const { hash, key } = useLocation();
+  const { hash, key, pathname, search } = useLocation();
+  const navigate = useNavigate();
   const navigationType = useNavigationType();
 
   useEffect(() => {
@@ -18,6 +21,12 @@ const ScrollToHashElement = () => {
       id = decodeURIComponent(id);
     } catch {
       // A malformed escape sequence must not break navigation.
+    }
+
+    // Preserve bookmarks to the portfolio that used to live at the root.
+    if (pathname === "/" && portfolioAnchors.has(id)) {
+      navigate({ pathname: "/mikhail/", search, hash }, { replace: true });
+      return;
     }
 
     let frame = 0;
@@ -69,7 +78,7 @@ const ScrollToHashElement = () => {
       window.cancelAnimationFrame(frame);
       stopFollowing();
     };
-  }, [hash, key, navigationType]);
+  }, [hash, key, navigationType, pathname, search, navigate]);
 
   return null;
 };

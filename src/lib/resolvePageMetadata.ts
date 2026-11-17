@@ -1,12 +1,22 @@
 import { telegramCommunityUrl } from "@/constants/contactLinks";
 import { canonicalUrl, findRouteMetadata, normalizePathname, notFoundMetadata, siteUrl } from "@/constants/routeMetadata.js";
 import type { PageMetadata } from "@/lib/pageMetadata";
+import { isStudioPath, studioLocale } from "@/lib/studioLocale";
 
 // Shared by client navigation and the static HTML generator. The portfolio
 // does not download Academy's catalog unless an Academy URL is requested.
 export const resolvePageMetadata = async (pathname: string): Promise<PageMetadata> => {
   const path = normalizePathname(pathname);
-  if (path === "/") return homeMetadata();
+  if (path === "/mikhail") return homeMetadata();
+  if (isStudioPath(path)) {
+    const metadata = findRouteMetadata(path)!;
+    const language = studioLocale(path);
+    return { ...metadata, language, alternates: [{ language: "ru", pathname: "/" }, { language: "en", pathname: "/en/" }], image: language === "en" ? "/studio-social-en.png" : "/studio-social.png", imageAlt: language === "en" ? "GamePunk — independent studio" : "GamePunk — есть идея, будет громко", imageWidth: 1200, imageHeight: 630, structuredData: { "@context": "https://schema.org", "@type": "Organization", name: "GamePunk", url: canonicalUrl(path), description: metadata.description } };
+  }
+  if (/^\/(en\/)?(privacy|terms)$/.test(path)) {
+    const documentPath = path.replace(/^\/en/, "");
+    return { ...findRouteMetadata(path)!, language: studioLocale(path), alternates: [{ language: "ru", pathname: `${documentPath}/` }, { language: "en", pathname: `/en${documentPath}/` }] };
+  }
   if (path === "/projects") {
     const { projectsIndexMetadata } = await import("@/lib/projectPages");
     return projectsIndexMetadata();
@@ -24,15 +34,20 @@ export const resolvePageMetadata = async (pathname: string): Promise<PageMetadat
 };
 
 const homeMetadata = (): PageMetadata => {
-  const metadata = findRouteMetadata("/")!;
+  const metadata = findRouteMetadata("/mikhail")!;
   return {
     ...metadata,
+    siteName: "Absolute Mikhail",
+    image: "/snippet.jpg",
+    imageAlt: "Михаил Ефремов — Senior Gameplay Programmer и Unreal Authorized Instructor",
+    imageWidth: 1200,
+    imageHeight: 630,
     structuredData: {
       "@context": "https://schema.org",
       "@type": "Person",
       name: "Михаил Ефремов",
       alternateName: "Absolute Mikhail",
-      url: canonicalUrl("/"),
+      url: canonicalUrl("/mikhail"),
       jobTitle: "Senior Gameplay Programmer",
       description: metadata.description,
       image: `${siteUrl}/snippet.jpg`,

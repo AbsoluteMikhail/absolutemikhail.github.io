@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import PrivacyControls from "@/components/PrivacyControls";
@@ -43,6 +43,19 @@ afterEach(() => {
 });
 
 describe("analytics choice", () => {
+  it("uses English controls and shares the saved choice with the Russian site", async () => {
+    render(<MemoryRouter initialEntries={["/en/"]}><PrivacyControls /></MemoryRouter>);
+    expect(screen.getByRole("complementary", { name: "Analytics choice" })).toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: "Without analytics" }));
+    expect(getAnalyticsChoice()).toBe("rejected");
+    expect(loaders()).toHaveLength(0);
+    act(() => window.dispatchEvent(new Event("gamepunk-privacy-settings")));
+    expect(screen.getByRole("dialog", { name: "Analytics settings" })).toBeVisible();
+    await waitFor(() => expect(screen.getByText("Analytics are currently disabled.")).toBeVisible());
+    fireEvent.click(screen.getByRole("button", { name: "Close analytics settings" }));
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
+
   it.each(["expiry", "storage removal"])("shows the banner after %s despite the HTML bootstrap class", (reason) => {
     const now = Date.now();
     vi.spyOn(Date, "now").mockReturnValue(now);
@@ -116,7 +129,7 @@ describe("analytics choice", () => {
     expect(stopAnalytics()).toBe(false);
   });
 
-  it.each(["/privacy", "/terms", "/malena/privacy", "/malena/privacy/", "/MALENA/PRIVACY", "/music", "/twitch", "/snippet"])("never starts counters on %s, even with a saved approval", (path) => {
+  it.each(["/privacy", "/terms", "/en/privacy", "/en/terms/", "/malena/privacy", "/malena/privacy/", "/MALENA/PRIVACY", "/music", "/twitch", "/snippet"])("never starts counters on %s, even with a saved approval", (path) => {
     saveAnalyticsChoice("accepted");
     window.history.replaceState(null, "", path);
     render(<MemoryRouter initialEntries={[path]}><PrivacyControls /></MemoryRouter>);

@@ -75,7 +75,11 @@ const Modal = ({ isOpen, onClose, labelledBy, children, className, returnFocusRe
         }
       }}
       onMouseDown={(event) => {
-        if (event.target === event.currentTarget) onClose();
+        if (event.target === event.currentTarget) {
+          // Do not let the backdrop's default focus action undo focus restoration.
+          event.preventDefault();
+          onClose();
+        }
       }}
     >
       {children}

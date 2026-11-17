@@ -1,5 +1,5 @@
 import { getAcademyCourse, getAcademyCoursesByTopic, getAcademyLesson, getAcademyTopic, getLatestAcademyUpdate, academyCourses, type AcademyCourse, type AcademyLesson, type AcademyTopic } from "@/lib/academy";
-import { absoluteUrl, canonicalUrl, findRouteMetadata, normalizePathname, notFoundMetadata, siteUrl } from "@/constants/routeMetadata.js";
+import { absoluteUrl, canonicalUrl, findRouteMetadata, normalizePathname, notFoundMetadata } from "@/constants/routeMetadata.js";
 import { publicImageMeta } from "@/lib/publicImageMeta";
 import type { PageMetadata } from "@/lib/pageMetadata";
 
@@ -31,7 +31,7 @@ export const getAcademyRoute = (pathname: string): AcademyRoute => {
 const mikhail = {
   "@type": "Person",
   name: "Михаил Ефремов",
-  url: `${siteUrl}/`,
+  url: canonicalUrl("/mikhail"),
 };
 
 // The catalogue uses "course" routes for standalone articles and collections too.
@@ -50,6 +50,14 @@ const imageFields = (src?: string, alt?: string) => {
     imageWidth: size?.width,
     imageHeight: size?.height,
   };
+};
+
+const academyIdentity = {
+  siteName: "Absolute Mikhail Academy",
+  image: "/academy-social.jpg",
+  imageAlt: "Absolute Mikhail Academy — Unreal Engine, C++, нейросети и инструменты",
+  imageWidth: 1200,
+  imageHeight: 630,
 };
 
 const courseList = (courses: readonly AcademyCourse[]) => ({
@@ -73,6 +81,7 @@ export const getAcademyMetadata = (pathname: string): PageMetadata => {
   if (route.type === "home") {
     return {
       ...findRouteMetadata("/academy")!,
+      ...academyIdentity,
       updated: getLatestAcademyUpdate(academyCourses),
       breadcrumbs,
       structuredData: courseList(academyCourses),
@@ -91,7 +100,7 @@ export const getAcademyMetadata = (pathname: string): PageMetadata => {
       breadcrumbs.push({ name: route.lesson.meta.title, pathname: `/academy/${route.course.slug}/${route.lesson.slug}` });
     }
   }
-  const base = { title: `${title} | Absolute Mikhail Academy`, description, robots: "index, follow", breadcrumbs };
+  const base = { ...academyIdentity, title: `${title} | Absolute Mikhail Academy`, description, robots: "index, follow", breadcrumbs };
   if (route.type === "topic") {
     const courses = getAcademyCoursesByTopic(route.topic.slug);
     return {

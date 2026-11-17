@@ -7,6 +7,11 @@ afterEach(() => vi.restoreAllMocks());
 describe("shared application routes", () => {
   it.each([
     ["/", "home"],
+    ["/en", "home"],
+    ["/en/", "home"],
+    ["/en/academy", "notFound"],
+    ["/mikhail", "mikhail"],
+    ["/mikhail/", "mikhail"],
     ["/games", "games"],
     ["/games/", "games"],
     ["/projects", "projects"],
@@ -15,6 +20,8 @@ describe("shared application routes", () => {
     ["/snippet/", "snippet"],
     ["/privacy/", "legal"],
     ["/terms/", "legal"],
+    ["/en/privacy/", "legal"],
+    ["/en/terms/", "legal"],
     ["/malena/privacy/", "malenaPrivacy"],
     ["/academy", "academy"],
     ["/academy/ai-intro/01-first-steps/", "academy"],

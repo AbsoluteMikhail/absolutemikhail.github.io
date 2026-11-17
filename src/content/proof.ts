@@ -10,11 +10,13 @@ export interface ProofItem {
   href: string;
 }
 
+export const profileExperience = { unrealYears: 11, commercialYears: 6 };
+
 export const proofItems: ProofItem[] = [
   {
     icon: "experience",
-    value: "11 лет",
-    label: "в экосистеме Unreal Engine;\n6+ лет — в коммерческой разработке",
+    value: `${profileExperience.unrealYears} лет`,
+    label: `в экосистеме Unreal Engine;\n${profileExperience.commercialYears}+ лет — в коммерческой разработке`,
     linkLabel: "Работа в командах",
     href: "#production",
   },

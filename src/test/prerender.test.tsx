@@ -21,8 +21,23 @@ const parseMarkup = (html: string) => {
 };
 
 describe("readable server rendering", () => {
+  it.each([["ru", "ЕСТЬ ИДЕЯ"], ["en", "BIG IDEAS"]])("renders the %s studio preview with the homepage logo and collage", async (language, heading) => {
+    const doc = parseMarkup(await render(`/snippet/?view=studio&lang=${language}`));
+    expect(doc.querySelector("h1")?.textContent).toContain(heading);
+    expect(doc.querySelector('.studio-snippet-logo')?.getAttribute("src")).toContain("gamepunk-logo.svg");
+    expect(doc.querySelector('.studio-snippet-art')?.getAttribute("src")).toContain("hero-collage.webp");
+    expect(doc.querySelector('.studio-snippet-sticker')?.getAttribute("src")).toContain("unreal-five-sticker.webp");
+    expect(doc.querySelector('#og-snippet-container')?.getAttribute("lang")).toBe(language);
+  });
+  it("renders the Academy preview without replacing the personal preview", async () => {
+    const academy = parseMarkup(await render("/snippet/?view=academy"));
+    const personal = parseMarkup(await render("/snippet/"));
+    expect(academy.querySelector("h1")?.textContent).toBe("ACADEMY.");
+    expect(academy.querySelector('a[href="/academy/"]')).not.toBeNull();
+    expect(personal.querySelector("h1")?.textContent).toContain("MIKHAIL");
+  });
   it.each([
-    "/", "/projects/", "/projects/duelant/", "/snippet/", "/privacy/", "/terms/",
+    "/", "/mikhail/", "/projects/", "/projects/duelant/", "/snippet/", "/privacy/", "/terms/",
     "/malena/privacy/", "/academy/ai-intro/01-first-steps/",
   ])("renders %s with its content ready and no invisible entrance state", async (path) => {
     const doc = parseMarkup(await render(path));

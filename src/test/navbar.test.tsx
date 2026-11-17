@@ -20,10 +20,10 @@ afterEach(() => {
 });
 
 describe("main navigation", () => {
-  it.each(["/", "/projects/", "/games/"])("links to the homepage games section from %s without advertising the studio landing page", (path) => {
-    const href = path === "/" ? "#games" : "/#games";
+  it.each(["/mikhail/", "/projects/", "/games/"])("links to the homepage games section from %s without advertising the studio landing page", (path) => {
+    const href = path === "/mikhail/" ? "#games" : "/mikhail/#games";
     const { container } = render(<MemoryRouter initialEntries={[path]}>
-      <Navbar /><SiteFooter projectsPage={path !== "/"} />
+      <Navbar /><SiteFooter projectsPage={path !== "/mikhail/"} />
     </MemoryRouter>);
     expect(screen.getByRole("link", { name: "Игры" })).toHaveAttribute("href", href);
     expect(screen.getByRole("link", { name: "Проекты" })).toHaveAttribute("href", href);

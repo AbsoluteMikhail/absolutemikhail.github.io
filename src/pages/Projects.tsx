@@ -33,18 +33,18 @@ const Projects = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
             <div>
               <Link
-                to="/"
+                to="/mikhail/"
                 className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6 group"
               >
                 <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                Назад на главную
+                К Михаилу
               </Link>
               <EntrancePageTitle
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="text-4xl md:text-6xl font-display font-bold tracking-tight"
               >
-                ВСЕ <span className="gradient-text">ПРОЕКТЫ</span>
+                ПРОЕКТЫ <span className="gradient-text">МИХАИЛА</span>
               </EntrancePageTitle>
             </div>
             <EntranceParagraph

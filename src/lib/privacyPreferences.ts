@@ -69,5 +69,5 @@ export const subscribePrivacySettings = (open: () => void) => {
 
 export const isAnalyticsExcluded = (pathname: string) => {
   const path = pathname.replace(/\/+$/, "").toLowerCase() || "/";
-  return ["/malena/privacy", "/privacy", "/terms", "/music", "/twitch", "/snippet"].includes(path);
+  return ["/malena/privacy", "/privacy", "/terms", "/en/privacy", "/en/terms", "/music", "/twitch", "/snippet"].includes(path);
 };

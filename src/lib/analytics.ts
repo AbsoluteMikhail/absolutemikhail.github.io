@@ -11,6 +11,24 @@ type AnalyticsWindow = Window & {
 };
 let started = false;
 
+type AnalyticsEvent = "project_open" | "video_start" | "video_progress" | "video_complete" | "contact_open" | "contact_select";
+type AnalyticsParameters = {
+  project_id?: string;
+  placement?: "header" | "contact" | "project_card";
+  contact_method?: "telegram" | "max" | "discord" | "email";
+  video_percent?: number;
+};
+
+export const trackAnalytics = (event: AnalyticsEvent, parameters: AnalyticsParameters = {}) => {
+  if (typeof window === "undefined" || !started || getAnalyticsChoice() !== "accepted"
+    || isAnalyticsExcluded(window.location.pathname)) return;
+  const target = window as AnalyticsWindow;
+  const payload = { ...parameters, page_path: window.location.pathname, site_language: /^\/en(?:\/|$)/.test(window.location.pathname) ? "en" : "ru" };
+  // A blocked or broken counter must not interrupt the visitor's action or the other counter.
+  try { target.gtag?.("event", event, payload); } catch { /* Optional analytics. */ }
+  try { target.ym?.(metricaId, "reachGoal", event, payload); } catch { /* Optional analytics. */ }
+};
+
 const addScript = (src: string) => {
   const script = document.createElement("script");
   script.async = true;

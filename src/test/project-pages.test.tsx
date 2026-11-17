@@ -29,7 +29,7 @@ describe("individual project pages", () => {
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Главная", item: canonicalUrl("/") },
+            { "@type": "ListItem", position: 1, name: "Михаил", item: canonicalUrl("/mikhail") },
             { "@type": "ListItem", position: 2, name: "Игры и проекты", item: canonicalUrl("/projects") },
             { "@type": "ListItem", position: 3, name: project.title, item: canonicalUrl(projectPath(project.slug)) },
           ],
@@ -63,7 +63,7 @@ describe("individual project pages", () => {
     expect(screen.getByRole("heading", { level: 1, name: "Dixotomia" })).toBeInTheDocument();
     expect(document.querySelector("iframe")).toBeNull();
     fireEvent.click(screen.getByRole("link", { name: "Весь архив" }));
-    expect(screen.getByRole("heading", { level: 1, name: "ВСЕ ПРОЕКТЫ" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "ПРОЕКТЫ МИХАИЛА" })).toBeInTheDocument();
     vi.restoreAllMocks();
   });
 

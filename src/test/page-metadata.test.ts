@@ -3,6 +3,13 @@ import { canonicalUrl, renderSitemap, trailingPath } from "@/constants/routeMeta
 import { resolvePageMetadata } from "@/lib/resolvePageMetadata";
 
 describe("page metadata", () => {
+  it("separates the studio identity from the personal portfolio", async () => {
+    const studio = await resolvePageMetadata("/");
+    const person = await resolvePageMetadata("/mikhail");
+    expect(studio.structuredData).toMatchObject({ "@type": "Organization", name: "GamePunk", url: "https://gamepunk.ru/" });
+    expect(studio.image).toBe("/studio-social.png");
+    expect(person.structuredData).toMatchObject({ "@type": "Person", url: "https://gamepunk.ru/mikhail/" });
+  });
   it("builds canonical URLs with the trailing slash GitHub Pages serves", () => {
     expect(canonicalUrl("/")).toBe("https://gamepunk.ru/");
     expect(canonicalUrl("/projects/duelant/")).toBe("https://gamepunk.ru/projects/duelant/");
@@ -13,8 +20,8 @@ describe("page metadata", () => {
   });
 
   it("describes the portfolio home as a person and keeps the shared social image", async () => {
-    const metadata = await resolvePageMetadata("/");
-    expect(metadata.image).toBeUndefined();
+    const metadata = await resolvePageMetadata("/mikhail/");
+    expect(metadata.image).toBe("/snippet.jpg");
     expect(metadata.structuredData).toMatchObject({
       "@type": "Person",
       name: "Михаил Ефремов",
@@ -54,6 +61,21 @@ describe("page metadata", () => {
     expect(lesson.updated).toBe("2026-10-13");
     expect(freshLesson.updated).toBe("2026-10-24");
     expect((await resolvePageMetadata("/academy")).structuredData).toMatchObject({ "@type": "ItemList" });
+  });
+
+  it("gives the three sections distinct previews and keeps course covers", async () => {
+    const studio = await resolvePageMetadata("/");
+    const englishStudio = await resolvePageMetadata("/en/");
+    const mikhail = await resolvePageMetadata("/mikhail/");
+    const academy = await resolvePageMetadata("/academy/");
+    expect([studio.image, mikhail.image, academy.image]).toEqual(["/studio-social.png", "/snippet.jpg", "/academy-social.jpg"]);
+    expect(englishStudio.image).toBe("/studio-social-en.png");
+    expect(academy.siteName).toBe("Absolute Mikhail Academy");
+    expect(academy.imageWidth).toBe(1200);
+    expect(academy.imageHeight).toBe(630);
+    expect((await resolvePageMetadata("/academy/topics/cpp/")).image).toBe(academy.image);
+    expect((await resolvePageMetadata("/academy/ue-cpp-blueprint-devs/")).image).toBe(academy.image);
+    expect((await resolvePageMetadata("/academy/data-driven-speed-modifiers/")).image).toBe("/academy/data-driven-speed-modifiers/cover.webp");
   });
 
   it("distinguishes standalone articles and collections from course routes", async () => {

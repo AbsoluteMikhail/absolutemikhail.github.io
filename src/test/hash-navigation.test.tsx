@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { lazy, Suspense, type ComponentType } from "react";
-import { Link, MemoryRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { Link, MemoryRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import ScrollToHashElement from "@/components/ScrollToHashElement";
 
@@ -14,6 +14,15 @@ beforeEach(() => {
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
 describe("hash navigation", () => {
+  it.each(["games", "mentoring", "timeline", "workshop"])("preserves the old portfolio anchor %s and its query", async (anchor) => {
+    const Location = () => { const location = useLocation(); return <output>{location.pathname + location.search + location.hash}</output>; };
+    render(<MemoryRouter initialEntries={[`/?source=bookmark#${anchor}`]}>
+      <ScrollToHashElement /><Location />
+      <Routes><Route path="/mikhail/" element={<section id={anchor}>Портфолио</section>} /><Route path="/" element={<p>Студия</p>} /></Routes>
+    </MemoryRouter>);
+    expect(screen.getByRole("status")).toHaveTextContent(`/mikhail/?source=bookmark#${anchor}`);
+    await waitFor(() => expect(scrollIntoView).toHaveBeenCalled());
+  });
   it("keeps an Academy section in view after images resize and yields to reader input", async () => {
     let resize: (() => void) | undefined;
     const disconnect = vi.fn();

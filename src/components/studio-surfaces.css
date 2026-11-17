@@ -1,0 +1,50 @@
+.studio-surface {
+  --background: 43 25% 89%;
+  --foreground: 60 5% 9%;
+  --card: 43 25% 89%;
+  --card-foreground: 60 5% 9%;
+  --popover: 43 25% 89%;
+  --popover-foreground: 60 5% 9%;
+  --primary: 60 5% 9%;
+  --primary-foreground: 43 25% 89%;
+  --accent: 73 100% 61%;
+  --secondary: 43 18% 83%;
+  --muted-foreground: 45 6% 28%;
+  --border: 45 12% 58%;
+  color: #171715;
+  background: #eae6dc url('../assets/studio/grain.svg');
+  font-family: Inter, Arial, sans-serif;
+  border-radius: 0;
+}
+.studio-surface .font-display { font-family: Inter, Arial, sans-serif; letter-spacing: -.035em; }
+.studio-surface :focus-visible { outline: 3px solid #617a00; outline-offset: 4px; }
+.studio-surface button { border-radius: 0; }
+.studio-surface a:hover { color: #171715; text-decoration-thickness: 2px; }
+.studio-dialog::backdrop { background: rgb(23 23 21 / 82%); backdrop-filter: blur(5px); }
+.studio-dialog .studio-surface { border: 2px solid #171715; border-radius: 0; box-shadow: 10px 10px 0 rgb(23 23 21 / 25%); }
+.studio-dialog .studio-contact-sheet { max-width: 490px; padding: 30px; border-top: 9px solid #d4ff39; }
+.studio-contact-sheet h2 { font-size: clamp(25px, 4vw, 38px); line-height: 1.05; font-weight: 900; text-transform: uppercase; }
+.studio-contact-sheet button.group { border-color: #aaa69c; padding: 14px 8px; }
+.studio-contact-sheet button.group:hover { background: #d4ff39; }
+.studio-contact-sheet button.group > span:first-child { border: 1px solid #171715; }
+.studio-settings-sheet > div:first-child { background: #d4ff39; border-bottom: 2px solid #171715; }
+.studio-settings-sheet h2 { font-size: clamp(20px, 3vw, 30px); line-height: 1.05; font-weight: 900; }
+.studio-settings-sheet button:hover, .studio-consent button:hover { background: #d4ff39; color: #171715; border-color: #171715; }
+.studio-settings-sheet > div:last-child { background: transparent; }
+.studio-surface.studio-consent { border: 2px solid #171715; border-top: 6px solid #d4ff39; border-radius: 0; box-shadow: 5px 5px 0 rgb(23 23 21 / 18%); }
+.studio-surface.studio-legal { border-radius: 0; }
+.studio-legal-logo { display: block; width: 230px; margin-bottom: 28px; }
+.studio-legal h1.font-display { font-family: 'Studio Display', Impact, sans-serif; font-size: clamp(38px, 5.5vw, 68px); line-height: 1; letter-spacing: -.035em; }
+.studio-legal h2 { font-family: Inter, Arial, sans-serif; font-weight: 850; letter-spacing: -.025em; }
+.studio-legal main > article > p:first-child { border-left: 6px solid #d4ff39; padding-left: 20px; color: #171715; }
+.studio-legal article section { padding-top: 24px; border-top: 1px solid #aaa69c; }
+.studio-legal article a, .studio-legal article button { color: #171715; }
+.studio-legal main > section > button { background: #171715; color: #eae6dc; font-family: Inter, Arial, sans-serif; box-shadow: none; }
+.studio-legal main > section > button:hover { background: #d4ff39; color: #171715; }
+@media (max-width: 600px) {
+  .studio-dialog .studio-contact-sheet { padding: 22px; }
+  .studio-legal-logo { width: 190px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .studio-surface *, .studio-surface *::before { transition: none !important; }
+}

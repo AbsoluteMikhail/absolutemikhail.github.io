@@ -8,7 +8,7 @@ interface LogoProps {
 
 const Logo = ({ className, onClick }: LogoProps) => {
   const location = useLocation();
-  const isHomePage = location.pathname === "/";
+  const isHomePage = location.pathname.replace(/\/+$/, "") === "/mikhail";
 
   const handleClick = (e: React.MouseEvent) => {
     if (isHomePage) {
@@ -35,7 +35,7 @@ const Logo = ({ className, onClick }: LogoProps) => {
 
   return (
     <Link
-      to="/"
+      to="/mikhail/"
       onClick={handleClick}
       className={cn("site-logo", className)}
     >

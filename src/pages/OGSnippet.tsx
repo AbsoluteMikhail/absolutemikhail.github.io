@@ -1,6 +1,9 @@
 import { motionInitial } from "@/lib/motion";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import AcademySnippet from "@/components/AcademySnippet";
+import StudioSnippet from "@/components/StudioSnippet";
 import { Award } from "lucide-react";
 import heroPhoto from "@/assets/hero-photo.webp";
 import {
@@ -14,6 +17,7 @@ import Logo from "@/components/Logo";
 import { decodeContactLink, encodedContactLinks } from "@/constants/contactLinks";
 
 const OGSnippet = () => {
+  const { search } = useLocation();
   useEffect(() => {
     const isCaptureMode = new URLSearchParams(window.location.search).has('capture');
     if (isCaptureMode) {
@@ -28,6 +32,10 @@ const OGSnippet = () => {
   const openPrivateContact = (encodedLink: string) => {
     window.open(decodeContactLink(encodedLink), "_blank", "noopener,noreferrer");
   };
+
+  const params = new URLSearchParams(search);
+  if (params.get("view") === "academy") return <AcademySnippet />;
+  if (params.get("view") === "studio") return <StudioSnippet locale={params.get("lang") === "en" ? "en" : "ru"} />;
 
   return (
     <main className="min-h-screen bg-black flex items-center justify-center p-0 overflow-hidden">
@@ -186,7 +194,7 @@ const OGSnippet = () => {
 
         {/* Compact credential card: mirrors the trust block from the main hero. */}
         <a
-          href="https://gamepunk.ru/#proof"
+          href="https://gamepunk.ru/mikhail/#proof"
           target="_blank"
           rel="noopener noreferrer"
           className="group absolute bottom-10 right-10 z-20 w-[390px] rounded-2xl border border-white/15 bg-background/70 p-3.5 shadow-2xl shadow-black/50 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-background/85 hover:shadow-primary/10 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"

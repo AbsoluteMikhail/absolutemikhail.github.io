@@ -1,4 +1,4 @@
-import { absoluteUrl, canonicalUrl, findRouteMetadata, siteUrl } from "@/constants/routeMetadata.js";
+import { absoluteUrl, canonicalUrl, findRouteMetadata } from "@/constants/routeMetadata.js";
 import { projects, type Project } from "@/constants/projects";
 import type { PageMetadata } from "@/lib/pageMetadata";
 
@@ -30,13 +30,13 @@ export const findProjectPage = (slug: string) => projectPages.find((project) => 
 const mikhail = {
   "@type": "Person",
   name: "Михаил Ефремов",
-  url: `${siteUrl}/`,
+  url: canonicalUrl("/mikhail"),
 };
 
 export const projectsIndexMetadata = (): PageMetadata => ({
   ...findRouteMetadata("/projects")!,
   breadcrumbs: [
-    { name: "Главная", pathname: "/" },
+    { name: "Михаил", pathname: "/mikhail" },
     { name: "Игры и проекты", pathname: "/projects" },
   ],
   structuredData: {
@@ -76,7 +76,7 @@ export const projectPageMetadata = (project: ProjectPage): PageMetadata => {
     imageWidth: project.coverWidth,
     imageHeight: project.coverHeight,
     breadcrumbs: [
-      { name: "Главная", pathname: "/" },
+      { name: "Михаил", pathname: "/mikhail" },
       { name: "Игры и проекты", pathname: "/projects" },
       { name: project.title, pathname: projectPath(project.slug) },
     ],
