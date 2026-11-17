@@ -66,7 +66,7 @@ describe("studio languages", () => {
     const html = await renderPage("/en/");
     expect(html).toContain("BIG IDEAS");
     expect(html).toContain("Without analytics");
-    expect(html).toContain("Mushroom hunting with a shotgun");
+    expect(html).toContain("PSX-style horror");
     expect(html).not.toContain("Настройки аналитики");
     expect(new DOMParser().parseFromString(html, "text/html").body.textContent).not.toMatch(/[А-Яа-яЁё]/);
     const metadata = await resolvePageMetadata("/en/");

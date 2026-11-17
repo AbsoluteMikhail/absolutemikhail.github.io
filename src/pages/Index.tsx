@@ -54,7 +54,7 @@ const Index = () => {
       <main id="main-content" tabIndex={-1}>
         <section className="studio-hero studio-container" aria-labelledby="studio-title">
           <div className="studio-hero-copy">
-            <h1 id="studio-title"><span className="studio-title-line"><span className="studio-title-highlight">{copy.hero[0]}</span>.</span><span className="studio-title-line">{copy.hero[1]}</span><span className="studio-title-line">{copy.hero[2]}</span></h1>
+            <h1 id="studio-title"><span className="studio-title-line"><span className="studio-title-highlight">{copy.hero[0]}</span>.</span><span className="studio-title-line">{copy.hero[1]}</span><span className="studio-title-line"><span className="studio-title-marked">{copy.hero[2]}<svg viewBox="0 0 600 24" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M7 17C126 4 357 5 591 13" /><path d="M13 19C153 9 375 7 587 15" /></svg></span></span></h1>
             <p className="studio-hero-description">{copy.description}<br className="studio-desktop-break" /> {copy.descriptionEnd}</p>
             <a href="#projects" className={buttonStyles({ variant: "unstyled", size: "none", effect: "none", className: "studio-button" })}>{copy.viewProjects} <ArrowDown aria-hidden="true" /></a>
           </div>
@@ -62,6 +62,7 @@ const Index = () => {
           <div className="studio-collage">
             <img className="studio-collage-art" src={heroCollage} width="1088" height="1440" alt={copy.collageAlt} {...{ fetchpriority: "high" }} />
             <img className="studio-collage-sticker" src={unrealSticker} width="384" height="351" alt={copy.stickerAlt} />
+            <span className="studio-character-sticker">{copy.characterSticker}</span>
           </div>
         </section>
 

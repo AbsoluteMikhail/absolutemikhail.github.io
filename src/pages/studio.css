@@ -15,10 +15,19 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Studio Hand';
+  src: url('/fonts/caveat-sticker.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 .studio-page {
   --studio-paper: #eae6dc;
   --studio-ink: #171715;
   --studio-lime: #d4ff39;
+  --studio-pink: #ff2787;
 
   background: var(--studio-paper) url('../assets/studio/grain.svg');
   color: var(--studio-ink);
@@ -49,6 +58,9 @@
 .studio-hero h1 { font-family: 'Studio Poster', Impact, sans-serif; font-weight: 800; font-variation-settings: 'wdth' 55; font-size: clamp(84px, 12.6vw, 182px); letter-spacing: -.015em; line-height: .94; }
 .studio-title-line { display: block; white-space: nowrap; }
 .studio-title-highlight { display: inline-block; padding: .025em .035em .01em; margin-left: -.035em; margin-bottom: .045em; background: var(--studio-lime); }
+.studio-title-marked { display: inline-block; position: relative; }
+.studio-title-marked svg { position: absolute; left: 0; bottom: -.055em; width: 100%; height: .115em; overflow: visible; stroke: var(--studio-pink); stroke-width: 7; stroke-linecap: round; }
+.studio-title-marked svg path + path { stroke-width: 3; opacity: .65; }
 .studio-hero-description { margin-block: 25px; font-size: clamp(18px, 2vw, 27px); line-height: 1.35; letter-spacing: -.04em; max-width: 560px; }
 .studio-page .studio-button { display: inline-flex; align-items: center; justify-content: center; gap: 28px; min-height: 58px; background: var(--studio-ink); color: var(--studio-paper); padding: 16px 24px; border: 2px solid var(--studio-ink); border-radius: 0; font-size: 18px; font-weight: 750; line-height: 1.25; transition: background .15s, color .15s; }
 .studio-page .studio-button:hover { background: var(--studio-lime); color: var(--studio-ink); }
@@ -56,6 +68,7 @@
 .studio-collage { position: absolute; right: -40px; top: 90px; width: 41%; pointer-events: none; }
 .studio-collage-art { display: block; width: 100%; height: auto; }
 .studio-collage-sticker { position: absolute; width: 25%; height: auto; left: 3%; bottom: 22%; transform: rotate(-9deg); }
+.studio-character-sticker { position: absolute; right: 4%; bottom: 5%; padding: .04em .45em .15em; background: var(--studio-lime); font-family: 'Studio Hand', cursive; font-size: clamp(25px, 3vw, 43px); font-weight: 700; line-height: 1.05; white-space: nowrap; transform: rotate(-7deg); box-shadow: 1px 3px 1px #17171526; clip-path: polygon(0 4%, 99% 0, 100% 94%, 2% 100%); }
 .studio-projects { padding-block: 32px 54px; }
 .studio-kicker { font-size: clamp(20px, 1.8vw, 26px); line-height: 1.15; letter-spacing: -.04em; font-weight: 850; margin-bottom: 14px; }
 .studio-page .studio-heading { font-family: 'Studio Display', Impact, sans-serif; font-weight: 900; font-size: clamp(42px, 6.1vw, 88px); line-height: 1; letter-spacing: -.045em; }
@@ -77,7 +90,7 @@
 .studio-page-en .studio-hero { min-height: clamp(560px, 56vw, 800px); }
 .studio-page-en .studio-manifesto .studio-heading { font-size: clamp(42px, 5.4vw, 78px); }
 .studio-page-en .studio-people .studio-heading { font-size: clamp(42px, 5.6vw, 80px); }
-.studio-project-caption svg { flex-shrink: 0; width: 29px; height: 29px; }
+.studio-project-caption svg { flex-shrink: 0; width: 29px; height: 29px; color: var(--studio-pink); }
 .studio-text-link { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; text-decoration: underline; text-underline-offset: 5px; min-height: 44px; }
 .studio-text-link svg { width: 20px; height: 20px; }
 .studio-text-link:hover { text-decoration-thickness: 2px; }
@@ -118,7 +131,7 @@
 .studio-contact .studio-button:hover { background: var(--studio-paper); }
 .studio-footer { padding-block: 30px 22px; display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between; gap: 24px; }
 .studio-footer .studio-logo { width: 180px; }
-.studio-footer nav { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 26px; font-size: 12px; font-weight: 650; }
+.studio-footer nav { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 26px; font-size: 15px; font-weight: 650; }
 .studio-footer nav a, .studio-footer nav button { display: inline-flex; align-items: center; min-height: 44px; text-align: left; }
 .studio-footer nav a:hover { text-decoration: underline; }
 .studio-footer > p { width: 100%; padding-top: 16px; border-top: 1px solid #aaa69c; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
