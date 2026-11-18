@@ -1,7 +1,8 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import GameCoverPreview from "@/components/GameCoverPreview";
+import StudioMalenaCard from "@/components/StudioMalenaCard";
 import ProjectExhibit from "@/components/ProjectExhibit";
 import ItchProjectsSection from "@/components/ItchProjectsSection";
 import MentoredProjectsSection from "@/components/MentoredProjectsSection";
@@ -21,9 +22,60 @@ beforeEach(() => {
   vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue();
   vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => undefined);
 });
-afterEach(() => vi.restoreAllMocks());
+afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 describe("game cover video previews", () => {
+  it("hands mobile playback between visible game and Malena covers and pauses in hidden tabs", () => {
+    const media = window.matchMedia("");
+    vi.mocked(window.matchMedia).mockImplementation(query => ({
+      ...media, media: query, matches: query.includes("(pointer: coarse)"),
+    }));
+    let notify: (entry: IntersectionObserverEntry) => void;
+    const originalObserver = window.IntersectionObserver;
+    class Observer extends originalObserver {
+      constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverInit) {
+        super(callback, options);
+        notify = entry => callback([entry], this);
+        expect(options?.threshold).toEqual([0, 0.6]);
+      }
+    }
+    window.IntersectionObserver = Observer;
+    try {
+      const { container } = render(<MemoryRouter><GameCoverPreview project={project} /><StudioMalenaCard locale="ru" /></MemoryRouter>);
+      const [video, malena] = container.querySelectorAll("video");
+      const rect = video.getBoundingClientRect();
+      const intersect = (target: HTMLVideoElement, fraction: number) => act(() => notify({
+        target, isIntersecting: fraction > 0, intersectionRatio: fraction,
+        boundingClientRect: rect, intersectionRect: rect, rootBounds: null, time: 0,
+      }));
+      intersect(video, 0.59);
+      expect(video).not.toHaveAttribute("src");
+      intersect(video, 0.6);
+      expect(video.play).toHaveBeenCalledOnce();
+      fireEvent.playing(video);
+      const hidden = vi.spyOn(document, "hidden", "get").mockReturnValue(true);
+      fireEvent(document, new Event("visibilitychange"));
+      expect(video).not.toHaveClass("opacity-100");
+      hidden.mockReturnValue(false);
+      fireEvent(document, new Event("visibilitychange"));
+      expect(video.play).toHaveBeenCalledTimes(2);
+      fireEvent.playing(video);
+      intersect(malena, 0.65);
+      fireEvent.playing(malena);
+      expect(malena).toHaveClass("opacity-100");
+      expect(video).not.toHaveClass("opacity-100");
+      intersect(malena, 0.4);
+      expect(malena).not.toHaveClass("opacity-100");
+      expect(video.play).toHaveBeenCalledTimes(4);
+      fireEvent.playing(video);
+      expect(video).toHaveClass("opacity-100");
+      intersect(video, 0.59);
+      expect(video).not.toHaveClass("opacity-100");
+    } finally {
+      window.IntersectionObserver = originalObserver;
+    }
+  });
+
   it("downloads only after hover, reveals actual playback and stops on leave", () => {
     const { link, video } = renderPreview();
     expect(video).not.toHaveAttribute("src");

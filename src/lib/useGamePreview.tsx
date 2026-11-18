@@ -2,7 +2,70 @@ import { useCallback, useEffect, useRef, useState, type PointerEvent } from "rea
 import { cn } from "@/lib/utils";
 
 const previewMediaQuery = "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)";
+const mobilePreviewQuery = "(hover: none) and (pointer: coarse) and (prefers-reduced-motion: no-preference)";
+const visibleFraction = 0.6;
 let stopCurrentPreview: (() => void) | undefined;
+
+type PreviewControls = { start: () => void; stop: () => void };
+let previewGroup: ReturnType<typeof createPreviewGroup> | undefined;
+
+function createPreviewGroup() {
+  const cards = new Map<Element, PreviewControls>();
+  // Insertion order remembers which cover most recently crossed the threshold.
+  const visible = new Set<Element>();
+  const mobile = window.matchMedia(mobilePreviewQuery);
+  const hover = window.matchMedia(previewMediaQuery);
+  const updatePlayback = () => {
+    if (document.hidden || document.body.classList.contains("modal-open")) {
+      stopCurrentPreview?.();
+    } else if (mobile.matches) {
+      const latest = Array.from(visible).pop();
+      if (latest) cards.get(latest)?.start();
+      else stopCurrentPreview?.();
+    }
+  };
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!cards.has(entry.target) || (entry.target as HTMLVideoElement).error) continue;
+      if (entry.isIntersecting && entry.intersectionRatio >= visibleFraction) visible.add(entry.target);
+      else visible.delete(entry.target);
+      if (!entry.isIntersecting) cards.get(entry.target)?.stop();
+    }
+    updatePlayback();
+  }, { threshold: [0, visibleFraction] });
+  const onMediaChange = () => { stopCurrentPreview?.(); updatePlayback(); };
+  const modalObserver = new MutationObserver(updatePlayback);
+  modalObserver.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  document.addEventListener("visibilitychange", updatePlayback);
+  mobile.addEventListener("change", onMediaChange);
+  hover.addEventListener("change", onMediaChange);
+
+  return {
+    observe(video: HTMLVideoElement, controls: PreviewControls) {
+      cards.set(video, controls);
+      observer.observe(video);
+      return () => {
+        observer.unobserve(video);
+        visible.delete(video);
+        cards.delete(video);
+        if (stopCurrentPreview === controls.stop) controls.stop();
+        if (cards.size) {
+          updatePlayback();
+          return;
+        }
+        observer.disconnect();
+        modalObserver.disconnect();
+        document.removeEventListener("visibilitychange", updatePlayback);
+        mobile.removeEventListener("change", onMediaChange);
+        hover.removeEventListener("change", onMediaChange);
+        previewGroup = undefined;
+      };
+    },
+    skip(video: HTMLVideoElement) {
+      if (visible.delete(video)) updatePlayback();
+    },
+  };
+}
 
 export function useGamePreview(previewUrl?: string) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -21,45 +84,39 @@ export function useGamePreview(previewUrl?: string) {
     setPlaying(false);
   }, []);
 
-  const start = () => {
+  const start = useCallback(() => {
     const video = videoRef.current;
-    if (!video || !previewUrl || activeRef.current || failedRef.current || !window.matchMedia(previewMediaQuery).matches) return;
+    if (!video || !previewUrl || activeRef.current || failedRef.current || document.hidden || document.body.classList.contains("modal-open")) return;
     stopCurrentPreview?.();
     stopCurrentPreview = stop;
     activeRef.current = true;
-    // Assign only on intent: even metadata must not download for untouched cards.
+    // Defer even the metadata request until playback is needed.
     if (!video.getAttribute("src")) video.src = previewUrl;
     void video.play().catch(() => {
-      if (activeRef.current && video.paused) setPlaying(false);
+      if (activeRef.current && video.paused) {
+        stop();
+        previewGroup?.skip(video);
+      }
     });
+  }, [previewUrl, stop]);
+
+  const startOnIntent = () => {
+    if (window.matchMedia(previewMediaQuery).matches) start();
   };
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    const media = window.matchMedia(previewMediaQuery);
-    const onMediaChange = () => { if (!media.matches) stop(); };
-    const onVisibilityChange = () => { if (document.hidden) stop(); };
-    const observer = new IntersectionObserver(([entry]) => { if (!entry.isIntersecting) stop(); });
-    observer.observe(video);
-    media.addEventListener("change", onMediaChange);
-    document.addEventListener("visibilitychange", onVisibilityChange);
-    return () => {
-      if (activeRef.current) stopCurrentPreview = undefined;
-      activeRef.current = false;
-      if (video.getAttribute("src")) video.pause();
-      observer.disconnect();
-      media.removeEventListener("change", onMediaChange);
-      document.removeEventListener("visibilitychange", onVisibilityChange);
-    };
-  }, [stop]);
+    previewGroup ??= createPreviewGroup();
+    return previewGroup.observe(video, { start, stop });
+  }, [start, stop]);
 
   return {
     previewEvents: {
-      onPointerEnter: (event: PointerEvent) => { if (event.pointerType !== "touch") start(); },
-      onPointerLeave: stop,
-      onFocus: start,
-      onBlur: stop,
+      onPointerEnter: (event: PointerEvent) => { if (event.pointerType !== "touch") startOnIntent(); },
+      onPointerLeave: (event: PointerEvent) => { if (event.pointerType !== "touch") stop(); },
+      onFocus: startOnIntent,
+      onBlur: () => { if (window.matchMedia(previewMediaQuery).matches) stop(); },
     },
     preview: previewUrl && <video
       ref={videoRef}
@@ -70,7 +127,7 @@ export function useGamePreview(previewUrl?: string) {
       aria-hidden="true"
       onPlaying={() => { if (activeRef.current) setPlaying(true); else videoRef.current?.pause(); }}
       onPause={() => setPlaying(false)}
-      onError={() => { failedRef.current = true; stop(); }}
+      onError={event => { failedRef.current = true; stop(); previewGroup?.skip(event.currentTarget); }}
       className={cn("pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-200 motion-reduce:hidden", playing && "opacity-100")}
     />,
   };

@@ -11,6 +11,9 @@ import malenaThrone from "@/assets/workshop/malena-throne.webp";
 import malenaThroneThumbnail from "@/assets/workshop/malena-throne-thumb.webp";
 import malenaLyre from "@/assets/workshop/malena-lyre.webp";
 import malenaLyreThumbnail from "@/assets/workshop/malena-lyre-thumb.webp";
+import malenaStudioCover from "@/assets/studio/malena-violin-960.webp";
+import malenaStudioCoverSmall from "@/assets/studio/malena-violin-640.webp";
+import malenaPreview from "@/assets/studio/malena-violin-preview.mp4";
 
 export const workshop = {
   introduction:
@@ -26,16 +29,43 @@ export const workshop = {
       linkLabel: "Малена о себе на DTF",
     },
     portrait: malenaGarden,
+    studioCover: malenaStudioCover,
+    studioCoverSrcSet: `${malenaStudioCoverSmall} 640w, ${malenaStudioCover} 960w`,
+    previewUrl: malenaPreview,
     portraitSrcSet: `${malenaGardenSmall} 640w, ${malenaGarden} 896w`,
     portraitAlt: "Малена в зелёном платье среди ночных руин и цветов",
     caption: "Как Малена видит себя",
     portraits: [
-      { src: malenaGarden, thumbnail: malenaGardenThumbnail, title: "Ночной сад", alt: "Малена в зелёном платье с кинжалом среди ночных руин и цветов" },
-      { src: malenaMoon, thumbnail: malenaMoonThumbnail, title: "Под луной", alt: "Малена с рогами на фоне луны, готических башен и фиолетовых огней" },
-      { src: malenaFlight, thumbnail: malenaFlightThumbnail, title: "Над городом", alt: "Малена в образе ведьмы летит на метле над городом под луной" },
-      { src: malenaWitch, thumbnail: malenaWitchThumbnail, title: "Ведьма и скелет", alt: "Малена в шляпе ведьмы у столба; рядом скелет держит зажжённую свечу" },
-      { src: malenaThrone, thumbnail: malenaThroneThumbnail, title: "На троне", alt: "Малена в сине-золотом костюме сидит на троне с мечом в окружении свечей" },
-      { src: malenaLyre, thumbnail: malenaLyreThumbnail, title: "С лирой", alt: "Малена в белом платье с лирой и светящейся магией над античными руинами" },
+      {
+        src: malenaGarden, thumbnail: malenaGardenThumbnail,
+        title: "Ночной сад", alt: "Малена в зелёном платье с кинжалом среди ночных руин и цветов",
+        en: { title: "Night garden", alt: "Malena in a green dress with a dagger among ruins and flowers at night" },
+      },
+      {
+        src: malenaMoon, thumbnail: malenaMoonThumbnail,
+        title: "Под луной", alt: "Малена с рогами на фоне луны, готических башен и фиолетовых огней",
+        en: { title: "Under the moon", alt: "Malena with horns against a moonlit sky, Gothic spires and violet lights" },
+      },
+      {
+        src: malenaFlight, thumbnail: malenaFlightThumbnail,
+        title: "Над городом", alt: "Малена в образе ведьмы летит на метле над городом под луной",
+        en: { title: "Over the city", alt: "Malena riding a broomstick above a moonlit city" },
+      },
+      {
+        src: malenaWitch, thumbnail: malenaWitchThumbnail,
+        title: "Ведьма и скелет", alt: "Малена в шляпе ведьмы у столба; рядом скелет держит зажжённую свечу",
+        en: { title: "The witch and the skeleton", alt: "Malena in a witch’s hat beside a skeleton holding a lit candle" },
+      },
+      {
+        src: malenaThrone, thumbnail: malenaThroneThumbnail,
+        title: "На троне", alt: "Малена в сине-золотом костюме сидит на троне с мечом в окружении свечей",
+        en: { title: "On the throne", alt: "Malena in blue and gold, seated on a throne with a sword and surrounded by candles" },
+      },
+      {
+        src: malenaLyre, thumbnail: malenaLyreThumbnail,
+        title: "С лирой", alt: "Малена в белом платье с лирой и светящейся магией над античными руинами",
+        en: { title: "With a lyre", alt: "Malena in a white dress playing a lyre above ancient ruins" },
+      },
     ],
   },
   plugins: {

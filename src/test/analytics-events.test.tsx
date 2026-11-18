@@ -54,7 +54,7 @@ describe("studio analytics events", () => {
     yandex.mockReset();
   });
 
-  it("distinguishes the two studio contact buttons and counts Malena without opening a game dialog", () => {
+  it("distinguishes the two studio contact buttons and counts opening Malena’s gallery", () => {
     approve(); render(<MemoryRouter><Index /></MemoryRouter>);
     fireEvent.click(screen.getByRole("button", { name: "Связаться" }));
     expect(google).toHaveBeenLastCalledWith("event", "contact_open", expect.objectContaining({ placement: "header" }));
@@ -62,10 +62,9 @@ describe("studio analytics events", () => {
     fireEvent.click(screen.getByRole("button", { name: "Написать нам" }));
     expect(google).toHaveBeenLastCalledWith("event", "contact_open", expect.objectContaining({ placement: "contact" }));
     fireEvent.click(screen.getByRole("button", { name: "Закрыть окно связи" }));
-    document.addEventListener("click", e => e.preventDefault(), { once: true });
-    fireEvent.click(screen.getByRole("link", { name: /Малена.*ИИ/ }));
+    fireEvent.click(screen.getByRole("link", { name: "Открыть карточку Малены" }));
     expect(google).toHaveBeenLastCalledWith("event", "project_open", expect.objectContaining({ project_id: "malena" }));
-    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(screen.getByRole("dialog", { name: "Малена" })).toBeInTheDocument();
   });
 
   it("tracks the selected channel without exposing the address or message", () => {

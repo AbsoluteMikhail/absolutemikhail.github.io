@@ -3,19 +3,18 @@ import { Link, useLocation } from "react-router-dom";
 import { ContactMessenger } from "@/components/ContactMessenger";
 import { Button, buttonStyles } from "@/components/ui/button";
 import StudioGameCard from "@/components/StudioGameCard";
+import StudioMalenaCard from "@/components/StudioMalenaCard";
 import StudioPortrait from "@/components/StudioPortrait";
 import { SectionTitle } from "@/components/ui/section-title";
 import { projects } from "@/constants/projects";
-import { workshop } from "@/constants/workshop";
 import { gamepunkLinks } from "@/constants/contactLinks";
 import { openPrivacySettings } from "@/lib/privacyPreferences";
-import { trackAnalytics } from "@/lib/analytics";
 import { legalHref } from "@/lib/siteContext";
 import { studioCopy } from "@/constants/studioCopy";
 import { studioLocale } from "@/lib/studioLocale";
 import { StudioHeroCollage, StudioHeroTitle, StudioSocials } from "@/components/StudioHero";
 import studioLogo from "@/assets/studio/gamepunk-logo.svg";
-import paintArrow from "@/assets/studio/paint-arrow.webp";
+import manifestoLogo from "@/assets/studio/gamepunk-manifesto.webp";
 import heroPhoto from "@/assets/hero-photo.webp";
 import bartsevPhoto from "@/assets/studio/alexey-bartsev.webp";
 
@@ -71,10 +70,7 @@ const Index = () => {
           <SectionTitle id="studio-projects-title" className="studio-heading">{copy.projectsTitle}</SectionTitle>
           <div className="studio-project-grid">
             {studioGames.map((project, index) => <StudioGameCard key={project.slug} project={project} index={index} locale={locale} />)}
-            <a href={workshop.malena.url} target="_blank" rel="noopener noreferrer" className="studio-project studio-project-3" onClick={() => trackAnalytics("project_open", { project_id: "malena", placement: "project_card" })}>
-              <div className="studio-project-image"><img src={workshop.malena.portrait} srcSet={workshop.malena.portraitSrcSet} sizes="(max-width: 600px) 100vw, 40vw" width="896" height="1200" loading="lazy" decoding="async" alt={copy.malenaAlt} /></div>
-              <div className="studio-project-caption"><div><h3>{copy.malena}</h3><p>{copy.malenaType}</p></div><ArrowUpRight aria-hidden="true" /></div>
-            </a>
+            <StudioMalenaCard locale={locale} />
           </div>
           <a className="studio-text-link studio-games-link" href={gamepunkLinks.steam} target="_blank" rel="noopener noreferrer">{copy.moreGames} <ArrowUpRight aria-hidden="true" /></a>
         </section>
@@ -86,7 +82,7 @@ const Index = () => {
               <SectionTitle id="studio-manifesto-title" className="studio-heading">{copy.manifesto[0]}<br />{copy.manifesto[1]}</SectionTitle>
               <p className="studio-manifesto-copy">{copy.manifestoCopy}</p>
             </div>
-            <img className="studio-manifesto-arrow" src={paintArrow} width="1280" height="1280" alt="" loading="lazy" aria-hidden="true" />
+            <img className="studio-manifesto-logo" src={manifestoLogo} width="512" height="512" alt="GamePunk" loading="lazy" decoding="async" />
           </div>
         </section>
 
@@ -103,7 +99,7 @@ const Index = () => {
               </StudioPortrait>
               <div className="studio-person-copy"><h3>{copy.person[0]}<br />{copy.person[1]}</h3><p className="studio-person-role">{copy.developer}<br /><span>{copy.credential}</span></p><p className="studio-person-specialization">{copy.specialization}</p><Link className="studio-text-link studio-person-more" to="/mikhail/">{copy.personalPage} <ArrowUpRight aria-hidden="true" /></Link></div>
               </div>
-              <div className="studio-person-note"><p>{copy.note[0]}<br />{copy.note[1]}</p><p className="studio-person-achievement">{copy.personAchievement}</p></div>
+              <div className="studio-person-note"><p>{copy.note}</p><p className="studio-person-achievement">{copy.personAchievement}</p></div>
             </article>
             <article className="studio-person">
               <div className="studio-person-intro">

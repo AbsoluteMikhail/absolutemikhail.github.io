@@ -38,6 +38,21 @@ describe("studio languages", () => {
     expect(screen.queryByRole("dialog")).toBeNull();
   });
 
+  it.each([["/", "Малена", "Рождённая помнить", "Следующий портрет"], ["/en/", "Malena", "Born to Remember", "Next portrait"]])("opens Malena's gallery from %s and resets it on reopening", (path, title, album, next) => {
+    const { container } = render(<MemoryRouter initialEntries={[path]}><Index /></MemoryRouter>);
+    const trigger = container.querySelector<HTMLAnchorElement>(".studio-project-3")!;
+    fireEvent.click(trigger);
+    const dialog = screen.getByRole("dialog", { name: title });
+    expect(dialog).toHaveTextContent(album);
+    expect(within(dialog).getByRole("link")).toHaveAttribute("href", trigger.href);
+    fireEvent.click(within(dialog).getByRole("button", { name: next }));
+    expect(within(dialog).getByRole("status")).toHaveTextContent("2 / 6");
+    fireEvent(dialog, new Event("cancel", { cancelable: true }));
+    expect(screen.queryByRole("dialog")).toBeNull();
+    fireEvent.click(trigger);
+    expect(within(screen.getByRole("dialog", { name: title })).getByRole("status")).toHaveTextContent("1 / 6");
+  });
+
   it("keeps untranslated destinations explicit and does not invent English archive routes", () => {
     render(<MemoryRouter initialEntries={["/en/"]}><Index /></MemoryRouter>);
     expect(screen.getByRole("link", { name: "Academy (in Russian)" })).toHaveAttribute("href", "/academy/");
