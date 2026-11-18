@@ -16,7 +16,7 @@ export default function StudioGameCard({ project, index, locale }: { project: Pr
   const title = project.slug === "gribnik" ? "G.R.I.B.N.I.K." : project.title;
   const [open, setOpen] = useState(false);
   const videoUrl = project.videoUrl ? new URL(project.videoUrl) : null;
-  videoUrl?.searchParams.set("autoplay", "true");
+  videoUrl?.searchParams.delete("autoplay");
   const trigger = useRef<HTMLAnchorElement>(null);
   const player = useRef<HTMLIFrameElement>(null);
   useRutubeAnalytics(open, player, project.slug);
@@ -57,7 +57,7 @@ export default function StudioGameCard({ project, index, locale }: { project: Pr
         <div className="studio-game-body">
           <div className="studio-game-media">
             {videoUrl
-              ? <iframe ref={player} src={videoUrl.href} title={`${copy.gameVideo}: ${title}`} allow="autoplay; fullscreen" allowFullScreen />
+              ? <iframe ref={player} src={videoUrl.href} title={`${copy.gameVideo}: ${title}`} allowFullScreen />
               : <img src={project.cover} width={project.coverWidth} height={project.coverHeight} alt={`${copy.cover} ${title}`} />}
           </div>
           {project.videoUrl && <a className="studio-text-link" href={project.videoUrl} target="_blank" rel="noopener noreferrer">{copy.openVideoSeparately}<ArrowUpRight aria-hidden="true" /></a>}

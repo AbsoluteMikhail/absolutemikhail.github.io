@@ -18,7 +18,7 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 describe("studio game cards", () => {
-  it("loads previews only on hover and autoplays the full video on opening", () => {
+  it("loads the preview on hover and embeds the full video for manual playback on opening", () => {
     const { container } = mount();
     const trigger = screen.getByRole("link", { name: "Explore game: DUELANT" });
     const preview = container.querySelector("video")!;
@@ -33,8 +33,8 @@ describe("studio game cards", () => {
     const dialog = screen.getByRole("dialog", { name: "DUELANT" });
     expect(dialog.querySelector("video")).toBeNull();
     const player = dialog.querySelector("iframe")!;
-    expect(player).toHaveAttribute("src", `${project.videoUrl}?autoplay=true`);
-    expect(player).toHaveAttribute("allow", "autoplay; fullscreen");
+    expect(player).toHaveAttribute("src", project.videoUrl);
+    expect(player.getAttribute("allow") ?? "").not.toContain("autoplay");
     expect(player).not.toHaveAttribute("src", project.previewUrl);
     expect(player).toHaveAttribute("allowfullscreen");
     fireEvent.click(within(dialog).getByRole("button", { name: "Close project" }));
@@ -82,20 +82,20 @@ describe("studio game cards", () => {
     const trigger = screen.getByRole("link");
     fireEvent.click(trigger);
     const firstPlayer = screen.getByRole("dialog").querySelector("iframe");
-    expect(firstPlayer).toHaveAttribute("src", `${game.videoUrl}?autoplay=true`);
+    expect(firstPlayer).toHaveAttribute("src", game.videoUrl);
     fireEvent.click(screen.getByRole("button", { name: "Закрыть проект" }));
     fireEvent.click(trigger);
     expect(firstPlayer).not.toBeInTheDocument();
-    expect(screen.getByRole("dialog").querySelector("iframe")).toHaveAttribute("src", `${game.videoUrl}?autoplay=true`);
+    expect(screen.getByRole("dialog").querySelector("iframe")).toHaveAttribute("src", game.videoUrl);
   });
 
-  it("preserves existing player options when enabling autoplay", () => {
-    const videoUrl = `${project.videoUrl}?skinColor=d4ff39&autoplay=false`;
+  it("removes autoplay from the embed URL while preserving other player options", () => {
+    const videoUrl = `${project.videoUrl}?skinColor=d4ff39&autoplay=true`;
     render(<MemoryRouter><StudioGameCard project={{ ...project, videoUrl }} index={0} locale="en" /></MemoryRouter>);
     fireEvent.click(screen.getByRole("link"));
     const url = new URL(screen.getByRole("dialog").querySelector("iframe")!.src);
     expect(url.searchParams.get("skinColor")).toBe("d4ff39");
-    expect(url.searchParams.getAll("autoplay")).toEqual(["true"]);
+    expect(url.searchParams.has("autoplay")).toBe(false);
   });
 
 });
