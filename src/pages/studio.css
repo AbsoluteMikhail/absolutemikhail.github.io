@@ -53,9 +53,9 @@
 .studio-nav a:hover, .studio-nav-contact:hover { text-decoration: underline; text-underline-offset: 6px; }
 .studio-nav svg { width: 30px; height: 30px; }
 .studio-hero { position: relative; padding-block: 35px 52px; border-bottom: 2px solid var(--studio-ink); }
-.studio-hero-copy { position: relative; z-index: 2; width: 67%; }
+.studio-hero-copy { position: relative; z-index: 2; width: 64%; container-type: inline-size; }
 .studio-eyebrow { position: absolute; z-index: 3; left: 67%; top: 55px; font-size: clamp(19px, 1.8vw, 26px); line-height: 1.04; font-weight: 800; letter-spacing: -.04em; }
-.studio-hero h1 { font-family: 'Studio Poster', Impact, sans-serif; font-weight: 800; font-variation-settings: 'wdth' 55; font-size: clamp(84px, 12.6vw, 182px); letter-spacing: -.015em; line-height: .94; }
+.studio-hero h1 { font-family: 'Studio Poster', Impact, sans-serif; font-weight: 800; font-variation-settings: 'wdth' 55; font-size: 16cqw; letter-spacing: -.015em; line-height: .94; }
 .studio-title-line { display: block; white-space: nowrap; }
 .studio-title-highlight { display: inline-block; padding: .025em .035em .01em; margin-left: -.035em; margin-bottom: .045em; background: var(--studio-lime); }
 .studio-title-marked { display: inline-block; position: relative; }
@@ -86,8 +86,8 @@
 .studio-project-caption h3 { font-size: clamp(20px, 2.1vw, 29px); line-height: 1.15; font-weight: 850; letter-spacing: -.04em; }
 .studio-project-caption p { font-size: 14px; margin-top: 4px; }
 .studio-page-en .studio-project-caption p { max-width: 460px; line-height: 1.5; }
-.studio-page-en .studio-hero h1 { font-size: clamp(84px, 11.5vw, 166px); }
-.studio-page-en .studio-hero { min-height: clamp(560px, 56vw, 800px); }
+.studio-page-en .studio-hero h1 { font-size: 14.4cqw; }
+.studio-hero { min-height: clamp(560px, 56vw, 800px); }
 .studio-page-en .studio-manifesto .studio-heading { font-size: clamp(42px, 5.4vw, 78px); }
 .studio-page-en .studio-people .studio-heading { font-size: clamp(42px, 5.6vw, 80px); }
 .studio-project-caption svg { flex-shrink: 0; width: 29px; height: 29px; color: var(--studio-pink); }
@@ -160,8 +160,7 @@
   .studio-logo { width: clamp(170px, 28vw, 250px); }
   .studio-nav { gap: 24px; font-size: clamp(19px, 3vw, 24px); }
   .studio-nav svg { width: 25px; height: 25px; }
-  .studio-hero-copy { width: 72%; }
-  .studio-hero h1 { font-size: 13.2vw; }
+  .studio-hero-copy { width: 61%; }
   .studio-eyebrow { left: 65%; top: 45px; }
   .studio-collage { right: -25px; top: 80px; width: 46%; }
   .studio-manifesto-layout { grid-template-columns: 1fr 140px; gap: 30px; }
@@ -184,9 +183,8 @@
   .studio-hero { padding-top: 50px; padding-bottom: 24px; }
   .studio-hero-copy { width: 100%; }
   .studio-eyebrow { left: auto; right: 0; top: 12px; font-size: 13px; }
-  .studio-hero h1 { font-size: 21vw; line-height: .96; letter-spacing: -.035em; }
-  .studio-page-en .studio-hero h1 { font-size: 19.5vw; }
-  .studio-page-en .studio-hero { min-height: 0; }
+  .studio-hero h1 { line-height: .96; letter-spacing: -.035em; }
+  .studio-hero { min-height: 0; }
   .studio-page-en .studio-people .studio-heading { font-size: 39px; }
   .studio-page-en .studio-manifesto .studio-heading { font-size: 39px; }
   .studio-page-en .studio-contact .studio-heading { font-size: 39px; }
