@@ -19,11 +19,11 @@ describe("studio languages", () => {
     expect(english).toHaveLength(2);
     expect(english[0]).toHaveAttribute("href", "/en/?ref=studio#projects");
     fireEvent.click(english[0]);
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("WE MAKE GAMES WITH CHARACTER.");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("WE MAKE GAMES WITH ATTITUDE");
     const russian = screen.getAllByRole("link", { name: "Русский" });
     expect(russian[1]).toHaveAttribute("href", "/?ref=studio#projects");
     fireEvent.click(russian[1]);
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("ДЕЛАЕМ ИГРЫ С ХАРАКТЕРОМ.");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("ДЕЛАЕМ ИГРЫ С ХАРАКТЕРОМ");
   });
 
   it("translates contact options without changing their reveal mechanism", async () => {
@@ -65,7 +65,7 @@ describe("studio languages", () => {
     expect(prerenderPaths).toContain("/en");
     const html = await renderPage("/en/");
     const doc = new DOMParser().parseFromString(html, "text/html");
-    expect(Array.from(doc.querySelectorAll("h1 .studio-title-line"), line => line.textContent)).toEqual(["WE MAKE", "GAMES", "WITH CHARACTER."]);
+    expect(Array.from(doc.querySelectorAll("h1 .studio-title-line"), line => line.textContent)).toEqual(["WE MAKE", "GAMES", "WITH ATTITUDE"]);
     expect(html).toContain("Without analytics");
     expect(html).toContain("PSX-style horror");
     expect(html).not.toContain("Настройки аналитики");

@@ -46,6 +46,12 @@ export const YoutubeIcon = (props: IconProps) => (
   </BaseIcon>
 );
 
+export const VkIcon = (props: IconProps) => (
+  <BaseIcon {...props}>
+    <path d="M0 3.6h4.1c.14 6.85 3.16 9.76 5.54 10.36V3.6h3.86v5.91c2.35-.25 4.82-2.94 5.66-5.91h3.85c-.64 3.66-3.34 6.36-5.25 7.47 1.91.9 4.98 3.25 6.24 7.43h-4.24c-.98-2.95-3.34-5.23-6.26-5.53v5.53h-.47C4.83 18.5.15 12.88 0 3.6Z" />
+  </BaseIcon>
+);
+
 export const TwitchIcon = (props: IconProps) => (
   <BaseIcon {...props}>
     <path d="M2.149 0L.537 4.11V20.11h5.19V24h3.91l3.91-3.89h4.167l6.286-6.29V0zm19.463 12.87l-3.344 3.345h-4.634l-3.91 3.91v-3.91H5.19V2.148h16.422zM17.167 5.618h-2.316v5.807h2.316zm-5.464 0H9.387v5.807h2.316z"/>

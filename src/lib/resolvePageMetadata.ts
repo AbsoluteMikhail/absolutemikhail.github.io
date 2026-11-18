@@ -11,7 +11,7 @@ export const resolvePageMetadata = async (pathname: string): Promise<PageMetadat
   if (isStudioPath(path)) {
     const metadata = findRouteMetadata(path)!;
     const language = studioLocale(path);
-    return { ...metadata, language, alternates: [{ language: "ru", pathname: "/" }, { language: "en", pathname: "/en/" }], image: language === "en" ? "/studio-social-en.png" : "/studio-social.png", imageAlt: language === "en" ? "GamePunk — We make games with character." : "GamePunk — Делаем игры с характером.", imageWidth: 1200, imageHeight: 630, structuredData: { "@context": "https://schema.org", "@type": "Organization", name: "GamePunk", url: canonicalUrl(path), description: metadata.description } };
+    return { ...metadata, language, alternates: [{ language: "ru", pathname: "/" }, { language: "en", pathname: "/en/" }], image: language === "en" ? "/studio-social-en.png" : "/studio-social.png", imageAlt: language === "en" ? "GamePunk — We make games with attitude" : "GamePunk — Делаем игры с характером", imageWidth: 1200, imageHeight: 630, structuredData: { "@context": "https://schema.org", "@type": "Organization", name: "GamePunk", url: canonicalUrl(path), description: metadata.description } };
   }
   if (/^\/(en\/)?(privacy|terms)$/.test(path)) {
     const documentPath = path.replace(/^\/en/, "");

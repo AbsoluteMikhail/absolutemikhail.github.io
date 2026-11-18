@@ -3,8 +3,9 @@ import { profileExperience } from "@/content/proof";
 export const studioCopy = {
   ru: {
     skip: "Перейти к содержимому", home: "GamePunk — главная", navigation: "Навигация студии", language: "Язык сайта",
-    projects: "Проекты", studio: "Студия", contact: "Связаться", hero: ["ДЕЛАЕМ ИГРЫ", "С ХАРАКТЕРОМ."],
-    description: "Делаем игры и другие штуки,", descriptionEnd: "которых нам самим не хватает.", viewProjects: "Смотреть проекты",
+    projects: "Проекты", studio: "Студия", contact: "Связаться", hero: ["ДЕЛАЕМ", "ИГРЫ", "С ХАРАКТЕРОМ"],
+    description: "И другие штуки,", descriptionEnd: "которых нам самим не хватает.", viewProjects: "Смотреть проекты",
+    socialLinks: "Соцсети и сообщества",
     independent: ["НЕЗАВИСИМАЯ", "СТУДИЯ"], collageAlt: "Малена с обложки «Рождённая помнить» в коллаже из рваной бумаги",
     characterSticker: "Рождённая помнить", releaseNote: "скоро", projectsKicker: "01 / ПРОЕКТЫ", projectsTitle: "Что мы натворили",
     gameTypes: ["Дуэли с отстрелом конечностей", "PSX-стайл хоррор"], cover: "Обложка игры",
@@ -26,8 +27,9 @@ export const studioCopy = {
   },
   en: {
     skip: "Skip to content", home: "GamePunk — home", navigation: "Studio navigation", language: "Site language",
-    projects: "Projects", studio: "Studio", contact: "Contact", hero: ["WE MAKE GAMES", "WITH CHARACTER."],
-    description: "We make games and other things", descriptionEnd: "we wish existed.", viewProjects: "Explore our projects",
+    projects: "Projects", studio: "Studio", contact: "Contact", hero: ["WE MAKE", "GAMES", "WITH ATTITUDE"],
+    description: "And other things", descriptionEnd: "we wish existed.", viewProjects: "Explore our projects",
+    socialLinks: "Social channels and communities",
     independent: ["INDEPENDENT", "STUDIO"], collageAlt: "Malena from the Born to Remember cover in a torn-paper collage",
     characterSticker: "Born to Remember", releaseNote: "coming soon", projectsKicker: "01 / PROJECTS", projectsTitle: "What we’ve been up to",
     gameTypes: ["Duels with limb dismemberment", "PSX-style horror"], cover: "Game cover:",

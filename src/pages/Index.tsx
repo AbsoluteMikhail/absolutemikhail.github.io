@@ -13,7 +13,7 @@ import { trackAnalytics } from "@/lib/analytics";
 import { legalHref } from "@/lib/siteContext";
 import { studioCopy } from "@/constants/studioCopy";
 import { studioLocale } from "@/lib/studioLocale";
-import { StudioHeroCollage, StudioHeroTitle } from "@/components/StudioHero";
+import { StudioHeroCollage, StudioHeroTitle, StudioSocials } from "@/components/StudioHero";
 import studioLogo from "@/assets/studio/gamepunk-logo.svg";
 import paintArrow from "@/assets/studio/paint-arrow.webp";
 import heroPhoto from "@/assets/hero-photo.webp";
@@ -41,12 +41,14 @@ const Index = () => {
     <div className={`studio-page studio-page-${locale}`} lang={locale}>
       <a href="#main-content" className="skip-link">{copy.skip}</a>
       <header className="studio-header studio-container">
-        <Link to={home} aria-label={copy.home}><img className="studio-logo" src={studioLogo} width="1756" height="551" alt="GamePunk" /></Link>
-        <nav aria-label={copy.navigation} className="studio-nav">
-          <a href="#projects">{copy.projects}</a>
-          <a href="#studio">{copy.studio}</a>
-          <ContactMessenger studio locale={locale} analyticsPlacement="header" variant="unstyled" size="none" effect="none" className="studio-nav-contact">{copy.contact} <ArrowUpRight aria-hidden="true" /></ContactMessenger>
-        </nav>
+        <div className="studio-header-main">
+          <Link to={home} aria-label={copy.home}><img className="studio-logo" src={studioLogo} width="1756" height="551" alt="GamePunk" /></Link>
+          <nav aria-label={copy.navigation} className="studio-nav">
+            <a href="#projects">{copy.projects}</a>
+            <a href="#studio">{copy.studio}</a>
+            <ContactMessenger studio locale={locale} analyticsPlacement="header" variant="unstyled" size="none" effect="none" className="studio-nav-contact">{copy.contact} <ArrowUpRight aria-hidden="true" /></ContactMessenger>
+          </nav>
+        </div>
         {languageLinks}
       </header>
 
@@ -54,11 +56,14 @@ const Index = () => {
         <section className="studio-hero studio-container" aria-labelledby="studio-title">
           <div className="studio-hero-copy">
             <StudioHeroTitle locale={locale} />
-            <p className="studio-hero-description">{copy.description}<br className="studio-desktop-break" /> {copy.descriptionEnd}</p>
+            <StudioSocials locale={locale} />
+            <p className="studio-hero-description">{copy.description} {copy.descriptionEnd}</p>
             <a href="#projects" className={buttonStyles({ variant: "unstyled", size: "none", effect: "none", className: "studio-button" })}>{copy.viewProjects} <ArrowDown aria-hidden="true" /></a>
           </div>
-          <p className="studio-eyebrow">{copy.independent[0]}<br />{copy.independent[1]}</p>
-          <StudioHeroCollage locale={locale} className="studio-collage" />
+          <div className="studio-hero-art">
+            <p className="studio-eyebrow">{copy.independent[0]}<br />{copy.independent[1]}</p>
+            <StudioHeroCollage locale={locale} className="studio-collage" />
+          </div>
         </section>
 
         <section id="projects" className="studio-projects studio-container" aria-labelledby="studio-projects-title">

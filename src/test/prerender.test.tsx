@@ -21,9 +21,13 @@ const parseMarkup = (html: string) => {
 };
 
 describe("readable server rendering", () => {
-  it.each([["ru", "ДЕЛАЕМ ИГРЫ"], ["en", "WE MAKE GAMES"]])("renders the %s studio preview with the homepage logo and collage", async (language, heading) => {
+  it.each([
+    ["ru", ["ДЕЛАЕМ", "ИГРЫ", "С ХАРАКТЕРОМ"]],
+    ["en", ["WE MAKE", "GAMES", "WITH ATTITUDE"]],
+  ] as const)("renders the %s studio preview with the homepage headline, social links and collage", async (language, lines) => {
     const doc = parseMarkup(await render(`/snippet/?view=studio&lang=${language}`));
-    expect(doc.querySelector("h1")?.textContent).toContain(heading);
+    expect(Array.from(doc.querySelectorAll("h1 .studio-title-line"), line => line.textContent)).toEqual(lines);
+    expect(doc.querySelectorAll(".studio-socials a")).toHaveLength(5);
     expect(doc.querySelector('.studio-snippet-logo')?.getAttribute("src")).toContain("gamepunk-logo.svg");
     expect(doc.querySelector('.studio-snippet-collage .studio-collage-art')?.getAttribute("src")).toContain("hero-collage.webp");
     const sticker = doc.querySelector(".studio-character-sticker");

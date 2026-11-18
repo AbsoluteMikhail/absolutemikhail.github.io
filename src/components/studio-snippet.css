@@ -1,6 +1,8 @@
 .studio-snippet { width: 1200px; height: 630px; overflow: hidden; }
 .studio-snippet-logo { position: absolute; top: 30px; left: 48px; width: 245px; height: auto; }
-.studio-snippet h1 { position: absolute; top: 135px; left: 48px; z-index: 2; font-family: 'Studio Poster', Impact, sans-serif; font-weight: 800; font-variation-settings: 'wdth' 55; font-size: 82px; line-height: .94; letter-spacing: -.015em; }
-.studio-snippet-description { position: absolute; left: 48px; bottom: 46px; font-size: 25px; line-height: 1.35; letter-spacing: -.035em; }
+.studio-snippet-copy { position: absolute; top: 135px; left: 48px; z-index: 2; width: 620px; }
+.studio-snippet h1 { font-family: 'Studio Poster', Impact, sans-serif; font-weight: 800; font-variation-settings: 'wdth' 55; font-size: 96px; line-height: .94; letter-spacing: -.015em; }
+.studio-snippet .studio-socials { margin-top: 26px; }
+.studio-snippet-description { margin-top: 20px; font-size: 25px; line-height: 1.35; letter-spacing: -.035em; }
 .studio-snippet-label { position: absolute; left: 625px; top: 145px; z-index: 2; font-size: 20px; line-height: 1.02; font-weight: 800; letter-spacing: -.04em; }
 .studio-snippet-collage { position: absolute; right: 28px; bottom: 12px; width: 425px; }

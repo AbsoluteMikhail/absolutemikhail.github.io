@@ -2,6 +2,9 @@ export const telegramCommunityUrl = "https://t.me/Absolute_Unreal";
 export const donationAlertsUrl = "https://www.donationalerts.com/r/absolutemikhail";
 
 export const gamepunkLinks = {
+  discord: "https://discord.gg/NkwZ8pqyS6",
+  vk: "https://vk.ru/absoluteunreal",
+  twitch: "https://www.twitch.tv/absolutemikhail",
   steam: "https://store.steampowered.com/developer/GamePunk-Studio/",
   linkedin: "https://www.linkedin.com/company/106789897",
   x: "https://x.com/AbsoluteMikhail",
