@@ -157,6 +157,11 @@ export const publicImageMeta: Record<string, { width: number; height: number; sr
     height: 1204,
     srcSet: "/academy/unreal-for-programmers/save-level-as-dialog-960.webp 960w, /academy/unreal-for-programmers/save-level-as-dialog-1600.webp 1600w, /academy/unreal-for-programmers/save-level-as-dialog.webp 2027w",
   },
+  "/academy/unreal-for-programmers/editor-startup-map.webp": {
+    width: 2729,
+    height: 1489,
+    srcSet: "/academy/unreal-for-programmers/editor-startup-map-960.webp 960w, /academy/unreal-for-programmers/editor-startup-map-1600.webp 1600w, /academy/unreal-for-programmers/editor-startup-map.webp 2729w",
+  },
   "/academy/unreal-for-programmers/folder-color.webp": {
     width: 1713,
     height: 1271,

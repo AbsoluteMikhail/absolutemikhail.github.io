@@ -8,7 +8,7 @@ status: Программа занятия
 pain: Знакомые принципы программирования нужно связать с объектами, компонентами и событиями Unreal Engine.
 mainIdea: Один Blueprint задаёт поведение лампы, а переменные позволяют по-разному настроить её экземпляры.
 order: 1
-updated: 2026-11-16
+updated: 2026-11-24
 ---
 
 :::note Живой сценарий занятия
@@ -257,6 +257,20 @@ updated: 2026-11-16
 
 Копия уровня продолжает ссылаться на те же модели, материалы и Blueprint-классы. Save Current Level As копирует карту; отдельные копии всех используемых ассетов при этом не создаются.
 
+### Открываем TestLevel при запуске редактора
+
+Чтобы каждый раз не искать рабочую карту в Content Browser, сделаем **TestLevel** стартовой картой редактора.
+
+1. Откройте **Edit → Project Settings**.
+2. Слева в разделе **Project** выберите **Maps & Modes**.
+3. В блоке **Default Maps** раскройте список **Editor Startup Map**, найдите **TestLevel** и выберите её.
+
+![В Project Settings → Maps & Modes красной рамкой выделено поле Editor Startup Map, в котором выбрана карта TestLevel](/academy/unreal-for-programmers/editor-startup-map.webp)
+
+**Editor Startup Map** задаёт карту, с которой открывается проект в Unreal Editor. За стартовую карту самой игры отвечает отдельное поле **Game Default Map**.
+
+При следующем открытии проекта проверьте, что в редакторе сразу открылась вкладка **TestLevel**.
+
 ### Выделяем свою папку цветом
 
 В дереве папок **Content Browser** нажмите правой кнопкой по **FromZero**, выберите **Set Color** и задайте удобный цвет. Так свою папку проще заметить среди папок шаблона и добавленных наборов. Цвет служит ориентиром в редакторе.
@@ -481,6 +495,7 @@ Construction Script настраивает объект при его конст
 - [Переменные Blueprint — Epic Games](https://dev.epicgames.com/documentation/unreal-engine/blueprint-variables-in-unreal-engine) — значения по умолчанию, Instance Editable и Expose on Spawn.
 - [Основы Blueprint — Epic Games](https://dev.epicgames.com/documentation/en-us/unreal-engine/blueprint-foundations) — Construction Script и настройка объекта при изменении его свойств в редакторе.
 - [Работа с уровнями — Epic Games](https://dev.epicgames.com/documentation/unreal-engine/working-with-levels-in-unreal-engine?lang=en-US) — сохранение копии карты и открытие уровней.
+- [Стартовая карта проекта — Epic Games](https://dev.epicgames.com/documentation/unreal-engine/changing-the-default-level-of-an-unreal-engine-project) — настройки карты при запуске редактора и игры.
 - [Папки Content Browser — Epic Games](https://dev.epicgames.com/documentation/unreal-engine/sources-panel-reference-in-unreal-engine?lang=en-US) — создание папок и Set Color.
 - [Работа с ассетами — Epic Games](https://dev.epicgames.com/documentation/en-us/unreal-engine/working-with-assets-in-unreal-engine) — создание, редактирование и ссылки между ресурсами.
 - [Ссылки на ассеты — Epic Games](https://dev.epicgames.com/documentation/unreal-engine/referencing-assets-in-unreal-engine?lang=en-US) — как ссылки связаны с загрузкой ресурсов.
